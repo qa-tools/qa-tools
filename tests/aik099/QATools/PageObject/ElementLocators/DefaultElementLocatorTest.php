@@ -1,0 +1,187 @@
+<?php
+/**
+ * This file is part of the qa-tools library.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ *
+ * @copyright Alexander Obuhovich <aik.bold@gmail.com>
+ * @link      https://github.com/aik099/qa-tools
+ */
+
+namespace tests\aik099\QATools\PageObject\ElementLocators;
+
+
+use Mockery as m;
+use aik099\QATools\PageObject\ElementLocators\DefaultElementLocator;
+use aik099\QATools\PageObject\ElementLocators\IElementLocator;
+
+class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
+{
+
+	const PROPERTY_CLASS = '\\aik099\\QATools\\PageObject\\Property';
+
+	const FIND_BY_CLASS = '\\aik099\\QATools\\PageObject\\Annotations\\FindByAnnotation';
+
+	/**
+	 * Locator class.
+	 *
+	 * @var string
+	 */
+	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocators\\DefaultElementLocator';
+
+	/**
+	 * Property.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $property;
+
+	/**
+	 * Annotation manager.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $annotationManager;
+
+	/**
+	 * Search context.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $searchContext;
+
+	/**
+	 * Locator.
+	 *
+	 * @var DefaultElementLocator
+	 */
+	protected $locator;
+
+	/**
+	 * Prepares page.
+	 *
+	 * @return void
+	 */
+	protected function setUp()
+	{
+		parent::setUp();
+
+		$this->property = m::mock(self::PROPERTY_CLASS);
+		$this->annotationManager = m::mock('\\mindplay\\annotations\\AnnotationManager');
+		$this->searchContext = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
+
+		$this->locator = $this->createLocator();
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testGetSearchContext()
+	{
+		$this->assertSame($this->searchContext, $this->locator->getSearchContext());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testFindOne()
+	{
+		$locator = $this->createLocator(array('findAll'));
+		$locator->shouldReceive('findAll')->andReturn(array('OK'));
+
+		$this->assertEquals('OK', $locator->find());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testFindNone()
+	{
+		$locator = $this->createLocator(array('findAll'));
+		$locator->shouldReceive('findAll')->andReturn(array());
+
+		$this->assertNull($locator->find());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testGetSelectorSuccess()
+	{
+		$expected = array('xpath' => 'xpath1');
+		$this->expectFindByAnnotation($expected);
+		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
+
+		$this->assertCount(0, $this->locator->findAll());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 * @expectedException \aik099\QATools\PageObject\Exceptions\PageFactoryException
+	 */
+	public function testGetSelectorFailure()
+	{
+		$this->property->shouldReceive('__toString')->andReturn('OK');
+		$this->property->shouldReceive('getDataType')->andReturnNull();
+		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());
+
+		$this->assertCount(0, $this->locator->findAll());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testToString()
+	{
+		$expected = 'OK';
+		$this->expectFindByAnnotation('OK');
+
+		$this->assertEquals(var_export(array('se' => $expected), true), (string)$this->locator);
+	}
+
+	/**
+	 * Adds expectation for @find-by annotation.
+	 *
+	 * @param mixed $selector Selector.
+	 *
+	 * @return void
+	 */
+	protected function expectFindByAnnotation($selector)
+	{
+		$annotation = m::mock(self::FIND_BY_CLASS);
+		$annotation->shouldReceive('getSelector')->andReturn($selector);
+
+		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array($annotation));
+	}
+
+	/**
+	 * Creates locator.
+	 *
+	 * @param array $mock_methods Mock methods.
+	 *
+	 * @return IElementLocator
+	 */
+	protected function createLocator(array $mock_methods = array())
+	{
+		if ( $mock_methods ) {
+			$class = $this->locatorClass . '[' . implode(',', $mock_methods) . ']';
+
+			return m::mock($class, array($this->property, $this->annotationManager, $this->searchContext));
+		}
+
+		return new $this->locatorClass($this->property, $this->annotationManager, $this->searchContext);
+	}
+
+}

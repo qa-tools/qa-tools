@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Element Testing Page</title>
+
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			function set_status($status) {
+				var $status_control = $('#status');
+
+				$status_control.html($status_control.html() + '<br/>' + $status);
+			}
+
+			$('#button1, #button2').click(function ($e) {
+				set_status('clicked on [' + $(this).attr('id') + '] button');
+			});
+
+			$('#checkbox-without-label')
+			.click(function ($e) {
+				var $me = $(this);
+
+				set_status('clicked on [' + $me.attr('id') + '] checkbox; checked = ' + ($me.is(':checked') ? 'yes' : 'no'));
+			})
+			.change(function ($e) {
+				var $checked = $(this).is(':checked');
+
+				set_status('change on [' + $(this).attr('id') + ']; checked = ' + ($checked ? 'yes' : 'no'));
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="status"></div>
+
+	<div>
+		<input type="button" id="button1" value="Click Me 1"/>
+		<button id="button2">Click Me 2</button>
+	</div>
+	<div>
+		<input type="checkbox" id="checkbox-without-label"/>
+		<input type="checkbox" id="checkbox-with-label"/><label for="checkbox-with-label">label text 2</label>
+		<label><input type="checkbox" id="checkbox-inside-label"/>label text 3</label>
+	</div>
+	<div>
+		<input type="radio" id="radio-without-group">
+		<input type="radio" name="radio-group1" value="1">
+		<label><input type="radio" name="radio-group1" value="2"> radio text 2</label>
+		<input type="radio" name="radio-group1" id="r1_v3" value="3"><label for="r1_v3">radio text 3</label>
+		<input type="radio" name="radio-group1" id="r1_v4" value="4"><label for="r1_v4">radio text 4</label>
+	</div>
+
+	<div>
+		<input type="text" id="text-input"/>
+		<textarea id="text-area"></textarea>
+	</div>
+
+	<div>
+		<select id="select-simple">
+			<option value="v1">t1</option>
+			<option value="v2">t2</option>
+		</select>
+
+		<select id="select-complex" multiple="multiple">
+			<!--<option value=""></option>-->
+			<optgroup label="g1">
+				<option value="v1">t1</option>
+				<option value="v2">t2 t11</option>
+			</optgroup>
+
+			<option value="v3">t3</option>
+		</select>
+	</div>
+
+	<div id="class_tester">
+		<div class="first"></div>
+		<div class="first second"></div>
+		<div class="first second third"></div>
+	</div>
+</body>
+</html>
