@@ -1,4 +1,7 @@
 # QA-Tools
+[![Build Status](https://travis-ci.org/aik099/qa-tools.png?branch=master)](https://travis-ci.org/aik099/qa-tools)
+[![Coverage Status](https://coveralls.io/repos/aik099/qa-tools/badge.png?branch=master)](https://coveralls.io/r/aik099/qa-tools?branch=master)
+
 Quality assurance utilities for functional tests.
 
 Library implements [Page Object Pattern](docs/PageObjectPattern.md), used in variety of testing frameworks (e.g. Selenium browser automation framework).
