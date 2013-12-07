@@ -31,16 +31,17 @@ class SelectOption extends TypifiedElement
 	protected $select;
 
 	/**
-	 * Specifies wrapped WebElement.
+	 * Sets reference to parent SELECT element.
 	 *
-	 * @param IWebElement $wrapped_element Element to be wrapped.
-	 * @param Select      $select          Associated SELECT element.
+	 * @param Select $select Associated SELECT element.
+	 *
+	 * @return self
 	 */
-	public function __construct(IWebElement $wrapped_element, Select $select)
+	public function setSelect(Select $select)
 	{
 		$this->select = $select;
 
-		parent::__construct($wrapped_element);
+		return $this;
 	}
 
 	/**
@@ -49,10 +50,15 @@ class SelectOption extends TypifiedElement
 	 * @param boolean $multiple Append this option to current selection.
 	 *
 	 * @return self
+	 * @throws TypifiedElementException When no SELECT element association defined.
 	 */
 	public function select($multiple = false)
 	{
 		if ( !$this->isSelected() ) {
+			if ( $this->select === null ) {
+				throw new TypifiedElementException('No SELECT element association defined');
+			}
+
 			$this->select->getWrappedElement()->selectOption($this->getValue(), $multiple);
 		}
 
@@ -122,21 +128,6 @@ class SelectOption extends TypifiedElement
 	public function getText()
 	{
 		return $this->getWrappedElement()->getText();
-	}
-
-	/**
-	 * Creates WebElement instance based on existing NodeElement instance.
-	 *
-	 * @param NodeElement $node_element Node element.
-	 * @param Select      $select       Select.
-	 *
-	 * @return TypifiedElement
-	 */
-	public static function fromNodeElement(NodeElement $node_element, Select $select)
-	{
-		$wrapped_element = WebElement::fromNodeElement($node_element);
-
-		return new static($wrapped_element, $select);
 	}
 
 }

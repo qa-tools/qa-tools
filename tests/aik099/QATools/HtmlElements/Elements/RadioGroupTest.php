@@ -115,7 +115,7 @@ class RadioGroupTest extends TypifiedElementTest
 		$radio = m::mock(self::RADIO_CLASS);
 		$radio->shouldReceive('isSelected')->once()->andReturn(true);
 
-		$this->assertTrue($this->mockElement(array($radio))->hasSelectedButton());
+		$this->assertTrue($this->mockElement(array(), array($radio))->hasSelectedButton());
 	}
 
 	/**
@@ -139,7 +139,7 @@ class RadioGroupTest extends TypifiedElementTest
 		$radio = m::mock(self::RADIO_CLASS);
 		$radio->shouldReceive('isSelected')->once()->andReturn(true);
 
-		$this->assertSame($radio, $this->mockElement(array($radio))->getSelectedButton());
+		$this->assertSame($radio, $this->mockElement(array(), array($radio))->getSelectedButton());
 	}
 
 	/**
@@ -164,7 +164,7 @@ class RadioGroupTest extends TypifiedElementTest
 		$radio->shouldReceive('getLabelText')->once()->andReturn('EXAMPLE TEXT');
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array($radio));
+		$element = $this->mockElement(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByLabelText('LE T'));
 	}
 
@@ -190,7 +190,7 @@ class RadioGroupTest extends TypifiedElementTest
 		$radio->shouldReceive('getAttribute')->with('value')->once()->andReturn('V1');
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array($radio));
+		$element = $this->mockElement(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByValue('V1'));
 	}
 
@@ -215,7 +215,7 @@ class RadioGroupTest extends TypifiedElementTest
 		$radio = m::mock(self::RADIO_CLASS);
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array($radio));
+		$element = $this->mockElement(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByIndex(0));
 	}
 
@@ -236,13 +236,15 @@ class RadioGroupTest extends TypifiedElementTest
 	/**
 	 * Mocks element.
 	 *
+	 * @param array         $methods       Methods to mock.
 	 * @param array|Radio[] $radio_buttons Radio buttons.
 	 *
 	 * @return RadioGroup
 	 */
-	protected function mockElement($radio_buttons = array())
+	protected function mockElement(array $methods = array(), $radio_buttons = array())
 	{
-		$element = parent::mockElement(array('getButtons'));
+		$methods[] = 'getButtons';
+		$element = parent::mockElement($methods);
 		$element->shouldReceive('getButtons')->once()->andReturn($radio_buttons);
 
 		return $element;

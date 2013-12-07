@@ -46,7 +46,7 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 	 *
 	 * @return IWebElement
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
 		$wrapped_element = WebElement::fromNodeElement($node_element);
 

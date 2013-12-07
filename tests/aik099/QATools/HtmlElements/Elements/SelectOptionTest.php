@@ -69,6 +69,35 @@ class SelectOptionTest extends TypifiedElementTest
 	/**
 	 * Test description.
 	 *
+	 * @return void
+	 * @expectedException \aik099\QATools\HtmlElements\Exceptions\TypifiedElementException
+	 * @expectedExceptionMessage No SELECT element association defined
+	 */
+	public function testSelectException()
+	{
+		$this->webElement->shouldReceive('isSelected')->once()->andReturn(false);
+
+		/** @var SelectOption $option */
+		$option = new $this->elementClass($this->webElement);
+		$option->select();
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testSetSelect()
+	{
+		/** @var SelectOption $option */
+		$option = new $this->elementClass($this->webElement);
+
+		$this->assertSame($option, $option->setSelect($this->select));
+	}
+
+	/**
+	 * Test description.
+	 *
 	 * @param boolean $checked      Checked.
 	 * @param string  $driver_class Driver class.
 	 *
@@ -202,24 +231,6 @@ class SelectOptionTest extends TypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
-	public function testFromNodeElement()
-	{
-		$node_element = $this->createNodeElement();
-
-		/* @var $element_class SelectOption */
-		$element_class = $this->elementClass;
-		$element = $element_class::fromNodeElement($node_element, $this->select);
-
-		$this->assertInstanceOf($element_class, $element);
-		$this->assertInstanceOf(self::WEB_ELEMENT_CLASS, $element->getWrappedElement());
-		$this->assertEquals($node_element->getXpath(), $element->getXpath());
-	}
-
-	/**
 	 * Returns existing element.
 	 *
 	 * @return SelectOption
@@ -236,7 +247,11 @@ class SelectOptionTest extends TypifiedElementTest
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass($this->webElement, $this->select);
+		/** @var SelectOption $option */
+		$option = new $this->elementClass($this->webElement);
+		$option->setSelect($this->select);
+
+		return $option;
 	}
 
 	/**

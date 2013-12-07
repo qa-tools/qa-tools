@@ -43,7 +43,7 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 	 *
 	 * @return IWebElement
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
 		$selenium_selector = array(How::XPATH => $node_element->getXpath());
 

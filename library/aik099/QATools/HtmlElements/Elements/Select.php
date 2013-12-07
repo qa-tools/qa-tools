@@ -294,7 +294,9 @@ class Select extends TypifiedElement implements ISimpleSetter
 		$ret = array();
 
 		foreach ( $nodes as $node_element ) {
-			$ret[] = SelectOption::fromNodeElement($node_element, $this);
+			/** @var SelectOption $option */
+			$option = SelectOption::fromNodeElement($node_element);
+			$ret[] = $option->setSelect($this);
 		}
 
 		return $ret;
