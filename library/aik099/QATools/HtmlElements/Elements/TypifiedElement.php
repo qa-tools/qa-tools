@@ -11,7 +11,6 @@
 namespace aik099\QATools\HtmlElements\Elements;
 
 
-use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
@@ -233,7 +232,7 @@ abstract class TypifiedElement implements IWebElement, INamed
 	 */
 	protected function isSeleniumDriver()
 	{
-		return $this->getSession()->getDriver() instanceof Selenium2Driver;
+		return is_a($this->getSession()->getDriver(), '\\Behat\\Mink\\Driver\\Selenium2Driver');
 	}
 
 	/**

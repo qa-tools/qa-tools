@@ -9,7 +9,6 @@ Library implements [Page Object Pattern](docs/PageObjectPattern.md), used in var
 Required dependencies:
 
 * [Behat/Mink](https://github.com/Behat/Mink) - for browser interaction
-* [Behat/MinkSelenium2Driver](https://github.com/Behat/MinkSelenium2Driver) - for using Selenium Grid
 * [mindplay/annotations](https://github.com/aik099/php-annotations) - for annotation handling
 
 ## aik099\QATools\PageObject
