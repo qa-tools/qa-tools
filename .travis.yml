@@ -7,7 +7,7 @@ php:
 
 before_script:
     - curl http://getcomposer.org/installer | php
-    - php composer.phar require satooshi/php-coveralls:dev-master brianium/paratest:dev-master --dev --prefer-source
+    - php composer.phar require satooshi/php-coveralls:dev-master --dev --prefer-source
 
 script:
     - mkdir -p build/logs
