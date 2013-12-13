@@ -1,5 +1,6 @@
 # QA-Tools
 [![Build Status](https://travis-ci.org/aik099/qa-tools.png?branch=master)](https://travis-ci.org/aik099/qa-tools)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/aik099/qa-tools/badges/quality-score.png?s=d31359d014d2f9cf76e3734055b2dadd5925eb8e)](https://scrutinizer-ci.com/g/aik099/qa-tools/)
 [![Coverage Status](https://coveralls.io/repos/aik099/qa-tools/badge.png?branch=master)](https://coveralls.io/r/aik099/qa-tools?branch=master)
 
 Quality assurance utilities for functional tests.

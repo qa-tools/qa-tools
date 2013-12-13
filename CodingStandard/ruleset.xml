@@ -33,15 +33,17 @@
 		</properties>
 	</rule>
 
-	<rule ref="Drupal.Array.Array"/>
-	<rule ref="Drupal.Classes.ClassCreateInstance"/>
-
-	<rule ref="Drupal.ControlStructures.ControlSignature"/>
-	<rule ref="Drupal.ControlStructures.ElseIf"/>
-	<rule ref="Drupal.Formatting.ItemAssignment"/>
-	<rule ref="Drupal.Formatting.SpaceOperator"/>
-	<rule ref="Drupal.Formatting.SpaceUnaryOperator"/>
-	<rule ref="Drupal.Strings.ConcatenationSpacing"/>
+	<!--
+		Copied locally to the standard:
+		<rule ref="Drupal.Array.Array"/>
+		<rule ref="Drupal.Classes.ClassCreateInstance"/>
+		<rule ref="Drupal.ControlStructures.ControlSignature"/>
+		<rule ref="Drupal.ControlStructures.ElseIf"/>
+		<rule ref="Drupal.Formatting.ItemAssignment"/>
+		<rule ref="Drupal.Formatting.SpaceOperator"/>
+		<rule ref="Drupal.Formatting.SpaceUnaryOperator"/>
+		<rule ref="Drupal.Strings.ConcatenationSpacing"/>
+	-->
 
 	<rule ref="MySource.PHP.EvalObjectFactory"/>
 
