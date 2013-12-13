@@ -17,3 +17,6 @@ tools:
             tab_width: 0
             standard: custom
             ruleset: CodingStandard
+
+    external_code_coverage:
+        timeout: 600
