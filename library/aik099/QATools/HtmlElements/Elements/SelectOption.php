@@ -11,11 +11,7 @@
 namespace aik099\QATools\HtmlElements\Elements;
 
 
-use Behat\Mink\Element\NodeElement;
 use aik099\QATools\HtmlElements\Exceptions\TypifiedElementException;
-use aik099\QATools\PageObject\Elements\IWebElement;
-use aik099\QATools\PageObject\Elements\WebElement;
-
 
 /**
  * Represents one option in a web page select control.
