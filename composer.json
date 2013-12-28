@@ -44,5 +44,11 @@
 			"aik099\\QATools\\": "./library/",
 			"tests\\aik099\\QATools\\": "./"
 		}
-	}
+	},
+
+	"extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
