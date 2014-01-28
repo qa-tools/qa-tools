@@ -79,9 +79,13 @@ Depends on `aik099\QATools\PageObject`.
 
 ### Annotation Overview
 
+* `@bem`
+
 ### Usage
 
 * TODO
+
+[Continue to Examples](docs/BEM.md)
 
 ## Using Composer
 
