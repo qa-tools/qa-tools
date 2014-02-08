@@ -18,26 +18,20 @@
 	"require": {
 		"php": ">=5.3.1",
 		"behat/mink": "~1.5@dev",
-		"mindplay/annotations": "dev-annotation-context-feat"
+		"mindplay/annotations": "dev-master"
 	},
 
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",
 		"brianium/paratest": "dev-master",
-		"mockery/mockery": "dev-master"
+		"behat/mink-selenium2-driver": "~1.1@dev",
+		"mockery/mockery": "0.9.0"
 	},
 
 	"suggest": {
 		"aik099/phpunit-mink": "Allows to use PageObject inside PHPUnit tests and remotely collect code coverage information",
 		"phpunit/phpunit": "Allows to use PageObject inside PHPUnit tests"
 	},
-
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/aik099/php-annotations"
-		}
-	],
 
 	"autoload": {
 		"psr-0": {

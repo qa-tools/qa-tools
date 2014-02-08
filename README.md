@@ -10,8 +10,8 @@ Library implements [Page Object Pattern](docs/PageObjectPattern.md), used in var
 
 Required dependencies:
 
-* [Behat/Mink](https://github.com/Behat/Mink) - for browser interaction
-* [mindplay/annotations](https://github.com/aik099/php-annotations) - for annotation handling
+* [behat/mink](https://github.com/Behat/Mink) - for browser interaction
+* [mindplay/annotations](https://github.com/mindplay-dk/php-annotations) - for annotation handling
 
 ## aik099\QATools\PageObject
 No internal dependencies.
@@ -93,17 +93,12 @@ Depends on `aik099\QATools\PageObject`.
 ```json
 {
 	"require": {
-		"aik099/qa-tools": "dev-master",
-		"mindplay/php-annotations": "dev-master"
+		"aik099/qa-tools": "dev-master"
 	},
 	"repositories": [
 		{
 			"type": "vcs",
 			"url": "https://github.com/aik099/qa-tools"
-		},
-		{
-			"type": "vcs",
-			"url": "https://github.com/aik099/php-annotations"
 		}
 	]
 }
