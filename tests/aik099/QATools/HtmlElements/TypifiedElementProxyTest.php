@@ -48,7 +48,7 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 */
 	public function testDefaultClassName()
 	{
-		$expected = '\\aik099\\QATools\\HtmlElements\\Elements\\TextBlock';
+		$expected = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
 
 		$this->assertInstanceOf($expected, $this->proxy->getObject());
 	}
@@ -60,7 +60,7 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 */
 	public function testSetClassName()
 	{
-		$expected = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Elements\\ButtonChild';
+		$expected = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\ButtonChild';
 
 		$this->proxy->setClassName($expected);
 		$this->assertInstanceOf($expected, $this->proxy->getObject());

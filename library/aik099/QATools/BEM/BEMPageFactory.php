@@ -13,11 +13,11 @@ namespace aik099\QATools\BEM;
 
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationManager;
-use aik099\QATools\BEM\ElementLocators\BEMElementLocatorFactory;
-use aik099\QATools\BEM\PropertyDecorators\BEMPropertyDecorator;
+use aik099\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
+use aik099\QATools\BEM\PropertyDecorator\BEMPropertyDecorator;
 use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\PageFactory;
-use aik099\QATools\PageObject\PropertyDecorators\IPropertyDecorator;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
  * Factory class to make using BEMPage Objects simpler and easier.
@@ -33,7 +33,7 @@ class BEMPageFactory extends PageFactory
 	 */
 	public function __construct(Session $session, AnnotationManager $annotation_manager = null)
 	{
-		$this->annotationRegistry['bem'] = '\\aik099\\QATools\\BEM\\Annotations\\BEMAnnotation';
+		$this->annotationRegistry['bem'] = '\\aik099\\QATools\\BEM\\Annotation\\BEMAnnotation';
 
 		parent::__construct($session, $annotation_manager);
 	}

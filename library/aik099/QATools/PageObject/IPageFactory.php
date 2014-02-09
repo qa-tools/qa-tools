@@ -12,8 +12,8 @@ namespace aik099\QATools\PageObject;
 
 
 use Behat\Mink\Session;
-use aik099\QATools\PageObject\Elements\IHtmlElement;
-use aik099\QATools\PageObject\PropertyDecorators\IPropertyDecorator;
+use aik099\QATools\PageObject\Element\IHtmlElement;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
  * All page factories must implement this interface.

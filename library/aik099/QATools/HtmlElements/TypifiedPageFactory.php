@@ -13,11 +13,11 @@ namespace aik099\QATools\HtmlElements;
 
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationManager;
-use aik099\QATools\HtmlElements\PropertyDecorators\TypifiedPropertyDecorator;
-use aik099\QATools\PageObject\ElementLocators\DefaultElementLocatorFactory;
+use aik099\QATools\HtmlElements\PropertyDecorator\TypifiedPropertyDecorator;
+use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\PageFactory;
-use aik099\QATools\PageObject\PropertyDecorators\IPropertyDecorator;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
  * Factory class to make using Page Objects simpler and easier.
@@ -33,7 +33,7 @@ class TypifiedPageFactory extends PageFactory
 	 */
 	public function __construct(Session $session, AnnotationManager $annotation_manager = null)
 	{
-		$this->annotationRegistry['element-name'] = '\\aik099\\QATools\\HtmlElements\\Annotations\\ElementNameAnnotation';
+		$this->annotationRegistry['element-name'] = '\\aik099\\QATools\\HtmlElements\\Annotation\\ElementNameAnnotation';
 
 		parent::__construct($session, $annotation_manager);
 	}

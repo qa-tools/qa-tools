@@ -11,10 +11,10 @@
 namespace aik099\QATools\PageObject;
 
 
-use aik099\QATools\PageObject\ElementLocators\IElementLocator;
-use aik099\QATools\PageObject\Elements\IWebElement;
-use aik099\QATools\PageObject\Elements\WebElement;
-use aik099\QATools\PageObject\Exceptions\PageFactoryException;
+use aik099\QATools\PageObject\ElementLocator\IElementLocator;
+use aik099\QATools\PageObject\Element\IWebElement;
+use aik099\QATools\PageObject\Element\WebElement;
+use aik099\QATools\PageObject\Exception\PageFactoryException;
 
 /**
  * Class for lazy-proxy creation to ensure, that WebElements are really accessed only at moment, when user needs them.
@@ -31,7 +31,7 @@ class WebElementProxy implements IWebElement
 	 *
 	 * @var string
 	 */
-	protected $className = '\\aik099\\QATools\\PageObject\\Elements\\WebElement';
+	protected $className = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 	/**
 	 * WebElement object to proxy.

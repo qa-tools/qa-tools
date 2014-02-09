@@ -12,10 +12,10 @@ namespace aik099\QATools\BEM;
 
 
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\BEM\Elements\Block;
-use aik099\QATools\BEM\Elements\IBlock;
-use aik099\QATools\BEM\Exceptions\BEMPageFactoryException;
-use aik099\QATools\PageObject\ElementLocators\IElementLocator;
+use aik099\QATools\BEM\Element\Block;
+use aik099\QATools\BEM\Element\IBlock;
+use aik099\QATools\BEM\Exception\BEMPageFactoryException;
+use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\IPageFactory;
 
 /**

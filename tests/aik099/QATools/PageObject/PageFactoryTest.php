@@ -12,11 +12,11 @@ namespace tests\aik099\QATools\PageObject;
 
 
 use Mockery as m;
-use aik099\QATools\PageObject\Annotations\PageUrlAnnotation;
+use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
 use aik099\QATools\PageObject\Page;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\Property;
-use aik099\QATools\PageObject\PropertyDecorators\IPropertyDecorator;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use tests\aik099\QATools\TestCase;
 
 class PageFactoryTest extends TestCase
@@ -36,14 +36,14 @@ class PageFactoryTest extends TestCase
 	 *
 	 * @var string
 	 */
-	protected $pageClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Pages\\PageChild';
+	protected $pageClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Page\\PageChild';
 
 	/**
 	 * Decorator class.
 	 *
 	 * @var string
 	 */
-	protected $decoratorClass = '\\aik099\\QATools\\PageObject\\PropertyDecorators\\DefaultPropertyDecorator';
+	protected $decoratorClass = '\\aik099\\QATools\\PageObject\\PropertyDecorator\\DefaultPropertyDecorator';
 
 	/**
 	 * Annotation manager.
@@ -219,7 +219,7 @@ class PageFactoryTest extends TestCase
 	 */
 	public function testInitHtmlElement()
 	{
-		$html_element = m::mock('\\aik099\\QATools\\PageObject\\Elements\\HtmlElement');
+		$html_element = m::mock('\\aik099\\QATools\\PageObject\\Element\\HtmlElement');
 		$this->assertSame($this->realFactory, $this->realFactory->initHtmlElement($html_element));
 	}
 

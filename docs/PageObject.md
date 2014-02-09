@@ -43,7 +43,7 @@ $home_page->setUsername('example user');
 ## Page (class: Page)
 ```php
 use aik099\QATools\PageObject\Page;
-use aik099\QATools\PageObject\Elements\WebElement;
+use aik099\QATools\PageObject\Element\WebElement;
 
 /**
  * @page-url('index')
@@ -77,8 +77,8 @@ class HomePage extends Page {
 
 ## LoginSidebox (class: HtmlElement)
 ```php
-use aik099\QATools\PageObject\Elements\HtmlElement;
-use aik099\QATools\PageObject\Elements\WebElement;
+use aik099\QATools\PageObject\Element\HtmlElement;
+use aik099\QATools\PageObject\Element\WebElement;
 
 class LoginSidebox extends HtmlElement {
 
@@ -136,7 +136,7 @@ class LoginSidebox extends HtmlElement {
 
 ## Sidebar (class: HtmlElement)
 ```php
-use aik099\QATools\PageObject\Elements\HtmlElement;
+use aik099\QATools\PageObject\Element\HtmlElement;
 
 /**
  * @find-by('id' => 'block-sidebar')

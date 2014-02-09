@@ -43,7 +43,7 @@ $home_page->examplePageMethod();
 ## Page (class: BEMPage)
 ```php
 use aik099\QATools\BEM\BEMPage;
-use aik099\QATools\BEM\Elements\Element;
+use aik099\QATools\BEM\Element\Element;
 
 /**
  * @page-url('index')
@@ -75,8 +75,8 @@ class HomePage extends BEMPage {
 
 ## LoginSidebox (class: Block)
 ```php
-use aik099\QATools\BEM\Elements\Block;
-use aik099\QATools\BEM\Elements\Element;
+use aik099\QATools\BEM\Element\Block;
+use aik099\QATools\BEM\Element\Element;
 
 /**
  * @bem('block' => 'b-login')

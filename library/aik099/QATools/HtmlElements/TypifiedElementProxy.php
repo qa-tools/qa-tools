@@ -11,11 +11,11 @@
 namespace aik099\QATools\HtmlElements;
 
 
-use aik099\QATools\HtmlElements\Elements\INamed;
-use aik099\QATools\HtmlElements\Elements\TypifiedElement;
-use aik099\QATools\PageObject\ElementLocators\IElementLocator;
-use aik099\QATools\PageObject\Elements\WebElement;
-use aik099\QATools\PageObject\Exceptions\PageFactoryException;
+use aik099\QATools\HtmlElements\Element\INamed;
+use aik099\QATools\HtmlElements\Element\TypifiedElement;
+use aik099\QATools\PageObject\ElementLocator\IElementLocator;
+use aik099\QATools\PageObject\Element\WebElement;
+use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\IPageFactory;
 use aik099\QATools\PageObject\WebElementProxy;
 
@@ -40,7 +40,7 @@ class TypifiedElementProxy extends WebElementProxy implements INamed
 	 *
 	 * @var string
 	 */
-	protected $wrappedClassName = '\\aik099\\QATools\\PageObject\\Elements\\WebElement';
+	protected $wrappedClassName = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 	/**
 	 * Initializes proxy for TypifiedElement.
@@ -52,7 +52,7 @@ class TypifiedElementProxy extends WebElementProxy implements INamed
 	public function __construct(IElementLocator $locator, IPageFactory $page_factory, $name)
 	{
 		$this->_name = $name;
-		$this->className = '\\aik099\\QATools\\HtmlElements\\Elements\\TextBlock';
+		$this->className = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
 
 		parent::__construct($locator, $page_factory);
 	}

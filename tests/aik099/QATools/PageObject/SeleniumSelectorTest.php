@@ -43,7 +43,7 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 * @param array $locator Locator.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exceptions\WebElementException
+	 * @expectedException \aik099\QATools\PageObject\Exception\WebElementException
 	 * @dataProvider notImplementedDataProvider
 	 */
 	public function testNotImplemented(array $locator)
@@ -126,7 +126,7 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 * @param mixed $locator Locator.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exceptions\WebElementException
+	 * @expectedException \aik099\QATools\PageObject\Exception\WebElementException
 	 * @dataProvider incorrectDataProvider
 	 */
 	public function testIncorrect($locator)

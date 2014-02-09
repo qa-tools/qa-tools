@@ -11,12 +11,12 @@
 namespace aik099\QATools\BEM;
 
 
-use aik099\QATools\BEM\Elements\Element;
-use aik099\QATools\BEM\Elements\IElement;
-use aik099\QATools\BEM\Exceptions\BEMPageFactoryException;
-use aik099\QATools\PageObject\ElementLocators\IElementLocator;
-use aik099\QATools\PageObject\Elements\IWebElement;
-use aik099\QATools\PageObject\Elements\WebElement;
+use aik099\QATools\BEM\Element\Element;
+use aik099\QATools\BEM\Element\IElement;
+use aik099\QATools\BEM\Exception\BEMPageFactoryException;
+use aik099\QATools\PageObject\ElementLocator\IElementLocator;
+use aik099\QATools\PageObject\Element\IWebElement;
+use aik099\QATools\PageObject\Element\WebElement;
 
 /**
  * Class for lazy-proxy creation to ensure, that BEM elements are really accessed only at moment, when user needs them

@@ -24,8 +24,8 @@ Implementation of Page Object pattern as done in Selenium Java library.
 | Name | Description |
 | ------------- | ------------- |
 | `\aik099\QATools\PageObject\Page` | Abstract class for creating dedicated classes for each of the website pages, that needs to be tested (descendant of [DocumentElement](http://mink.behat.org/api/behat/mink/element/documentelement.html)). |
-| `\aik099\QATools\PageObject\Elements\WebElement` | Class for interacting with __one__ element on page (descendant of [NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)). |
-| `\aik099\QATools\PageObject\Elements\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
+| `\aik099\QATools\PageObject\Element\WebElement` | Class for interacting with __one__ element on page (descendant of [NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)). |
+| `\aik099\QATools\PageObject\Element\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 
@@ -37,7 +37,7 @@ Implementation of Page Object pattern as done in Selenium Java library.
 ### Usage
 
 1. create subclass from `\aik099\QATools\PageObject\Page` class
-2. add class properties, that have `\aik099\QATools\PageObject\Elements\WebElement` or `\aik099\QATools\PageObject\Elements\HtmlElement` in their `@var` annotation
+2. add class properties, that have `\aik099\QATools\PageObject\Element\WebElement` or `\aik099\QATools\PageObject\Element\HtmlElement` in their `@var` annotation
 3. create public method(-s), that would use properties defined before
 
 [Continue to Examples](docs/PageObject.md)
@@ -74,7 +74,7 @@ This library solves major problem with PageObject implementation, that original 
 ### Usage
 
 1. create subclass from `\aik099\QATools\HtmlElements\TypifiedPage` class
-2. add class properties, that have `\aik099\QATools\PageObject\Elements\WebElement` or any other element class described above in their `@var` annotation
+2. add class properties, that have `\aik099\QATools\PageObject\Element\WebElement` or any other element class described above in their `@var` annotation
 3. create public method, that would use properties defined before
 
 [Continue to Examples](docs/HtmlElements.md)
@@ -93,8 +93,8 @@ But single HTML node (or it's element) can be within different blocks at same ti
 
 | Name | Description |
 | ------------- | ------------- |
-| `\aik099\QATools\BEM\Elements\Element` | Represents a single element on a page, that must be placed within a Block. |
-| `\aik099\QATools\BEM\Elements\Block` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
+| `\aik099\QATools\BEM\Element\Element` | Represents a single element on a page, that must be placed within a Block. |
+| `\aik099\QATools\BEM\Element\Block` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 
@@ -104,8 +104,8 @@ But single HTML node (or it's element) can be within different blocks at same ti
 
 ### Usage
 
-1. create a subclass from `\aik099\QATools\BEM\Elements\Block` class to for each block on a page
-2. add class properties, that have `\aik099\QATools\BEM\Elements\Element` in their `@var` annotation for each individual element in each block (or alternatively use `$this->getElements` method in the `Block` class)
+1. create a subclass from `\aik099\QATools\BEM\Element\Block` class to for each block on a page
+2. add class properties, that have `\aik099\QATools\BEM\Element\Element` in their `@var` annotation for each individual element in each block (or alternatively use `$this->getElements` method in the `Block` class)
 3. create subclass from `\aik099\QATools\BEM\BEMPage` class
 4. add class propery with previously created block subclass name in it's `@var` annotation for each individual block
 

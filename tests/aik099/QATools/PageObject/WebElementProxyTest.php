@@ -55,7 +55,7 @@ class WebElementProxyTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->locator = m::mock('\\aik099\\QATools\\PageObject\\ElementLocators\\IElementLocator');
+		$this->locator = m::mock('\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator');
 
 		if ( !in_array($this->getName(), $this->ignoreLocatorTests) ) {
 			$this->locator->shouldReceive('find')->once()->andReturn($this->createNodeElement());
@@ -71,7 +71,7 @@ class WebElementProxyTest extends TestCase
 	 */
 	public function testDefaultClassName()
 	{
-		$expected = '\\aik099\\QATools\\PageObject\\Elements\\WebElement';
+		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 		$this->assertInstanceOf($expected, $this->proxy->getObject());
 	}
@@ -83,7 +83,7 @@ class WebElementProxyTest extends TestCase
 	 */
 	public function testSetClassName()
 	{
-		$expected = '\\aik099\\QATools\\PageObject\\Elements\\WebElement';
+		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 		$this->proxy->setClassName($expected);
 		$this->assertInstanceOf($expected, $this->proxy->getObject());
@@ -103,7 +103,7 @@ class WebElementProxyTest extends TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exceptions\PageFactoryException
+	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
 	 */
 	public function testGetObjectEmptyLocator()
 	{
@@ -127,7 +127,7 @@ class WebElementProxyTest extends TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exceptions\PageFactoryException
+	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
 	 */
 	public function testMethodForwardingFailure()
 	{

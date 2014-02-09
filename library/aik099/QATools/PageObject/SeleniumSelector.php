@@ -13,7 +13,7 @@ namespace aik099\QATools\PageObject;
 
 use Behat\Mink\Selector\SelectorInterface;
 use Behat\Mink\Selector\SelectorsHandler;
-use aik099\QATools\PageObject\Exceptions\WebElementException;
+use aik099\QATools\PageObject\Exception\WebElementException;
 
 /**
  * Class for handling Selenium-style element selectors.

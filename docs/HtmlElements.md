@@ -43,9 +43,9 @@ $home_page->examplePageMethod();
 ## Page (class: TypifiedPage)
 ```php
 use aik099\QATools\HtmlElements\TypifiedPage;
-use aik099\QATools\PageObject\Elements\WebElement;
-use aik099\QATools\HtmlElements\Elements\Select;
-use aik099\QATools\HtmlElements\Elements\Button;
+use aik099\QATools\PageObject\Element\WebElement;
+use aik099\QATools\HtmlElements\Element\Select;
+use aik099\QATools\HtmlElements\Element\Button;
 
 /**
  * @page-url('index')
@@ -130,10 +130,10 @@ class HomePage extends TypifiedPage {
 
 ## LoginSidebox (class: HtmlElement)
 ```php
-use aik099\QATools\HtmlElements\Elements\HtmlElement;
-use aik099\QATools\HtmlElements\Elements\TextInput;
-use aik099\QATools\HtmlElements\Elements\Button;
-use aik099\QATools\HtmlElements\Elements\TextBlock;
+use aik099\QATools\HtmlElements\Element\HtmlElement;
+use aik099\QATools\HtmlElements\Element\TextInput;
+use aik099\QATools\HtmlElements\Element\Button;
+use aik099\QATools\HtmlElements\Element\TextBlock;
 
 /**
  * @element-name('default element name')
@@ -194,7 +194,7 @@ class LoginSidebox extends HtmlElement {
 
 ## Sidebar (class: HtmlElement)
 ```php
-use aik099\QATools\HtmlElements\Elements\HtmlElement;
+use aik099\QATools\HtmlElements\Element\HtmlElement;
 
 /**
  * @find-by('id' => 'block-sidebar')

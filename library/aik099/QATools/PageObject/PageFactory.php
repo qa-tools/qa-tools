@@ -14,12 +14,12 @@ namespace aik099\QATools\PageObject;
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
-use aik099\QATools\PageObject\Annotations\PageUrlAnnotation;
-use aik099\QATools\PageObject\ElementLocators\DefaultElementLocatorFactory;
-use aik099\QATools\PageObject\Elements\IHtmlElement;
-use aik099\QATools\PageObject\Exceptions\PageFactoryException;
-use aik099\QATools\PageObject\PropertyDecorators\DefaultPropertyDecorator;
-use aik099\QATools\PageObject\PropertyDecorators\IPropertyDecorator;
+use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
+use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
+use aik099\QATools\PageObject\Element\IHtmlElement;
+use aik099\QATools\PageObject\Exception\PageFactoryException;
+use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
  * Factory class to make using Page Objects simpler and easier.
@@ -49,8 +49,8 @@ class PageFactory implements IPageFactory
 	 * @var array
 	 */
 	protected $annotationRegistry = array(
-		'find-by' => '\\aik099\\QATools\\PageObject\\Annotations\\FindByAnnotation',
-		'page-url' => '\\aik099\\QATools\\PageObject\\Annotations\\PageUrlAnnotation',
+		'find-by' => '\\aik099\\QATools\\PageObject\\Annotation\\FindByAnnotation',
+		'page-url' => '\\aik099\\QATools\\PageObject\\Annotation\\PageUrlAnnotation',
 		'method' => false,
 	);
 

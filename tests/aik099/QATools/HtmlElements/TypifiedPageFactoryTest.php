@@ -32,8 +32,8 @@ class TypifiedPageFactoryTest extends PageFactoryTest
 	protected function setUp()
 	{
 		$this->factoryClass = '\\aik099\\QATools\\HtmlElements\\TypifiedPageFactory';
-		$this->pageClass = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Pages\\TypifiedPageChild';
-		$this->decoratorClass = '\\aik099\\QATools\\HtmlElements\\PropertyDecorators\\TypifiedPropertyDecorator';
+		$this->pageClass = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Page\\TypifiedPageChild';
+		$this->decoratorClass = '\\aik099\\QATools\\HtmlElements\\PropertyDecorator\\TypifiedPropertyDecorator';
 
 		parent::setUp();
 	}

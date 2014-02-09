@@ -23,7 +23,7 @@ class PageTest extends TestCase
 	 *
 	 * @var string
 	 */
-	protected $pageClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Pages\\PageChild';
+	protected $pageClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Page\\PageChild';
 
 	/**
 	 * Page.
@@ -44,7 +44,7 @@ class PageTest extends TestCase
 		$this->pageFactory->shouldReceive('initPage')->once()->andReturn($this->pageFactory);
 		$this->pageFactory->shouldReceive('initElements')->once()->andReturn($this->pageFactory);
 
-		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorators\\IPropertyDecorator');
+		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
 		$this->pageFactory->shouldReceive('createDecorator')->once()->andReturn($decorator);
 
 		$this->page = new $this->pageClass($this->pageFactory);
