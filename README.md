@@ -20,15 +20,19 @@ Implementation of Page Object pattern as done in Selenium Java library.
 
 ### Class Overview
 
-* `\aik099\QATools\PageObject\Page` (descendant of [Behat\Mink\Element\DocumentElement](http://mink.behat.org/api/behat/mink/element/documentelement.html)) - abstract class for creating dedicated classes for each of website pages, that needs to be tested
-* `\aik099\QATools\PageObject\Elements\WebElement` (descendant of [Behat\Mink\Element\NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)) - class for interacting with __one__ element on page.
-* `\aik099\QATools\PageObject\Elements\HtmlElement` - abstract class for creating dedicated classes, that will encapsulate associated elements on a page.
+
+| Name | Description |
+| ------------- | ------------- |
+| `\aik099\QATools\PageObject\Page` | Abstract class for creating dedicated classes for each of the website pages, that needs to be tested (descendant of [DocumentElement](http://mink.behat.org/api/behat/mink/element/documentelement.html)). |
+| `\aik099\QATools\PageObject\Elements\WebElement` | Class for interacting with __one__ element on page (descendant of [NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)). |
+| `\aik099\QATools\PageObject\Elements\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 
-* `@find-by` - tells how to find element on a page
-* `@page-url` - sets default url, associated with a Page
-
+| Name | Description |
+| ------------- | ------------- |
+| `@find-by` | Tells how to find element on a page. |
+| `@page-url` | Sets default url, associated with a Page. |
 
 ### Usage
 
@@ -45,24 +49,27 @@ This library solves major problem with PageObject implementation, that original 
 
 ### Class Overview
 
-* `\aik099\QATools\HtmlElements\TypifiedPage` - abstract class for creating dedicated classes for each of website pages, that needs to be tested
-* `\aik099\QATools\HtmlElements\TypifiedElement` - base class for all other elements in this library, that wraps around WebElement and only exposes methods, that are common for all elements
-* `\aik099\QATools\HtmlElements\HtmlElement` - abstract class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\HtmlElement`)
-* `\aik099\QATools\HtmlElements\LabeledElement` - element, that has associated LABEL element on a page (e.g. radio button or a checkbox)
-* `\aik099\QATools\HtmlElements\Button` - button
-* `\aik099\QATools\HtmlElements\Checkbox` - checkbox
-* `\aik099\QATools\HtmlElements\Form` - form
-* `\aik099\QATools\HtmlElements\Link` - link
-* `\aik099\QATools\HtmlElements\RadioGroup` - group of radio buttons
-* `\aik099\QATools\HtmlElements\Select` - dropdown
-* `\aik099\QATools\HtmlElements\TextBlock` - div or span
-* `\aik099\QATools\HtmlElements\TextInput` - text box or text area
-* `\aik099\QATools\HtmlElements\FileInput` - single file upload
-
+| Name | Description |
+| ------------- | ------------- |
+| `\aik099\QATools\HtmlElements\TypifiedPage` | Abstract class for creating dedicated classes for each of website pages, that needs to be tested. |
+| `\aik099\QATools\HtmlElements\TypifiedElement` | Base class for all other elements in this library, that wraps around WebElement and only exposes methods, that are common for all elements. |
+| `\aik099\QATools\HtmlElements\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\HtmlElement`). |
+| `\aik099\QATools\HtmlElements\LabeledElement` | Element, that has associated LABEL element on a page (e.g. radio button or a checkbox). |
+| `\aik099\QATools\HtmlElements\Button` | Button. |
+| `\aik099\QATools\HtmlElements\Checkbox` | Checkbox. |
+| `\aik099\QATools\HtmlElements\Form` | Form. |
+| `\aik099\QATools\HtmlElements\Link` | Link. |
+| `\aik099\QATools\HtmlElements\RadioGroup` | Group of radio buttons. |
+| `\aik099\QATools\HtmlElements\Select` | Dropdown. |
+| `\aik099\QATools\HtmlElements\TextBlock` | Div or span. |
+| `\aik099\QATools\HtmlElements\TextInput` | Text box or text area. |
+| `\aik099\QATools\HtmlElements\FileInput` | Single file upload. |
 
 ### Annotation Overview
 
-* `@name` - sets optional element name to be used instead of ClassName in error messages (e.g. when element was not found on a page)
+| Name | Description |
+| ------------- | ------------- |
+| `@name` | Sets optional element name to be used instead of ClassName in error messages (e.g. when element was not found on a page). |
 
 ### Usage
 
@@ -84,12 +91,16 @@ But single HTML node (or it's element) can be within different blocks at same ti
 
 ### Class Overview
 
-* `\aik099\QATools\BEM\Elements\Element` - represents a single element on a page, that must be placed within a Block
-* `\aik099\QATools\BEM\Elements\Block` - abstract class for creating dedicated classes, that will encapsulate associated elements on a page
+| Name | Description |
+| ------------- | ------------- |
+| `\aik099\QATools\BEM\Elements\Element` | Represents a single element on a page, that must be placed within a Block. |
+| `\aik099\QATools\BEM\Elements\Block` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 
-* `@bem` - unified annotation for both Block and Element
+| Name | Description |
+| ------------- | ------------- |
+| `@bem` | Unified annotation for both Block and Element. |
 
 ### Usage
 
