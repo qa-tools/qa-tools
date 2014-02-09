@@ -3,6 +3,34 @@ On a page there is a sidebar on the left. Inside a sidebar there are multiple si
 
 ![Example Page](example_page.png)
 
+```html
+<html>
+	<head></head>
+	<body>
+		<div class="b-header">
+			Language:
+			<select name="b-header__language">
+				<option value="1">English</option>
+				<option value="2">Russian</option>
+			</select>
+			Currency:
+			<select name="b-header__curr-iso">
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+			</select>
+		</div>
+		<div class="b-sidebar">
+			<div class="b-login_location_sidebar">
+				<div class="b-login__error-msg"></div>
+				E-mail or Username: <input type="text" class="b-login__input-username" value=""/><br/>
+				Password: <input type="password" class="b-login__input-password_color_red" value=""/><br/>
+				<input type="submit" class="b-login__btn-login" value="Login"/>
+			</div>
+		</div>
+	</body>
+</html>
+```
+
 ## Usage
 ```php
 $session = new \Behat\Mink\Session(new \Behat\Mink\Driver\Selenium2Driver());
@@ -15,6 +43,7 @@ $home_page->examplePageMethod();
 ## Page (class: BEMPage)
 ```php
 use aik099\QATools\BEM\BEMPage;
+use aik099\QATools\BEM\Elements\Element;
 
 /**
  * @page-url('index')

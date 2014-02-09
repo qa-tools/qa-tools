@@ -26,15 +26,15 @@ Implementation of Page Object pattern as done in Selenium Java library.
 
 ### Annotation Overview
 
-* `@find-by`
-* `@page-url`
+* `@find-by` - tells how to find element on a page
+* `@page-url` - sets default url, associated with a Page
 
 
 ### Usage
 
 1. create subclass from `\aik099\QATools\PageObject\Page` class
 2. add class properties, that have `\aik099\QATools\PageObject\Elements\WebElement` or `\aik099\QATools\PageObject\Elements\HtmlElement` in their `@var` annotation
-3. create public method, that would use properties defined before
+3. create public method(-s), that would use properties defined before
 
 [Continue to Examples](docs/PageObject.md)
 
@@ -62,7 +62,7 @@ This library solves major problem with PageObject implementation, that original 
 
 ### Annotation Overview
 
-* `@name`
+* `@name` - sets optional element name to be used instead of ClassName in error messages (e.g. when element was not found on a page)
 
 ### Usage
 
@@ -75,15 +75,28 @@ This library solves major problem with PageObject implementation, that original 
 ## aik099\QATools\BEM
 Depends on `aik099\QATools\PageObject`.
 
+According to BEM metodology (http://bem.info/) the following restrictions apply:
+
+1. there can't be nested blocks
+2. each element must be placed within a block
+
+But single HTML node (or it's element) can be within different blocks at same time.
+
 ### Class Overview
+
+* `\aik099\QATools\BEM\Elements\Element` - represents a single element on a page, that must be placed within a Block
+* `\aik099\QATools\BEM\Elements\Block` - abstract class for creating dedicated classes, that will encapsulate associated elements on a page
 
 ### Annotation Overview
 
-* `@bem`
+* `@bem` - unified annotation for both Block and Element
 
 ### Usage
 
-* TODO
+1. create a subclass from `\aik099\QATools\BEM\Elements\Block` class to for each block on a page
+2. add class properties, that have `\aik099\QATools\BEM\Elements\Element` in their `@var` annotation for each individual element in each block (or alternatively use `$this->getElements` method in the `Block` class)
+3. create subclass from `\aik099\QATools\BEM\BEMPage` class
+4. add class propery with previously created block subclass name in it's `@var` annotation for each individual block
 
 [Continue to Examples](docs/BEM.md)
 

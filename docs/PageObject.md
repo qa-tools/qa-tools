@@ -3,6 +3,34 @@ Page with login box and currency selector.
 
 ![Example Page](example_page.png)
 
+```html
+<html>
+	<head></head>
+	<body>
+		<div class="header">
+			Language:
+			<select name="language">
+				<option value="1">English</option>
+				<option value="2">Russian</option>
+			</select>
+			Currency:
+			<select name="curr_iso">
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+			</select>
+		</div>
+		<div id="block-sidebar">
+			<div id="login-sidebox">
+				<div class="field-error"></div>
+				E-mail or Username: <input type="text" name="u.login-sidebox[-2][UserLogin]" value=""/><br/>
+				Password: <input type="password" name="u.login-sidebox[-2][UserPassword]" value=""/><br/>
+				<input type="submit" name="events[u.login-sidebox][OnLogin]" value="Login"/>
+			</div>
+		</div>
+	</body>
+</html>
+```
+
 ## Usage
 ```php
 $session = new \Behat\Mink\Session(new \Behat\Mink\Driver\Selenium2Driver());
