@@ -127,7 +127,8 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
+	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 */
 	public function testGetSelectorFailure()
 	{

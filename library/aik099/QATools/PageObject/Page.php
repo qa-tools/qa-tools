@@ -11,6 +11,7 @@
 namespace aik099\QATools\PageObject;
 
 
+use aik099\QATools\PageObject\Exception\PageException;
 use Behat\Mink\Element\DocumentElement;
 
 /**
@@ -58,14 +59,14 @@ abstract class Page extends DocumentElement implements ISearchContext
 	 * @param array $params Page parameters.
 	 *
 	 * @return self
-	 * @throws \RuntimeException When page url not specified.
+	 * @throws PageException When page url not specified.
 	 */
 	public function open(array $params = array())
 	{
 		$url = $this->getAbsoluteUrl($params);
 
 		if ( !$url ) {
-			throw new \RuntimeException('Page url not specified');
+			throw new PageException('Page url not specified', PageException::TYPE_EMPTY_URL);
 		}
 
 		$this->getSession()->visit($url);

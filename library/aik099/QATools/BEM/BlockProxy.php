@@ -11,10 +11,10 @@
 namespace aik099\QATools\BEM;
 
 
+use aik099\QATools\PageObject\Exception\ElementException;
 use Behat\Mink\Element\NodeElement;
 use aik099\QATools\BEM\Element\Block;
 use aik099\QATools\BEM\Element\IBlock;
-use aik099\QATools\BEM\Exception\BEMPageFactoryException;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\IPageFactory;
 
@@ -176,7 +176,7 @@ class BlockProxy implements IBlock
 	 * @param array  $arguments Method arguments.
 	 *
 	 * @return mixed
-	 * @throws BEMPageFactoryException When sub-object doesn't have a specified method.
+	 * @throws ElementException When sub-object doesn't have a specified method.
 	 */
 	public function __call($method, array $arguments)
 	{
@@ -185,7 +185,7 @@ class BlockProxy implements IBlock
 		if ( !method_exists($block, $method) ) {
 			$message = sprintf('"%s" method is not available on the %s', $method, get_class($block));
 
-			throw new BEMPageFactoryException($message);
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
 		}
 
 		return call_user_func_array(array($block, $method), $arguments);

@@ -8,14 +8,20 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject\Exception;
+namespace aik099\QATools\HtmlElements\Exception;
 
 
 /**
- * Exception related to Page Factory.
+ * Exception related to Select.
  */
-class PageFactoryException extends \Exception
+class SelectException extends TypifiedElementException
 {
-	const TYPE_UNKNOWN_CLASS = 1;
 
+	const TYPE_NOT_SELECTED = 241;
+
+	const TYPE_NOT_MULTISELECT = 242;
+
+	const TYPE_NOT_SUPPORTED = 243;
+
+	const TYPE_UNBOUND_OPTION = 244;
 }

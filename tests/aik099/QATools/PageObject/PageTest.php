@@ -91,7 +91,8 @@ class PageTest extends TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \RuntimeException
+	 * @expectedException \aik099\QATools\PageObject\Exception\PageException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL
 	 */
 	public function testOpenIncorrect()
 	{

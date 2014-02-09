@@ -11,7 +11,7 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
-use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
+use aik099\QATools\HtmlElements\Exception\SelectException;
 
 /**
  * Represents one option in a web page select control.
@@ -46,13 +46,16 @@ class SelectOption extends TypifiedElement
 	 * @param boolean $multiple Append this option to current selection.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When no SELECT element association defined.
+	 * @throws SelectException When no SELECT element association defined.
 	 */
 	public function select($multiple = false)
 	{
 		if ( !$this->isSelected() ) {
 			if ( $this->select === null ) {
-				throw new TypifiedElementException('No SELECT element association defined');
+				throw new SelectException(
+					'No SELECT element association defined',
+					SelectException::TYPE_UNBOUND_OPTION
+				);
 			}
 
 			$this->select->getWrappedElement()->selectOption($this->getValue(), $multiple);
@@ -65,13 +68,16 @@ class SelectOption extends TypifiedElement
 	 * Deselects option if it is not already deselected.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When non-Selenium driver is used.
+	 * @throws SelectException When non-Selenium driver is used.
 	 */
 	public function deselect()
 	{
 		if ( $this->isSelected() ) {
 			if ( !$this->isSeleniumDriver() ) {
-				throw new TypifiedElementException('Deselecting individual options is only supported in Selenium drivers');
+				throw new SelectException(
+					'Deselecting individual options is only supported in Selenium drivers',
+					SelectException::TYPE_NOT_SUPPORTED
+				);
 			}
 
 			$this->getWrappedElement()->click();

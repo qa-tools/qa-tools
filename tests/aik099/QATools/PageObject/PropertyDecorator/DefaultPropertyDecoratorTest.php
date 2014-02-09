@@ -129,6 +129,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 	 *
 	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageFactoryException::TYPE_UNKNOWN_CLASS
 	 */
 	public function testNotExistentClassPreventsDecoration()
 	{

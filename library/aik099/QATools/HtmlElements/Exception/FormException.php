@@ -8,14 +8,16 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject\Exception;
+namespace aik099\QATools\HtmlElements\Exception;
 
 
 /**
- * Exception related to Page Factory.
+ * Exception related to Form.
  */
-class PageFactoryException extends \Exception
+class FormException extends TypifiedElementException
 {
-	const TYPE_UNKNOWN_CLASS = 1;
 
+	const TYPE_UNKNOWN_FIELD = 221;
+
+	const TYPE_READONLY_FIELD = 222;
 }

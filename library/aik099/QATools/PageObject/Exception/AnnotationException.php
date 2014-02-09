@@ -12,10 +12,12 @@ namespace aik099\QATools\PageObject\Exception;
 
 
 /**
- * Exception related to Page Factory.
+ * Exception related to annotations.
  */
-class PageFactoryException extends \Exception
+class AnnotationException extends PageFactoryException
 {
-	const TYPE_UNKNOWN_CLASS = 1;
+	const TYPE_REQUIRED = 101;
+
+	const TYPE_INCORRECT_USAGE = 102;
 
 }

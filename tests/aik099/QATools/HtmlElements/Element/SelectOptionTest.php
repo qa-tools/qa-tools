@@ -70,7 +70,8 @@ class SelectOptionTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_UNBOUND_OPTION
 	 * @expectedExceptionMessage No SELECT element association defined
 	 */
 	public function testSelectException()

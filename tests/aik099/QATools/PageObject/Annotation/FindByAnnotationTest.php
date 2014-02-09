@@ -72,7 +72,8 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \mindplay\annotations\AnnotationException
+	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */
 	public function testUnknownDirectSelector()
 	{
@@ -84,7 +85,8 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \mindplay\annotations\AnnotationException
+	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */
 	public function testUnknownHowSelector()
 	{

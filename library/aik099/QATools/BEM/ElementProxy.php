@@ -13,10 +13,10 @@ namespace aik099\QATools\BEM;
 
 use aik099\QATools\BEM\Element\Element;
 use aik099\QATools\BEM\Element\IElement;
-use aik099\QATools\BEM\Exception\BEMPageFactoryException;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
+use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 
 /**
  * Class for lazy-proxy creation to ensure, that BEM elements are really accessed only at moment, when user needs them
@@ -74,15 +74,15 @@ class ElementProxy implements IElement
 	 * Returns element instance.
 	 *
 	 * @return Element
-	 * @throws BEMPageFactoryException When element not found.
+	 * @throws ElementNotFoundException When element not found.
 	 */
 	protected function getObject()
 	{
 		if ( !is_object($this->object) ) {
 			$node_element = $this->locator->find();
 
-			if ( !$node_element ) {
-				throw new BEMPageFactoryException('Element not found by selector: ' . (string)$this->locator);
+			if ( !is_object($node_element) ) {
+				throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
 			}
 
 			$web_element = WebElement::fromNodeElement($node_element);

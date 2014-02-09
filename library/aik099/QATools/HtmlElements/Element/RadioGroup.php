@@ -11,8 +11,8 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\HtmlElements\Exception\RadioGroupException;
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
 
 /**
  * Represents a group of radio buttons.
@@ -93,7 +93,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 * Returns selected radio button.
 	 *
 	 * @return NodeElement Element, that represents selected radio button or {@code null} if no radio buttons are selected.
-	 * @throws TypifiedElementException When no radio button is selected.
+	 * @throws RadioGroupException When no radio button is selected.
 	 */
 	public function getSelectedButton()
 	{
@@ -103,7 +103,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 			}
 		}
 
-		throw new TypifiedElementException('No selected button');
+		throw new RadioGroupException('No selected button', RadioGroupException::TYPE_NOT_SELECTED);
 	}
 
 	/**
@@ -112,7 +112,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 * @param string $text Text.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When radio button with given label text wasn't found.
+	 * @throws RadioGroupException When radio button with given label text wasn't found.
 	 */
 	public function selectButtonByLabelText($text)
 	{
@@ -124,7 +124,10 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 			}
 		}
 
-		throw new TypifiedElementException('Cannot locate radio button with label text containing: ' . $text);
+		throw new RadioGroupException(
+			'Cannot locate radio button with label text containing: ' . $text,
+			RadioGroupException::TYPE_NOT_FOUND
+		);
 	}
 
 	/**
@@ -133,7 +136,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 * @param string $value The value to match against.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When radio button with given value wasn't found.
+	 * @throws RadioGroupException When radio button with given value wasn't found.
 	 */
 	public function selectButtonByValue($value)
 	{
@@ -147,7 +150,10 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 			}
 		}
 
-		throw new TypifiedElementException('Cannot locate radio button with value: ' . $value);
+		throw new RadioGroupException(
+			'Cannot locate radio button with value: ' . $value,
+			RadioGroupException::TYPE_NOT_FOUND
+		);
 	}
 
 	/**
@@ -156,7 +162,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 * @param integer $index Index of a radio button to be selected.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When non-existing index was given.
+	 * @throws RadioGroupException When non-existing index was given.
 	 */
 	public function selectButtonByIndex($index)
 	{
@@ -168,7 +174,10 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 			return $this;
 		}
 
-		throw new TypifiedElementException('Cannot locate radio button with index: ' . $index);
+		throw new RadioGroupException(
+			'Cannot locate radio button with index: ' . $index,
+			RadioGroupException::TYPE_NOT_FOUND
+		);
 	}
 
 	/**

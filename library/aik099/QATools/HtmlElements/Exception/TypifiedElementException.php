@@ -11,10 +11,12 @@
 namespace aik099\QATools\HtmlElements\Exception;
 
 
+use aik099\QATools\PageObject\Exception\ElementException;
+
 /**
- * Base exception related to TypifiedElement.
+ * Exception related to Typified Element.
  */
-class TypifiedElementException extends \Exception
+class TypifiedElementException extends ElementException
 {
 
 }

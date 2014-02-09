@@ -8,13 +8,15 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\BEM\Exception;
+namespace aik099\QATools\HtmlElements\Exception;
 
 
 /**
- * Base exception related to BEMPageFactory.
+ * Exception related to RadioGroup.
  */
-class BEMPageFactoryException extends \Exception
+class RadioGroupException extends TypifiedElementException
 {
+
+	const TYPE_NOT_SELECTED = 231;
 
 }

@@ -64,7 +64,8 @@ class FileInputTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\FileInputException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FileInputException::TYPE_FILE_NOT_FOUND
 	 * @expectedExceptionMessage File "/non-existing-file.txt" doesn't exist
 	 */
 	public function testSetNonExistingFileToUpload()

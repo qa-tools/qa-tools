@@ -11,8 +11,7 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
-use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
-
+use aik099\QATools\HtmlElements\Exception\FileInputException;
 
 /**
  * Represents web page file upload element.
@@ -36,12 +35,15 @@ class FileInput extends TypifiedElement implements ISimpleSetter
 	 * @param string $filename Filename.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When file could not be found on disk.
+	 * @throws FileInputException When file could not be found on disk.
 	 */
 	public function setFileToUpload($filename)
 	{
 		if ( !file_exists($filename) ) {
-			throw new TypifiedElementException('File "' . $filename . '" doesn\'t exist');
+			throw new FileInputException(
+				'File "' . $filename . '" doesn\'t exist',
+				FileInputException::TYPE_FILE_NOT_FOUND
+			);
 		}
 
 		$this->getWrappedElement()->attachFile($filename);

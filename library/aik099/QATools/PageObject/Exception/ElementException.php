@@ -12,10 +12,15 @@ namespace aik099\QATools\PageObject\Exception;
 
 
 /**
- * Exception related to Page Factory.
+ * Exception related to Element.
  */
-class PageFactoryException extends \Exception
+class ElementException extends PageFactoryException
 {
-	const TYPE_UNKNOWN_CLASS = 1;
+	const TYPE_UNKNOWN_METHOD = 101;
 
+	const TYPE_INCORRECT_SELECTOR = 102;
+
+	const TYPE_UNKNOWN_SELECTOR = 103;
+
+	const TYPE_NOT_FOUND = 104;
 }

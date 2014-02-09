@@ -103,7 +103,7 @@ class WebElementProxyTest extends TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
+	 * @expectedException \aik099\QATools\PageObject\Exception\ElementNotFoundException
 	 */
 	public function testGetObjectEmptyLocator()
 	{
@@ -127,7 +127,8 @@ class WebElementProxyTest extends TestCase
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
+	 * @expectedException \aik099\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
 	 */
 	public function testMethodForwardingFailure()
 	{

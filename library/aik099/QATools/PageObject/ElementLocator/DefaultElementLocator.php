@@ -11,11 +11,11 @@
 namespace aik099\QATools\PageObject\ElementLocator;
 
 
+use aik099\QATools\PageObject\Exception\AnnotationException;
 use Behat\Mink\Element\NodeElement;
 use mindplay\annotations\AnnotationManager;
 use aik099\QATools\PageObject\Annotation\FindByAnnotation;
 use aik099\QATools\PageObject\Element\IWebElement;
-use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\Property;
 
@@ -124,7 +124,7 @@ class DefaultElementLocator implements IElementLocator
 	 * @param Property $property Property.
 	 *
 	 * @return array
-	 * @throws PageFactoryException When required @find-by annotation is missing.
+	 * @throws AnnotationException When required @find-by annotation is missing.
 	 */
 	protected function getSelector(Property $property)
 	{
@@ -136,7 +136,7 @@ class DefaultElementLocator implements IElementLocator
 			$parameters = array((string)$property, $property->getDataType());
 			$message = '@find-by must be specified in the property "%s" DocBlock or in class "%s" DocBlock';
 
-			throw new PageFactoryException(vsprintf($message, $parameters));
+			throw new AnnotationException(vsprintf($message, $parameters), AnnotationException::TYPE_REQUIRED);
 		}
 
 		return $selector;

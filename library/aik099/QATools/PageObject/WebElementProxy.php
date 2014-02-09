@@ -14,7 +14,8 @@ namespace aik099\QATools\PageObject;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
-use aik099\QATools\PageObject\Exception\PageFactoryException;
+use aik099\QATools\PageObject\Exception\ElementNotFoundException;
+use aik099\QATools\PageObject\Exception\ElementException;
 
 /**
  * Class for lazy-proxy creation to ensure, that WebElements are really accessed only at moment, when user needs them.
@@ -118,7 +119,7 @@ class WebElementProxy implements IWebElement
 	 * @param array  $arguments Method arguments.
 	 *
 	 * @return mixed
-	 * @throws PageFactoryException When sub-object doesn't have a specified method.
+	 * @throws ElementException When sub-object doesn't have a specified method.
 	 */
 	public function __call($method, array $arguments)
 	{
@@ -127,7 +128,7 @@ class WebElementProxy implements IWebElement
 		if ( !method_exists($sub_object, $method) ) {
 			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
 
-			throw new PageFactoryException($message);
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
 		}
 
 		return call_user_func_array(array($sub_object, $method), $arguments);
@@ -137,7 +138,7 @@ class WebElementProxy implements IWebElement
 	 * Returns class instance, that was placed inside a proxy.
 	 *
 	 * @return WebElement
-	 * @throws PageFactoryException When element wasn't found on the page.
+	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	public function getObject()
 	{
@@ -145,7 +146,7 @@ class WebElementProxy implements IWebElement
 			$element = $this->locator->find();
 
 			if ( !is_object($element) ) {
-				throw new PageFactoryException('Element not found by selector: ' . (string)$this->locator);
+				throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
 			}
 
 			$this->object = call_user_func(array($this->className, 'fromNodeElement'), $element, $this->pageFactory);

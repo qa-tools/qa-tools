@@ -13,7 +13,7 @@ namespace aik099\QATools\PageObject;
 
 use Behat\Mink\Selector\SelectorInterface;
 use Behat\Mink\Selector\SelectorsHandler;
-use aik099\QATools\PageObject\Exception\WebElementException;
+use aik099\QATools\PageObject\Exception\ElementException;
 
 /**
  * Class for handling Selenium-style element selectors.
@@ -48,12 +48,15 @@ class SeleniumSelector implements SelectorInterface
 	 * @param mixed $locator Current selector locator.
 	 *
 	 * @return string
-	 * @throws WebElementException When used selector is broken or not implemented.
+	 * @throws ElementException When used selector is broken or not implemented.
 	 */
 	public function translateToXPath($locator)
 	{
 		if ( !$locator || !is_array($locator) ) {
-			throw new WebElementException('Incorrect Selenium selector format');
+			throw new ElementException(
+				'Incorrect Selenium selector format',
+				ElementException::TYPE_INCORRECT_SELECTOR
+			);
 		}
 
 		list ($selector, $locator) = each($locator);
@@ -83,7 +86,10 @@ class SeleniumSelector implements SelectorInterface
 //		case How::LINK_TEXT:
 //		case How::PARTIAL_LINK_TEXT:
 
-		throw new WebElementException(sprintf('Selector type "%s" not yet implemented', $selector));
+		throw new ElementException(
+			sprintf('Selector type "%s" not yet implemented', $selector),
+			ElementException::TYPE_UNKNOWN_SELECTOR
+		);
 	}
 
 }

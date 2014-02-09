@@ -164,7 +164,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_SELECTED
 	 */
 	public function testGetFirstSelectedOptionError()
 	{
@@ -197,7 +198,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
 	 */
 	public function testSelectByTextWithoutExactMatch()
 	{
@@ -247,7 +249,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
 	 */
 	public function testSelectByValueWithoutExactMatch()
 	{
@@ -315,7 +318,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
 	public function testSelectAllNotIsMultiple()
 	{
@@ -351,7 +355,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
 	public function testSetSelectedNotIsMultiple()
 	{
@@ -384,7 +389,8 @@ class SelectTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
 	public function testDeselectAllNotIsMultiple()
 	{

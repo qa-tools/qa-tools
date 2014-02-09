@@ -63,7 +63,8 @@ class FormTest extends HtmlElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND
 	 * @expectedExceptionMessage Form field "field-name" not found
 	 */
 	public function testGetWebElementFailure()
@@ -134,7 +135,8 @@ class FormTest extends HtmlElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD
 	 * @expectedExceptionMessage Unable create typified element for ELEMENT NAME
 	 */
 	public function testTypifyFailure()
@@ -150,7 +152,8 @@ class FormTest extends HtmlElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_READONLY_FIELD
 	 * @expectedExceptionMessage Element ELEMENT NAME doesn't support value changing
 	 */
 	public function testSetValueFailure()

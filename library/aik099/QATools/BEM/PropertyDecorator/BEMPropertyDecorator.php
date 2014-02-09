@@ -14,8 +14,8 @@ namespace aik099\QATools\BEM\PropertyDecorator;
 use aik099\QATools\BEM\Annotation\BEMAnnotation;
 use aik099\QATools\BEM\BlockProxy;
 use aik099\QATools\BEM\ElementProxy;
-use aik099\QATools\BEM\Exception\BEMPageFactoryException;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
+use aik099\QATools\PageObject\Exception\AnnotationException;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use aik099\QATools\PageObject\WebElementProxy;
@@ -71,7 +71,7 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 	 * @param IElementLocator $locator  Locator.
 	 *
 	 * @return BlockProxy
-	 * @throws BEMPageFactoryException When block annotation is missing.
+	 * @throws AnnotationException When block annotation is missing.
 	 */
 	protected function proxyBEMBlock(Property $property, IElementLocator $locator)
 	{
@@ -79,7 +79,10 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 		$annotations = $property->getAnnotationsFromPropertyOrClass('@bem');
 
 		if ( !$annotations ) {
-			throw new BEMPageFactoryException('Block must be defined as annotation');
+			throw new AnnotationException(
+				'Block must be defined as annotation',
+				AnnotationException::TYPE_REQUIRED
+			);
 		}
 
 		return new BlockProxy($annotations[0]->block, $locator, $property->getDataType(), $this->pageFactory);
@@ -104,7 +107,7 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 	 * @param IElementLocator $locator  Locator.
 	 *
 	 * @return ElementProxy
-	 * @throws BEMPageFactoryException When element annotation is missing.
+	 * @throws AnnotationException When element annotation is missing.
 	 */
 	protected function proxyBEMElement(Property $property, IElementLocator $locator)
 	{
@@ -112,7 +115,10 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 		$annotations = $property->getAnnotations('@bem');
 
 		if ( !$annotations ) {
-			throw new BEMPageFactoryException('Element must be defined as annotation');
+			throw new AnnotationException(
+				'Element must be defined as annotation',
+				AnnotationException::TYPE_REQUIRED
+			);
 		}
 
 		return new ElementProxy($annotations[0]->element, $locator, $property->getDataType());

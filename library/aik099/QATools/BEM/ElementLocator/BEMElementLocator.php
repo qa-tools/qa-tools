@@ -13,8 +13,8 @@ namespace aik099\QATools\BEM\ElementLocator;
 
 use aik099\QATools\BEM\Annotation\BEMAnnotation;
 use aik099\QATools\BEM\Element\IBlock;
-use aik099\QATools\BEM\Exception\BEMPageFactoryException;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocator;
+use aik099\QATools\PageObject\Exception\AnnotationException;
 use aik099\QATools\PageObject\Property;
 
 /**
@@ -31,7 +31,7 @@ class BEMElementLocator extends DefaultElementLocator
 	 * @param Property $property Property.
 	 *
 	 * @return array
-	 * @throws BEMPageFactoryException When required @find-by annotation is missing.
+	 * @throws AnnotationException When required @find-by annotation is missing.
 	 */
 	protected function getSelector(Property $property)
 	{
@@ -39,7 +39,10 @@ class BEMElementLocator extends DefaultElementLocator
 		$annotations = $property->getAnnotations('@bem');
 
 		if ( !$annotations ) {
-			throw new BEMPageFactoryException('Block/Element must be defined as annotation');
+			throw new AnnotationException(
+				'Block/Element must be defined as annotation',
+				AnnotationException::TYPE_REQUIRED
+			);
 		}
 
 		$bem_annotation = $annotations[0];

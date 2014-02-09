@@ -122,7 +122,8 @@ class RadioGroupTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_SELECTED
 	 */
 	public function testGetSelectedButtonNotFound()
 	{
@@ -146,7 +147,8 @@ class RadioGroupTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
 	public function testSelectButtonByLabelTextNotFound()
 	{
@@ -172,7 +174,8 @@ class RadioGroupTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
 	public function testSelectButtonByValueNotFound()
 	{
@@ -198,7 +201,8 @@ class RadioGroupTest extends TypifiedElementTest
 	 * Test description.
 	 *
 	 * @return void
-	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
 	public function testSelectButtonByIndexNotFound()
 	{

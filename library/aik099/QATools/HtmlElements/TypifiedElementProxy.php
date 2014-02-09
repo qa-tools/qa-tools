@@ -15,7 +15,7 @@ use aik099\QATools\HtmlElements\Element\INamed;
 use aik099\QATools\HtmlElements\Element\TypifiedElement;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Element\WebElement;
-use aik099\QATools\PageObject\Exception\PageFactoryException;
+use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\IPageFactory;
 use aik099\QATools\PageObject\WebElementProxy;
 
@@ -61,7 +61,7 @@ class TypifiedElementProxy extends WebElementProxy implements INamed
 	 * Returns class instance, that was placed inside a proxy.
 	 *
 	 * @return TypifiedElement
-	 * @throws PageFactoryException When element wasn't found on the page.
+	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	public function getObject()
 	{
@@ -69,7 +69,7 @@ class TypifiedElementProxy extends WebElementProxy implements INamed
 			$element = $this->locator->find();
 
 			if ( !is_object($element) ) {
-				throw new PageFactoryException('Element not found by selector: ' . (string)$this->locator);
+				throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
 			}
 
 			/* @var $wrapped_element WebElement */

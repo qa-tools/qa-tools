@@ -8,13 +8,15 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject\Exception;
+namespace aik099\QATools\HtmlElements\Exception;
 
 
 /**
- * Base exception related to WebElement.
+ * Exception related to FileInput.
  */
-class WebElementException extends \Exception
+class FileInputException extends TypifiedElementException
 {
+
+	const TYPE_FILE_NOT_FOUND = 211;
 
 }

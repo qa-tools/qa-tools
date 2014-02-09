@@ -11,8 +11,8 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\HtmlElements\Exception\SelectException;
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
 use aik099\QATools\PageObject\How;
 
 /**
@@ -100,7 +100,7 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * The first selected option in this select tag (or the currently selected option in a normal select).
 	 *
 	 * @return SelectOption
-	 * @throws TypifiedElementException When no options were selected.
+	 * @throws SelectException When no options were selected.
 	 */
 	public function getFirstSelectedOption()
 	{
@@ -110,7 +110,7 @@ class Select extends TypifiedElement implements ISimpleSetter
 			}
 		}
 
-		throw new TypifiedElementException('No options are selected');
+		throw new SelectException('No options are selected', SelectException::TYPE_NOT_SELECTED);
 	}
 
 	/**
@@ -120,14 +120,14 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * @param boolean $exact_match Search for exact text.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException No options were found by given text.
+	 * @throws SelectException No options were found by given text.
 	 */
 	public function selectByText($text, $exact_match = true)
 	{
 		$options = $this->getOptionsByText($text, $exact_match);
 
 		if ( !$options ) {
-			throw new TypifiedElementException('Cannot locate option with text: ' . $text);
+			throw new SelectException('Cannot locate option with text: ' . $text, SelectException::TYPE_NOT_FOUND);
 		}
 
 		return $this->selectOptions($options, !$this->isMultiple());
@@ -156,14 +156,14 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * @param mixed $value The value to match against.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When option with given value can't be found.
+	 * @throws SelectException When option with given value can't be found.
 	 */
 	public function selectByValue($value)
 	{
 		$options = $this->getOptionsByValue($value);
 
 		if ( !$options ) {
-			throw new TypifiedElementException('Cannot locate option with value: ' . $value);
+			throw new SelectException('Cannot locate option with value: ' . $value, SelectException::TYPE_NOT_FOUND);
 		}
 
 		return $this->selectOptions($options, !$this->isMultiple());
@@ -189,12 +189,15 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * Selects all options.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException If the SELECT does not support multiple selections.
+	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function selectAll()
 	{
 		if ( !$this->isMultiple() ) {
-			throw new TypifiedElementException('You may only deselect all options of a multi-select');
+			throw new SelectException(
+				'You may only deselect all options of a multi-select',
+				SelectException::TYPE_NOT_MULTISELECT
+			);
 		}
 
 		return $this->selectOptions($this->getOptions());
@@ -206,12 +209,15 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * @param array $values Values of options to select.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException If the SELECT does not support multiple selections.
+	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function setSelected(array $values)
 	{
 		if ( !$this->isMultiple() ) {
-			throw new TypifiedElementException('You may only deselect all options of a multi-select');
+			throw new SelectException(
+				'You may only deselect all options of a multi-select',
+				SelectException::TYPE_NOT_MULTISELECT
+			);
 		}
 
 		$candidates = array();
@@ -230,12 +236,15 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * Deselects all options.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException If the SELECT does not support multiple selections.
+	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function deselectAll()
 	{
 		if ( !$this->isMultiple() ) {
-			throw new TypifiedElementException('You may only deselect all options of a multi-select');
+			throw new SelectException(
+				'You may only deselect all options of a multi-select',
+				SelectException::TYPE_NOT_MULTISELECT
+			);
 		}
 
 		foreach ( $this->getSelectedOptions() as $option ) {

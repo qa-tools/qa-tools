@@ -17,7 +17,6 @@ use mindplay\annotations\AnnotationManager;
 use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use aik099\QATools\PageObject\Element\IHtmlElement;
-use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
@@ -191,7 +190,6 @@ class PageFactory implements IPageFactory
 	 * @param IPropertyDecorator $property_decorator Property decorator.
 	 *
 	 * @return self
-	 * @throws PageFactoryException When class of non-existing element discovered in property's @var annotation.
 	 */
 	protected function proxyFields(ISearchContext $search_context, IPropertyDecorator $property_decorator)
 	{

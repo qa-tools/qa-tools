@@ -100,8 +100,10 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 		}
 
 		if ( !class_exists($data_type) ) {
+			$message = '"%s" element not recognised. "%s" class not found.';
 			throw new PageFactoryException(
-				sprintf('"%s" element not recognised. "%s" class not found.', $property, $data_type)
+				sprintf($message, $property, $data_type),
+				PageFactoryException::TYPE_UNKNOWN_CLASS
 			);
 		}
 

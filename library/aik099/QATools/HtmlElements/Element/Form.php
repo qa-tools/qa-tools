@@ -11,7 +11,7 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
-use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
+use aik099\QATools\HtmlElements\Exception\FormException;
 use aik099\QATools\PageObject\Element\WebElement;
 
 /**
@@ -54,14 +54,17 @@ class Form extends HtmlElement
 	 * @param string $field_name Field name to search for.
 	 *
 	 * @return WebElement
-	 * @throws TypifiedElementException When element for a field name not found.
+	 * @throws FormException When element for a field name not found.
 	 */
 	public function getWebElement($field_name)
 	{
 		$node_element = $this->find('named', array('field', $field_name));
 
 		if ( is_null($node_element) ) {
-			throw new TypifiedElementException(sprintf('Form field "%s" not found', $field_name));
+			throw new FormException(
+				sprintf('Form field "%s" not found', $field_name),
+				FormException::TYPE_NOT_FOUND
+			);
 		}
 
 		return WebElement::fromNodeElement($node_element);
@@ -73,7 +76,7 @@ class Form extends HtmlElement
 	 * @param WebElement $web_element Web Element.
 	 *
 	 * @return TypifiedElement
-	 * @throws TypifiedElementException When unable to create typified element.
+	 * @throws FormException When unable to create typified element.
 	 */
 	public function typify(WebElement $web_element)
 	{
@@ -103,7 +106,10 @@ class Form extends HtmlElement
 			return new TextInput($web_element);
 		}
 
-		throw new TypifiedElementException('Unable create typified element for ' . (string)$web_element);
+		throw new FormException(
+			'Unable create typified element for ' . (string)$web_element,
+			FormException::TYPE_UNKNOWN_FIELD
+		);
 	}
 
 	/**
@@ -113,7 +119,7 @@ class Form extends HtmlElement
 	 * @param mixed           $value            Element value to set.
 	 *
 	 * @return self
-	 * @throws TypifiedElementException When element doesn't support value changing.
+	 * @throws FormException When element doesn't support value changing.
 	 */
 	public function setValue(TypifiedElement $typified_element, $value)
 	{
@@ -123,7 +129,10 @@ class Form extends HtmlElement
 			return $this;
 		}
 
-		throw new TypifiedElementException('Element ' . (string)$typified_element . ' doesn\'t support value changing');
+		throw new FormException(
+			'Element ' . (string)$typified_element . ' doesn\'t support value changing',
+			FormException::TYPE_READONLY_FIELD
+		);
 	}
 
 	/**

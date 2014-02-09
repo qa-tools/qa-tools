@@ -11,8 +11,8 @@
 namespace aik099\QATools\PageObject\Annotation;
 
 
+use aik099\QATools\PageObject\Exception\AnnotationException;
 use mindplay\annotations\Annotation;
-use mindplay\annotations\AnnotationException;
 use aik099\QATools\PageObject\How;
 
 /**
@@ -116,17 +116,21 @@ class FindByAnnotation extends Annotation
 		if ( $this->how && $this->using ) {
 			if ( !in_array($this->how, $direct_settings) ) {
 				throw new AnnotationException(
-					"FindBy annotation expects 'how' to be one of \\aik099\\QATools\\PageObject\\How class constants"
+					"FindBy annotation expects 'how' to be one of \\aik099\\QATools\\PageObject\\How class constants",
+					AnnotationException::TYPE_INCORRECT_USAGE
 				);
 			}
 
 			return array($this->how => $this->using);
 		}
 
-		throw new AnnotationException(sprintf(
-			"FindBy annotation requires one of '%s' or both 'how' and 'using' parameters specified",
-			implode("', '", $direct_settings)
-		));
+		throw new AnnotationException(
+			sprintf(
+				"FindBy annotation requires one of '%s' or both 'how' and 'using' parameters specified",
+				implode("', '", $direct_settings)
+			),
+			AnnotationException::TYPE_INCORRECT_USAGE
+		);
 	}
 
 }
