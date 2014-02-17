@@ -118,21 +118,6 @@ class TypifiedElementTest extends TestCase
 	 *
 	 * @return void
 	 */
-	public function testFindAll()
-	{
-		$expected = 'C';
-		$this->webElement->shouldReceive('findAll')->with('A', 'B')->once()->andReturn($expected);
-		$this->webElement->shouldReceive('find')->with('A', 'B')->once()->andReturn($expected);
-
-		$this->assertSame($expected, $this->typifiedElement->findAll('A', 'B'));
-		$this->assertSame($expected, $this->typifiedElement->find('A', 'B'));
-	}
-
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSession()
 	{
 		$this->assertSame($this->session, $this->typifiedElement->getSession());

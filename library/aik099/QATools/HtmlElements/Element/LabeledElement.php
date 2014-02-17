@@ -38,12 +38,12 @@ class LabeledElement extends TypifiedElement
 
 		if ( is_null($label) ) {
 			// label wrapped around checkbox
-			$label = $this->find('xpath', 'parent::label');
+			$label = $this->getWrappedElement()->find('xpath', 'parent::label');
 		}
 
 		if ( is_null($label) ) {
 			// label right next to checkbox
-			$label = $this->find('xpath', 'following-sibling::*[1][self::label]');
+			$label = $this->getWrappedElement()->find('xpath', 'following-sibling::*[1][self::label]');
 		}
 
 		return $label;

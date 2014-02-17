@@ -53,4 +53,30 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 		return new static($wrapped_element, $page_factory);
 	}
 
+	/**
+	 * Finds all elements with specified selector.
+	 *
+	 * @param string $selector Selector engine name.
+	 * @param string $locator  Selector locator.
+	 *
+	 * @return NodeElement[]
+	 */
+	public function findAll($selector, $locator)
+	{
+		return $this->getWrappedElement()->findAll($selector, $locator);
+	}
+
+	/**
+	 * Finds first element with specified selector.
+	 *
+	 * @param string $selector Selector engine name.
+	 * @param string $locator  Selector locator.
+	 *
+	 * @return NodeElement|null
+	 */
+	public function find($selector, $locator)
+	{
+		return $this->getWrappedElement()->find($selector, $locator);
+	}
+
 }

@@ -38,7 +38,7 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 */
 	public function getOptions()
 	{
-		return $this->wrapOptions($this->findAll('se', array(How::TAG_NAME => 'option')));
+		return $this->wrapOptions($this->getWrappedElement()->findAll('se', array(How::TAG_NAME => 'option')));
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Select extends TypifiedElement implements ISimpleSetter
 		$selectors_handler = $this->getSelectorsHandler();
 		$xpath = 'descendant-or-self::option[@value = ' . $selectors_handler->xpathLiteral($value) . ']';
 
-		return $this->wrapOptions($this->findAll('xpath', $xpath));
+		return $this->wrapOptions($this->getWrappedElement()->findAll('xpath', $xpath));
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Select extends TypifiedElement implements ISimpleSetter
 			$xpath = 'descendant-or-self::option[contains(., ' . $selectors_handler->xpathLiteral($text) . ')]';
 		}
 
-		return $this->wrapOptions($this->findAll('xpath', $xpath));
+		return $this->wrapOptions($this->getWrappedElement()->findAll('xpath', $xpath));
 	}
 
 	/**

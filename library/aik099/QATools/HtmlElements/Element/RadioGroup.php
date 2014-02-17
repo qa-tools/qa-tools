@@ -49,7 +49,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 		$ret = array();
 
 		foreach ( $xpath_expressions as $xpath_expression ) {
-			$ret = array_merge($ret, $this->findAll('xpath', $xpath_expression));
+			$ret = array_merge($ret, $this->getWrappedElement()->findAll('xpath', $xpath_expression));
 		}
 
 		return $this->wrapButtons($ret);
