@@ -14,7 +14,7 @@
 * Test code is very readable
 * No duplication of Selenium API calls
 * Interactive documentation via Ctrl-Space
-* Eminently resuable code
+* Eminently reusable code
 * Improved maintainability
 * Provide opportunity to make test creation __extremely__ quick (and maybe even fun!)
 
