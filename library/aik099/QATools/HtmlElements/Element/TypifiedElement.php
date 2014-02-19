@@ -122,6 +122,16 @@ abstract class TypifiedElement implements IWebElement, INamed
 	}
 
 	/**
+	 * Checks if an element is still valid.
+	 *
+	 * @return boolean
+	 */
+	public function isValid()
+	{
+		return $this->getWrappedElement()->isValid();
+	}
+
+	/**
 	 * Checks whether element has attribute with specified name.
 	 *
 	 * @param string $name Attribute name.

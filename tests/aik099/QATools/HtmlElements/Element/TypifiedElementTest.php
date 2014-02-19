@@ -148,6 +148,7 @@ class TypifiedElementTest extends TestCase
 	{
 		return array(
 			array('isVisible'),
+			array('isValid'),
 			array('getXpath'),
 			array('getTagName'),
 			array('getContainer'),
