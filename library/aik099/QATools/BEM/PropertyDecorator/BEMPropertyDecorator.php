@@ -12,13 +12,15 @@ namespace aik099\QATools\BEM\PropertyDecorator;
 
 
 use aik099\QATools\BEM\Annotation\BEMAnnotation;
-use aik099\QATools\BEM\BlockProxy;
-use aik099\QATools\BEM\ElementProxy;
+use aik099\QATools\BEM\BEMPage;
+use aik099\QATools\BEM\Element\IBlock;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
+use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\Exception\AnnotationException;
+use aik099\QATools\PageObject\IPageFactory;
+use aik099\QATools\PageObject\Proxy\IProxy;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
-use aik099\QATools\PageObject\WebElementProxy;
 
 /**
  * Default decorator for use with PageFactory. Will decorate 1) all of the
@@ -32,21 +34,62 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 {
 
 	/**
+	 * BEM block interface.
+	 *
+	 * @var string
+	 */
+	private $_blockInterface = '\\aik099\\QATools\\BEM\\Element\\IBlock';
+
+	/**
+	 * BEM element interface.
+	 *
+	 * @var string
+	 */
+	private $_elementInterface = '\\aik099\\QATools\\BEM\\Element\\IElement';
+
+	/**
+	 * Creates decorator instance.
+	 *
+	 * @param IElementLocatorFactory $locator_factory Locator factory.
+	 * @param IPageFactory           $page_factory    Page factory.
+	 */
+	public function __construct(IElementLocatorFactory $locator_factory, IPageFactory $page_factory)
+	{
+		parent::__construct($locator_factory, $page_factory);
+
+		$this->elementToProxyMapping[$this->_blockInterface] = '\\aik099\\QATools\\BEM\\Proxy\\BlockProxy';
+		$this->elementToProxyMapping[$this->_elementInterface] = '\\aik099\\QATools\\BEM\\Proxy\\ElementProxy';
+	}
+
+	/**
 	 * Perform actual decoration.
 	 *
 	 * @param Property        $property The property that may be decorated.
 	 * @param IElementLocator $locator  Locator.
 	 *
-	 * @return WebElementProxy|null
+	 * @return IProxy|null
 	 */
 	protected function doDecorate(Property $property, IElementLocator $locator)
 	{
-		if ( $this->isBEMBlock($property) ) {
-			return $this->proxyBEMBlock($property, $locator);
+		$proxy_class = $this->getProxyClass($property);
+
+		if ( !$proxy_class ) {
+			return null;
 		}
 
-		if ( $this->isBEMElement($property) ) {
-			return $this->proxyBEMElement($property, $locator);
+		if ( $this->_isBEMBlock($property) || $this->_isBEMElement($property) ) {
+			/* @var $annotations BEMAnnotation[] */
+			$annotations = $property->getAnnotationsFromPropertyOrClass('@bem');
+			$this->_assertAnnotationUsage($annotations, $locator);
+
+			$name = $this->_isBEMBlock($property) ? $annotations[0]->block : $annotations[0]->element;
+
+			/* @var $proxy IProxy */
+			$proxy = new $proxy_class($name, $locator, $this->pageFactory);
+			$proxy->setClassName($property->getDataType());
+			$proxy->setContainer($locator->getSearchContext());
+
+			return $proxy;
 		}
 
 		return parent::doDecorate($property, $locator);
@@ -59,33 +102,9 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 	 *
 	 * @return boolean
 	 */
-	protected function isBEMBlock(Property $property)
+	private function _isBEMBlock(Property $property)
 	{
-		return $this->classMatches($property->getDataType(), '\\aik099\\QATools\\BEM\\Element\\Block');
-	}
-
-	/**
-	 * Creates lazy proxy object for a property using given proxy class.
-	 *
-	 * @param Property        $property Property, that will store created proxy object.
-	 * @param IElementLocator $locator  Locator.
-	 *
-	 * @return BlockProxy
-	 * @throws AnnotationException When block annotation is missing.
-	 */
-	protected function proxyBEMBlock(Property $property, IElementLocator $locator)
-	{
-		/* @var $annotations BEMAnnotation[] */
-		$annotations = $property->getAnnotationsFromPropertyOrClass('@bem');
-
-		if ( !$annotations ) {
-			throw new AnnotationException(
-				'Block must be defined as annotation',
-				AnnotationException::TYPE_REQUIRED
-			);
-		}
-
-		return new BlockProxy($annotations[0]->block, $locator, $property->getDataType(), $this->pageFactory);
+		return $this->classMatches($property->getDataType(), $this->_blockInterface);
 	}
 
 	/**
@@ -95,33 +114,50 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 	 *
 	 * @return boolean
 	 */
-	protected function isBEMElement(Property $property)
+	private function _isBEMElement(Property $property)
 	{
-		return $this->classMatches($property->getDataType(), '\\aik099\\QATools\\BEM\\Element\\Element');
+		return $this->classMatches($property->getDataType(), $this->_elementInterface);
 	}
 
 	/**
-	 * Creates lazy proxy object for a property using given proxy class.
+	 * Verifies, that annotations are being correctly used.
 	 *
-	 * @param Property        $property Property, that will store created proxy object.
-	 * @param IElementLocator $locator  Locator.
+	 * @param array           $annotations Annotations.
+	 * @param IElementLocator $locator     Locator.
 	 *
-	 * @return ElementProxy
-	 * @throws AnnotationException When element annotation is missing.
+	 * @return void
+	 * @throws AnnotationException When annotation is being used incorrectly.
 	 */
-	protected function proxyBEMElement(Property $property, IElementLocator $locator)
+	private function _assertAnnotationUsage(array $annotations, IElementLocator $locator)
 	{
-		/* @var $annotations BEMAnnotation[] */
-		$annotations = $property->getAnnotations('@bem');
-
 		if ( !$annotations ) {
 			throw new AnnotationException(
-				'Element must be defined as annotation',
+				'BEM block/element must be specified as annotation',
 				AnnotationException::TYPE_REQUIRED
 			);
 		}
 
-		return new ElementProxy($annotations[0]->element, $locator, $property->getDataType());
+		/** @var BEMAnnotation $annotation */
+		$annotation = $annotations[0];
+
+		if ( ($annotation->element && $annotation->block) || (!$annotation->element && !$annotation->block) ) {
+			throw new AnnotationException(
+				"Either 'block' or 'element' key with non-empty value must be specified in the annotation",
+				AnnotationException::TYPE_INCORRECT_USAGE
+			);
+		}
+		elseif ( $annotation->element && !($locator->getSearchContext() instanceof IBlock) ) {
+			throw new AnnotationException(
+				'BEM element can only be used in Block sub-class (or any class, implementing IBlock interface) property',
+				AnnotationException::TYPE_INCORRECT_USAGE
+			);
+		}
+		elseif ( $annotation->block && !($locator->getSearchContext() instanceof BEMPage) ) {
+			throw new AnnotationException(
+				'BEM block can only be used in BEMPage sub-class property',
+				AnnotationException::TYPE_INCORRECT_USAGE
+			);
+		}
 	}
 
 }

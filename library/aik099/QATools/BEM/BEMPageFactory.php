@@ -11,6 +11,7 @@
 namespace aik099\QATools\BEM;
 
 
+use aik099\QATools\BEM\ElementLocator\LocatorHelper;
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationManager;
 use aik099\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
@@ -26,16 +27,26 @@ class BEMPageFactory extends PageFactory
 {
 
 	/**
+	 * Locator helper.
+	 *
+	 * @var LocatorHelper
+	 */
+	private $_locatorHelper;
+
+	/**
 	 * Creates BEMPageFactory instance.
 	 *
 	 * @param Session                $session            Mink session.
 	 * @param AnnotationManager|null $annotation_manager Annotation manager.
+	 * @param LocatorHelper          $locator_helper     Locator helper.
 	 */
-	public function __construct(Session $session, AnnotationManager $annotation_manager = null)
+	public function __construct(Session $session, AnnotationManager $annotation_manager = null, LocatorHelper $locator_helper = null)
 	{
 		$this->annotationRegistry['bem'] = '\\aik099\\QATools\\BEM\\Annotation\\BEMAnnotation';
 
 		parent::__construct($session, $annotation_manager);
+
+		$this->_locatorHelper = isset($locator_helper) ? $locator_helper : new LocatorHelper();
 	}
 
 	/**
@@ -47,7 +58,7 @@ class BEMPageFactory extends PageFactory
 	 */
 	public function createDecorator(ISearchContext $search_context)
 	{
-		$locator_factory = new BEMElementLocatorFactory($search_context, $this->annotationManager);
+		$locator_factory = new BEMElementLocatorFactory($search_context, $this->annotationManager, $this->_locatorHelper);
 
 		return new BEMPropertyDecorator($locator_factory, $this);
 	}

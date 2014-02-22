@@ -19,6 +19,13 @@ abstract class AbstractProxyTestCase extends TestCase
 {
 
 	/**
+	 * Locator class.
+	 *
+	 * @var string
+	 */
+	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator';
+
+	/**
 	 * Proxy class.
 	 *
 	 * @var string
@@ -57,13 +64,35 @@ abstract class AbstractProxyTestCase extends TestCase
 	{
 		parent::setUp();
 
-		$this->locator = m::mock('\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator');
+		$this->locator = m::mock($this->locatorClass);
 
 		if ( !in_array($this->getName(), $this->ignoreLocatorTests) ) {
-			$this->locator->shouldReceive('find')->once()->andReturn($this->createNodeElement());
+			$this->expectLocatorCall();
 		}
 
+		$this->beforeSetUpFinish();
+
 		$this->proxy = $this->createProxy();
+	}
+
+	/**
+	 * Occurs before "setUp" method is finished configuration jobs.
+	 *
+	 * @return void
+	 */
+	protected function beforeSetUpFinish()
+	{
+
+	}
+
+	/**
+	 * Sets expectation for a specific locator call.
+	 *
+	 * @return void
+	 */
+	protected function expectLocatorCall()
+	{
+		$this->locator->shouldReceive('find')->once()->andReturn($this->createNodeElement());
 	}
 
 	/**

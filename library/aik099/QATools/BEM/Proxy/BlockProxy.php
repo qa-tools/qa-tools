@@ -8,14 +8,13 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\BEM;
+namespace aik099\QATools\BEM\Proxy;
 
 
-use aik099\QATools\PageObject\Exception\ElementException;
+use aik099\QATools\BEM\ElementLocator\BEMElementLocator;
+use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\BEM\Element\Block;
 use aik099\QATools\BEM\Element\IBlock;
-use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\IPageFactory;
 
 /**
@@ -25,71 +24,40 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * @link http://bit.ly/14TbcR9
  */
-class BlockProxy implements IBlock
+class BlockProxy extends PartProxy implements IBlock
 {
 
 	/**
-	 * Block class name.
+	 * Initializes BEM block proxy.
 	 *
-	 * @var string
+	 * @param string            $name         Block name.
+	 * @param BEMElementLocator $locator      Locator.
+	 * @param IPageFactory      $page_factory Page factory.
 	 */
-	protected $className;
-
-	/**
-	 * Block.
-	 *
-	 * @var IBlock
-	 */
-	protected $object;
-
-	/**
-	 * Locator.
-	 *
-	 * @var IElementLocator
-	 */
-	protected $locator;
-
-	/**
-	 * Block name.
-	 *
-	 * @var string
-	 */
-	protected $name;
-
-	/**
-	 * Page factory.
-	 *
-	 * @var IPageFactory
-	 */
-	protected $pageFactory;
-
-	/**
-	 * Initializes proxy for BEM block.
-	 *
-	 * @param string          $name         Block name.
-	 * @param IElementLocator $locator      Selector.
-	 * @param string          $class_name   Class name to proxy.
-	 * @param IPageFactory    $page_factory Page factory.
-	 */
-	public function __construct($name, IElementLocator $locator, $class_name, IPageFactory $page_factory)
+	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory)
 	{
-		$this->name = $name;
-		$this->className = $class_name;
-		$this->locator = $locator;
-		$this->pageFactory = $page_factory;
+		parent::__construct($name, $locator, $page_factory);
+
+		$this->className = '\\aik099\\QATools\\BEM\\Element\\Block';
 	}
 
 	/**
 	 * Returns block instance.
 	 *
-	 * @return Block
+	 * @return IBlock
+	 * @throws ElementNotFoundException When block not found.
 	 */
-	protected function getObject()
+	public function getObject()
 	{
 		if ( !is_object($this->object) ) {
 			$nodes = $this->locator->findAll();
 
-			$this->object = new $this->className($this->name, $nodes, $this->pageFactory);
+			if ( !$nodes ) {
+				throw new ElementNotFoundException('Block not found by selector: ' . (string)$this->locator);
+			}
+
+			$this->object = new $this->className($this->getName(), $nodes, $this->pageFactory, $this->locator);
+			$this->object->setContainer($this->getContainer());
 		}
 
 		return $this->object;
@@ -134,16 +102,6 @@ class BlockProxy implements IBlock
 	}
 
 	/**
-	 * Returns name of the entity.
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
 	 * Finds all elements with specified selector.
 	 *
 	 * @param string $selector Selector engine name.
@@ -167,28 +125,6 @@ class BlockProxy implements IBlock
 	public function find($selector, $locator)
 	{
 		return $this->getObject()->find($selector, $locator);
-	}
-
-	/**
-	 * Proxies all methods to sub-object.
-	 *
-	 * @param string $method    Method to proxy.
-	 * @param array  $arguments Method arguments.
-	 *
-	 * @return mixed
-	 * @throws ElementException When sub-object doesn't have a specified method.
-	 */
-	public function __call($method, array $arguments)
-	{
-		$block = $this->getObject();
-
-		if ( !method_exists($block, $method) ) {
-			$message = sprintf('"%s" method is not available on the %s', $method, get_class($block));
-
-			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
-		}
-
-		return call_user_func_array(array($block, $method), $arguments);
 	}
 
 }

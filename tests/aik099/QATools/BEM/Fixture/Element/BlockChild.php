@@ -8,13 +8,12 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\BEM\Element;
+namespace tests\aik099\QATools\BEM\Fixture\Element;
 
 
-/**
- * Interface, that every BEM element must implement.
- */
-interface IElement extends IPart
+use aik099\QATools\BEM\Element\Block;
+
+class BlockChild extends Block
 {
 
 }

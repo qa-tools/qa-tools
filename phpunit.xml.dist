@@ -19,9 +19,9 @@
 			<directory>tests/aik099/QATools/HtmlElements</directory>
 			<!--<directory>tests/aik099/QATools/HtmlElementsLive</directory>-->
 		</testsuite>
-		<!--<testsuite name="BEM">
+		<testsuite name="BEM">
 			<directory>tests/aik099/QATools/BEM</directory>
-		</testsuite>-->
+		</testsuite>
 	</testsuites>
 
 	<listeners>

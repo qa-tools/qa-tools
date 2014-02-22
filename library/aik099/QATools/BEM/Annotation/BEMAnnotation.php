@@ -11,8 +11,8 @@
 namespace aik099\QATools\BEM\Annotation;
 
 
+use aik099\QATools\BEM\ElementLocator\LocatorHelper;
 use mindplay\annotations\Annotation;
-use aik099\QATools\PageObject\How;
 
 /**
  * Defines BEM meta-data.
@@ -37,30 +37,45 @@ class BEMAnnotation extends Annotation
 	public $element;
 
 	/**
-	 * Modifier.
+	 * Modificator.
 	 *
 	 * @var array
 	 */
-	public $modifier;
+	public $modificator;
 
 	/**
-	 * Returns selector, that combines block, element and modifier.
+	 * Returns selector, that combines block, element and modificator.
+	 *
+	 * @param LocatorHelper $locator_helper Locator helper.
 	 *
 	 * @return array
 	 */
-	public function getSelector()
+	public function getSelector(LocatorHelper $locator_helper)
 	{
-		$class_name = $this->block;
+		list($modificator_name, $modificator_value) = $this->getModificator();
 
 		if ( $this->element ) {
-			$class_name .= '__' . $this->element;
+			return $locator_helper->getElementLocator($this->element, $this->block, $modificator_name, $modificator_value);
 		}
 
-		if ( $this->modifier ) {
-			$class_name .= '_' . key($this->modifier) . '_' . current($this->modifier);
+		return $locator_helper->getBlockLocator($this->block, $modificator_name, $modificator_value);
+	}
+
+	/**
+	 * Returns modificator.
+	 *
+	 * @return array
+	 */
+	protected function getModificator()
+	{
+		if ( $this->modificator ) {
+			list($modificator_name, $modificator_value) = each($this->modificator);
+		}
+		else {
+			$modificator_name = $modificator_value = null;
 		}
 
-		return array('se' => array(How::CLASS_NAME => $class_name));
+		return array($modificator_name, $modificator_value);
 	}
 
 }

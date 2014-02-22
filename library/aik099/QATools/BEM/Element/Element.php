@@ -11,7 +11,6 @@
 namespace aik099\QATools\BEM\Element;
 
 
-use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
 
 /**
@@ -19,15 +18,8 @@ use aik099\QATools\PageObject\Element\WebElement;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-class Element implements IElement
+class Element extends Part implements IElement
 {
-
-	/**
-	 * Name of the element.
-	 *
-	 * @var string
-	 */
-	private $_name;
 
 	/**
 	 * Wrapped element.
@@ -39,12 +31,13 @@ class Element implements IElement
 	/**
 	 * Specifies wrapped WebElement and element's name.
 	 *
-	 * @param string      $name            Element name.
-	 * @param IWebElement $wrapped_element Wrapped element.
+	 * @param string     $name            Element name.
+	 * @param WebElement $wrapped_element Wrapped element.
 	 */
-	public function __construct($name, IWebElement $wrapped_element)
+	public function __construct($name, WebElement $wrapped_element)
 	{
-		$this->_name = $name;
+		parent::__construct($name);
+
 		$this->_wrappedElement = $wrapped_element;
 	}
 
@@ -56,16 +49,6 @@ class Element implements IElement
 	public function getWrappedElement()
 	{
 		return $this->_wrappedElement;
-	}
-
-	/**
-	 * Returns element name.
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->_name;
 	}
 
 }

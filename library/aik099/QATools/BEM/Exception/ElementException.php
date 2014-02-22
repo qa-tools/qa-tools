@@ -8,13 +8,18 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\BEM\Element;
+namespace aik099\QATools\BEM\Exception;
 
+
+use aik099\QATools\PageObject\Exception\ElementException as BaseElementException;
 
 /**
- * Interface, that every BEM element must implement.
+ * Exception related to BEM elements/blocks.
  */
-interface IElement extends IPart
+class ElementException extends BaseElementException
 {
 
+	const TYPE_BLOCK_REQUIRED = 251;
+
+	const TYPE_ELEMENT_REQUIRED = 252;
 }

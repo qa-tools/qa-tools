@@ -13,7 +13,7 @@ namespace aik099\QATools\BEM;
 
 use aik099\QATools\PageObject\Page;
 
-class BEMPage extends Page
+abstract class BEMPage extends Page
 {
 
 	/**

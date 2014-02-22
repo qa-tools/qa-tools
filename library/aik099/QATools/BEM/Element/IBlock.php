@@ -12,13 +12,12 @@ namespace aik099\QATools\BEM\Element;
 
 
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\HtmlElements\Element\INamed;
 use aik099\QATools\PageObject\ISearchContext;
 
 /**
  * Interface, that every BEM block must implement.
  */
-interface IBlock extends INamed, ISearchContext
+interface IBlock extends IPart, ISearchContext
 {
 
 	/**
