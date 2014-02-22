@@ -14,7 +14,6 @@ namespace aik099\QATools\HtmlElements\Element;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
-use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\ISearchContext;
 
@@ -24,7 +23,7 @@ use aik099\QATools\PageObject\ISearchContext;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-abstract class TypifiedElement implements IWebElement, INamed
+abstract class TypifiedElement implements ITypifiedElement
 {
 
 	/**
@@ -44,9 +43,9 @@ abstract class TypifiedElement implements IWebElement, INamed
 	/**
 	 * Specifies wrapped WebElement.
 	 *
-	 * @param IWebElement $wrapped_element Element to be wrapped.
+	 * @param WebElement $wrapped_element Element to be wrapped.
 	 */
-	public function __construct(IWebElement $wrapped_element)
+	public function __construct(WebElement $wrapped_element)
 	{
 		$this->_wrappedElement = $wrapped_element;
 	}
@@ -56,7 +55,7 @@ abstract class TypifiedElement implements IWebElement, INamed
 	 *
 	 * @param NodeElement $node_element Node element.
 	 *
-	 * @return TypifiedElement
+	 * @return static
 	 */
 	public static function fromNodeElement(NodeElement $node_element)
 	{

@@ -13,7 +13,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 use Mockery as m;
 use aik099\QATools\HtmlElements\Element\TypifiedElement;
-use aik099\QATools\PageObject\Element\IWebElement;
+use aik099\QATools\PageObject\Element\WebElement;
 use tests\aik099\QATools\TestCase;
 
 class TypifiedElementTest extends TestCase
@@ -31,7 +31,7 @@ class TypifiedElementTest extends TestCase
 	/**
 	 * Web Element.
 	 *
-	 * @var IWebElement
+	 * @var WebElement
 	 */
 	protected $webElement;
 

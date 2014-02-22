@@ -8,10 +8,10 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject;
+namespace aik099\QATools\PageObject\Proxy;
 
 
-use aik099\QATools\PageObject\Element\IWebElement;
+use aik099\QATools\PageObject\Element\IContainerAware;
 use aik099\QATools\PageObject\Exception\ElementException;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 
@@ -21,7 +21,7 @@ use aik099\QATools\PageObject\Exception\ElementNotFoundException;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-interface IProxy extends IWebElement
+interface IProxy extends IContainerAware
 {
 
 	/**

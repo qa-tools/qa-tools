@@ -12,11 +12,10 @@ namespace aik099\QATools\HtmlElements\PropertyDecorator;
 
 
 use aik099\QATools\HtmlElements\Annotation\ElementNameAnnotation;
-use aik099\QATools\HtmlElements\TypifiedElementProxy;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\IPageFactory;
-use aik099\QATools\PageObject\IProxy;
+use aik099\QATools\PageObject\Proxy\IProxy;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 
@@ -41,7 +40,7 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 	{
 		parent::__construct($locator_factory, $page_factory);
 
-		$this->elementToProxyMapping['\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement'] = '\\aik099\\QATools\\HtmlElements\\TypifiedElementProxy';
+		$this->elementToProxyMapping['\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement'] = '\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
 	}
 
 	/**

@@ -13,7 +13,6 @@ namespace aik099\QATools\HtmlElements\Element;
 
 use Behat\Mink\Element\NodeElement;
 use aik099\QATools\PageObject\Element\IHtmlElement;
-use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\IPageFactory;
 
@@ -28,10 +27,10 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 	/**
 	 * Specifies wrapped WebElement.
 	 *
-	 * @param IWebElement  $wrapped_element Element to be wrapped.
+	 * @param WebElement   $wrapped_element Element to be wrapped.
 	 * @param IPageFactory $page_factory    Page factory.
 	 */
-	public function __construct(IWebElement $wrapped_element, IPageFactory $page_factory)
+	public function __construct(WebElement $wrapped_element, IPageFactory $page_factory)
 	{
 		parent::__construct($wrapped_element);
 
@@ -44,7 +43,7 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 	 * @param NodeElement  $node_element Node element.
 	 * @param IPageFactory $page_factory Page factory.
 	 *
-	 * @return IWebElement
+	 * @return static
 	 */
 	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{

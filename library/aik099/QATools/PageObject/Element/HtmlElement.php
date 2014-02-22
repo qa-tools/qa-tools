@@ -41,7 +41,7 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 	 * @param NodeElement  $node_element Node element.
 	 * @param IPageFactory $page_factory Page factory.
 	 *
-	 * @return IWebElement
+	 * @return static
 	 */
 	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{

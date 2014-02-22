@@ -8,14 +8,14 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace tests\aik099\QATools\PageObject;
+namespace tests\aik099\QATools\PageObject\Proxy;
 
 
-use aik099\QATools\PageObject\WebElementProxy;
+use aik099\QATools\PageObject\Proxy\AbstractProxy;
 use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
-class WebElementProxyTest extends TestCase
+abstract class AbstractProxyTestCase extends TestCase
 {
 
 	/**
@@ -23,12 +23,12 @@ class WebElementProxyTest extends TestCase
 	 *
 	 * @var string
 	 */
-	protected $proxyClass = '\\aik099\\QATools\\PageObject\\WebElementProxy';
+	protected $proxyClass = '\\aik099\\QATools\\PageObject\\Proxy\\AbstractProxy';
 
 	/**
 	 * Proxy.
 	 *
-	 * @var WebElementProxy
+	 * @var AbstractProxy
 	 */
 	protected $proxy;
 
@@ -44,7 +44,9 @@ class WebElementProxyTest extends TestCase
 	 *
 	 * @var array
 	 */
-	protected $ignoreLocatorTests = array('testSetContainer', 'testGetContainerFallback', 'testGetObjectEmptyLocator');
+	protected $ignoreLocatorTests = array(
+		'testSetContainer', 'testGetContainerFallback', 'testGetObjectEmptyLocator', 'testIsValidSubstitute',
+	);
 
 	/**
 	 * Creates proxy.
@@ -62,31 +64,6 @@ class WebElementProxyTest extends TestCase
 		}
 
 		$this->proxy = $this->createProxy();
-	}
-
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
-	public function testDefaultClassName()
-	{
-		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
-
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
-	}
-
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
-	public function testSetClassName()
-	{
-		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
-
-		$this->proxy->setClassName($expected);
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
 	}
 
 	/**
@@ -172,9 +149,30 @@ class WebElementProxyTest extends TestCase
 	}
 
 	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	abstract public function testDefaultClassName();
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	abstract public function testSetClassName();
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	abstract public function testIsValidSubstitute();
+
+	/**
 	 * Creates a proxy.
 	 *
-	 * @return WebElementProxy
+	 * @return AbstractProxy
 	 */
 	protected function createProxy()
 	{

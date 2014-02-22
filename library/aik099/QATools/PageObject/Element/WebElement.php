@@ -56,7 +56,7 @@ class WebElement extends NodeElement implements IWebElement
 	 *
 	 * @param NodeElement $node_element Node element.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public static function fromNodeElement(NodeElement $node_element)
 	{

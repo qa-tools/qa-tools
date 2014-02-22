@@ -8,14 +8,12 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace tests\aik099\QATools\HtmlElements;
+namespace tests\aik099\QATools\PageObject\Proxy;
 
 
 use Mockery as m;
-use aik099\QATools\HtmlElements\TypifiedElementProxy;
-use tests\aik099\QATools\PageObject\WebElementProxyTest;
 
-class TypifiedElementProxyTest extends WebElementProxyTest
+class WebElementProxyTest extends AbstractProxyTestCase
 {
 
 	/**
@@ -25,20 +23,9 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 */
 	protected function setUp()
 	{
-		$this->ignoreLocatorTests[] = 'testGetName';
-		$this->proxyClass = '\\aik099\\QATools\\HtmlElements\\TypifiedElementProxy';
+		$this->proxyClass = '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy';
 
 		parent::setUp();
-	}
-
-	/**
-	 * Creates a proxy.
-	 *
-	 * @return TypifiedElementProxy
-	 */
-	protected function createProxy()
-	{
-		return new $this->proxyClass($this->locator, $this->pageFactory, 'sample-name');
 	}
 
 	/**
@@ -48,7 +35,7 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 */
 	public function testDefaultClassName()
 	{
-		$expected = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
+		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 		$this->assertInstanceOf($expected, $this->proxy->getObject());
 	}
@@ -60,7 +47,7 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 */
 	public function testSetClassName()
 	{
-		$expected = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\ButtonChild';
+		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
 		$this->proxy->setClassName($expected);
 		$this->assertInstanceOf($expected, $this->proxy->getObject());
@@ -71,9 +58,9 @@ class TypifiedElementProxyTest extends WebElementProxyTest
 	 *
 	 * @return void
 	 */
-	public function testGetName()
+	public function testIsValidSubstitute()
 	{
-		$this->assertEquals('sample-name', $this->proxy->getName());
+		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->proxy);
 	}
 
 }

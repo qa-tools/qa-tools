@@ -15,7 +15,6 @@ use aik099\QATools\PageObject\Exception\AnnotationException;
 use Behat\Mink\Element\NodeElement;
 use mindplay\annotations\AnnotationManager;
 use aik099\QATools\PageObject\Annotation\FindByAnnotation;
-use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\Property;
 
@@ -58,7 +57,7 @@ class DefaultElementLocator implements IElementLocator
 	/**
 	 * Cached WebElement list.
 	 *
-	 * @var IWebElement[]
+	 * @var NodeElement[]
 	 */
 	protected $cachedElements;
 
@@ -66,10 +65,10 @@ class DefaultElementLocator implements IElementLocator
 	 * Creates a new element locator.
 	 *
 	 * @param Property          $property           Property.
-	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 * @param ISearchContext    $search_context     The context to use when finding the element.
+	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 */
-	public function __construct(Property $property, AnnotationManager $annotation_manager, ISearchContext $search_context)
+	public function __construct(Property $property, ISearchContext $search_context, AnnotationManager $annotation_manager)
 	{
 		$this->property = $property;
 		$this->searchContext = $search_context;

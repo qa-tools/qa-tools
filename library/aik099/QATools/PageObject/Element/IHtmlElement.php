@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Interface to allow HtmlElement class detection in proxies.
  */
-interface IHtmlElement extends ISearchContext
+interface IHtmlElement extends IContainerAware, ISearchContext
 {
 
 }

@@ -11,7 +11,7 @@
 namespace aik099\QATools\PageObject\PropertyDecorator;
 
 
-use aik099\QATools\PageObject\IProxy;
+use aik099\QATools\PageObject\Proxy\IProxy;
 use aik099\QATools\PageObject\Property;
 
 

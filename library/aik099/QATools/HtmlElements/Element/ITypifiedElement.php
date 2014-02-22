@@ -8,16 +8,15 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject\Element;
+namespace aik099\QATools\HtmlElements\Element;
 
 
 /**
- * Classes, that represent elements on a page must implement this interface.
+ * Represents a typified element.
  *
  * @method \Mockery\Expectation shouldReceive
  */
-interface IWebElement extends IContainerAware
+interface ITypifiedElement extends INamed
 {
-
 
 }

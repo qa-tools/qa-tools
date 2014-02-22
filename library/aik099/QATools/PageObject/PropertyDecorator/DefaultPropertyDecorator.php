@@ -15,10 +15,8 @@ use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\IPageFactory;
-use aik099\QATools\PageObject\IProxy;
+use aik099\QATools\PageObject\Proxy\IProxy;
 use aik099\QATools\PageObject\Property;
-use aik099\QATools\PageObject\WebElementProxy;
-
 
 /**
  * Default decorator for use with PageFactory. Will decorate 1) all of the
@@ -51,7 +49,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 * @var array
 	 */
 	protected $elementToProxyMapping = array(
-		'\\aik099\\QATools\\PageObject\\Element\\WebElement' => '\\aik099\\QATools\\PageObject\\WebElementProxy',
+		'\\aik099\\QATools\\PageObject\\Element\\WebElement' => '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy',
 	);
 
 	/**

@@ -11,16 +11,25 @@
 namespace tests\aik099\QATools\PageObject\PropertyDecorator;
 
 
+use aik099\QATools\PageObject\Proxy\IProxy;
+use aik099\QATools\PageObject\ISearchContext;
 use Mockery as m;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
-use aik099\QATools\PageObject\WebElementProxy;
+use aik099\QATools\PageObject\Proxy\WebElementProxy;
 use tests\aik099\QATools\TestCase;
 
 class DefaultPropertyDecoratorTest extends TestCase
 {
+
+	/**
+	 * Locator class.
+	 *
+	 * @var string
+	 */
+	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator';
 
 	/**
 	 * Decorator class.
@@ -67,7 +76,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 		parent::setUp();
 
 		$this->property = m::mock('\\aik099\\QATools\\PageObject\\Property');
-		$this->locator = m::mock('\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator');
+		$this->locator = m::mock($this->locatorClass);
 		$this->locatorFactory = m::mock('\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocatorFactory');
 
 		if ( $this->getName() == 'testEmptyLocatorPreventsDecoration' ) {
@@ -174,12 +183,27 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->property->shouldReceive('getDataType')->andReturn($element_class);
 
 		$proxy = $this->decorator->decorate($this->property);
-		$this->assertInstanceOf($proxy_class, $proxy);
-		$this->assertInstanceOf($element_class, $proxy->getObject());
-		$this->assertSame($search_context, $proxy->getContainer());
+		$this->assertProxy($proxy, $proxy_class, $search_context, $element_class);
 		$this->assertEquals($node_element->getXpath(), $proxy->getXpath());
 
 		return $proxy;
+	}
+
+	/**
+	 * Verifies, that proxy did that's needed.
+	 *
+	 * @param IProxy         $proxy           Proxy object.
+	 * @param string         $proxy_class     Proxy class.
+	 * @param ISearchContext $proxy_container Container object set to proxy.
+	 * @param string         $element_class   Element class given to proxy.
+	 *
+	 * @return void
+	 */
+	protected function assertProxy(IProxy $proxy, $proxy_class, ISearchContext $proxy_container, $element_class)
+	{
+		$this->assertInstanceOf($proxy_class, $proxy);
+		$this->assertInstanceOf($element_class, $proxy->getObject());
+		$this->assertSame($proxy_container, $proxy->getContainer());
 	}
 
 	/**
@@ -190,7 +214,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 	public function proxyDataProvider()
 	{
 		return array(
-			array('\\aik099\\QATools\\PageObject\\Element\\WebElement', '\\aik099\\QATools\\PageObject\\WebElementProxy'),
+			array('\\aik099\\QATools\\PageObject\\Element\\WebElement', '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy'),
 		);
 	}
 

@@ -11,6 +11,7 @@
 namespace tests\aik099\QATools\PageObject\ElementLocator;
 
 
+use aik099\QATools\PageObject\Annotation\FindByAnnotation;
 use Mockery as m;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
@@ -28,6 +29,13 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	 * @var string
 	 */
 	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\DefaultElementLocator';
+
+	/**
+	 * Search context class.
+	 *
+	 * @var string
+	 */
+	protected $searchContextClass = '\\aik099\\QATools\\PageObject\\ISearchContext';
 
 	/**
 	 * Property.
@@ -68,7 +76,7 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 
 		$this->property = m::mock(self::PROPERTY_CLASS);
 		$this->annotationManager = m::mock('\\mindplay\\annotations\\AnnotationManager');
-		$this->searchContext = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
+		$this->searchContext = m::mock($this->searchContextClass);
 
 		$this->locator = $this->createLocator();
 	}
@@ -157,7 +165,7 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @param mixed $selector Selector.
 	 *
-	 * @return void
+	 * @return FindByAnnotation
 	 */
 	protected function expectFindByAnnotation($selector)
 	{
@@ -165,6 +173,8 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$annotation->shouldReceive('getSelector')->andReturn($selector);
 
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array($annotation));
+
+		return $annotation;
 	}
 
 	/**
@@ -179,10 +189,10 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		if ( $mock_methods ) {
 			$class = $this->locatorClass . '[' . implode(',', $mock_methods) . ']';
 
-			return m::mock($class, array($this->property, $this->annotationManager, $this->searchContext));
+			return m::mock($class, array($this->property, $this->searchContext, $this->annotationManager));
 		}
 
-		return new $this->locatorClass($this->property, $this->annotationManager, $this->searchContext);
+		return new $this->locatorClass($this->property, $this->searchContext, $this->annotationManager);
 	}
 
 }

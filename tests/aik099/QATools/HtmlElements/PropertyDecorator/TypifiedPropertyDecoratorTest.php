@@ -12,7 +12,7 @@ namespace tests\aik099\QATools\HtmlElements\PropertyDecorator;
 
 
 use Mockery as m;
-use aik099\QATools\PageObject\WebElementProxy;
+use aik099\QATools\PageObject\Proxy\WebElementProxy;
 use tests\aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorTest;
 
 class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
@@ -63,7 +63,7 @@ class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	{
 		$data = parent::proxyDataProvider();
 
-		$data[] = array('\\aik099\\QATools\\HtmlElements\\Element\\TextBlock', '\\aik099\\QATools\\HtmlElements\\TypifiedElementProxy');
+		$data[] = array('\\aik099\\QATools\\HtmlElements\\Element\\TextBlock', '\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy');
 
 		return $data;
 	}

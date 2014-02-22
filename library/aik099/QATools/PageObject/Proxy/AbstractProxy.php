@@ -8,37 +8,37 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\PageObject;
+namespace aik099\QATools\PageObject\Proxy;
 
 
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
-use aik099\QATools\PageObject\Element\IWebElement;
-use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\Exception\ElementException;
+use aik099\QATools\PageObject\IPageFactory;
+use aik099\QATools\PageObject\ISearchContext;
 use Behat\Mink\Element\NodeElement;
 
 /**
- * Class for lazy-proxy creation to ensure, that WebElements are really accessed only at moment, when user needs them.
+ * Class for lazy-proxy creation to ensure, that elements are really accessed only at moment, when user needs them.
  *
  * @method \Mockery\Expectation shouldReceive
  *
  * @link http://bit.ly/14TbcR9
  */
-class WebElementProxy implements IProxy
+abstract class AbstractProxy implements IProxy
 {
 
 	/**
-	 * Class name to proxy (must implement IWebElement).
+	 * Class name to proxy.
 	 *
 	 * @var string
 	 */
-	protected $className = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
+	protected $className = '';
 
 	/**
-	 * WebElement object to proxy.
+	 * Object to proxy.
 	 *
-	 * @var WebElement
+	 * @var mixed
 	 */
 	protected $object;
 
@@ -50,7 +50,7 @@ class WebElementProxy implements IProxy
 	protected $locator;
 
 	/**
-	 * Page Factory, used to create an WebElementProxy.
+	 * Page Factory, that allows to create more elements on demand.
 	 *
 	 * @var IPageFactory
 	 */
@@ -64,7 +64,7 @@ class WebElementProxy implements IProxy
 	protected $container;
 
 	/**
-	 * Initializes proxy for WebElement.
+	 * Initializes proxy for the element.
 	 *
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.
@@ -133,23 +133,6 @@ class WebElementProxy implements IProxy
 		}
 
 		return call_user_func_array(array($sub_object, $method), $arguments);
-	}
-
-	/**
-	 * Returns class instance, that was placed inside a proxy.
-	 *
-	 * @return WebElement
-	 */
-	public function getObject()
-	{
-		if ( !is_object($this->object) ) {
-			$element = $this->locateElement();
-
-			$this->object = call_user_func(array($this->className, 'fromNodeElement'), $element, $this->pageFactory);
-			$this->object->setContainer($this->getContainer());
-		}
-
-		return $this->object;
 	}
 
 	/**

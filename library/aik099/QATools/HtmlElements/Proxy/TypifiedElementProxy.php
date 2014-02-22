@@ -8,16 +8,15 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace aik099\QATools\HtmlElements;
+namespace aik099\QATools\HtmlElements\Proxy;
 
 
-use aik099\QATools\HtmlElements\Element\INamed;
+use aik099\QATools\HtmlElements\Element\ITypifiedElement;
 use aik099\QATools\HtmlElements\Element\TypifiedElement;
+use aik099\QATools\PageObject\Proxy\AbstractProxy;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Element\WebElement;
-use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\IPageFactory;
-use aik099\QATools\PageObject\WebElementProxy;
 
 /**
  * Class for lazy-proxy creation to ensure, that TypifiedElements are
@@ -25,7 +24,7 @@ use aik099\QATools\PageObject\WebElementProxy;
  *
  * @link http://bit.ly/14TbcR9
  */
-class TypifiedElementProxy extends WebElementProxy implements INamed
+class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 {
 
 	/**
