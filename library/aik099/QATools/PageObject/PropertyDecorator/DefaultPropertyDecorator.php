@@ -15,6 +15,7 @@ use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\IPageFactory;
+use aik099\QATools\PageObject\IProxy;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\WebElementProxy;
 
@@ -70,7 +71,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 *
 	 * @param Property $property The property that may be decorated.
 	 *
-	 * @return WebElementProxy
+	 * @return IProxy
 	 */
 	public function decorate(Property $property)
 	{
@@ -116,7 +117,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 * @param Property        $property The property that may be decorated.
 	 * @param IElementLocator $locator  Locator.
 	 *
-	 * @return WebElementProxy|null
+	 * @return IProxy|null
 	 */
 	protected function doDecorate(Property $property, IElementLocator $locator)
 	{
@@ -126,7 +127,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 			return null;
 		}
 
-		/* @var $proxy WebElementProxy */
+		/* @var $proxy IProxy */
 		$proxy = new $proxy_class($locator, $this->pageFactory);
 		$proxy->setClassName($property->getDataType());
 		$proxy->setContainer($locator->getSearchContext());

@@ -16,6 +16,7 @@ use aik099\QATools\HtmlElements\TypifiedElementProxy;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
 use aik099\QATools\PageObject\IPageFactory;
+use aik099\QATools\PageObject\IProxy;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 
@@ -49,7 +50,7 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 	 * @param Property        $property The property that may be decorated.
 	 * @param IElementLocator $locator  Locator.
 	 *
-	 * @return TypifiedElementProxy|null
+	 * @return IProxy|null
 	 */
 	protected function doDecorate(Property $property, IElementLocator $locator)
 	{
@@ -59,7 +60,7 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 			return null;
 		}
 
-		/* @var $proxy TypifiedElementProxy */
+		/* @var $proxy IProxy */
 		$proxy = new $proxy_class($locator, $this->pageFactory, $this->getElementName($property));
 		$proxy->setClassName($property->getDataType());
 		$proxy->setContainer($locator->getSearchContext());

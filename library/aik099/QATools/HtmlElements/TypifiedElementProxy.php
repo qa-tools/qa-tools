@@ -61,16 +61,11 @@ class TypifiedElementProxy extends WebElementProxy implements INamed
 	 * Returns class instance, that was placed inside a proxy.
 	 *
 	 * @return TypifiedElement
-	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	public function getObject()
 	{
 		if ( !is_object($this->object) ) {
-			$element = $this->locator->find();
-
-			if ( !is_object($element) ) {
-				throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
-			}
+			$element = $this->locateElement();
 
 			/* @var $wrapped_element WebElement */
 			$wrapped_element = call_user_func(array($this->wrappedClassName, 'fromNodeElement'), $element, $this->pageFactory);

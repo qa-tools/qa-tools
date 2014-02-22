@@ -189,16 +189,10 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * Selects all options.
 	 *
 	 * @return self
-	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function selectAll()
 	{
-		if ( !$this->isMultiple() ) {
-			throw new SelectException(
-				'You may only deselect all options of a multi-select',
-				SelectException::TYPE_NOT_MULTISELECT
-			);
-		}
+		$this->assertMultiSelect();
 
 		return $this->selectOptions($this->getOptions());
 	}
@@ -209,16 +203,10 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * @param array $values Values of options to select.
 	 *
 	 * @return self
-	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function setSelected(array $values)
 	{
-		if ( !$this->isMultiple() ) {
-			throw new SelectException(
-				'You may only deselect all options of a multi-select',
-				SelectException::TYPE_NOT_MULTISELECT
-			);
-		}
+		$this->assertMultiSelect();
 
 		$candidates = array();
 		/* @var $candidates SelectOption[] */
@@ -236,16 +224,10 @@ class Select extends TypifiedElement implements ISimpleSetter
 	 * Deselects all options.
 	 *
 	 * @return self
-	 * @throws SelectException If the SELECT does not support multiple selections.
 	 */
 	public function deselectAll()
 	{
-		if ( !$this->isMultiple() ) {
-			throw new SelectException(
-				'You may only deselect all options of a multi-select',
-				SelectException::TYPE_NOT_MULTISELECT
-			);
-		}
+		$this->assertMultiSelect();
 
 		foreach ( $this->getSelectedOptions() as $option ) {
 			$option->deselect();
@@ -309,6 +291,22 @@ class Select extends TypifiedElement implements ISimpleSetter
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Throws an exception when it's not a multiselect.
+	 *
+	 * @return void
+	 * @throws SelectException If the SELECT does not support multiple selections.
+	 */
+	protected function assertMultiSelect()
+	{
+		if ( !$this->isMultiple() ) {
+			throw new SelectException(
+				'You may only deselect all options of a multi-select',
+				SelectException::TYPE_NOT_MULTISELECT
+			);
+		}
 	}
 
 }

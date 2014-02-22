@@ -16,6 +16,7 @@ use aik099\QATools\PageObject\Element\IWebElement;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\Exception\ElementException;
+use Behat\Mink\Element\NodeElement;
 
 /**
  * Class for lazy-proxy creation to ensure, that WebElements are really accessed only at moment, when user needs them.
@@ -24,7 +25,7 @@ use aik099\QATools\PageObject\Exception\ElementException;
  *
  * @link http://bit.ly/14TbcR9
  */
-class WebElementProxy implements IWebElement
+class WebElementProxy implements IProxy
 {
 
 	/**
@@ -68,7 +69,7 @@ class WebElementProxy implements IWebElement
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.
 	 */
-	public function __construct(IElementLocator $locator, IPageFactory $page_factory)
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory = null)
 	{
 		$this->locator = $locator;
 		$this->pageFactory = $page_factory;
@@ -138,22 +139,34 @@ class WebElementProxy implements IWebElement
 	 * Returns class instance, that was placed inside a proxy.
 	 *
 	 * @return WebElement
-	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	public function getObject()
 	{
 		if ( !is_object($this->object) ) {
-			$element = $this->locator->find();
-
-			if ( !is_object($element) ) {
-				throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
-			}
+			$element = $this->locateElement();
 
 			$this->object = call_user_func(array($this->className, 'fromNodeElement'), $element, $this->pageFactory);
 			$this->object->setContainer($this->getContainer());
 		}
 
 		return $this->object;
+	}
+
+	/**
+	 * Locates element using the locator.
+	 *
+	 * @return NodeElement|null
+	 * @throws ElementNotFoundException When element wasn't found on the page.
+	 */
+	protected function locateElement()
+	{
+		$element = $this->locator->find();
+
+		if ( !is_object($element) ) {
+			throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
+		}
+
+		return $element;
 	}
 
 }

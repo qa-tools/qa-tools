@@ -11,6 +11,7 @@
 namespace aik099\QATools\PageObject\PropertyDecorator;
 
 
+use aik099\QATools\PageObject\IProxy;
 use aik099\QATools\PageObject\Property;
 
 
@@ -27,7 +28,7 @@ interface IPropertyDecorator
 	 *
 	 * @param Property $property The property that may be decorated.
 	 *
-	 * @return mixed
+	 * @return IProxy
 	 */
 	public function decorate(Property $property);
 
