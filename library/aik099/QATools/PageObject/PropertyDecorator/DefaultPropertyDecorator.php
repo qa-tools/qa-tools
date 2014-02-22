@@ -49,7 +49,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 * @var array
 	 */
 	protected $elementToProxyMapping = array(
-		'\\aik099\\QATools\\PageObject\\Element\\WebElement' => '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy',
+		'\\aik099\\QATools\\PageObject\\Element\\IWebElement' => '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy',
 	);
 
 	/**
@@ -165,8 +165,9 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	{
 		$class_name = ltrim($class_name, '\\');
 		$descendant_of = ltrim($descendant_of, '\\');
+		$match_with = array_merge(class_implements($class_name), class_parents($class_name));
 
-		return $class_name == $descendant_of || in_array($descendant_of, class_parents($class_name));
+		return $class_name == $descendant_of || in_array($descendant_of, $match_with);
 	}
 
 }
