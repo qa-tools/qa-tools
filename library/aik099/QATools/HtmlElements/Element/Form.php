@@ -95,7 +95,7 @@ class Form extends HtmlElement
 				return new FileInput($web_element);
 			}
 			else {
-				// if ( is_null($input_type) || ($input_type == self::TEXT_INPUT) || ($input_type == self::PASSWORD_INPUT) ) {
+				/*if ( is_null($input_type) || ($input_type == self::TEXT_INPUT) || ($input_type == self::PASSWORD_INPUT) ) {*/
 				return new TextInput($web_element);
 			}
 		}

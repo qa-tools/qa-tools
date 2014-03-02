@@ -83,8 +83,8 @@ class SeleniumSelector implements SelectorInterface
 			return $locator;
 		}
 
-//		case How::LINK_TEXT:
-//		case How::PARTIAL_LINK_TEXT:
+		/*case How::LINK_TEXT:
+		case How::PARTIAL_LINK_TEXT:*/
 
 		throw new ElementException(
 			sprintf('Selector type "%s" not yet implemented', $selector),

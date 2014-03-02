@@ -30,18 +30,18 @@ class LabeledElement extends TypifiedElement
 		$id = $this->getAttribute('id');
 
 		if ( !is_null($id) ) {
-			// label with matching "for" attribute
+			// Label with matching "for" attribute.
 			$escaped_id = $this->getSelectorsHandler()->xpathLiteral($id);
 			$label = $this->getContainer()->find('xpath', 'descendant-or-self::label[@for = ' . $escaped_id . ']');
 		}
 
 		if ( is_null($label) ) {
-			// label wrapped around checkbox
+			// Label wrapped around checkbox.
 			$label = $this->getWrappedElement()->find('xpath', 'parent::label');
 		}
 
 		if ( is_null($label) ) {
-			// label right next to checkbox
+			// Label right next to checkbox.
 			$label = $this->getWrappedElement()->find('xpath', 'following-sibling::*[1][self::label]');
 		}
 
