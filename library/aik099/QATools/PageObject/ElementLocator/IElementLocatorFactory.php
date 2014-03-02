@@ -13,7 +13,6 @@ namespace aik099\QATools\PageObject\ElementLocator;
 
 use aik099\QATools\PageObject\Property;
 
-
 /**
  * A factory for producing IElementLocators. It is expected that a new IElementLocator will be returned per call.
  *

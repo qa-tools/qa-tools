@@ -15,7 +15,6 @@ use aik099\QATools\PageObject\Element\IContainerAware;
 use aik099\QATools\PageObject\Exception\ElementException;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 
-
 /**
  * All page factories must implement this interface.
  *

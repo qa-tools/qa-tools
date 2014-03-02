@@ -12,9 +12,6 @@ namespace tests\aik099\QATools\BEM\PropertyDecorator;
 
 
 use aik099\QATools\BEM\Annotation\BEMAnnotation;
-use aik099\QATools\BEM\BlockProxy;
-use aik099\QATools\PageObject\IProxy;
-use aik099\QATools\PageObject\ISearchContext;
 use Mockery as m;
 use tests\aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorTest;
 

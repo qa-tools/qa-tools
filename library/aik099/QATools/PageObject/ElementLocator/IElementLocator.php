@@ -14,7 +14,6 @@ namespace aik099\QATools\PageObject\ElementLocator;
 use Behat\Mink\Element\NodeElement;
 use aik099\QATools\PageObject\ISearchContext;
 
-
 /**
  * Classes, that can search elements on a page must implement this interface.
  *

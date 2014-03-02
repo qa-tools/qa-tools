@@ -13,7 +13,6 @@ namespace aik099\QATools\PageObject\Element;
 
 use aik099\QATools\PageObject\ISearchContext;
 
-
 /**
  * Interface to allow container manipulations.
  */

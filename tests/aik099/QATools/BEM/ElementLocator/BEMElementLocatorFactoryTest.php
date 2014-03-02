@@ -13,7 +13,6 @@ namespace tests\aik099\QATools\BEM\ElementLocator;
 
 use aik099\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
 use Mockery as m;
-use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 
 class BEMElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
 {

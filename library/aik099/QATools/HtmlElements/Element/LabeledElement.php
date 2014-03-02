@@ -13,7 +13,6 @@ namespace aik099\QATools\HtmlElements\Element;
 
 use Behat\Mink\Element\NodeElement;
 
-
 /**
  * Represents web page control with optional associated label.
  */
