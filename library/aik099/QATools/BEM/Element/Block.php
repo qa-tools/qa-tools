@@ -129,7 +129,7 @@ class Block extends Part implements IBlock
 	{
 		$items = array();
 
-		foreach ($this->_nodes as $node) {
+		foreach ( $this->_nodes as $node ) {
 			$items = array_merge($items, $node->findAll($selector, $locator));
 		}
 

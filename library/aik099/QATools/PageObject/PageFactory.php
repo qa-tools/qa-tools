@@ -96,7 +96,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function setAnnotationManager(AnnotationManager $manager)
 	{
-		foreach ($this->annotationRegistry as $annotation_name => $annotation_class) {
+		foreach ( $this->annotationRegistry as $annotation_name => $annotation_class ) {
 			$manager->registry[$annotation_name] = $annotation_class;
 		}
 
@@ -217,7 +217,7 @@ class PageFactory implements IPageFactory
 		$ret = array();
 		$reflection = new \ReflectionClass($search_context);
 
-		foreach ($reflection->getProperties() as $property) {
+		foreach ( $reflection->getProperties() as $property ) {
 			$ret[] = new Property($property, $this->annotationManager);
 		}
 

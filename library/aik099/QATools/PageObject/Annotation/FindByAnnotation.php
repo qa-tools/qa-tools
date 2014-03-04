@@ -107,7 +107,7 @@ class FindByAnnotation extends Annotation
 	{
 		$direct_settings = array('className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath');
 
-		foreach ($direct_settings as $direct_setting) {
+		foreach ( $direct_settings as $direct_setting ) {
 			if ( $this->$direct_setting ) {
 				return array($direct_setting => $this->$direct_setting);
 			}
