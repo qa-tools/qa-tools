@@ -31,7 +31,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 
 		if ( is_null($radio_name) ) {
 			$xpath_expressions = array(
-				"self::*",
+				'self::*',
 				"following::input[@type = 'radio']",
 				"preceding::input[@type = 'radio']",
 			);
@@ -40,9 +40,9 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 			$radio_name = $this->getSelectorsHandler()->xpathLiteral($radio_name);
 
 			$xpath_expressions = array(
-				"self::*",
-				"following::input[@type = 'radio' and @name = " . $radio_name . "]",
-				"preceding::input[@type = 'radio' and @name = " . $radio_name . "]",
+				'self::*',
+				"following::input[@type = 'radio' and @name = " . $radio_name . ']',
+				"preceding::input[@type = 'radio' and @name = " . $radio_name . ']',
 			);
 		}
 
@@ -143,7 +143,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 		foreach ( $this->getButtons() as $button ) {
 			$button_value = $button->getAttribute('value');
 
-			if ( "$button_value" === "$value" ) {
+			if ( (string)$button_value === (string)$value ) {
 				$button->select();
 
 				return $this;

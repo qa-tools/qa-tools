@@ -65,7 +65,7 @@ class SeleniumSelector implements SelectorInterface
 		if ( $selector == How::CLASS_NAME ) {
 			$locator = $this->_handler->xpathLiteral(' ' . $locator . ' ');
 
-			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), {$locator})]";
+			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), " . $locator . ')]';
 		}
 		elseif ( $selector == How::CSS ) {
 			return $this->_handler->selectorToXpath('css', $locator);

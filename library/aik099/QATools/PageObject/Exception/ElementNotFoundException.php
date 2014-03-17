@@ -24,7 +24,7 @@ class ElementNotFoundException extends ElementException
 	 * @param integer    $code     Code.
 	 * @param \Exception $previous Previous exception.
 	 */
-	public function __construct($message = "", $code = 0, \Exception $previous = null)
+	public function __construct($message = '', $code = 0, \Exception $previous = null)
 	{
 		parent::__construct($message, self::TYPE_NOT_FOUND, $previous);
 	}

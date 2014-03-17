@@ -46,7 +46,7 @@ class RadioGroupTest extends TypifiedElementTest
 	public function testGetButtons(array $xpath_expressions, $radio_name)
 	{
 		$this->webElement->shouldReceive('getAttribute')->with('name')->once()->andReturn($radio_name);
-		$this->selectorsHandler->shouldReceive('xpathLiteral')->with($radio_name)->andReturn("'$radio_name'");
+		$this->selectorsHandler->shouldReceive('xpathLiteral')->with($radio_name)->andReturn("'" . $radio_name . "'");
 
 		foreach ( $xpath_expressions as $xpath_expression ) {
 			$expected = crc32($xpath_expression);
@@ -78,7 +78,7 @@ class RadioGroupTest extends TypifiedElementTest
 		return array(
 			array(
 				array(
-					"self::*",
+					'self::*',
 					"following::input[@type = 'radio']",
 					"preceding::input[@type = 'radio']",
 				),
@@ -86,7 +86,7 @@ class RadioGroupTest extends TypifiedElementTest
 			),
 			array(
 				array(
-					"self::*",
+					'self::*',
 					"following::input[@type = 'radio' and @name = 'RN']",
 					"preceding::input[@type = 'radio' and @name = 'RN']",
 				),
