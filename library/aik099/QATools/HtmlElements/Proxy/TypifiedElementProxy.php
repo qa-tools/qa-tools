@@ -71,7 +71,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 			$wrapped_element->setContainer($this->getContainer());
 
 			/* @var $object TypifiedElement */
-			$object = new $this->className($wrapped_element);
+			$object = new $this->className($wrapped_element, $this->pageFactory);
 			$object->setName($this->getName());
 
 			$this->object = $object;
