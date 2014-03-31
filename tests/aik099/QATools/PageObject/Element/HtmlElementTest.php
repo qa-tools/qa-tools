@@ -35,6 +35,20 @@ class HtmlElementTest extends WebElementTest
 	}
 
 	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testGetPageFactory()
+	{
+		$element = $this->createElement();
+		$method = new \ReflectionMethod(get_class($element), 'getPageFactory');
+		$method->setAccessible(true);
+
+		$this->assertSame($this->pageFactory, $method->invoke($element));
+	}
+
+	/**
 	 * Create element.
 	 *
 	 * @return HtmlElementChild

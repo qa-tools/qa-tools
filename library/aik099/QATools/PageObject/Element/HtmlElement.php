@@ -23,6 +23,13 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 {
 
 	/**
+	 * Stores instance of used page factory.
+	 *
+	 * @var IPageFactory
+	 */
+	private $_pageFactory;
+
+	/**
 	 * Initializes html element.
 	 *
 	 * @param array        $selenium_selector Element selector.
@@ -32,7 +39,9 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 	{
 		parent::__construct($selenium_selector, $page_factory->getSession());
 
-		$page_factory->initHtmlElement($this)->initElements($this, $page_factory->createDecorator($this));
+		$this->_pageFactory = $page_factory;
+		$this->_pageFactory->initHtmlElement($this);
+		$this->_pageFactory->initElements($this, $this->_pageFactory->createDecorator($this));
 	}
 
 	/**
@@ -48,6 +57,16 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 		$selenium_selector = array(How::XPATH => $node_element->getXpath());
 
 		return new static($selenium_selector, $page_factory);
+	}
+
+	/**
+	 * Returns page factory, used during object creation.
+	 *
+	 * @return IPageFactory
+	 */
+	protected function getPageFactory()
+	{
+		return $this->_pageFactory;
 	}
 
 }

@@ -11,8 +11,8 @@
 namespace tests\aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\HtmlElements\Element\HtmlElement;
 use Mockery as m;
-use aik099\QATools\HtmlElements\Element\TypifiedElement;
 
 class HtmlElementTest extends TypifiedElementTest
 {
@@ -40,7 +40,7 @@ class HtmlElementTest extends TypifiedElementTest
 	{
 		parent::setUpBeforeCreateElement();
 
-		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill');
+		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory');
 		$times = in_array($this->getName(), $two_times_tests) ? 2 : 1;
 
 		$this->pageFactory->shouldReceive('initHtmlElement')->times($times)->andReturn($this->pageFactory);
@@ -66,9 +66,23 @@ class HtmlElementTest extends TypifiedElementTest
 	}
 
 	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testGetPageFactory()
+	{
+		$element = $this->createElement();
+		$method = new \ReflectionMethod(get_class($element), 'getPageFactory');
+		$method->setAccessible(true);
+
+		$this->assertSame($this->pageFactory, $method->invoke($element));
+	}
+
+	/**
 	 * Create element.
 	 *
-	 * @return TypifiedElement
+	 * @return HtmlElement
 	 */
 	protected function createElement()
 	{

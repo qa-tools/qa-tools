@@ -25,6 +25,13 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 {
 
 	/**
+	 * Stores instance of used page factory.
+	 *
+	 * @var IPageFactory
+	 */
+	private $_pageFactory;
+
+	/**
 	 * Specifies wrapped WebElement.
 	 *
 	 * @param WebElement   $wrapped_element Element to be wrapped.
@@ -34,7 +41,19 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 	{
 		parent::__construct($wrapped_element);
 
-		$page_factory->initHtmlElement($this)->initElements($this, $page_factory->createDecorator($this));
+		$this->_pageFactory = $page_factory;
+		$this->_pageFactory->initHtmlElement($this);
+		$this->_pageFactory->initElements($this, $page_factory->createDecorator($this));
+	}
+
+	/**
+	 * Returns page factory, used during object creation.
+	 *
+	 * @return IPageFactory
+	 */
+	protected function getPageFactory()
+	{
+		return $this->_pageFactory;
 	}
 
 	/**
