@@ -6,7 +6,7 @@ php:
     - 5.5
 
 before_script:
-    - composer require satooshi/php-coveralls:dev-master --dev --prefer-source
+    - composer require satooshi/php-coveralls:dev-master phpunit/phpunit:~3.7 --dev --prefer-source
 
 script:
     - mkdir -p build/logs
