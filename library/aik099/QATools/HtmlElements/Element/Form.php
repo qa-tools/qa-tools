@@ -58,7 +58,13 @@ class Form extends HtmlElement
 	 */
 	public function getWebElement($field_name)
 	{
-		$node_element = $this->find('named', array('field', $field_name));
+		if ( $this->_isAutomaticSelectorEscaping() ) {
+			$node_element = $this->find('named', array('field', $field_name));
+		}
+		else {
+			$escaped_field_name = $this->getSelectorsHandler()->xpathLiteral($field_name);
+			$node_element = $this->find('named', array('field', $escaped_field_name));
+		}
 
 		if ( is_null($node_element) ) {
 			throw new FormException(
@@ -68,6 +74,16 @@ class Form extends HtmlElement
 		}
 
 		return WebElement::fromNodeElement($node_element);
+	}
+
+	/**
+	 * Determines if Mink does automatic selector escaping.
+	 *
+	 * @return boolean
+	 */
+	private function _isAutomaticSelectorEscaping()
+	{
+		return class_exists('Behat\\Mink\\Selector\\Xpath\\Escaper');
 	}
 
 	/**
