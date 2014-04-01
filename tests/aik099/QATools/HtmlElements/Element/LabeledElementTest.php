@@ -39,7 +39,11 @@ class LabeledElementTest extends TypifiedElementTest
 	public function testGetLabelById()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
-		$container->shouldReceive('find')->with('xpath', 'descendant-or-self::label[@for = ID_VALUE_ESCAPED]')->once()->andReturn('FOUND1');
+		$container
+			->shouldReceive('find')
+			->with('xpath', 'descendant-or-self::label[@for = ID_VALUE_ESCAPED]')
+			->once()
+			->andReturn('FOUND1');
 
 		$this->webElement->shouldReceive('getContainer')->withNoArgs()->once()->andReturn($container);
 		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturn('ID_VALUE');
@@ -69,9 +73,21 @@ class LabeledElementTest extends TypifiedElementTest
 	 */
 	public function testGetFollowingLabel()
 	{
-		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturnNull();
-		$this->webElement->shouldReceive('find')->with('xpath', 'parent::label')->once()->andReturnNull();
-		$this->webElement->shouldReceive('find')->with('xpath', 'following-sibling::*[1][self::label]')->once()->andReturn('FOUND3');
+		$this->webElement
+			->shouldReceive('getAttribute')
+			->with('id')
+			->once()
+			->andReturnNull();
+		$this->webElement
+			->shouldReceive('find')
+			->with('xpath', 'parent::label')
+			->once()
+			->andReturnNull();
+		$this->webElement
+			->shouldReceive('find')
+			->with('xpath', 'following-sibling::*[1][self::label]')
+			->once()
+			->andReturn('FOUND3');
 
 		$this->assertEquals('FOUND3', $this->getElement()->getLabel());
 	}

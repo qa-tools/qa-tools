@@ -63,7 +63,10 @@ class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	{
 		$data = parent::proxyDataProvider();
 
-		$data[] = array('\\aik099\\QATools\\HtmlElements\\Element\\TextBlock', '\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy');
+		$data[] = array(
+			'\\aik099\\QATools\\HtmlElements\\Element\\TextBlock',
+			'\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy',
+		);
 
 		return $data;
 	}

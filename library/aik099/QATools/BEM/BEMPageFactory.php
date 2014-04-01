@@ -40,7 +40,11 @@ class BEMPageFactory extends PageFactory
 	 * @param AnnotationManager|null $annotation_manager Annotation manager.
 	 * @param LocatorHelper          $locator_helper     Locator helper.
 	 */
-	public function __construct(Session $session, AnnotationManager $annotation_manager = null, LocatorHelper $locator_helper = null)
+	public function __construct(
+		Session $session,
+		AnnotationManager $annotation_manager = null,
+		LocatorHelper $locator_helper = null
+	)
 	{
 		$this->annotationRegistry['bem'] = '\\aik099\\QATools\\BEM\\Annotation\\BEMAnnotation';
 

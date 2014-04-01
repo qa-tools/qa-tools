@@ -90,11 +90,19 @@ class FormTest extends HtmlElementTest
 		$node_element = $this->createNodeElement();
 
 		if ( $this->_isAutomaticSelectorEscaping() ) {
-			$this->webElement->shouldReceive('find')->with('named', array('field', "field-name"))->once()->andReturn($node_element);
+			$this->webElement
+				->shouldReceive('find')
+				->with('named', array('field', 'field-name'))
+				->once()
+				->andReturn($node_element);
 		}
 		else {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
-			$this->webElement->shouldReceive('find')->with('named', array('field', "'field-name'"))->once()->andReturn($node_element);
+			$this->webElement
+				->shouldReceive('find')
+				->with('named', array('field', "'field-name'"))
+				->once()
+				->andReturn($node_element);
 		}
 
 		$found_element = $this->getElement()->getWebElement('field-name');

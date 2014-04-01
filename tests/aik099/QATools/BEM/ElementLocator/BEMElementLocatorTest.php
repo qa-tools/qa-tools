@@ -163,7 +163,10 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 			->once()
 			->andReturn('OK');
 
-		$this->assertEquals('OK', $this->locator->getElementLocator('element-name', 'block-name', 'modificator-name', 'modificator-value'));
+		$this->assertEquals(
+			'OK',
+			$this->locator->getElementLocator('element-name', 'block-name', 'modificator-name', 'modificator-value')
+		);
 	}
 
 	/**
@@ -178,10 +181,15 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		if ( $mock_methods ) {
 			$class = $this->locatorClass . '[' . implode(',', $mock_methods) . ']';
 
-			return m::mock($class, array($this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper));
+			return m::mock(
+				$class,
+				array($this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper)
+			);
 		}
 
-		return new $this->locatorClass($this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper);
+		return new $this->locatorClass(
+			$this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper
+		);
 	}
 
 }

@@ -54,8 +54,15 @@ class RadioGroupTest extends TypifiedElementTest
 			$node_element->shouldReceive('getXpath')->andReturn($expected);
 			$node_element->shouldReceive('getSession')->andReturn($this->session);
 
-			$this->selectorsHandler->shouldReceive('selectorToXpath')->with('se', array('xpath' => $expected))->andReturn($expected);
-			$this->webElement->shouldReceive('findAll')->with('xpath', $xpath_expression)->once()->andReturn(array($node_element));
+			$this->selectorsHandler
+				->shouldReceive('selectorToXpath')
+				->with('se', array('xpath' => $expected))
+				->andReturn($expected);
+			$this->webElement
+				->shouldReceive('findAll')
+				->with('xpath', $xpath_expression)
+				->once()
+				->andReturn(array($node_element));
 		}
 
 		$buttons = $this->getElement()->getButtons();

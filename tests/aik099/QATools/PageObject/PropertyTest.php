@@ -171,7 +171,11 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	public function testGetAnnotations()
 	{
 		$expected = 'OK';
-		$this->annotationManager->shouldReceive('getPropertyAnnotations')->with($this->property, null, 'A')->once()->andReturn($expected);
+		$this->annotationManager
+			->shouldReceive('getPropertyAnnotations')
+			->with($this->property, null, 'A')
+			->once()
+			->andReturn($expected);
 
 		$this->assertEquals($expected, $this->property->getAnnotations('A'));
 	}
@@ -184,7 +188,11 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	public function testGetAnnotationsFromPropertyOrClass()
 	{
 		$expected = 'OK';
-		$this->annotationManager->shouldReceive('getPropertyAnnotations')->with($this->property, null, 'A')->once()->andReturn($expected);
+		$this->annotationManager
+			->shouldReceive('getPropertyAnnotations')
+			->with($this->property, null, 'A')
+			->once()
+			->andReturn($expected);
 
 		$this->assertEquals($expected, $this->property->getAnnotationsFromPropertyOrClass('A'));
 	}
@@ -200,11 +208,23 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$var_annotation->type = 'DT';
 
 		$expected = 'OK';
-		$this->annotationManager->shouldReceive('getPropertyAnnotations')->with($this->property, null, '@var')->once()->andReturn(
-			array($var_annotation)
-		);
-		$this->annotationManager->shouldReceive('getPropertyAnnotations')->with($this->property, null, 'A')->once()->andReturn(array());
-		$this->annotationManager->shouldReceive('getClassAnnotations')->with('DT', 'A')->once()->andReturn('OK');
+		$this->annotationManager
+			->shouldReceive('getPropertyAnnotations')
+			->with($this->property, null, '@var')
+			->once()
+			->andReturn(
+				array($var_annotation)
+			);
+		$this->annotationManager
+			->shouldReceive('getPropertyAnnotations')
+			->with($this->property, null, 'A')
+			->once()
+			->andReturn(array());
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with('DT', 'A')
+			->once()
+			->andReturn('OK');
 
 		$this->assertEquals($expected, $this->property->getAnnotationsFromPropertyOrClass('A'));
 	}

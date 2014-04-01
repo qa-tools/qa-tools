@@ -41,7 +41,12 @@ class BEMElementLocator extends DefaultElementLocator
 	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 * @param LocatorHelper     $locator_helper     Locator helper.
 	 */
-	public function __construct(Property $property, ISearchContext $search_context, AnnotationManager $annotation_manager, LocatorHelper $locator_helper)
+	public function __construct(
+		Property $property,
+		ISearchContext $search_context,
+		AnnotationManager $annotation_manager,
+		LocatorHelper $locator_helper
+	)
 	{
 		parent::__construct($property, $search_context, $annotation_manager);
 

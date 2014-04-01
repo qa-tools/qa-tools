@@ -86,9 +86,13 @@ class SelectTest extends TypifiedElementTest
 	{
 		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
 
-		$this->webElement->shouldReceive('findAll')->with('xpath', 'descendant-or-self::option[@value = SV]')->once()->andReturn(
-			array($this->createNodeElement())
-		);
+		$this->webElement
+			->shouldReceive('findAll')
+			->with('xpath', 'descendant-or-self::option[@value = SV]')
+			->once()
+			->andReturn(
+				array($this->createNodeElement())
+			);
 
 		$this->assertValidOptions($this->getElement()->getOptionsByValue('SV'));
 	}
