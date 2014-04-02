@@ -4,6 +4,9 @@
 [![Coverage Status](https://coveralls.io/repos/aik099/qa-tools/badge.png?branch=master)](https://coveralls.io/r/aik099/qa-tools?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/52ad65f5ec1375a2870000b2/badge.png)](https://www.versioneye.com/user/projects/52ad65f5ec1375a2870000b2)
 
+[![Latest Stable Version](https://poser.pugx.org/aik099/qa-tools/v/stable.png)](https://packagist.org/packages/aik099/qa-tools)
+[![Total Downloads](https://poser.pugx.org/aik099/qa-tools/downloads.png)](https://packagist.org/packages/aik099/qa-tools)
+
 Quality assurance utilities for functional tests.
 
 Library implements [Page Object Pattern](docs/PageObjectPattern.md), used in variety of testing frameworks (e.g. Selenium browser automation framework).
