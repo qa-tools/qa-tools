@@ -118,13 +118,7 @@ But single HTML node (or it's element) can be within different blocks at same ti
 {
 	"require": {
 		"aik099/qa-tools": "dev-master"
-	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/aik099/qa-tools"
-		}
-	]
+	}
 }
 ```
 
