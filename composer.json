@@ -1,7 +1,7 @@
 {
 	"name": "aik099/qa-tools",
 	"description": "Library that provides easy-to-use way of interaction with web-page elements in functional tests using PageObject pattern.",
-	"keywords": ["PageObject", "HtmlElements", "BEM", "Mink", "PHPUnit", "Tests"],
+	"keywords": ["PageObject", "HtmlElements", "BEM", "Mink", "PHPUnit", "functional", "acceptance", "Tests"],
 	"license": "BSD-3-Clause",
 
 	"authors": [
