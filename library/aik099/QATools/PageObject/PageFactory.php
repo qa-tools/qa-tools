@@ -16,7 +16,7 @@ use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
-use aik099\QATools\PageObject\Element\IHtmlElement;
+use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
@@ -159,13 +159,13 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
-	 * Initializes HtmlElement.
+	 * Initializes ElementContainer.
 	 *
-	 * @param IHtmlElement $html_element HtmlElement to be initialized.
+	 * @param IElementContainer $element_container ElementContainer to be initialized.
 	 *
 	 * @return self
 	 */
-	public function initHtmlElement(IHtmlElement $html_element)
+	public function initElementContainer(IElementContainer $element_container)
 	{
 		return $this;
 	}

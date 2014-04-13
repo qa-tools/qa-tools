@@ -8,12 +8,12 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace tests\aik099\QATools\HtmlElements\Fixture\Element;
+namespace tests\aik099\QATools\PageObject\Fixture\Element;
 
 
-use aik099\QATools\HtmlElements\Element\HtmlElement;
+use aik099\QATools\PageObject\Element\ElementContainer;
 
-class HtmlElementChild extends HtmlElement
+class ElementContainerChild extends ElementContainer
 {
 
 }

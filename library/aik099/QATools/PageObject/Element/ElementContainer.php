@@ -19,7 +19,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * To make a class that will represent a block of elements (e.g. web form) create a descendant of this class.
  */
-abstract class HtmlElement extends WebElement implements IHtmlElement
+abstract class ElementContainer extends WebElement implements IElementContainer
 {
 
 	/**
@@ -40,7 +40,7 @@ abstract class HtmlElement extends WebElement implements IHtmlElement
 		parent::__construct($selenium_selector, $page_factory->getSession());
 
 		$this->_pageFactory = $page_factory;
-		$this->_pageFactory->initHtmlElement($this);
+		$this->_pageFactory->initElementContainer($this);
 		$this->_pageFactory->initElements($this, $this->_pageFactory->createDecorator($this));
 	}
 

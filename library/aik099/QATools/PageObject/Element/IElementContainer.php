@@ -8,12 +8,15 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace tests\aik099\QATools\PageObject\Fixture\Element;
+namespace aik099\QATools\PageObject\Element;
 
 
-use aik099\QATools\PageObject\Element\HtmlElement;
+use aik099\QATools\PageObject\ISearchContext;
 
-class HtmlElementChild extends HtmlElement
+/**
+ * Interface to allow ElementContainer class detection in proxies.
+ */
+interface IElementContainer extends IContainerAware, ISearchContext
 {
 
 }

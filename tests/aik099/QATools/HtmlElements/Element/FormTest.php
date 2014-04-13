@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 use aik099\QATools\HtmlElements\Element\Form;
 use Mockery as m;
 
-class FormTest extends HtmlElementTest
+class FormTest extends ElementContainerTest
 {
 
 	const TYPIFIED_ELEMENT_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement';

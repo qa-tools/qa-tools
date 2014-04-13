@@ -12,7 +12,7 @@ namespace aik099\QATools\PageObject;
 
 
 use Behat\Mink\Session;
-use aik099\QATools\PageObject\Element\IHtmlElement;
+use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
@@ -49,13 +49,13 @@ interface IPageFactory
 	public function initPage(Page $page);
 
 	/**
-	 * Initializes HtmlElement.
+	 * Initializes ElementContainer.
 	 *
-	 * @param IHtmlElement $html_element HtmlElement to be initialized.
+	 * @param IElementContainer $element_container ElementContainer to be initialized.
 	 *
 	 * @return self
 	 */
-	public function initHtmlElement(IHtmlElement $html_element);
+	public function initElementContainer(IElementContainer $element_container);
 
 	/**
 	 * Initializes elements in given search context.

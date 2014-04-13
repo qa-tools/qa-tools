@@ -8,16 +8,14 @@
  * @link      https://github.com/aik099/qa-tools
  */
 
-namespace tests\aik099\QATools\HtmlElements\Proxy;
+namespace tests\aik099\QATools\PageObject\Proxy;
 
 
-use aik099\QATools\HtmlElements\Proxy\TypifiedElementProxy;
+use aik099\QATools\PageObject\Proxy\WebElementProxy;
 use Mockery as m;
 
-class HtmlElementProxyTest extends TypifiedElementProxyTest
+class ElementContainerProxyTest extends WebElementProxyTest
 {
-
-	const ELEMENT_CLASS = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\HtmlElementChild';
 
 	/**
 	 * Occurs before "setUp" method is finished configuration jobs.
@@ -26,7 +24,7 @@ class HtmlElementProxyTest extends TypifiedElementProxyTest
 	 */
 	protected function beforeSetUpFinish()
 	{
-		$this->pageFactory->shouldReceive('initHtmlElement')->andReturn($this->pageFactory);
+		$this->pageFactory->shouldReceive('initElementContainer')->andReturn($this->pageFactory);
 
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
 		$this->pageFactory->shouldReceive('createDecorator')->andReturn($decorator);
@@ -49,27 +47,15 @@ class HtmlElementProxyTest extends TypifiedElementProxyTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
-	public function testDefaultClassName()
-	{
-		$expected = self::ELEMENT_CLASS;
-
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
-	}
-
-	/**
 	 * Creates a proxy.
 	 *
-	 * @return TypifiedElementProxy
+	 * @return WebElementProxy
 	 */
 	protected function createProxy()
 	{
-		/** @var TypifiedElementProxy $proxy */
-		$proxy = new $this->proxyClass($this->locator, $this->pageFactory, 'sample-name');
-		$proxy->setClassName(self::ELEMENT_CLASS);
+		/** @var WebElementProxy $proxy */
+		$proxy = new $this->proxyClass($this->locator, $this->pageFactory);
+		$proxy->setClassName('\\tests\\aik099\\QATools\\PageObject\\Fixture\\Element\\ElementContainerChild');
 
 		return $proxy;
 	}

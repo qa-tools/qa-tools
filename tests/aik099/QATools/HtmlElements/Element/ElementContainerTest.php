@@ -11,10 +11,10 @@
 namespace tests\aik099\QATools\HtmlElements\Element;
 
 
-use aik099\QATools\HtmlElements\Element\HtmlElement;
+use aik099\QATools\HtmlElements\Element\ElementContainer;
 use Mockery as m;
 
-class HtmlElementTest extends TypifiedElementTest
+class ElementContainerTest extends TypifiedElementTest
 {
 
 	/**
@@ -25,7 +25,7 @@ class HtmlElementTest extends TypifiedElementTest
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
-			$this->elementClass = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\HtmlElementChild';
+			$this->elementClass = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\ElementContainerChild';
 		}
 
 		parent::setUp();
@@ -43,7 +43,7 @@ class HtmlElementTest extends TypifiedElementTest
 		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory');
 		$times = in_array($this->getName(), $two_times_tests) ? 2 : 1;
 
-		$this->pageFactory->shouldReceive('initHtmlElement')->times($times)->andReturn($this->pageFactory);
+		$this->pageFactory->shouldReceive('initElementContainer')->times($times)->andReturn($this->pageFactory);
 		$this->pageFactory->shouldReceive('initElements')->times($times)->andReturn($this->pageFactory);
 
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
@@ -81,8 +81,10 @@ class HtmlElementTest extends TypifiedElementTest
 
 	/**
 	 * Create element.
-	 *
-	 * @return HtmlElement
+
+
+*
+*@return ElementContainer
 	 */
 	protected function createElement()
 	{

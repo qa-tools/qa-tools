@@ -17,7 +17,7 @@ use aik099\QATools\PageObject\Element\WebElement;
 /**
  * Form element.
  */
-class Form extends HtmlElement
+class Form extends ElementContainer
 {
 
 	const TEXT_INPUT = 'text';

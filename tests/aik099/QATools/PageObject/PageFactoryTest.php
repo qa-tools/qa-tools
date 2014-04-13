@@ -69,7 +69,7 @@ class PageFactoryTest extends TestCase
 		parent::setUp();
 
 		$this->pageFactory->shouldReceive('initPage')->andReturn(\Mockery::self());
-		$this->pageFactory->shouldReceive('initHtmlElement')->andReturn(\Mockery::self());
+		$this->pageFactory->shouldReceive('initElementContainer')->andReturn(\Mockery::self());
 		$this->pageFactory->shouldReceive('initElements')->andReturn(\Mockery::self());
 
 		$this->selectorsHandler->shouldReceive('isSelectorRegistered')->andReturn(false);
@@ -217,10 +217,10 @@ class PageFactoryTest extends TestCase
 	 *
 	 * @return void
 	 */
-	public function testInitHtmlElement()
+	public function testInitElementContainer()
 	{
-		$html_element = m::mock('\\aik099\\QATools\\PageObject\\Element\\HtmlElement');
-		$this->assertSame($this->realFactory, $this->realFactory->initHtmlElement($html_element));
+		$element_container = m::mock('\\aik099\\QATools\\PageObject\\Element\\ElementContainer');
+		$this->assertSame($this->realFactory, $this->realFactory->initElementContainer($element_container));
 	}
 
 	/**

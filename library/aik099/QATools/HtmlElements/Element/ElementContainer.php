@@ -12,7 +12,7 @@ namespace aik099\QATools\HtmlElements\Element;
 
 
 use Behat\Mink\Element\NodeElement;
-use aik099\QATools\PageObject\Element\IHtmlElement;
+use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\IPageFactory;
 
@@ -21,7 +21,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * To make a class that will represent a block of elements (e.g. web form) create a descendant of this class.
  */
-abstract class HtmlElement extends TypifiedElement implements IHtmlElement
+abstract class ElementContainer extends TypifiedElement implements IElementContainer
 {
 
 	/**
@@ -42,7 +42,7 @@ abstract class HtmlElement extends TypifiedElement implements IHtmlElement
 		parent::__construct($wrapped_element);
 
 		$this->_pageFactory = $page_factory;
-		$this->_pageFactory->initHtmlElement($this);
+		$this->_pageFactory->initElementContainer($this);
 		$this->_pageFactory->initElements($this, $page_factory->createDecorator($this));
 	}
 

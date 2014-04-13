@@ -28,7 +28,7 @@ Implementation of Page Object pattern as done in Selenium Java library.
 | ------------- | ------------- |
 | `\aik099\QATools\PageObject\Page` | Abstract class for creating dedicated classes for each of the website pages, that needs to be tested (descendant of [DocumentElement](http://mink.behat.org/api/behat/mink/element/documentelement.html)). |
 | `\aik099\QATools\PageObject\Element\WebElement` | Class for interacting with __one__ element on page (descendant of [NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)). |
-| `\aik099\QATools\PageObject\Element\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
+| `\aik099\QATools\PageObject\Element\ElementContainer` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 
@@ -40,7 +40,7 @@ Implementation of Page Object pattern as done in Selenium Java library.
 ### Usage
 
 1. create subclass from `\aik099\QATools\PageObject\Page` class
-2. add class properties, that have `\aik099\QATools\PageObject\Element\WebElement` or `\aik099\QATools\PageObject\Element\HtmlElement` in their `@var` annotation
+2. add class properties, that have `\aik099\QATools\PageObject\Element\WebElement` or `\aik099\QATools\PageObject\Element\ElementContainer` in their `@var` annotation
 3. create public method(-s), that would use properties defined before
 
 [Continue to Examples](docs/PageObject.md)
@@ -56,7 +56,7 @@ This library solves major problem with PageObject implementation, that original 
 | ------------- | ------------- |
 | `\aik099\QATools\HtmlElements\TypifiedPage` | Abstract class for creating dedicated classes for each of website pages, that needs to be tested. |
 | `\aik099\QATools\HtmlElements\TypifiedElement` | Base class for all other elements in this library, that wraps around WebElement and only exposes methods, that are common for all elements. |
-| `\aik099\QATools\HtmlElements\HtmlElement` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\HtmlElement`). |
+| `\aik099\QATools\HtmlElements\ElementContainer` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\ElementContainer`). |
 | `\aik099\QATools\HtmlElements\LabeledElement` | Element, that has associated LABEL element on a page (e.g. radio button or a checkbox). |
 | `\aik099\QATools\HtmlElements\Button` | Button. |
 | `\aik099\QATools\HtmlElements\Checkbox` | Checkbox. |

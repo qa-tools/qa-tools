@@ -12,9 +12,9 @@ namespace tests\aik099\QATools\PageObject\Element;
 
 
 use Mockery as m;
-use tests\aik099\QATools\PageObject\Fixture\Element\HtmlElementChild;
+use tests\aik099\QATools\PageObject\Fixture\Element\ElementContainerChild;
 
-class HtmlElementTest extends WebElementTest
+class ElementContainerTest extends WebElementTest
 {
 
 	/**
@@ -26,8 +26,8 @@ class HtmlElementTest extends WebElementTest
 	{
 		parent::setUp();
 
-		$this->elementClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Element\\HtmlElementChild';
-		$this->pageFactory->shouldReceive('initHtmlElement')->once()->andReturn($this->pageFactory);
+		$this->elementClass = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Element\\ElementContainerChild';
+		$this->pageFactory->shouldReceive('initElementContainer')->once()->andReturn($this->pageFactory);
 		$this->pageFactory->shouldReceive('initElements')->once()->andReturn($this->pageFactory);
 
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
@@ -50,8 +50,9 @@ class HtmlElementTest extends WebElementTest
 
 	/**
 	 * Create element.
+
 	 *
-	 * @return HtmlElementChild
+*@return ElementContainerChild
 	 */
 	protected function createElement()
 	{
