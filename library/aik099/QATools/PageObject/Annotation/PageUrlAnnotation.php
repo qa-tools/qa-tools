@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Annotation;
 use mindplay\annotations\Annotation;
 
 /**
- * Defines Selenium-related metadata.
+ * Defines page metadata.
  *
  * @usage('class'=>true, 'inherited'=>true)
  */
