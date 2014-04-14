@@ -85,15 +85,13 @@ class BEMElementLocator extends DefaultElementLocator
 	/**
 	 * Returns final selector to be used for element locating.
 	 *
-	 * @param Property $property Property.
-	 *
 	 * @return array
 	 * @throws AnnotationException When required @bem annotation is missing.
 	 */
-	protected function getSelector(Property $property)
+	protected function getSelector()
 	{
 		/* @var $annotations BEMAnnotation[] */
-		$annotations = $property->getAnnotations('@bem');
+		$annotations = $this->property->getAnnotations('@bem');
 
 		if ( !$annotations ) {
 			throw new AnnotationException(

@@ -108,7 +108,7 @@ class DefaultElementLocator implements IElementLocator
 			return $this->cachedElements;
 		}*/
 
-		$elements = $this->searchContext->findAll('se', $this->getSelector($this->property));
+		$elements = $this->searchContext->findAll('se', $this->getSelector());
 
 		/*if ( $this->shouldCache ) {
 			$this->cachedElements = $elements;
@@ -120,19 +120,17 @@ class DefaultElementLocator implements IElementLocator
 	/**
 	 * Returns final selector to be used for element locating.
 	 *
-	 * @param Property $property Property.
-	 *
 	 * @return array
 	 * @throws AnnotationException When required @find-by annotation is missing.
 	 */
-	protected function getSelector(Property $property)
+	protected function getSelector()
 	{
 		/* @var $annotations FindByAnnotation[] */
-		$annotations = $property->getAnnotationsFromPropertyOrClass('@find-by');
+		$annotations = $this->property->getAnnotationsFromPropertyOrClass('@find-by');
 		$selector = $annotations ? $annotations[0]->getSelector() : array();
 
 		if ( !$selector ) {
-			$parameters = array((string)$property, $property->getDataType());
+			$parameters = array((string)$this->property, $this->property->getDataType());
 			$message = '@find-by must be specified in the property "%s" DocBlock or in class "%s" DocBlock';
 
 			throw new AnnotationException(vsprintf($message, $parameters), AnnotationException::TYPE_REQUIRED);
@@ -148,7 +146,7 @@ class DefaultElementLocator implements IElementLocator
 	 */
 	public function __toString()
 	{
-		return var_export(array('se' => $this->getSelector($this->property)), true);
+		return var_export(array('se' => $this->getSelector()), true);
 	}
 
 }
