@@ -22,6 +22,7 @@
 	},
 
 	"require-dev": {
+		"aik099/coding-standard": "dev-master",
 		"phpunit/phpunit": ">=3.7.8",
 		"brianium/paratest": "dev-master",
 		"behat/mink-selenium2-driver": "~1.1@dev",
