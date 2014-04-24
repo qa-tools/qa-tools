@@ -50,7 +50,16 @@ abstract class Page extends DocumentElement implements ISearchContext
 	 */
 	public function getAbsoluteUrl(array $params = array())
 	{
-		return $this->relativeUrl;
+		if ( empty($params) ) {
+			return $this->relativeUrl;
+		}
+
+		$query = http_build_query($params);
+
+		// Check if a ? is already present then glue together with & instead of ?
+		$glue = strpos($this->relativeUrl, '?') === false ? '?' : '&';
+
+		return $this->relativeUrl . $glue . $query;
 	}
 
 	/**
