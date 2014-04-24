@@ -23,8 +23,8 @@
 
 	"require-dev": {
 		"aik099/coding-standard": "dev-master",
-		"phpunit/phpunit": ">=3.7.8",
-		"brianium/paratest": "dev-master",
+		"phpunit/phpunit": "~3.7",
+		"brianium/paratest": "0.6.1",
 		"behat/mink-selenium2-driver": "~1.1@dev",
 		"mockery/mockery": "0.9.0"
 	},
