@@ -99,4 +99,57 @@ class PageTest extends TestCase
 		$this->page->open();
 	}
 
+	/**
+	 * Tests if params are correctly added to the URL.
+	 *
+	 * @param string $url      The target url.
+	 * @param string $expected The expected merged url.
+	 * @param array  $params   The GET params.
+	 *
+	 * @dataProvider getAbsoluteUrlWithParamsDataProvider
+	 * @return void
+	 */
+	public function testGetAbsoluteUrlWithParams($url, $expected, array $params)
+	{
+		$this->page->relativeUrl = $url;
+		$this->assertEquals($expected, $this->page->getAbsoluteUrl($params));
+	}
+
+	/**
+	 * Data Provider for the GET Param test.
+	 *
+	 * @return array
+	 */
+	public function getAbsoluteUrlWithParamsDataProvider()
+	{
+		return array(
+			array(
+				'RL',
+				'RL?param1=value1&param2=value2',
+				array('param1' => 'value1', 'param2' => 'value2'),
+			),
+			array(
+				'RL?param=value',
+				'RL?param=value&param1=value1&param2=value2',
+				array('param1' => 'value1', 'param2' => 'value2'),
+			),
+		);
+	}
+
+	/**
+	 * Test that open is still working if params are passed.
+	 *
+	 * @return void
+	 */
+	public function testOpenWithParamsCorrect()
+	{
+		$url = 'RL';
+		$expected = $url . '?param=value';
+		$params = array('param' => 'value');
+
+		$this->session->shouldReceive('visit')->with($expected)->once()->andReturnNull();
+
+		$this->page->relativeUrl = $url;
+		$this->assertSame($this->page, $this->page->open($params));
+	}
 }
