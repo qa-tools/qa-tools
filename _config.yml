@@ -1,0 +1,25 @@
+# Dependencies
+markdown:         redcarpet
+redcarpet:
+    extensions:   ["autolink", "tables"]
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            QA-Tools
+tagline:          'Quality assurance utilities for functional tests'
+description:      'Easy-to-use way of interaction with web-page elements in functional tests using PageObject pattern.'
+url:              http://qa-tools.alex-time.com
+
+exclude:          [vendor, atlassian-ide-plugin.xml, phpunit.xml, composer.lock]
+timezone:         Europe/Riga
+
+author:
+  name:           'Alexander Obuhovich'
+  url:            https://twitter.com/aik099
+
+# Custom vars
+github:
+  repo:           https://github.com/aik099/qa-tools
