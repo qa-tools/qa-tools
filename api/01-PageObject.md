@@ -1,7 +1,8 @@
 ---
-layout: page
-title:  PageObject
-categories:   [api]
+layout:     page
+title:      PageObject
+categories: [api]
+gh-file:    api/01-PageObject.md
 ---
 
 ## aik099\QATools\PageObject

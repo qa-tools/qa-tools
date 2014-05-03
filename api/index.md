@@ -1,6 +1,7 @@
 ---
-layout: page
-title:  API
+layout:  page
+title:   API
+gh-file: api/index.md
 ---
 
 Please select library part to show API for:

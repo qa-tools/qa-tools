@@ -1,7 +1,8 @@
 ---
-layout: page
-title:  HtmlElements
-categories:   [examples]
+layout:     page
+title:      HtmlElements
+categories: [examples]
+gh-file:    examples/02-HtmlElements.md
 ---
 
 On a page there is a sidebar on the left. Inside a sidebar there are multiple sideboxes, and one of them is LoginBox. LoginBox consists of 2 inputs and submit button.

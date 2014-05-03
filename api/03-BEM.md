@@ -1,7 +1,8 @@
 ---
-layout: page
-title:  BEM
-categories:   [api]
+layout:     page
+title:      BEM
+categories: [api]
+gh-file:    api/03-BEM.md
 ---
 
 ## aik099\QATools\BEM

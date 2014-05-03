@@ -5,4 +5,13 @@ layout: default
 <div class="page">
   <h1 class="page-title">{{ page.title }}</h1>
   {{ content }}
+
+  {% if page.gh-file %}
+    <p class="fork_and_edit">
+      Found a typo ? Something is wrong in this documentation ? Just <a
+            href="https://github.com/aik099/qa-tools/edit/gh-pages/{{ page.gh-file }}">fork
+
+      and edit</a> it !
+    </p>
+  {% endif %}
 </div>

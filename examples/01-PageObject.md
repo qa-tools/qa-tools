@@ -1,7 +1,8 @@
 ---
-layout: page
-title:  PageObject
-categories:   [examples]
+layout:     page
+title:      PageObject
+categories: [examples]
+gh-file:    examples/01-PageObject.md
 ---
 
 Page with login box and currency selector.

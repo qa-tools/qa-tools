@@ -1,6 +1,7 @@
 ---
-layout: page
-title:  Examples
+layout:  page
+title:   Examples
+gh-file: examples/index.md
 ---
 
 Please select library part to show examples for:
