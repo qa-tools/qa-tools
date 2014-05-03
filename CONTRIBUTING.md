@@ -9,9 +9,10 @@ QA-Tools is an open source, community-driven project. If you'd like to contribut
 1. Create your feature addition or a bug fix branch based on `master` branch in your repository's fork.
 2. Make necessary changes, but __don't mix__ code reformatting with code changes on topic.
 3. Add tests for those changes (please look into `tests/` folder for some examples). This is important so we don't break it in a future version unintentionally.
-4. Commit your code.
-5. Squash your commits by topic to preserve a clean and readable log.
-6. Create Pull Request.
+4. Check your code using "Coding Standard" (see below).
+5. Commit your code.
+6. Squash your commits by topic to preserve a clean and readable log.
+7. Create Pull Request.
 
 # Running tests
 Make sure that you don't break anything with your changes by running:
@@ -19,3 +20,13 @@ Make sure that you don't break anything with your changes by running:
 ```bash
 $> phpunit
 ```
+
+# Checking coding standard violations
+
+This library uses [Coding Standard](https://github.com/aik099/CodingStandard) to ensure consistent formatting across the code base. Make sure you haven't introduced any Coding Standard violations by running following command in the root folder of the library:
+
+```bash
+$> phpcs --standard="vendor/aik099/coding-standard/CodingStandard" library tests
+```
+
+or by making your IDE ([instructions for PhpStorm](http://www.jetbrains.com/phpstorm/webhelp/using-php-code-sniffer-tool.html)) to check them automatically.
