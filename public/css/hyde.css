@@ -261,7 +261,7 @@ a.sidebar-nav-item:focus {
     height: 30px;
     margin: 60px auto 0;
     padding-top: 5px;
-    /*width: 670px;*/
+    width: 720px;
 }
 
 .fork_and_edit a {
