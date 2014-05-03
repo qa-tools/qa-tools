@@ -14,14 +14,14 @@ QA-Tools is an open source, community-driven project. If you'd like to contribut
 6. Squash your commits by topic to preserve a clean and readable log.
 7. Create Pull Request.
 
-# Running tests
+## Running tests
 Make sure that you don't break anything with your changes by running:
 
 ```bash
 $> phpunit
 ```
 
-# Checking coding standard violations
+## Checking coding standard violations
 
 This library uses [Coding Standard](https://github.com/aik099/CodingStandard) to ensure consistent formatting across the code base. Make sure you haven't introduced any Coding Standard violations by running following command in the root folder of the library:
 
