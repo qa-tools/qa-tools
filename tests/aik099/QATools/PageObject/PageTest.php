@@ -152,4 +152,5 @@ class PageTest extends TestCase
 		$this->page->relativeUrl = $url;
 		$this->assertSame($this->page, $this->page->open($params));
 	}
+
 }

@@ -10,6 +10,7 @@
 
 namespace aik099\QATools\PageObject;
 
+
 /**
  * Ways of finding element on a page in Selenium style.
  */

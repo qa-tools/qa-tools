@@ -50,9 +50,8 @@ class ElementContainerTest extends WebElementTest
 
 	/**
 	 * Create element.
-
 	 *
-*@return ElementContainerChild
+	 * @return ElementContainerChild
 	 */
 	protected function createElement()
 	{

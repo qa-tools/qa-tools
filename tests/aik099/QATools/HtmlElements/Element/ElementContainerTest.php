@@ -81,10 +81,8 @@ class ElementContainerTest extends TypifiedElementTest
 
 	/**
 	 * Create element.
-
-
-*
-*@return ElementContainer
+	 *
+	 * @return ElementContainer
 	 */
 	protected function createElement()
 	{
