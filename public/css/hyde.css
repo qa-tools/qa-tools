@@ -255,15 +255,16 @@ a.sidebar-nav-item:focus {
 /* Fork and Edit in Footer */
 
 .fork_and_edit {
-    text-align: center;
-    font-style: italic;
-    background: transparent url(../github.gif) no-repeat 0 0;
-    height: 30px;
-    margin: 60px auto 0;
-    padding-top: 5px;
-    width: 720px;
+  text-align: center;
+  font-style: italic;
+  margin: 60px auto 0;
+  padding-top: 5px;
 }
 
-.fork_and_edit a {
-    text-decoration: underline;
+.github_icon {
+  background: transparent url(../github.gif) no-repeat 0 0;
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
 }
