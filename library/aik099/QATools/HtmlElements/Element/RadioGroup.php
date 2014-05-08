@@ -141,9 +141,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	public function selectButtonByValue($value)
 	{
 		foreach ( $this->getButtons() as $button ) {
-			$button_value = $button->getAttribute('value');
-
-			if ( (string)$button_value === (string)$value ) {
+			if ( (string)$button->getValue() === (string)$value ) {
 				$button->select();
 
 				return $this;

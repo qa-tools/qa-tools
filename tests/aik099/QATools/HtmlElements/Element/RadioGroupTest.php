@@ -197,7 +197,7 @@ class RadioGroupTest extends TypifiedElementTest
 	public function testSelectButtonByValueFound()
 	{
 		$radio = m::mock(self::RADIO_CLASS);
-		$radio->shouldReceive('getAttribute')->with('value')->once()->andReturn('V1');
+		$radio->shouldReceive('getValue')->once()->andReturn('V1');
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
 		$element = $this->mockElement(array(), array($radio));
