@@ -120,7 +120,7 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 			$this->session->start();
 		}
 
-		$this->session->visit($_SERVER['WEB_FIXTURE_URL'] . '/tests/aik099/QATools/HtmlElementsLive/Elements/index.html');
+		$this->session->visit($_SERVER['WEB_FIXTURE_URL'] . '/tests/aik099/QATools/HtmlElementsLive/Element/index.html');
 	}
 
 	/**
