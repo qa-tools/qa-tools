@@ -92,7 +92,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	/**
 	 * Returns selected radio button.
 	 *
-	 * @return NodeElement Element, that represents selected radio button or {@code null} if no radio buttons are selected.
+	 * @return Radio Element, that represents selected radio button or {@code null} if no radio buttons are selected.
 	 * @throws RadioGroupException When no radio button is selected.
 	 */
 	public function getSelectedButton()
@@ -141,9 +141,7 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	public function selectButtonByValue($value)
 	{
 		foreach ( $this->getButtons() as $button ) {
-			$button_value = $button->getAttribute('value');
-
-			if ( (string)$button_value === (string)$value ) {
+			if ( (string)$button->getValue() === (string)$value ) {
 				$button->select();
 
 				return $this;

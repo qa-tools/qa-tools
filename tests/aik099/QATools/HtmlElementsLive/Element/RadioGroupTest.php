@@ -62,4 +62,19 @@ class RadioGroupTest extends TypifiedElementTestCase
 		$this->assertInstanceOf(self::RADIO_CLASS, $buttons[0]);
 	}
 
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testSelection()
+	{
+		/* @var $radio_group RadioGroup */
+		$radio_group = $this->createElement(array('xpath' => "(//html/descendant-or-self::*[@id = 'r1_v3'])[1]"));
+
+		$this->assertFalse($radio_group->hasSelectedButton(), 'No radio button is selected initially');
+		$radio_group->selectButtonByValue(4);
+		$this->assertEquals(4, $radio_group->getSelectedButton()->getValue());
+	}
+
 }

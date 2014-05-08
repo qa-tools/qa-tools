@@ -38,7 +38,8 @@ class RadioTest extends LabeledElementTest
 	 */
 	public function testSelect()
 	{
-		$this->webElement->shouldReceive('check')->once()->andReturnNull();
+		$this->webElement->shouldReceive('getAttribute')->with('value')->once()->andReturn('OK');
+		$this->webElement->shouldReceive('selectOption')->with('OK')->once()->andReturnNull();
 
 		$element = $this->getElement();
 

@@ -12,7 +12,7 @@ namespace aik099\QATools\HtmlElements\Element;
 
 
 /**
- * Represents a group of radio buttons.
+ * Represents single radio button in radio button group. Please use "RadioGroup" typified element for manipulations.
  */
 class Radio extends LabeledElement
 {
@@ -24,7 +24,7 @@ class Radio extends LabeledElement
 	 */
 	public function select()
 	{
-		$this->getWrappedElement()->check();
+		$this->getWrappedElement()->selectOption($this->getValue());
 
 		return $this;
 	}
@@ -37,6 +37,16 @@ class Radio extends LabeledElement
 	public function isSelected()
 	{
 		return $this->getWrappedElement()->isChecked();
+	}
+
+	/**
+	 * Returns value of an option.
+	 *
+	 * @return string
+	 */
+	public function getValue()
+	{
+		return $this->getAttribute('value');
 	}
 
 }
