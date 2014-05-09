@@ -29,6 +29,13 @@ class PageUrlAnnotation extends Annotation
 	public $url;
 
 	/**
+	 * GET params.
+	 *
+	 * @var array
+	 */
+	public $params = array();
+
+	/**
 	 * Initialize the annotation.
 	 *
 	 * @param array $properties Annotation parameters.
@@ -37,7 +44,7 @@ class PageUrlAnnotation extends Annotation
 	 */
 	public function initAnnotation(array $properties)
 	{
-		$this->map($properties, array('url'));
+		$this->map($properties, array('url', 'params'));
 
 		parent::initAnnotation($properties);
 	}

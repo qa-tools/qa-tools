@@ -11,12 +11,16 @@
 namespace tests\aik099\QATools\PageObject;
 
 
-use Mockery as m;
 use aik099\QATools\PageObject\Page;
+use aik099\QATools\PageObject\Url\IUrlBuilder;
+use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
+use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
 class PageTest extends TestCase
 {
+
+	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilder';
 
 	/**
 	 * Page class.
@@ -33,6 +37,20 @@ class PageTest extends TestCase
 	protected $page;
 
 	/**
+	 * UrlBuilderFactory class.
+	 *
+	 * @var string
+	 */
+	protected $urlBuilderFactoryClass = '\\aik099\\QATools\\PageObject\\Url\\UrlBuilderFactory';
+
+	/**
+	 * The url builder factory.
+	 *
+	 * @var IUrlBuilderFactory
+	 */
+	protected $urlBuilderFactory;
+
+	/**
 	 * Prepares page.
 	 *
 	 * @return void
@@ -46,6 +64,8 @@ class PageTest extends TestCase
 
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
 		$this->pageFactory->shouldReceive('createDecorator')->once()->andReturn($decorator);
+
+		$this->urlBuilderFactory = m::mock('\\aik099\\QATools\\PageObject\\Url\\IUrlBuilderFactory');
 
 		$this->page = new $this->pageClass($this->pageFactory);
 	}
@@ -68,8 +88,10 @@ class PageTest extends TestCase
 	public function testGetAbsoluteUrl()
 	{
 		$expected = 'RL';
+		$url_builder = $this->createUrlBuilderWithReturn($expected);
 
-		$this->page->relativeUrl = $expected;
+		$this->page->setUrlBuilder($url_builder);
+
 		$this->assertEquals($expected, $this->page->getAbsoluteUrl());
 	}
 
@@ -81,20 +103,39 @@ class PageTest extends TestCase
 	public function testOpenCorrect()
 	{
 		$expected = 'RL';
+		$url_builder = $this->createUrlBuilderWithReturn($expected);
+
 		$this->session->shouldReceive('visit')->with($expected)->once()->andReturnNull();
 
-		$this->page->relativeUrl = $expected;
+		$this->page->setUrlBuilder($url_builder);
+
 		$this->assertSame($this->page, $this->page->open());
 	}
 
 	/**
-	 * Test description.
+	 * Test with an url builder that returns no url.
 	 *
 	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\PageException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL
 	 */
-	public function testOpenIncorrect()
+	public function testOpenIncorrectUrlBuilder()
+	{
+		$url_builder = $this->createUrlBuilderWithReturn();
+
+		$this->page->setUrlBuilder($url_builder);
+
+		$this->page->open();
+	}
+
+	/**
+	 * Test open with missing url builder.
+	 *
+	 * @return void
+	 * @expectedException \aik099\QATools\PageObject\Exception\PageException
+	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageException::TYPE_MISSING_URL_BUILDER
+	 */
+	public function testOpenMissingUrlBuilder()
 	{
 		$this->page->open();
 	}
@@ -102,21 +143,25 @@ class PageTest extends TestCase
 	/**
 	 * Tests if params are correctly added to the URL.
 	 *
-	 * @param string $url      The target url.
 	 * @param string $expected The expected merged url.
 	 * @param array  $params   The GET params.
 	 *
 	 * @dataProvider getAbsoluteUrlWithParamsDataProvider
 	 * @return void
 	 */
-	public function testGetAbsoluteUrlWithParams($url, $expected, array $params)
+	public function testGetAbsoluteUrlWithParams($expected, array $params)
 	{
-		$this->page->relativeUrl = $url;
+		$url_builder = $this->createUrlBuilder();
+
+		$url_builder->shouldReceive('build')->with($params)->once()->andReturn($expected);
+
+		$this->page->setUrlBuilder($url_builder);
+
 		$this->assertEquals($expected, $this->page->getAbsoluteUrl($params));
 	}
 
 	/**
-	 * Data Provider for the GET Param test.
+	 * Data Provider for the GET param test.
 	 *
 	 * @return array
 	 */
@@ -124,12 +169,10 @@ class PageTest extends TestCase
 	{
 		return array(
 			array(
-				'RL',
 				'RL?param1=value1&param2=value2',
 				array('param1' => 'value1', 'param2' => 'value2'),
 			),
 			array(
-				'RL?param=value',
 				'RL?param=value&param1=value1&param2=value2',
 				array('param1' => 'value1', 'param2' => 'value2'),
 			),
@@ -146,11 +189,40 @@ class PageTest extends TestCase
 		$url = 'RL';
 		$expected = $url . '?param=value';
 		$params = array('param' => 'value');
+		/* @var IUrlBuilderFactory $url_builder_factory */
+		$url_builder_factory = new $this->urlBuilderFactoryClass();
 
 		$this->session->shouldReceive('visit')->with($expected)->once()->andReturnNull();
 
-		$this->page->relativeUrl = $url;
+		$this->page->setUrlBuilder($url_builder_factory->getUrlBuilder($url));
+
 		$this->assertSame($this->page, $this->page->open($params));
+	}
+
+	/**
+	 * Creates an empty mocked url builder.
+	 *
+	 * @return IUrlBuilder
+	 */
+	public function createUrlBuilder()
+	{
+		return m::mock(self::URL_BUILDER_INTERFACE);
+	}
+
+	/**
+	 * Creates a mocked url builder with once expected called build function and passed return value.
+	 *
+	 * @param mixed $return The return value of mocked build function.
+	 *
+	 * @return IUrlBuilder
+	 */
+	public function createUrlBuilderWithReturn($return = null)
+	{
+		$url_builder = $this->createUrlBuilder();
+
+		$url_builder->shouldReceive('build')->once()->andReturn($return);
+
+		return $url_builder;
 	}
 
 }

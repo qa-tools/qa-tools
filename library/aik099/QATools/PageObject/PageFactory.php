@@ -11,14 +11,16 @@
 namespace aik099\QATools\PageObject;
 
 
+use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
+use aik099\QATools\PageObject\Element\IElementContainer;
+use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
+use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
+use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
+use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
+use aik099\QATools\PageObject\Url\UrlBuilderFactory;
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
-use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
-use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
-use aik099\QATools\PageObject\Element\IElementContainer;
-use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
-use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 
 /**
  * Factory class to make using Page Objects simpler and easier.
@@ -54,6 +56,13 @@ class PageFactory implements IPageFactory
 	);
 
 	/**
+	 * The url builder factory.
+	 *
+	 * @var IUrlBuilderFactory
+	 */
+	protected $urlBuilderFactory;
+
+	/**
 	 * Creates PageFactory instance.
 	 *
 	 * @param Session                $session            Mink session.
@@ -69,6 +78,7 @@ class PageFactory implements IPageFactory
 		}
 
 		$this->setAnnotationManager($annotation_manager)->attachSeleniumSelector();
+		$this->setUrlBuilderFactory(new UrlBuilderFactory());
 	}
 
 	/**
@@ -116,6 +126,30 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
+	 * Sets the url builder factory.
+	 *
+	 * @param IUrlBuilderFactory $url_builder_factory Url builder factory.
+	 *
+	 * @return IUrlBuilderFactory
+	 */
+	public function setUrlBuilderFactory(IUrlBuilderFactory $url_builder_factory)
+	{
+		$this->urlBuilderFactory = $url_builder_factory;
+
+		return $this;
+	}
+
+	/**
+	 * Returns current url builder factory.
+	 *
+	 * @return IUrlBuilderFactory
+	 */
+	public function getUrlBuilderFactory()
+	{
+		return $this->urlBuilderFactory;
+	}
+
+	/**
 	 * Creates default decorator.
 	 *
 	 * @param ISearchContext $search_context Search context.
@@ -152,7 +186,7 @@ class PageFactory implements IPageFactory
 		$annotations = $this->annotationManager->getClassAnnotations($page, '@page-url');
 
 		if ( $annotations ) {
-			$page->relativeUrl = $annotations[0]->url;
+			$page->setUrlBuilder($this->urlBuilderFactory->getUrlBuilder($annotations[0]->url, $annotations[0]->params));
 		}
 
 		return $this;

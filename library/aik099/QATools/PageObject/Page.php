@@ -12,6 +12,7 @@ namespace aik099\QATools\PageObject;
 
 
 use aik099\QATools\PageObject\Exception\PageException;
+use aik099\QATools\PageObject\Url\IUrlBuilder;
 use Behat\Mink\Element\DocumentElement;
 
 /**
@@ -23,11 +24,11 @@ abstract class Page extends DocumentElement implements ISearchContext
 {
 
 	/**
-	 * Relative URL to a page.
+	 * The builder which generates the url.
 	 *
-	 * @var string
+	 * @var IUrlBuilder
 	 */
-	public $relativeUrl;
+	protected $urlBuilder;
 
 	/**
 	 * Initialize the page.
@@ -47,19 +48,18 @@ abstract class Page extends DocumentElement implements ISearchContext
 	 * @param array $params Page parameters.
 	 *
 	 * @return string
+	 * @throws PageException When url builder is missing.
 	 */
 	public function getAbsoluteUrl(array $params = array())
 	{
-		if ( empty($params) ) {
-			return $this->relativeUrl;
+		if ( !is_object($this->urlBuilder) ) {
+			throw new PageException(
+				'The UrlBuilder of a page not set, have you used @page-url annotation?',
+				PageException::TYPE_MISSING_URL_BUILDER
+			);
 		}
 
-		$query = http_build_query($params);
-
-		// Check if a ? is already present then glue together with & instead of ?
-		$glue = strpos($this->relativeUrl, '?') === false ? '?' : '&';
-
-		return $this->relativeUrl . $glue . $query;
+		return $this->urlBuilder->build($params);
 	}
 
 	/**
@@ -79,6 +79,20 @@ abstract class Page extends DocumentElement implements ISearchContext
 		}
 
 		$this->getSession()->visit($url);
+
+		return $this;
+	}
+
+	/**
+	 * Sets the url builder.
+	 *
+	 * @param IUrlBuilder $urlBuilder Url builder.
+	 *
+	 * @return self
+	 */
+	public function setUrlBuilder(IUrlBuilder $urlBuilder)
+	{
+		$this->urlBuilder = $urlBuilder;
 
 		return $this;
 	}
