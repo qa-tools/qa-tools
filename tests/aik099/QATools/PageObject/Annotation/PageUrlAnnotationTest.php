@@ -19,15 +19,36 @@ class PageUrlAnnotationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test description.
 	 *
+	 * @param array  $annotation_params Params for initing the annotation.
+	 * @param string $expected_url      The url which is expected.
+	 * @param array  $expected_params   The expected GET params.
+	 *
 	 * @return void
+	 *
+	 * @dataProvider initAnnotationDataProvider
 	 */
-	public function testInitAnnotation()
+	public function testInitAnnotation(array $annotation_params, $expected_url, array $expected_params)
 	{
-		$expected = 'test';
-
 		$annotation = new PageUrlAnnotation();
-		$annotation->initAnnotation(array(0 => $expected));
-		$this->assertEquals($expected, $annotation->url);
+		$annotation->initAnnotation($annotation_params);
+
+		$this->assertEquals($expected_url, $annotation->url);
+		$this->assertEquals($expected_params, $annotation->params);
+	}
+
+	/**
+	 * Data provider for testInitAnnotation.
+	 *
+	 * @return array
+	 */
+	public function initAnnotationDataProvider()
+	{
+		return array(
+			array(array('/test'), '/test', array()),
+			array(array('/test', array('param' => 'value')), '/test', array('param' => 'value')),
+			array(array('url' => '/test'), '/test', array()),
+			array(array('url' => '/test', 'params' => array('param' => 'value')), '/test', array('param' => 'value')),
+		);
 	}
 
 }

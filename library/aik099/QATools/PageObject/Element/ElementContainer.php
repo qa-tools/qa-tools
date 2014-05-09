@@ -11,9 +11,9 @@
 namespace aik099\QATools\PageObject\Element;
 
 
-use Behat\Mink\Element\NodeElement;
 use aik099\QATools\PageObject\How;
 use aik099\QATools\PageObject\IPageFactory;
+use Behat\Mink\Element\NodeElement;
 
 /**
  * The base class to be used for making blocks of elements.

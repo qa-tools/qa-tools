@@ -14,10 +14,9 @@ namespace aik099\QATools\PageObject\Exception;
 /**
  * Exception related to pages.
  */
-class PageException extends PageFactoryException
+class UrlBuilderException extends PageFactoryException
 {
 
-	const TYPE_EMPTY_URL = 101;
+	const TYPE_EMPTY_PATH = 101;
 
-	const TYPE_MISSING_URL_BUILDER = 102;
 }

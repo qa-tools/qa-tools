@@ -11,18 +11,23 @@
 namespace tests\aik099\QATools\PageObject;
 
 
-use Mockery as m;
 use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
 use aik099\QATools\PageObject\Page;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
+use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
+use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
 class PageFactoryTest extends TestCase
 {
 
 	const ANNOTATION_MANAGER_CLASS = '\\mindplay\\annotations\\AnnotationManager';
+
+	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilder';
+
+	const URL_BUILDER_FACTORY_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilderFactory';
 
 	/**
 	 * Page factory class.
@@ -60,6 +65,13 @@ class PageFactoryTest extends TestCase
 	protected $realFactory;
 
 	/**
+	 * The url builder factory.
+	 *
+	 * @var IUrlBuilderFactory
+	 */
+	protected $urlBuilderFactory;
+
+	/**
 	 * Prepare factory.
 	 *
 	 * @return void
@@ -76,6 +88,7 @@ class PageFactoryTest extends TestCase
 		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any())->andReturnNull();
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
+		$this->urlBuilderFactory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
 
 		$this->realFactory = $this->createFactory();
 	}
@@ -163,35 +176,50 @@ class PageFactoryTest extends TestCase
 	/**
 	 * Test description.
 	 *
-	 * @param string|null $url Url.
+	 * @param string|null $url             Url.
+	 * @param array       $params          Get params.
+	 * @param boolean     $use_url_builder Should setUrlBuilder called.
 	 *
 	 * @return void
+	 *
 	 * @dataProvider initPageDataProvider
 	 */
-	public function testInitPage($url)
+	public function testInitPage($url, array $params, $use_url_builder)
 	{
-		$this->expectPageUrlAnnotation($url);
+		$this->expectPageUrlAnnotation($url, $params);
 
 		/* @var $page Page */
 		$page = m::mock($this->pageClass);
+		$urlBuilder = m::mock(self::URL_BUILDER_INTERFACE);
+
+		$this->realFactory->setUrlBuilderFactory($this->urlBuilderFactory);
+		$this->urlBuilderFactory
+			->shouldReceive('getUrlBuilder')
+			->with($url, $params)
+			->times(isset($url) ? 1 : 0)
+			->andReturn($urlBuilder);
+
+		$page->shouldReceive('setUrlBuilder')->times($use_url_builder ? 1 : 0)->andReturn($page);
+
 		$this->assertSame($this->realFactory, $this->realFactory->initPage($page));
-		$this->assertEquals($url, $page->relativeUrl);
 	}
 
 	/**
 	 * Sets expectation for a specific page url annotation.
 	 *
-	 * @param string|null $url Url.
+	 * @param string|null $url    Url.
+	 * @param array       $params Get params.
 	 *
 	 * @return void
 	 */
-	protected function expectPageUrlAnnotation($url = null)
+	protected function expectPageUrlAnnotation($url = null, array $params = array())
 	{
 		$annotations = array();
 
 		if ( isset($url) ) {
 			$annotation = new PageUrlAnnotation();
 			$annotation->url = $url;
+			$annotation->params = $params;
 
 			$annotations[] = $annotation;
 		}
@@ -207,8 +235,15 @@ class PageFactoryTest extends TestCase
 	public function initPageDataProvider()
 	{
 		return array(
-			array('TEST-URL'),
-			array(null),
+			array('TEST-URL', array(), true),
+			array('TEST-URL', array('param' => 'value'), true),
+			array('TEST-URL?param=value', array(), true),
+			array('TEST-URL?param1=value1', array('param2' => 'value2'), true),
+			array('TEST-URL#anchor', array(), true),
+			array('TEST-URL#anchor', array('param' => 'value'), true),
+			array('TEST-URL?param=value#anchor', array(), true),
+			array('TEST-URL?param1=value1#anchor', array('param2' => 'value2'), true),
+			array(null, array(), false),
 		);
 	}
 
@@ -258,6 +293,20 @@ class PageFactoryTest extends TestCase
 
 		$page = $factory->getPage($this->pageClass);
 		$this->assertInstanceOf($this->pageClass, $page);
+	}
+
+	/**
+	 * Tests getUrlBuilderFactory and setUrlBuilderFactory.
+	 *
+	 * @return void
+	 */
+	public function testGetUrlBuilderFactory()
+	{
+		/* @var IUrlBuilderFactory $url_builder_factory */
+		$url_builder_factory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
+
+		$this->realFactory->setUrlBuilderFactory($url_builder_factory);
+		$this->assertEquals($url_builder_factory, $this->realFactory->getUrlBuilderFactory());
 	}
 
 	/**
