@@ -57,6 +57,22 @@ class Property extends \ReflectionProperty
 	 */
 	public function getDataType()
 	{
+		$data_type = $this->getRawDataType();
+
+		if ( $data_type === false ) {
+			return $data_type;
+		}
+
+		return preg_replace('/\[\]$/', '', $data_type);
+	}
+
+	/**
+	 * Returns the raw data type.
+	 *
+	 * @return string|boolean
+	 */
+	public function getRawDataType()
+	{
 		if ( !isset($this->dataType) ) {
 			/* @var $annotations VarAnnotation[] */
 			$annotations = $this->annotationManager->getPropertyAnnotations($this, null, '@var');
@@ -80,6 +96,16 @@ class Property extends \ReflectionProperty
 		);
 
 		return in_array(strtolower($this->getDataType()), $data_types);
+	}
+
+	/**
+	 * Determines if property data type is an array.
+	 *
+	 * @return boolean
+	 */
+	public function isDataTypeArray()
+	{
+		return substr($this->getRawDataType(), -2) == '[]';
 	}
 
 	/**

@@ -118,6 +118,37 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			array('SampleClass', 'SampleClass'),
+			array('SampleClass[]', 'SampleClass'),
+			array(null, false),
+		);
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @param string $data_type Data type.
+	 * @param mixed  $result    Result.
+	 *
+	 * @return void
+	 * @dataProvider getRawDataTypeDataProvider
+	 */
+	public function testGetRawDataType($data_type, $result)
+	{
+		$this->expectVarAnnotation($data_type);
+
+		$this->assertSame($result, $this->property->getRawDataType());
+	}
+
+	/**
+	 * Test data provider for getDataType.
+	 *
+	 * @return array
+	 */
+	public function getRawDataTypeDataProvider()
+	{
+		return array(
+			array('SampleClass', 'SampleClass'),
+			array('SampleClass[]', 'SampleClass[]'),
 			array(null, false),
 		);
 	}
@@ -160,6 +191,36 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 			array('double', true),
 			array('array', true),
 			array($this->propertyClass, false),
+		);
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @param string  $data_type Data type.
+	 * @param boolean $is_array  Is data type an array.
+	 *
+	 * @return void
+	 * @dataProvider isDataTypeArrayProvider
+	 */
+	public function testIsDataTypeArray($data_type, $is_array)
+	{
+		$this->expectVarAnnotation($data_type);
+
+		$this->assertSame($is_array, $this->property->isDataTypeArray());
+	}
+
+	/**
+	 * Provides data types for test.
+	 *
+	 * @return array
+	 */
+	public function isDataTypeArrayProvider()
+	{
+		return array(
+			array('SampleClass[]', true),
+			array('SampleClass', false),
+			array(null, false),
 		);
 	}
 
