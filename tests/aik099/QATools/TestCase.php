@@ -55,6 +55,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
 		$this->session = m::mock('\\Behat\\Mink\\Session');
 		$this->session->shouldReceive('getSelectorsHandler')->andReturn($this->selectorsHandler);
+		$this->session->shouldReceive('getDriver')->byDefault();
 
 		$this->pageFactory = m::mock('\\aik099\\QATools\\PageObject\\IPageFactory');
 		$this->pageFactory->shouldReceive('getSession')->andReturn($this->session);

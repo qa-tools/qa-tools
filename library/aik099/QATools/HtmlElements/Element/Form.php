@@ -58,13 +58,7 @@ class Form extends ElementContainer
 	 */
 	public function getWebElement($field_name)
 	{
-		if ( $this->_isAutomaticSelectorEscaping() ) {
-			$node_element = $this->find('named', array('field', $field_name));
-		}
-		else {
-			$escaped_field_name = $this->getSelectorsHandler()->xpathLiteral($field_name);
-			$node_element = $this->find('named', array('field', $escaped_field_name));
-		}
+		$node_element = $this->find('named', array('field', $this->_autoEscapeForXpath($field_name)));
 
 		if ( is_null($node_element) ) {
 			throw new FormException(
@@ -79,11 +73,20 @@ class Form extends ElementContainer
 	/**
 	 * Determines if Mink does automatic selector escaping.
 	 *
-	 * @return boolean
+	 * @param string $string Text to escape.
+	 *
+	 * @return string
 	 */
-	private function _isAutomaticSelectorEscaping()
+	private function _autoEscapeForXpath($string)
 	{
-		return class_exists('Behat\\Mink\\Selector\\Xpath\\Escaper');
+		$selectors_handler = $this->getSelectorsHandler();
+
+		// Needed for Mink 1.5 and below.
+		if ( method_exists($selectors_handler, 'xpathLiteral') ) {
+			return $selectors_handler->xpathLiteral($string);
+		}
+
+		return $string;
 	}
 
 	/**
