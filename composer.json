@@ -36,7 +36,12 @@
 
 	"autoload": {
 		"psr-0": {
-			"aik099\\QATools\\": "./library/",
+			"aik099\\QATools\\": "./library/"
+		}
+	},
+
+	"autoload-dev": {
+		"psr-0": {
 			"tests\\aik099\\QATools\\": "./"
 		}
 	},
