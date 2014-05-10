@@ -69,12 +69,12 @@ class FormTest extends ElementContainerTest
 	 */
 	public function testGetWebElementFailure()
 	{
-		if ( $this->_isAutomaticSelectorEscaping() ) {
-			$this->webElement->shouldReceive('find')->with('named', array('field', 'field-name'))->once()->andReturnNull();
-		}
-		else {
+		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
 			$this->webElement->shouldReceive('find')->with('named', array('field', "'field-name'"))->once()->andReturnNull();
+		}
+		else {
+			$this->webElement->shouldReceive('find')->with('named', array('field', 'field-name'))->once()->andReturnNull();
 		}
 
 		$this->getElement()->getWebElement('field-name');
@@ -89,18 +89,18 @@ class FormTest extends ElementContainerTest
 	{
 		$node_element = $this->createNodeElement();
 
-		if ( $this->_isAutomaticSelectorEscaping() ) {
-			$this->webElement
-				->shouldReceive('find')
-				->with('named', array('field', 'field-name'))
-				->once()
-				->andReturn($node_element);
-		}
-		else {
+		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
 			$this->webElement
 				->shouldReceive('find')
 				->with('named', array('field', "'field-name'"))
+				->once()
+				->andReturn($node_element);
+		}
+		else {
+			$this->webElement
+				->shouldReceive('find')
+				->with('named', array('field', 'field-name'))
 				->once()
 				->andReturn($node_element);
 		}
@@ -109,16 +109,6 @@ class FormTest extends ElementContainerTest
 
 		$this->assertInstanceOf(self::WEB_ELEMENT_CLASS, $found_element);
 		$this->assertEquals('XPATH', $found_element->getXpath());
-	}
-
-	/**
-	 * Determines if Mink does automatic selector escaping.
-	 *
-	 * @return boolean
-	 */
-	private function _isAutomaticSelectorEscaping()
-	{
-		return class_exists('Behat\\Mink\\Selector\\Xpath\\Escaper');
 	}
 
 	/**
