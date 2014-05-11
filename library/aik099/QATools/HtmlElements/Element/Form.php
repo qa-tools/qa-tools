@@ -81,7 +81,7 @@ class Form extends ElementContainer
 	{
 		$selectors_handler = $this->getSelectorsHandler();
 
-		// Needed for Mink 1.5 and below.
+		// Needed for Mink 1.x and below.
 		if ( method_exists($selectors_handler, 'xpathLiteral') ) {
 			return $selectors_handler->xpathLiteral($string);
 		}
