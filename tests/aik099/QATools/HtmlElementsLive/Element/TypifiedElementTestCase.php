@@ -94,7 +94,7 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 	{
 		$web_element = new WebElement($selector, $this->session);
 
-		return new $this->elementClass($web_element);
+		return new $this->elementClass($web_element, $this->pageFactory);
 	}
 
 	/**

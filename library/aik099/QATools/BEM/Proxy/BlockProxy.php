@@ -127,4 +127,19 @@ class BlockProxy extends PartProxy implements IBlock
 		return $this->getObject()->find($selector, $locator);
 	}
 
+	/**
+	 * Waits for an element(-s) to appear and returns it.
+	 *
+	 * @param integer  $timeout  Maximal allowed waiting time in milliseconds.
+	 * @param callable $callback Callback, which result is both used as waiting condition and returned.
+	 *                           Will receive reference to `this element` as first argument.
+	 *
+	 * @return mixed
+	 * @throws \LogicException Always.
+	 */
+	public function waitFor($timeout, $callback)
+	{
+		return $this->getObject()->waitFor($timeout, $callback);
+	}
+
 }
