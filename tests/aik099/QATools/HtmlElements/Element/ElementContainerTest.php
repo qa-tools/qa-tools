@@ -40,7 +40,7 @@ class ElementContainerTest extends TypifiedElementTest
 	{
 		parent::setUpBeforeCreateElement();
 
-		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory');
+		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory', 'testWaitFor');
 		$times = in_array($this->getName(), $two_times_tests) ? 2 : 1;
 
 		$this->pageFactory->shouldReceive('initElementContainer')->times($times)->andReturn($this->pageFactory);
@@ -77,6 +77,35 @@ class ElementContainerTest extends TypifiedElementTest
 		$method->setAccessible(true);
 
 		$this->assertSame($this->pageFactory, $method->invoke($element));
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testWaitFor()
+	{
+		$web_element = $this->webElement;
+		$this->webElement
+			->shouldReceive('waitFor')
+			->with(5000, m::type('callable'))
+			->once()
+			->andReturnUsing(function ($timeout, $callback) use ($web_element) {
+				return call_user_func($callback, $web_element);
+			});
+
+		$self = $this;
+		$expected_result = 'OK';
+		$expected_element = $this->createElement();
+
+		$actual_result = $expected_element->waitFor(5000, function ($actual_element) use ($self, $expected_element, $expected_result) {
+			$self->assertSame($expected_element, $actual_element, 'typified element is given to callback');
+
+			return $expected_result;
+		});
+
+		$this->assertEquals($expected_result, $actual_result, 'callback return value is returned from waitFor call');
 	}
 
 	/**

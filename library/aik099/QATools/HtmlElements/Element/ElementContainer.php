@@ -97,4 +97,24 @@ abstract class ElementContainer extends TypifiedElement implements IElementConta
 		return $this->getWrappedElement()->find($selector, $locator);
 	}
 
+	/**
+	 * Waits for an element(-s) to appear and returns it.
+	 *
+	 * @param integer  $timeout  Maximal allowed waiting time in milliseconds.
+	 * @param callable $callback Callback, which result is both used as waiting condition and returned.
+	 *                           Will receive reference to `this element` as first argument.
+	 *
+	 * @return mixed
+	 * @throws \InvalidArgumentException When invalid callback given.
+	 */
+	public function waitFor($timeout, $callback)
+	{
+		$container = $this;
+		$wrapped_callback = function () use ($container, $callback) {
+			return call_user_func($callback, $container);
+		};
+
+		return $this->getWrappedElement()->waitFor($timeout, $wrapped_callback);
+	}
+
 }

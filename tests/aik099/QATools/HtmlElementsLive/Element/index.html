@@ -28,6 +28,16 @@
 
 				set_status('change on [' + $(this).attr('id') + ']; checked = ' + ($checked ? 'yes' : 'no'));
 			});
+
+      $('#generate-btn').click(function ($e) {
+        var $me = $(this);
+
+      	setTimeout(function () {
+          $me.before('<div id="delayed-element"/>');
+        }, 5000);
+
+        $e.preventDefault();
+      });
 		});
 	</script>
 </head>
@@ -94,5 +104,10 @@
 		<div class="first second"></div>
 		<div class="first second third"></div>
 	</div>
+
+
+  <form id="test-form">
+    <button id="generate-btn">generate element</button>
+  </form>
 </body>
 </html>
