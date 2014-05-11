@@ -52,6 +52,7 @@ class PageFactory implements IPageFactory
 	protected $annotationRegistry = array(
 		'find-by' => '\\aik099\\QATools\\PageObject\\Annotation\\FindByAnnotation',
 		'page-url' => '\\aik099\\QATools\\PageObject\\Annotation\\PageUrlAnnotation',
+		'timeout' => '\\aik099\\QATools\\PageObject\\Annotation\\TimeoutAnnotation',
 		'method' => false,
 	);
 
