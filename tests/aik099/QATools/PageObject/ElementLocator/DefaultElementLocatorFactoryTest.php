@@ -24,7 +24,7 @@ class DefaultElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @var string
 	 */
-	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\DefaultElementLocator';
+	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\WaitingElementLocator';
 
 	/**
 	 * Test description.
@@ -38,6 +38,8 @@ class DefaultElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
 		$factory = new DefaultElementLocatorFactory($search_context, $annotation_manager);
 
 		$property = m::mock(self::PROPERTY_CLASS);
+		$property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@timeout')->once()->andReturn(array());
+
 		$this->assertInstanceOf($this->locatorClass, $factory->createLocator($property));
 	}
 
