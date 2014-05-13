@@ -13,6 +13,7 @@ namespace aik099\QATools\HtmlElements\Element;
 
 use aik099\QATools\HtmlElements\Exception\FormException;
 use aik099\QATools\PageObject\Element\WebElement;
+use Behat\Mink\Element\NodeElement;
 
 /**
  * Form element.
@@ -40,7 +41,7 @@ class Form extends ElementContainer
 	public function fill(array $form_data)
 	{
 		foreach ( $form_data as $field_name => $field_value ) {
-			$form_element = $this->typify($this->getWebElement($field_name));
+			$form_element = $this->typify($this->getNodeElement($field_name));
 
 			$this->setValue($form_element, $field_value);
 		}
@@ -49,14 +50,14 @@ class Form extends ElementContainer
 	}
 
 	/**
-	 * Finds WebElement by a given field name.
+	 * Finds NodeElement by a given field name.
 	 *
 	 * @param string $field_name Field name to search for.
 	 *
-	 * @return WebElement
+	 * @return NodeElement
 	 * @throws FormException When element for a field name not found.
 	 */
-	public function getWebElement($field_name)
+	public function getNodeElement($field_name)
 	{
 		$node_element = $this->find('named', array('field', $this->_autoEscapeForXpath($field_name)));
 
@@ -67,7 +68,7 @@ class Form extends ElementContainer
 			);
 		}
 
-		return WebElement::fromNodeElement($node_element);
+		return $node_element;
 	}
 
 	/**
@@ -90,43 +91,43 @@ class Form extends ElementContainer
 	}
 
 	/**
-	 * Create TypifiedElement from a given WebElement.
+	 * Create TypifiedElement from a given NodeElement.
 	 *
-	 * @param WebElement $web_element Web Element.
+	 * @param NodeElement $node_element Node Element.
 	 *
-	 * @return TypifiedElement
+	 * @return ITypifiedElement
 	 * @throws FormException When unable to create typified element.
 	 */
-	public function typify(WebElement $web_element)
+	public function typify(NodeElement $node_element)
 	{
-		$tag_name = $web_element->getTagName();
+		$tag_name = $node_element->getTagName();
 
 		if ( $tag_name == 'input' ) {
-			$input_type = $web_element->getAttribute('type');
+			$input_type = $node_element->getAttribute('type');
 
 			if ( $input_type == self::CHECKBOX_INPUT ) {
-				return new Checkbox($web_element);
+				return Checkbox::fromNodeElement($node_element);
 			}
 			elseif ( $input_type == self::RADIO_INPUT ) {
-				return new RadioGroup($web_element);
+				return RadioGroup::fromNodeElement($node_element);
 			}
 			elseif ( $input_type == self::FILE_INPUT ) {
-				return new FileInput($web_element);
+				return FileInput::fromNodeElement($node_element);
 			}
 			else {
 				/*if ( is_null($input_type) || ($input_type == self::TEXT_INPUT) || ($input_type == self::PASSWORD_INPUT) ) {*/
-				return new TextInput($web_element);
+				return TextInput::fromNodeElement($node_element);
 			}
 		}
 		elseif ( $tag_name == 'select' ) {
-			return new Select($web_element);
+			return Select::fromNodeElement($node_element);
 		}
 		elseif ( $tag_name == 'textarea' ) {
-			return new TextInput($web_element);
+			return TextInput::fromNodeElement($node_element);
 		}
 
 		throw new FormException(
-			'Unable create typified element for ' . (string)$web_element,
+			'Unable create typified element for ' . (string)WebElement::fromNodeElement($node_element),
 			FormException::TYPE_UNKNOWN_FIELD
 		);
 	}
@@ -134,13 +135,13 @@ class Form extends ElementContainer
 	/**
 	 * Sets value to the form element.
 	 *
-	 * @param TypifiedElement $typified_element Element, to set a value for.
-	 * @param mixed           $value            Element value to set.
+	 * @param ITypifiedElement $typified_element Element, to set a value for.
+	 * @param mixed            $value            Element value to set.
 	 *
 	 * @return self
 	 * @throws FormException When element doesn't support value changing.
 	 */
-	public function setValue(TypifiedElement $typified_element, $value)
+	public function setValue(ITypifiedElement $typified_element, $value)
 	{
 		if ( $typified_element instanceof ISimpleSetter ) {
 			$typified_element->setValue($value);

@@ -41,18 +41,18 @@ class FormTest extends ElementContainerTest
 	public function testFill()
 	{
 		/** @var Form $form */
-		$form = $this->mockElement(array('typify', 'getWebElement', 'setValue'));
+		$form = $this->mockElement(array('typify', 'getNodeElement', 'setValue'));
 
-		$web_element1 = m::mock(self::WEB_ELEMENT_CLASS);
+		$node_element1 = $this->createNodeElement();
 		$typified_element1 = m::mock(self::TYPIFIED_ELEMENT_CLASS);
-		$form->shouldReceive('getWebElement')->with('f1')->once()->andReturn($web_element1);
-		$form->shouldReceive('typify')->with($web_element1)->once()->andReturn($typified_element1);
+		$form->shouldReceive('getNodeElement')->with('f1')->once()->andReturn($node_element1);
+		$form->shouldReceive('typify')->with($node_element1)->once()->andReturn($typified_element1);
 		$form->shouldReceive('setValue')->with($typified_element1, 'v1')->once()->andReturn($form);
 
-		$web_element2 = m::mock(self::WEB_ELEMENT_CLASS);
+		$node_element2 = $this->createNodeElement();
 		$typified_element2 = m::mock(self::TYPIFIED_ELEMENT_CLASS);
-		$form->shouldReceive('getWebElement')->with('f2')->once()->andReturn($web_element2);
-		$form->shouldReceive('typify')->with($web_element2)->once()->andReturn($typified_element2);
+		$form->shouldReceive('getNodeElement')->with('f2')->once()->andReturn($node_element2);
+		$form->shouldReceive('typify')->with($node_element2)->once()->andReturn($typified_element2);
 		$form->shouldReceive('setValue')->with($typified_element2, 'v2')->once()->andReturn($form);
 
 		$form_data = array('f1' => 'v1', 'f2' => 'v2');
@@ -67,7 +67,7 @@ class FormTest extends ElementContainerTest
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND
 	 * @expectedExceptionMessage Form field "field-name" not found
 	 */
-	public function testGetWebElementFailure()
+	public function testGetNodeElementFailure()
 	{
 		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
@@ -77,7 +77,7 @@ class FormTest extends ElementContainerTest
 			$this->webElement->shouldReceive('find')->with('named', array('field', 'field-name'))->once()->andReturnNull();
 		}
 
-		$this->getElement()->getWebElement('field-name');
+		$this->getElement()->getNodeElement('field-name');
 	}
 
 	/**
@@ -85,12 +85,13 @@ class FormTest extends ElementContainerTest
 	 *
 	 * @return void
 	 */
-	public function testGetWebElementSuccess()
+	public function testGetNodeElementSuccess()
 	{
 		$node_element = $this->createNodeElement();
 
 		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
+
 			$this->webElement
 				->shouldReceive('find')
 				->with('named', array('field', "'field-name'"))
@@ -105,9 +106,9 @@ class FormTest extends ElementContainerTest
 				->andReturn($node_element);
 		}
 
-		$found_element = $this->getElement()->getWebElement('field-name');
+		$found_element = $this->getElement()->getNodeElement('field-name');
 
-		$this->assertInstanceOf(self::WEB_ELEMENT_CLASS, $found_element);
+		$this->assertSame($node_element, $found_element);
 		$this->assertEquals('XPATH', $found_element->getXpath());
 	}
 
@@ -123,14 +124,14 @@ class FormTest extends ElementContainerTest
 	 */
 	public function testTypify($tag_name, $input_type, $element_class)
 	{
-		$web_element = m::mock(self::WEB_ELEMENT_CLASS);
-		$web_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn($tag_name);
+		$node_element = $this->createNodeElement();
+		$node_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn($tag_name);
 
 		if ( $tag_name == 'input' ) {
-			$web_element->shouldReceive('getAttribute')->with('type')->once()->andReturn($input_type);
+			$node_element->shouldReceive('getAttribute')->with('type')->once()->andReturn($input_type);
 		}
 
-		$form_element = $this->getElement()->typify($web_element);
+		$form_element = $this->getElement()->typify($node_element);
 		$this->assertInstanceOf($element_class, $form_element);
 	}
 
@@ -160,15 +161,14 @@ class FormTest extends ElementContainerTest
 	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD
-	 * @expectedExceptionMessage Unable create typified element for ELEMENT NAME
+	 * @expectedExceptionMessage Unable create typified element for element (class: aik099\QATools\PageObject\Element\WebElement; xpath: XPATH)
 	 */
 	public function testTypifyFailure()
 	{
-		$web_element = m::mock(self::WEB_ELEMENT_CLASS);
-		$web_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn('article');
-		$web_element->shouldReceive('__toString')->withNoArgs()->once()->andReturn('ELEMENT NAME');
+		$node_element = $this->createNodeElement();
+		$node_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn('article');
 
-		$this->getElement()->typify($web_element);
+		$this->getElement()->typify($node_element);
 	}
 
 	/**
