@@ -11,9 +11,12 @@
 namespace aik099\QATools\PageObject\Proxy;
 
 
+use aik099\QATools\PageObject\Element\AbstractElementCollection;
+use aik099\QATools\PageObject\Element\IContainerAware;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\Exception\ElementException;
+use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\IPageFactory;
 use aik099\QATools\PageObject\ISearchContext;
 use Behat\Mink\Element\NodeElement;
@@ -25,7 +28,7 @@ use Behat\Mink\Element\NodeElement;
  *
  * @link http://bit.ly/14TbcR9
  */
-abstract class AbstractProxy implements IProxy
+abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 {
 
 	/**
@@ -48,6 +51,13 @@ abstract class AbstractProxy implements IProxy
 	 * @var IElementLocator
 	 */
 	protected $locator;
+
+	/**
+	 * Determines if a locator was used to locate the elements.
+	 *
+	 * @var boolean
+	 */
+	protected $locatorUsed = false;
 
 	/**
 	 * Page Factory, that allows to create more elements on demand.
@@ -73,6 +83,8 @@ abstract class AbstractProxy implements IProxy
 	{
 		$this->locator = $locator;
 		$this->pageFactory = $page_factory;
+
+		parent::__construct();
 	}
 
 	/**
@@ -143,13 +155,53 @@ abstract class AbstractProxy implements IProxy
 	 */
 	protected function locateElement()
 	{
-		$element = $this->locator->find();
+		$elements = $this->locateElements();
 
-		if ( !is_object($element) ) {
-			throw new ElementNotFoundException('Element not found by selector: ' . (string)$this->locator);
+		return count($elements) ? current($elements) : null;
+	}
+
+	/**
+	 * Locates elements using the locator.
+	 *
+	 * @return NodeElement[]
+	 * @throws ElementNotFoundException When element wasn't found on the page.
+	 */
+	protected function locateElements()
+	{
+		$elements = $this->locator->findAll();
+
+		if ( empty($elements) ) {
+			throw new ElementNotFoundException('No elements found by selector: ' . (string)$this->locator);
 		}
 
-		return $element;
+		return $elements;
+	}
+
+	/**
+	 * Determines if a class to proxy in fact is an element collection.
+	 *
+	 * @return boolean
+	 */
+	protected function isElementCollection()
+	{
+		return is_subclass_of($this->className, 'aik099\\QATools\\PageObject\\Element\\AbstractElementCollection');
+	}
+
+	/**
+	 * Sets proxy's container into each of given elements.
+	 *
+	 * @param AbstractElementCollection $elements Elements.
+	 *
+	 * @return void
+	 */
+	protected function injectContainer(AbstractElementCollection $elements)
+	{
+		$container = $this->getContainer();
+
+		/** @var IContainerAware $element */
+		foreach ( $elements as $element ) {
+			$element->setContainer($container);
+		}
 	}
 
 }

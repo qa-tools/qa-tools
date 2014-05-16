@@ -21,4 +21,15 @@ use aik099\QATools\PageObject\Element\IContainerAware;
 interface ITypifiedElement extends IContainerAware, INamed
 {
 
+	/**
+	 * Sets a name of an element.
+	 *
+	 * This method is used by initialization mechanism and is not intended to be used directly.
+	 *
+	 * @param string $name Name to set.
+	 *
+	 * @return self
+	 */
+	public function setName($name);
+
 }

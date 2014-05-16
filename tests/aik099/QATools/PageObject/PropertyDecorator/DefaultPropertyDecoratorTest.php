@@ -177,7 +177,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->locator->shouldReceive('getSearchContext')->andReturn($search_context);
 
 		$node_element = $this->createNodeElement();
-		$this->locator->shouldReceive('find')->andReturn($node_element);
+		$this->locator->shouldReceive('findAll')->andReturn(array($node_element));
 
 		$this->property->shouldReceive('isSimpleDataType')->andReturn(false);
 		$this->property->shouldReceive('getDataType')->andReturn($element_class);

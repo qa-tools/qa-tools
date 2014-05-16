@@ -36,9 +36,10 @@ class BlockProxy extends PartProxy implements IBlock
 	 */
 	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory)
 	{
-		parent::__construct($name, $locator, $page_factory);
-
 		$this->className = '\\aik099\\QATools\\BEM\\Element\\Block';
+		$this->elementClass = '\\aik099\\QATools\\BEM\\Element\\IBlock';
+
+		parent::__construct($name, $locator, $page_factory);
 	}
 
 	/**

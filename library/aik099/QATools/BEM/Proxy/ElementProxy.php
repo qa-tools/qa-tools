@@ -35,9 +35,10 @@ class ElementProxy extends PartProxy implements IElement
 	 */
 	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory = null)
 	{
-		parent::__construct($name, $locator, $page_factory);
-
 		$this->className = '\\aik099\\QATools\\BEM\\Element\\Element';
+		$this->elementClass = '\\aik099\\QATools\\BEM\\Element\\IElement';
+
+		parent::__construct($name, $locator, $page_factory);
 	}
 
 	/**

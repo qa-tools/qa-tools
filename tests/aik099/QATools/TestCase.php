@@ -26,6 +26,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	protected $session;
 
 	/**
+	 * Session driver.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $driver;
+
+	/**
 	 * Selectors handler.
 	 *
 	 * @var \Mockery\MockInterface
@@ -53,9 +60,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH_ROOT'))->andReturn('/XPATH');
 		$this->selectorsHandler = $handler;
 
+		$this->driver = m::mock('\\Behat\\Mink\\Driver\\DriverInterface');
+
 		$this->session = m::mock('\\Behat\\Mink\\Session');
 		$this->session->shouldReceive('getSelectorsHandler')->andReturn($this->selectorsHandler);
-		$this->session->shouldReceive('getDriver')->byDefault();
+		$this->session->shouldReceive('getDriver')->andReturn($this->driver)->byDefault();
 
 		$this->pageFactory = m::mock('\\aik099\\QATools\\PageObject\\IPageFactory');
 		$this->pageFactory->shouldReceive('getSession')->andReturn($this->session);
