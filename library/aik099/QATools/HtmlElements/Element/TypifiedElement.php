@@ -11,6 +11,8 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\PageObject\Element\INodeElementAware;
+use aik099\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
@@ -23,7 +25,7 @@ use aik099\QATools\PageObject\ISearchContext;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-abstract class TypifiedElement implements ITypifiedElement
+abstract class TypifiedElement implements ITypifiedElement, INodeElementAware
 {
 
 	/**
@@ -51,13 +53,14 @@ abstract class TypifiedElement implements ITypifiedElement
 	}
 
 	/**
-	 * Creates TypifiedElement instance based on existing NodeElement instance.
+	 * Creates Element instance based on existing NodeElement instance.
 	 *
-	 * @param NodeElement $node_element Node element.
+	 * @param NodeElement  $node_element Node element.
+	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
 	 */
-	public static function fromNodeElement(NodeElement $node_element)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
 		$wrapped_element = WebElement::fromNodeElement($node_element);
 

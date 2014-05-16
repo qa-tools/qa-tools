@@ -46,7 +46,7 @@ abstract class ElementContainer extends WebElement implements IElementContainer
 	}
 
 	/**
-	 * Creates WebElement instance based on existing NodeElement instance.
+	 * Creates Element instance based on existing NodeElement instance.
 	 *
 	 * @param NodeElement  $node_element Node element.
 	 * @param IPageFactory $page_factory Page factory.
