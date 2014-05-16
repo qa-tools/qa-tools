@@ -66,8 +66,8 @@ class ElementCollectionTest extends TestCase
 	public function creatingCollectionWithElementMatchByInterfaceDataProvider()
 	{
 		return array(
-			array(m::mock('\\tests\\aik099\\QATools\\PageObject\\Element\\SampleElementInterface')),
-			array(m::mock('\\tests\\aik099\\QATools\\PageObject\\Element\\SubSampleElementInterface')),
+			array(m::mock('\\tests\\aik099\\QATools\\PageObject\\Element\\ISampleElementInterface')),
+			array(m::mock('\\tests\\aik099\\QATools\\PageObject\\Element\\ISubSampleElementInterface')),
 		);
 	}
 
@@ -92,7 +92,7 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element must be of "\tests\aik099\QATools\PageObject\Element\SampleElementInterface" class, but element of "tests\aik099\QATools\PageObject\Element\NonMatchingClass" class given
+	 * @expectedExceptionMessage Collection element must be of "\tests\aik099\QATools\PageObject\Element\ISampleElementInterface" class, but element of "tests\aik099\QATools\PageObject\Element\NonMatchingClass" class given
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementCollectionException::TYPE_ELEMENT_CLASS_MISMATCH
 	 * @dataProvider nowLaterDataProvider
 	 */
@@ -118,7 +118,7 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element class "\tests\aik099\QATools\PageObject\Element\SampleElementInterface" must implement INodeElementAware interface
+	 * @expectedExceptionMessage Collection element class "\tests\aik099\QATools\PageObject\Element\ISampleElementInterface" must implement INodeElementAware interface
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementCollectionException::TYPE_INCORRECT_ELEMENT_CLASS
 	 */
 	public function testFromNodeElementElementCantWorkWithInterfaces()
@@ -186,7 +186,6 @@ class CollectionWithExistingElementClass extends AbstractElementCollection
 
 }
 
-
 class SubStdClass extends \stdClass
 {
 
@@ -197,18 +196,20 @@ class CollectionWithExistingElementInterface extends AbstractElementCollection
 
 	public function __construct(array $elements = array())
 	{
-		$this->elementClass = '\\tests\\aik099\\QATools\\PageObject\\Element\\SampleElementInterface';
+		$this->elementClass = '\\tests\\aik099\\QATools\\PageObject\\Element\\ISampleElementInterface';
 
 		parent::__construct($elements);
 	}
 
 }
 
-interface SampleElementInterface {
+interface ISampleElementInterface
+{
 
 }
 
-interface SubSampleElementInterface extends SampleElementInterface {
+interface ISubSampleElementInterface extends ISampleElementInterface
+{
 
 }
 
