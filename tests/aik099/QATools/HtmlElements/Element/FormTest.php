@@ -12,6 +12,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 
 use aik099\QATools\HtmlElements\Element\Form;
+use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 
 class FormTest extends ElementContainerTest
@@ -41,22 +42,31 @@ class FormTest extends ElementContainerTest
 	public function testFill()
 	{
 		/** @var Form $form */
-		$form = $this->mockElement(array('typify', 'getNodeElement', 'setValue'));
+		$form = $this->mockElement(array('typify', 'getNodeElements', 'setValue'));
 
-		$node_element1 = $this->createNodeElement();
-		$typified_element1 = m::mock(self::TYPIFIED_ELEMENT_CLASS);
-		$form->shouldReceive('getNodeElement')->with('f1')->once()->andReturn($node_element1);
-		$form->shouldReceive('typify')->with($node_element1)->once()->andReturn($typified_element1);
-		$form->shouldReceive('setValue')->with($typified_element1, 'v1')->once()->andReturn($form);
-
-		$node_element2 = $this->createNodeElement();
-		$typified_element2 = m::mock(self::TYPIFIED_ELEMENT_CLASS);
-		$form->shouldReceive('getNodeElement')->with('f2')->once()->andReturn($node_element2);
-		$form->shouldReceive('typify')->with($node_element2)->once()->andReturn($typified_element2);
-		$form->shouldReceive('setValue')->with($typified_element2, 'v2')->once()->andReturn($form);
+		$this->createFillFixture($form, 'f1', 'v1');
+		$this->createFillFixture($form, 'f2', 'v2');
 
 		$form_data = array('f1' => 'v1', 'f2' => 'v2');
 		$this->assertSame($form, $form->fill($form_data));
+	}
+
+	/**
+	 * Creates fixture for "Form::fill" method testing.
+	 *
+	 * @param Form   $form        Form.
+	 * @param string $field_name  Field name.
+	 * @param string $field_value Field value.
+	 *
+	 * @return void
+	 */
+	protected function createFillFixture(Form $form, $field_name, $field_value)
+	{
+		$node_elements = array($this->createNodeElement());
+		$typified_element = m::mock(self::TYPIFIED_ELEMENT_CLASS);
+		$form->shouldReceive('getNodeElements')->with($field_name)->once()->andReturn($node_elements);
+		$form->shouldReceive('typify')->with(m::mustBe($node_elements))->once()->andReturn($typified_element);
+		$form->shouldReceive('setValue')->with($typified_element, $field_value)->once()->andReturn($form);
 	}
 
 	/**
@@ -67,17 +77,17 @@ class FormTest extends ElementContainerTest
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND
 	 * @expectedExceptionMessage Form field "field-name" not found
 	 */
-	public function testGetNodeElementFailure()
+	public function testGetNodeElementsFailure()
 	{
 		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
-			$this->webElement->shouldReceive('find')->with('named', array('field', "'field-name'"))->once()->andReturnNull();
+			$this->webElement->shouldReceive('findAll')->with('named', array('field', "'field-name'"))->once()->andReturn(array());
 		}
 		else {
-			$this->webElement->shouldReceive('find')->with('named', array('field', 'field-name'))->once()->andReturnNull();
+			$this->webElement->shouldReceive('findAll')->with('named', array('field', 'field-name'))->once()->andReturn(array());
 		}
 
-		$this->getElement()->getNodeElement('field-name');
+		$this->getElement()->getNodeElements('field-name');
 	}
 
 	/**
@@ -85,31 +95,31 @@ class FormTest extends ElementContainerTest
 	 *
 	 * @return void
 	 */
-	public function testGetNodeElementSuccess()
+	public function testGetNodeElementsSuccess()
 	{
-		$node_element = $this->createNodeElement();
+		$node_elements = array($this->createNodeElement());
 
 		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
 			$this->selectorsHandler->shouldReceive('xpathLiteral')->with('field-name')->once()->andReturn("'field-name'");
 
 			$this->webElement
-				->shouldReceive('find')
+				->shouldReceive('findAll')
 				->with('named', array('field', "'field-name'"))
 				->once()
-				->andReturn($node_element);
+				->andReturn($node_elements);
 		}
 		else {
 			$this->webElement
-				->shouldReceive('find')
+				->shouldReceive('findAll')
 				->with('named', array('field', 'field-name'))
 				->once()
-				->andReturn($node_element);
+				->andReturn($node_elements);
 		}
 
-		$found_element = $this->getElement()->getNodeElement('field-name');
+		$found_elements = $this->getElement()->getNodeElements('field-name');
 
-		$this->assertSame($node_element, $found_element);
-		$this->assertEquals('XPATH', $found_element->getXpath());
+		$this->assertSame($node_elements, $found_elements);
+		$this->assertEquals('XPATH', $found_elements[0]->getXpath());
 	}
 
 	/**
@@ -124,14 +134,17 @@ class FormTest extends ElementContainerTest
 	 */
 	public function testTypify($tag_name, $input_type, $element_class)
 	{
-		$node_element = $this->createNodeElement();
-		$node_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn($tag_name);
+		// 2 times for radio, because radio is wrapped within a collection and is asserted.
+		$call_count = $input_type == 'radio' ? 2 : 1;
+
+		$node_element = new NodeElement('XPATH', $this->session);
+		$this->driver->shouldReceive('getTagName')->with('XPATH')->times($call_count)->andReturn($tag_name);
 
 		if ( $tag_name == 'input' ) {
-			$node_element->shouldReceive('getAttribute')->with('type')->once()->andReturn($input_type);
+			$this->driver->shouldReceive('getAttribute')->with('XPATH', 'type')->times($call_count)->andReturn($input_type);
 		}
 
-		$form_element = $this->getElement()->typify($node_element);
+		$form_element = $this->getElement()->typify(array($node_element));
 		$this->assertInstanceOf($element_class, $form_element);
 	}
 
@@ -143,15 +156,15 @@ class FormTest extends ElementContainerTest
 	public function typifyDataProvider()
 	{
 		return array(
-			array('input', 'checkbox', '\\aik099\\QATools\\HtmlElements\\Element\\Checkbox'),
-			array('input', 'radio', '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup'),
-			array('input', 'file', '\\aik099\\QATools\\HtmlElements\\Element\\FileInput'),
-			array('input', null, '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
-			array('input', 'text', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
-			array('input', 'password', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
-			array('input', 'color', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
-			array('select', null, '\\aik099\\QATools\\HtmlElements\\Element\\Select'),
-			array('textarea', null, '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
+			'checkbox' => array('input', 'checkbox', '\\aik099\\QATools\\HtmlElements\\Element\\Checkbox'),
+			'radio' => array('input', 'radio', '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup'),
+			'file' => array('input', 'file', '\\aik099\\QATools\\HtmlElements\\Element\\FileInput'),
+			'text-no-type' => array('input', null, '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
+			'text' => array('input', 'text', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
+			'password' => array('input', 'password', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
+			'color' => array('input', 'color', '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
+			'select' => array('select', null, '\\aik099\\QATools\\HtmlElements\\Element\\Select'),
+			'textarea' => array('textarea', null, '\\aik099\\QATools\\HtmlElements\\Element\\TextInput'),
 		);
 	}
 
@@ -168,7 +181,7 @@ class FormTest extends ElementContainerTest
 		$node_element = $this->createNodeElement();
 		$node_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn('article');
 
-		$this->getElement()->typify($node_element);
+		$this->getElement()->typify(array($node_element));
 	}
 
 	/**

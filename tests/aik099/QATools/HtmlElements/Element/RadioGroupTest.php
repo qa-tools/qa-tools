@@ -14,11 +14,10 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 use Mockery as m;
 use aik099\QATools\HtmlElements\Element\Radio;
 use aik099\QATools\HtmlElements\Element\RadioGroup;
+use Mockery\MockInterface;
 
-class RadioGroupTest extends TypifiedElementTest
+class RadioGroupTest extends TypifiedElementCollectionTest
 {
-
-	const RADIO_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
 
 	/**
 	 * Prepares test.
@@ -27,79 +26,28 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	protected function setUp()
 	{
-		if ( is_null($this->elementClass) ) {
-			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup';
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup';
+			$this->collectionElementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
 		}
 
 		parent::setUp();
 	}
 
 	/**
-	 * Test description.
+	 * Creates valid collection element mock.
 	 *
-	 * @param array  $xpath_expressions Xpath expressions to be queried.
-	 * @param string $radio_name        Radio button name.
-	 *
-	 * @return void
-	 * @dataProvider getButtonsDataProvider
+	 * @return MockInterface
 	 */
-	public function testGetButtons(array $xpath_expressions, $radio_name)
+	protected function createValidElementMock()
 	{
-		$this->webElement->shouldReceive('getAttribute')->with('name')->once()->andReturn($radio_name);
-		$this->selectorsHandler->shouldReceive('xpathLiteral')->with($radio_name)->andReturn("'" . $radio_name . "'");
+		$call_count = $this->getName(false) == 'testArrayAccessInterface' ? 2 : 1;
 
-		foreach ( $xpath_expressions as $xpath_expression ) {
-			$expected = crc32($xpath_expression);
-			$node_element = m::mock('\\Behat\\Mink\\Element\\NodeElement');
-			$node_element->shouldReceive('getXpath')->andReturn($expected);
-			$node_element->shouldReceive('getSession')->andReturn($this->session);
+		$element = m::mock($this->collectionElementClass);
+		$element->shouldReceive('getTagName')->times($call_count)->andReturn('input');
+		$element->shouldReceive('getAttribute')->with('type')->times($call_count)->andReturn('radio');
 
-			$this->selectorsHandler
-				->shouldReceive('selectorToXpath')
-				->with('se', array('xpath' => $expected))
-				->andReturn($expected);
-			$this->webElement
-				->shouldReceive('findAll')
-				->with('xpath', $xpath_expression)
-				->once()
-				->andReturn(array($node_element));
-		}
-
-		$buttons = $this->getElement()->getButtons();
-
-		$this->assertCount(count($xpath_expressions), $buttons);
-
-		foreach ( $buttons as $index => $button ) {
-			$this->assertInstanceOf(self::RADIO_CLASS, $button);
-			$this->assertEquals(crc32($xpath_expressions[$index]), $button->getXpath());
-		}
-	}
-
-	/**
-	 * Data provider for "getButtons" method testing.
-	 *
-	 * @return array
-	 */
-	public function getButtonsDataProvider()
-	{
-		return array(
-			array(
-				array(
-					'self::*',
-					"following::input[@type = 'radio']",
-					"preceding::input[@type = 'radio']",
-				),
-				null,
-			),
-			array(
-				array(
-					'self::*',
-					"following::input[@type = 'radio' and @name = 'RN']",
-					"preceding::input[@type = 'radio' and @name = 'RN']",
-				),
-				'RN',
-			),
-		);
+		return $element;
 	}
 
 	/**
@@ -109,7 +57,7 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testHasSelectedButtonNotFound()
 	{
-		$this->assertFalse($this->mockElement()->hasSelectedButton());
+		$this->assertFalse($this->mockCollection()->hasSelectedButton());
 	}
 
 	/**
@@ -119,10 +67,10 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testHasSelectedButtonFound()
 	{
-		$radio = m::mock(self::RADIO_CLASS);
+		$radio = $this->createRadioButton();
 		$radio->shouldReceive('isSelected')->once()->andReturn(true);
 
-		$this->assertTrue($this->mockElement(array(), array($radio))->hasSelectedButton());
+		$this->assertTrue($this->mockCollection(array(), array($radio))->hasSelectedButton());
 	}
 
 	/**
@@ -134,7 +82,7 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testGetSelectedButtonNotFound()
 	{
-		$this->mockElement()->getSelectedButton();
+		$this->mockCollection()->getSelectedButton();
 	}
 
 	/**
@@ -144,10 +92,10 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testGetSelectedButtonFound()
 	{
-		$radio = m::mock(self::RADIO_CLASS);
+		$radio = $this->createRadioButton();
 		$radio->shouldReceive('isSelected')->once()->andReturn(true);
 
-		$this->assertSame($radio, $this->mockElement(array(), array($radio))->getSelectedButton());
+		$this->assertSame($radio, $this->mockCollection(array(), array($radio))->getSelectedButton());
 	}
 
 	/**
@@ -159,7 +107,7 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByLabelTextNotFound()
 	{
-		$this->mockElement()->selectButtonByLabelText('ANY');
+		$this->mockCollection()->selectButtonByLabelText('ANY');
 	}
 
 	/**
@@ -169,11 +117,11 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByLabelTextFound()
 	{
-		$radio = m::mock(self::RADIO_CLASS);
+		$radio = $this->createRadioButton();
 		$radio->shouldReceive('getLabelText')->once()->andReturn('EXAMPLE TEXT');
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array(), array($radio));
+		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByLabelText('LE T'));
 	}
 
@@ -186,7 +134,7 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByValueNotFound()
 	{
-		$this->mockElement()->selectButtonByValue('ANY');
+		$this->mockCollection()->selectButtonByValue('ANY');
 	}
 
 	/**
@@ -196,11 +144,11 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByValueFound()
 	{
-		$radio = m::mock(self::RADIO_CLASS);
+		$radio = $this->createRadioButton();
 		$radio->shouldReceive('getValue')->once()->andReturn('V1');
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array(), array($radio));
+		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByValue('V1'));
 	}
 
@@ -213,7 +161,7 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByIndexNotFound()
 	{
-		$this->mockElement()->selectButtonByIndex(100);
+		$this->mockCollection()->selectButtonByIndex(100);
 	}
 
 	/**
@@ -223,10 +171,10 @@ class RadioGroupTest extends TypifiedElementTest
 	 */
 	public function testSelectButtonByIndexFound()
 	{
-		$radio = m::mock(self::RADIO_CLASS);
+		$radio = $this->createRadioButton();
 		$radio->shouldReceive('select')->once()->andReturnNull();
 
-		$element = $this->mockElement(array(), array($radio));
+		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByIndex(0));
 	}
 
@@ -238,37 +186,37 @@ class RadioGroupTest extends TypifiedElementTest
 	public function testSetValue()
 	{
 		/* @var $element RadioGroup */
-		$element = parent::mockElement(array('selectButtonByValue'));
+		$element = parent::mockCollection(array('selectButtonByValue'));
 		$element->shouldReceive('selectButtonByValue')->with('555')->once()->andReturn($element);
 
 		$this->assertSame($element, $element->setValue(555));
 	}
 
 	/**
-	 * Mocks element.
+	 * Creates a radio button.
 	 *
-	 * @param array         $methods       Methods to mock.
-	 * @param array|Radio[] $radio_buttons Radio buttons.
-	 *
-	 * @return RadioGroup
+	 * @return Radio
 	 */
-	protected function mockElement(array $methods = array(), $radio_buttons = array())
+	protected function createRadioButton()
 	{
-		$methods[] = 'getButtons';
-		$element = parent::mockElement($methods);
-		$element->shouldReceive('getButtons')->once()->andReturn($radio_buttons);
+		$radio = m::mock($this->collectionElementClass);
+		$radio->shouldReceive('getTagName')->once()->andReturn('INPUT');
+		$radio->shouldReceive('getAttribute')->with('type')->once()->andReturn('radio');
 
-		return $element;
+		return $radio;
 	}
 
 	/**
-	 * Returns existing element.
+	 * Mocks element.
+	 *
+	 * @param array         $methods  Methods to mock.
+	 * @param array|Radio[] $elements Radio buttons.
 	 *
 	 * @return RadioGroup
 	 */
-	protected function getElement()
+	protected function mockCollection(array $methods = array(), array $elements = array())
 	{
-		return $this->typifiedElement;
+		return parent::mockCollection($methods, $elements);
 	}
 
 }

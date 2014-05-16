@@ -12,65 +12,37 @@ namespace aik099\QATools\HtmlElements\Element;
 
 
 use aik099\QATools\HtmlElements\Exception\RadioGroupException;
-use Behat\Mink\Element\NodeElement;
 
 /**
  * Represents a group of radio buttons.
  */
-class RadioGroup extends TypifiedElement implements ISimpleSetter
+class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSetter
 {
 
 	/**
-	 * Returns all radio buttons belonging to this group.
+	 * Initializes collection with a list of elements.
 	 *
-	 * @return Radio[]
+	 * @param array|Radio[] $elements Radio elements.
 	 */
-	public function getButtons()
+	public function __construct(array $elements = array())
 	{
-		$radio_name = $this->getAttribute('name');
-
-		if ( is_null($radio_name) ) {
-			$xpath_expressions = array(
-				'self::*',
-				"following::input[@type = 'radio']",
-				"preceding::input[@type = 'radio']",
-			);
-		}
-		else {
-			$radio_name = $this->getSelectorsHandler()->xpathLiteral($radio_name);
-
-			$xpath_expressions = array(
-				'self::*',
-				"following::input[@type = 'radio' and @name = " . $radio_name . ']',
-				"preceding::input[@type = 'radio' and @name = " . $radio_name . ']',
-			);
+		if ( !$this->elementClass ) {
+			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
 		}
 
-		$ret = array();
-
-		foreach ( $xpath_expressions as $xpath_expression ) {
-			$ret = array_merge($ret, $this->getWrappedElement()->findAll('xpath', $xpath_expression));
-		}
-
-		return $this->wrapButtons($ret);
+		parent::__construct($elements);
 	}
 
 	/**
-	 * Wraps each of NodeElement in array with a Radio class.
+	 * Determines if an element can be added to a collection.
 	 *
-	 * @param array|NodeElement[] $nodes Nodes.
+	 * @param mixed $element Element.
 	 *
-	 * @return Radio[]
+	 * @return boolean
 	 */
-	protected function wrapButtons(array $nodes)
+	protected function acceptElement($element)
 	{
-		$ret = array();
-
-		foreach ( $nodes as $node_element ) {
-			$ret[] = Radio::fromNodeElement($node_element);
-		}
-
-		return $ret;
+		return strtolower($element->getTagName()) == 'input' && strtolower($element->getAttribute('type')) == 'radio';
 	}
 
 	/**
@@ -80,7 +52,8 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 */
 	public function hasSelectedButton()
 	{
-		foreach ( $this->getButtons() as $button ) {
+		/** @var $button Radio */
+		foreach ( $this as $button ) {
 			if ( $button->isSelected() ) {
 				return true;
 			}
@@ -97,7 +70,8 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 */
 	public function getSelectedButton()
 	{
-		foreach ( $this->getButtons() as $button ) {
+		/** @var $button Radio */
+		foreach ( $this as $button ) {
 			if ( $button->isSelected() ) {
 				return $button;
 			}
@@ -116,7 +90,8 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 */
 	public function selectButtonByLabelText($text)
 	{
-		foreach ( $this->getButtons() as $button ) {
+		/** @var $button Radio */
+		foreach ( $this as $button ) {
 			if ( strpos($button->getLabelText(), $text) !== false ) {
 				$button->select();
 
@@ -140,7 +115,8 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 */
 	public function selectButtonByValue($value)
 	{
-		foreach ( $this->getButtons() as $button ) {
+		/** @var $button Radio */
+		foreach ( $this as $button ) {
 			if ( (string)$button->getValue() === (string)$value ) {
 				$button->select();
 
@@ -164,10 +140,10 @@ class RadioGroup extends TypifiedElement implements ISimpleSetter
 	 */
 	public function selectButtonByIndex($index)
 	{
-		$buttons = $this->getButtons();
-
-		if ( array_key_exists($index, $buttons) ) {
-			$buttons[$index]->select();
+		if ( isset($this[$index]) ) {
+			/** @var Radio $button */
+			$button = $this[$index];
+			$button->select();
 
 			return $this;
 		}
