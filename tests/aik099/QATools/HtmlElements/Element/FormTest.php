@@ -18,7 +18,7 @@ use Mockery as m;
 class FormTest extends ElementContainerTest
 {
 
-	const TYPIFIED_ELEMENT_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement';
+	const TYPIFIED_ELEMENT_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 
 	/**
 	 * Prepares test.

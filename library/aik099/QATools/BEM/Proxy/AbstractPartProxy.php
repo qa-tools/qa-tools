@@ -23,7 +23,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * @link http://bit.ly/14TbcR9
  */
-abstract class PartProxy extends AbstractProxy implements IPart
+abstract class AbstractPartProxy extends AbstractProxy implements IPart
 {
 
 	/**

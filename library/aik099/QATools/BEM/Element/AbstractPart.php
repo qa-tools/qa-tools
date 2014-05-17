@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\ISearchContext;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-abstract class Part implements IPart
+abstract class AbstractPart implements IPart
 {
 
 	/**

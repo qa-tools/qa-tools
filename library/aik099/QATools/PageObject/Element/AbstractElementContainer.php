@@ -20,7 +20,7 @@ use Behat\Mink\Element\NodeElement;
  *
  * To make a class that will represent a block of elements (e.g. web form) create a descendant of this class.
  */
-abstract class ElementContainer extends WebElement implements IElementContainer
+abstract class AbstractElementContainer extends WebElement implements IElementContainer
 {
 
 	/**

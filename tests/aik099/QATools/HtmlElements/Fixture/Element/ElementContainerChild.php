@@ -11,9 +11,9 @@
 namespace tests\aik099\QATools\HtmlElements\Fixture\Element;
 
 
-use aik099\QATools\HtmlElements\Element\ElementContainer;
+use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 
-class ElementContainerChild extends ElementContainer
+class ElementContainerChild extends AbstractElementContainer
 {
 
 }

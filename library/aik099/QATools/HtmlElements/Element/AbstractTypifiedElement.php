@@ -25,7 +25,7 @@ use aik099\QATools\PageObject\ISearchContext;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-abstract class TypifiedElement implements ITypifiedElement, INodeElementAware
+abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElementAware
 {
 
 	/**

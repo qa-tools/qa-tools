@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\HtmlElementsLive\Element;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
-use aik099\QATools\HtmlElements\Element\TypifiedElement;
+use aik099\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use aik099\QATools\HtmlElements\TypifiedPageFactory;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\PageFactory;
@@ -48,7 +48,7 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 	 *
 	 * @var string
 	 */
-	protected $elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement';
+	protected $elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 
 	/**
 	 * Creates one session per test case.
@@ -88,7 +88,7 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 	 *
 	 * @param array $selector Selector.
 	 *
-	 * @return TypifiedElement
+	 * @return AbstractTypifiedElement
 	 */
 	protected function createElement(array $selector)
 	{

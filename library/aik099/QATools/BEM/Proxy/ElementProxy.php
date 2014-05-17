@@ -23,7 +23,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-class ElementProxy extends PartProxy implements IElement
+class ElementProxy extends AbstractPartProxy implements IElement
 {
 
 	/**

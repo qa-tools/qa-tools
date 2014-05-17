@@ -49,9 +49,9 @@ interface IPageFactory
 	public function initPage(Page $page);
 
 	/**
-	 * Initializes ElementContainer.
+	 * Initializes AbstractElementContainer.
 	 *
-	 * @param IElementContainer $element_container ElementContainer to be initialized.
+	 * @param IElementContainer $element_container AbstractElementContainer to be initialized.
 	 *
 	 * @return self
 	 */

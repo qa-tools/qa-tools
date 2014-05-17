@@ -21,7 +21,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * To make a class that will represent a block of elements (e.g. web form) create a descendant of this class.
  */
-abstract class ElementContainer extends TypifiedElement implements IElementContainer
+abstract class AbstractElementContainer extends AbstractTypifiedElement implements IElementContainer
 {
 
 	/**

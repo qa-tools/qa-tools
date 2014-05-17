@@ -20,7 +20,7 @@ use Behat\Mink\Element\NodeElement;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-class Block extends Part implements IBlock
+class Block extends AbstractPart implements IBlock
 {
 
 	/**

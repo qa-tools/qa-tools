@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents text block on a web page.
  */
-class TextBlock extends TypifiedElement
+class TextBlock extends AbstractTypifiedElement
 {
 
 	/**

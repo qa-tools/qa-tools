@@ -16,7 +16,7 @@ use aik099\QATools\HtmlElements\Exception\FileInputException;
 /**
  * Represents web page file upload element.
  */
-class FileInput extends TypifiedElement implements ISimpleSetter
+class FileInput extends AbstractTypifiedElement implements ISimpleSetter
 {
 
 	/**
