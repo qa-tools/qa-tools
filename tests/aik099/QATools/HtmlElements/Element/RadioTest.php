@@ -12,7 +12,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 
 use Mockery as m;
-use aik099\QATools\HtmlElements\Element\Radio;
+use aik099\QATools\HtmlElements\Element\RadioButton;
 
 class RadioTest extends LabeledElementTest
 {
@@ -25,7 +25,7 @@ class RadioTest extends LabeledElementTest
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
-			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
+			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 
 		parent::setUp();
@@ -62,7 +62,7 @@ class RadioTest extends LabeledElementTest
 	/**
 	 * Returns existing element.
 	 *
-	 * @return Radio
+	 * @return RadioButton
 	 */
 	protected function getElement()
 	{

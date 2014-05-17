@@ -12,7 +12,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 
 use Mockery as m;
-use aik099\QATools\HtmlElements\Element\Radio;
+use aik099\QATools\HtmlElements\Element\RadioButton;
 use aik099\QATools\HtmlElements\Element\RadioGroup;
 use Mockery\MockInterface;
 
@@ -28,7 +28,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup';
-			$this->collectionElementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
+			$this->collectionElementClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 
 		parent::setUp();
@@ -195,7 +195,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * Creates a radio button.
 	 *
-	 * @return Radio
+	 * @return RadioButton
 	 */
 	protected function createRadioButton()
 	{
@@ -209,8 +209,8 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * Mocks element.
 	 *
-	 * @param array         $methods  Methods to mock.
-	 * @param array|Radio[] $elements Radio buttons.
+	 * @param array               $methods  Methods to mock.
+	 * @param array|RadioButton[] $elements Radio buttons.
 	 *
 	 * @return RadioGroup
 	 */

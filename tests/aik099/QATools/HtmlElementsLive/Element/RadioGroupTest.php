@@ -16,7 +16,7 @@ use aik099\QATools\HtmlElements\Element\RadioGroup;
 class RadioGroupTest extends TypifiedElementTestCase
 {
 
-	const RADIO_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
+	const RADIO_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\RadioButton';
 
 	/**
 	 * Prepares test.

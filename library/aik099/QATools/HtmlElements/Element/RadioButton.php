@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents single radio button in radio button group. Please use "RadioGroup" typified element for manipulations.
  */
-class Radio extends LabeledElement
+class RadioButton extends LabeledElement
 {
 
 	/**

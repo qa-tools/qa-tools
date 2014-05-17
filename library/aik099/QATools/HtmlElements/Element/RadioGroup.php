@@ -22,12 +22,12 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	/**
 	 * Initializes collection with a list of elements.
 	 *
-	 * @param array|Radio[] $elements Radio elements.
+	 * @param array|RadioButton[] $elements RadioButton elements.
 	 */
 	public function __construct(array $elements = array())
 	{
 		if ( !$this->elementClass ) {
-			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Radio';
+			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 
 		parent::__construct($elements);
@@ -52,7 +52,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 */
 	public function hasSelectedButton()
 	{
-		/** @var $button Radio */
+		/** @var $button RadioButton */
 		foreach ( $this as $button ) {
 			if ( $button->isSelected() ) {
 				return true;
@@ -65,12 +65,12 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	/**
 	 * Returns selected radio button.
 	 *
-	 * @return Radio Element, that represents selected radio button or {@code null} if no radio buttons are selected.
+	 * @return RadioButton Element, that represents selected radio button or {@code null} if no radio buttons are selected.
 	 * @throws RadioGroupException When no radio button is selected.
 	 */
 	public function getSelectedButton()
 	{
-		/** @var $button Radio */
+		/** @var $button RadioButton */
 		foreach ( $this as $button ) {
 			if ( $button->isSelected() ) {
 				return $button;
@@ -90,7 +90,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 */
 	public function selectButtonByLabelText($text)
 	{
-		/** @var $button Radio */
+		/** @var $button RadioButton */
 		foreach ( $this as $button ) {
 			if ( strpos($button->getLabelText(), $text) !== false ) {
 				$button->select();
@@ -115,7 +115,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 */
 	public function selectButtonByValue($value)
 	{
-		/** @var $button Radio */
+		/** @var $button RadioButton */
 		foreach ( $this as $button ) {
 			if ( (string)$button->getValue() === (string)$value ) {
 				$button->select();
@@ -141,7 +141,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	public function selectButtonByIndex($index)
 	{
 		if ( isset($this[$index]) ) {
-			/** @var Radio $button */
+			/** @var RadioButton $button */
 			$button = $this[$index];
 			$button->select();
 
