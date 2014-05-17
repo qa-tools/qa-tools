@@ -16,7 +16,7 @@ use aik099\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use aik099\QATools\PageObject\Element\WebElement;
 use tests\aik099\QATools\TestCase;
 
-class TypifiedElementTest extends TestCase
+class AbstractTypifiedElementTest extends TestCase
 {
 
 	const WEB_ELEMENT_CLASS = '\\aik099\\QATools\\PageObject\\Element\\WebElement';

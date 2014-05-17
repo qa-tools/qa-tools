@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 use Mockery as m;
 use aik099\QATools\HtmlElements\Element\TextBlock;
 
-class TextBlockTest extends TypifiedElementTest
+class TextBlockTest extends AbstractTypifiedElementTest
 {
 
 	/**

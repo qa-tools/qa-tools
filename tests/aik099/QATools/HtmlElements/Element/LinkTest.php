@@ -13,7 +13,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 use aik099\QATools\HtmlElements\Element\Link;
 
-class LinkTest extends TypifiedElementTest
+class LinkTest extends AbstractTypifiedElementTest
 {
 
 	/**

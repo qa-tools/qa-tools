@@ -15,7 +15,7 @@ use aik099\QATools\HtmlElements\Element\Form;
 use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 
-class FormTest extends ElementContainerTest
+class FormTest extends AbstractElementContainerTest
 {
 
 	const TYPIFIED_ELEMENT_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';

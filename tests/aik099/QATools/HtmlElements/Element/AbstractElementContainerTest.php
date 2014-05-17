@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 use Mockery as m;
 
-class ElementContainerTest extends TypifiedElementTest
+class AbstractElementContainerTest extends AbstractTypifiedElementTest
 {
 
 	/**

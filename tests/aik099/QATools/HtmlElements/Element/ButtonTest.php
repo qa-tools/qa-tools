@@ -13,7 +13,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 use aik099\QATools\HtmlElements\Element\Button;
 
-class ButtonTest extends TypifiedElementTest
+class ButtonTest extends AbstractTypifiedElementTest
 {
 
 	/**

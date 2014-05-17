@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\PageObject\Element;
 use Mockery as m;
 use tests\aik099\QATools\PageObject\Fixture\Element\ElementContainerChild;
 
-class ElementContainerTest extends WebElementTest
+class AbstractElementContainerTest extends WebElementTest
 {
 
 	/**
