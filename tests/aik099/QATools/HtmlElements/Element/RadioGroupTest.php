@@ -200,7 +200,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	protected function createRadioButton()
 	{
 		$radio = m::mock($this->collectionElementClass);
-		$radio->shouldReceive('getTagName')->once()->andReturn('INPUT');
+		$radio->shouldReceive('getTagName')->once()->andReturn('input');
 		$radio->shouldReceive('getAttribute')->with('type')->once()->andReturn('radio');
 
 		return $radio;

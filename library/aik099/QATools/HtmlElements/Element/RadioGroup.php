@@ -42,7 +42,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 */
 	protected function acceptElement($element)
 	{
-		return strtolower($element->getTagName()) == 'input' && strtolower($element->getAttribute('type')) == 'radio';
+		return $element->getTagName() == 'input' && strtolower($element->getAttribute('type')) == 'radio';
 	}
 
 	/**
