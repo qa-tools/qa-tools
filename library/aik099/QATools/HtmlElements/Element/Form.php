@@ -41,7 +41,7 @@ class Form extends ElementContainer
 	public function fill(array $form_data)
 	{
 		foreach ( $form_data as $field_name => $field_value ) {
-			$form_element = $this->typify($this->getNodeElement($field_name));
+			$form_element = $this->typify($this->getNodeElements($field_name));
 
 			$this->setValue($form_element, $field_value);
 		}
@@ -50,25 +50,25 @@ class Form extends ElementContainer
 	}
 
 	/**
-	 * Finds NodeElement by a given field name.
+	 * Finds NodeElements by a given field name.
 	 *
 	 * @param string $field_name Field name to search for.
 	 *
-	 * @return NodeElement
+	 * @return NodeElement[]
 	 * @throws FormException When element for a field name not found.
 	 */
-	public function getNodeElement($field_name)
+	public function getNodeElements($field_name)
 	{
-		$node_element = $this->find('named', array('field', $this->_autoEscapeForXpath($field_name)));
+		$node_elements = $this->findAll('named', array('field', $this->_autoEscapeForXpath($field_name)));
 
-		if ( is_null($node_element) ) {
+		if ( empty($node_elements) ) {
 			throw new FormException(
 				sprintf('Form field "%s" not found', $field_name),
 				FormException::TYPE_NOT_FOUND
 			);
 		}
 
-		return $node_element;
+		return $node_elements;
 	}
 
 	/**
@@ -91,15 +91,16 @@ class Form extends ElementContainer
 	}
 
 	/**
-	 * Create TypifiedElement from a given NodeElement.
+	 * Create TypifiedElement from a given NodeElements.
 	 *
-	 * @param NodeElement $node_element Node Element.
+	 * @param array|NodeElement[] $node_elements Node Elements.
 	 *
 	 * @return ITypifiedElement
 	 * @throws FormException When unable to create typified element.
 	 */
-	public function typify(NodeElement $node_element)
+	public function typify(array $node_elements)
 	{
+		$node_element = $node_elements[0];
 		$tag_name = $node_element->getTagName();
 
 		if ( $tag_name == 'input' ) {
@@ -109,7 +110,7 @@ class Form extends ElementContainer
 				return Checkbox::fromNodeElement($node_element);
 			}
 			elseif ( $input_type == self::RADIO_INPUT ) {
-				return RadioGroup::fromNodeElement($node_element);
+				return RadioGroup::fromNodeElements($node_elements);
 			}
 			elseif ( $input_type == self::FILE_INPUT ) {
 				return FileInput::fromNodeElement($node_element);

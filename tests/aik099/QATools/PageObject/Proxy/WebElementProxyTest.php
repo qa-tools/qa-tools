@@ -23,7 +23,10 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	 */
 	protected function setUp()
 	{
-		$this->proxyClass = '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy';
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy';
+			$this->collectionElementClass = '\\aik099\\QATools\\PageObject\\Element\\IWebElement';
+		}
 
 		parent::setUp();
 	}
@@ -37,7 +40,7 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -49,8 +52,8 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
-		$this->proxy->setClassName($expected);
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -60,7 +63,7 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testIsValidSubstitute()
 	{
-		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->proxy);
+		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->element);
 	}
 
 }

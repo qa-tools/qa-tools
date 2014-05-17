@@ -71,8 +71,8 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		$search_context = m::mock('\\aik099\\QATools\\BEM\\Element\\IBlock');
 		$this->locator->shouldReceive('getSearchContext')->andReturn($search_context);
 
-		$node_element = $this->createNodeElement();
-		$this->locator->shouldReceive('find')->once()->andReturn($node_element);
+		$node_elements = array($this->createNodeElement());
+		$this->locator->shouldReceive('findAll')->once()->andReturn($node_elements);
 
 		$annotation = new BEMAnnotation();
 		$annotation->element = 'element-name';

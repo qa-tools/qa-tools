@@ -17,6 +17,8 @@ use Mockery as m;
 class ElementContainerProxyTest extends WebElementProxyTest
 {
 
+	const ELEMENT_CLASS = '\\tests\\aik099\\QATools\\PageObject\\Fixture\\Element\\ElementContainerChild';
+
 	/**
 	 * Occurs before "setUp" method is finished configuration jobs.
 	 *
@@ -24,6 +26,8 @@ class ElementContainerProxyTest extends WebElementProxyTest
 	 */
 	protected function beforeSetUpFinish()
 	{
+		parent::beforeSetUpFinish();
+
 		$this->pageFactory->shouldReceive('initElementContainer')->andReturn($this->pageFactory);
 
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
@@ -36,9 +40,19 @@ class ElementContainerProxyTest extends WebElementProxyTest
 	 *
 	 * @return void
 	 */
+	public function testDefaultClassName()
+	{
+		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
 	public function testGetPageFactory()
 	{
-		$object = $this->proxy->getObject();
+		$object = $this->element->getObject();
 
 		$method = new \ReflectionMethod(get_class($object), 'getPageFactory');
 		$method->setAccessible(true);
@@ -51,11 +65,11 @@ class ElementContainerProxyTest extends WebElementProxyTest
 	 *
 	 * @return WebElementProxy
 	 */
-	protected function createProxy()
+	protected function createElement()
 	{
 		/** @var WebElementProxy $proxy */
-		$proxy = new $this->proxyClass($this->locator, $this->pageFactory);
-		$proxy->setClassName('\\tests\\aik099\\QATools\\PageObject\\Fixture\\Element\\ElementContainerChild');
+		$proxy = new $this->collectionClass($this->locator, $this->pageFactory);
+		$proxy->setClassName(self::ELEMENT_CLASS);
 
 		return $proxy;
 	}

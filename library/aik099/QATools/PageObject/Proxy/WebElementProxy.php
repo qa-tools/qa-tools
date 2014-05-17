@@ -35,6 +35,7 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 	public function __construct(IElementLocator $locator, IPageFactory $page_factory = null)
 	{
 		$this->className = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
+		$this->elementClass = '\\aik099\\QATools\\PageObject\\Element\\IWebElement';
 
 		parent::__construct($locator, $page_factory);
 	}
@@ -46,14 +47,27 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 	 */
 	public function getObject()
 	{
-		if ( !is_object($this->object) ) {
-			$element = $this->locateElement();
+		if ( !$this->locatorUsed ) {
+			// NodeElement + TargetElement(setContainer) = Proxy.
+			$this->locatorUsed = true;
+			/* @var $object IWebElement */
 
-			$this->object = call_user_func(array($this->className, 'fromNodeElement'), $element, $this->pageFactory);
-			$this->object->setContainer($this->getContainer());
+			if ( $this->isElementCollection() ) {
+				$object = call_user_func(
+					array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
+				);
+			}
+			else {
+				$object = call_user_func(
+					array($this->className, 'fromNodeElement'), $this->locateElement(), $this->pageFactory
+				);
+			}
+
+			$this[] = $object;
+			$this->injectContainer();
 		}
 
-		return $this->object;
+		return $this->current();
 	}
 
 }

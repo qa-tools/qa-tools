@@ -13,9 +13,10 @@ namespace tests\aik099\QATools\PageObject\Proxy;
 
 use aik099\QATools\PageObject\Proxy\AbstractProxy;
 use Mockery as m;
+use tests\aik099\QATools\PageObject\Element\AbstractElementCollectionTestCase;
 use tests\aik099\QATools\TestCase;
 
-abstract class AbstractProxyTestCase extends TestCase
+abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 {
 
 	/**
@@ -26,18 +27,11 @@ abstract class AbstractProxyTestCase extends TestCase
 	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocator';
 
 	/**
-	 * Proxy class.
-	 *
-	 * @var string
-	 */
-	protected $proxyClass = '\\aik099\\QATools\\PageObject\\Proxy\\AbstractProxy';
-
-	/**
-	 * Proxy.
+	 * Collection.
 	 *
 	 * @var AbstractProxy
 	 */
-	protected $proxy;
+	protected $element;
 
 	/**
 	 * Locator.
@@ -53,6 +47,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	protected $ignoreLocatorTests = array(
 		'testSetContainer', 'testGetContainerFallback', 'testGetObjectEmptyLocator', 'testIsValidSubstitute',
+		'testSetName', 'testArrayAccessInterface', 'testIteratorInterface', 'testFromNodeElements',
 	);
 
 	/**
@@ -62,17 +57,11 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	protected function setUp()
 	{
-		parent::setUp();
-
-		$this->locator = m::mock($this->locatorClass);
-
-		if ( !in_array($this->getName(), $this->ignoreLocatorTests) ) {
-			$this->expectLocatorCall();
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\PageObject\\Proxy\\AbstractProxy';
 		}
 
-		$this->beforeSetUpFinish();
-
-		$this->proxy = $this->createProxy();
+		parent::setUp();
 	}
 
 	/**
@@ -82,7 +71,11 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	protected function beforeSetUpFinish()
 	{
+		$this->locator = m::mock($this->locatorClass);
 
+		if ( !in_array($this->getName(), $this->ignoreLocatorTests) ) {
+			$this->expectLocatorCall();
+		}
 	}
 
 	/**
@@ -92,7 +85,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	protected function expectLocatorCall()
 	{
-		$this->locator->shouldReceive('find')->once()->andReturn($this->createNodeElement());
+		$this->locator->shouldReceive('findAll')->once()->andReturn(array($this->createNodeElement()));
 	}
 
 	/**
@@ -102,7 +95,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	public function testGetObjectSharing()
 	{
-		$this->assertSame($this->proxy->getObject(), $this->proxy->getObject());
+		$this->assertSame($this->element->getObject(), $this->element->getObject());
 	}
 
 	/**
@@ -113,10 +106,10 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	public function testGetObjectEmptyLocator()
 	{
-		$this->locator->shouldReceive('find')->once()->andReturn(null);
+		$this->locator->shouldReceive('findAll')->once()->andReturn(null);
 		$this->locator->shouldReceive('__toString')->once()->andReturn('OK');
 
-		$this->createProxy()->getObject();
+		$this->createElement()->getObject();
 	}
 
 	/**
@@ -126,7 +119,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	public function testMethodForwardingSuccess()
 	{
-		$this->assertEquals('XPATH', $this->proxy->getXpath());
+		$this->assertEquals('XPATH', $this->element->getXpath());
 	}
 
 	/**
@@ -138,7 +131,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	public function testMethodForwardingFailure()
 	{
-		$this->proxy->nonExistingMethod();
+		$this->element->nonExistingMethod();
 	}
 
 	/**
@@ -150,8 +143,8 @@ abstract class AbstractProxyTestCase extends TestCase
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
 
-		$this->assertSame($this->proxy, $this->proxy->setContainer($container));
-		$this->assertSame($container, $this->proxy->getContainer());
+		$this->assertSame($this->element, $this->element->setContainer($container));
+		$this->assertSame($container, $this->element->getContainer());
 	}
 
 	/**
@@ -161,7 +154,7 @@ abstract class AbstractProxyTestCase extends TestCase
 	 */
 	public function testGetContainerFallback()
 	{
-		$this->assertNull($this->proxy->getContainer());
+		$this->assertNull($this->element->getContainer());
 	}
 
 	/**
@@ -172,9 +165,9 @@ abstract class AbstractProxyTestCase extends TestCase
 	public function testContainerToElement()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
-		$this->proxy->setContainer($container);
+		$this->element->setContainer($container);
 
-		$this->assertSame($container, $this->proxy->getObject()->getContainer());
+		$this->assertSame($container, $this->element->getObject()->getContainer());
 	}
 
 	/**
@@ -203,9 +196,9 @@ abstract class AbstractProxyTestCase extends TestCase
 	 *
 	 * @return AbstractProxy
 	 */
-	protected function createProxy()
+	protected function createElement()
 	{
-		return new $this->proxyClass($this->locator, $this->pageFactory);
+		return new $this->collectionClass($this->locator, $this->pageFactory);
 	}
 
 }

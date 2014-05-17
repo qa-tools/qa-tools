@@ -26,8 +26,12 @@ class ElementProxyTest extends AbstractProxyTestCase
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
-		$this->proxyClass = '\\aik099\\QATools\\BEM\\Proxy\\ElementProxy';
 		$this->locatorClass = '\\aik099\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
+
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\BEM\\Proxy\\ElementProxy';
+			$this->collectionElementClass = '\\aik099\\QATools\\BEM\\Element\\IElement';
+		}
 
 		parent::setUp();
 	}
@@ -41,7 +45,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\aik099\\QATools\\BEM\\Element\\Element';
 
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -53,8 +57,8 @@ class ElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\tests\\aik099\\QATools\\BEM\\Fixture\\Element\\ElementChild';
 
-		$this->proxy->setClassName($expected);
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -64,7 +68,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testIsValidSubstitute()
 	{
-		$this->assertInstanceOf('\\aik099\\QATools\\BEM\\Element\\IElement', $this->proxy);
+		$this->assertInstanceOf('\\aik099\\QATools\\BEM\\Element\\IElement', $this->element);
 	}
 
 	/**
@@ -74,7 +78,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testGetName()
 	{
-		$this->assertEquals('sample-name', $this->proxy->getName());
+		$this->assertEquals('sample-name', $this->element->getName());
 	}
 
 	/**
@@ -84,7 +88,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testMethodForwardingSuccess()
 	{
-		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->proxy->getWrappedElement());
+		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->element->getWrappedElement());
 	}
 
 	/**
@@ -92,9 +96,9 @@ class ElementProxyTest extends AbstractProxyTestCase
 	 *
 	 * @return ElementProxy
 	 */
-	protected function createProxy()
+	protected function createElement()
 	{
-		return new $this->proxyClass('sample-name', $this->locator, $this->pageFactory);
+		return new $this->collectionClass('sample-name', $this->locator, $this->pageFactory);
 	}
 
 }

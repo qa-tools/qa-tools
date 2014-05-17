@@ -12,10 +12,8 @@ namespace aik099\QATools\HtmlElements\Proxy;
 
 
 use aik099\QATools\HtmlElements\Element\ITypifiedElement;
-use aik099\QATools\HtmlElements\Element\TypifiedElement;
 use aik099\QATools\PageObject\Proxy\AbstractProxy;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
-use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\PageObject\IPageFactory;
 
 /**
@@ -35,13 +33,6 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	private $_name;
 
 	/**
-	 * Class name to wrap inside the typified element.
-	 *
-	 * @var string
-	 */
-	protected $wrappedClassName = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
-
-	/**
 	 * Initializes proxy for TypifiedElement.
 	 *
 	 * @param IElementLocator $locator      Element selector.
@@ -52,6 +43,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	{
 		$this->_name = $name;
 		$this->className = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
+		$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\ITypifiedElement';
 
 		parent::__construct($locator, $page_factory);
 	}
@@ -59,25 +51,33 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	/**
 	 * Returns class instance, that was placed inside a proxy.
 	 *
-	 * @return TypifiedElement
+	 * @return ITypifiedElement
 	 */
 	public function getObject()
 	{
-		if ( !is_object($this->object) ) {
-			$element = $this->locateElement();
+		if ( !$this->locatorUsed ) {
+			// NodeElement + WebElement(setContainer) + TargetElement(setName) = Proxy.
+			$this->locatorUsed = true;
+			/* @var $object ITypifiedElement */
 
-			/* @var $wrapped_element WebElement */
-			$wrapped_element = call_user_func(array($this->wrappedClassName, 'fromNodeElement'), $element, $this->pageFactory);
-			$wrapped_element->setContainer($this->getContainer());
+			if ( $this->isElementCollection() ) {
+				$object = call_user_func(
+					array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
+				);
+			}
+			else {
+				$object = call_user_func(
+					array($this->className, 'fromNodeElement'), $this->locateElement(), $this->pageFactory
+				);
+			}
 
-			/* @var $object TypifiedElement */
-			$object = new $this->className($wrapped_element, $this->pageFactory);
 			$object->setName($this->getName());
+			$this[] = $object;
 
-			$this->object = $object;
+			$this->injectContainer();
 		}
 
-		return $this->object;
+		return $this->current();
 	}
 
 	/**
@@ -88,6 +88,22 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	public function getName()
 	{
 		return $this->_name;
+	}
+
+	/**
+	 * Sets a name of an element.
+	 *
+	 * This method is used by initialization mechanism and is not intended to be used directly.
+	 *
+	 * @param string $name Name to set.
+	 *
+	 * @return self
+	 */
+	public function setName($name)
+	{
+		$this->_name = $name;
+
+		return $this;
 	}
 
 }

@@ -11,6 +11,7 @@
 namespace aik099\QATools\PageObject\Element;
 
 
+use aik099\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
 use aik099\QATools\PageObject\How;
@@ -21,7 +22,7 @@ use aik099\QATools\PageObject\ISearchContext;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-class WebElement extends NodeElement implements IWebElement
+class WebElement extends NodeElement implements IWebElement, INodeElementAware
 {
 
 	/**
@@ -52,13 +53,14 @@ class WebElement extends NodeElement implements IWebElement
 	}
 
 	/**
-	 * Creates WebElement instance based on existing NodeElement instance.
+	 * Creates Element instance based on existing NodeElement instance.
 	 *
-	 * @param NodeElement $node_element Node element.
+	 * @param NodeElement  $node_element Node element.
+	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
 	 */
-	public static function fromNodeElement(NodeElement $node_element)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
 		$selenium_selector = array(How::XPATH => $node_element->getXpath());
 

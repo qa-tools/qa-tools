@@ -26,7 +26,11 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
-		$this->proxyClass = '\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
+
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
+			$this->collectionElementClass = '\\aik099\\QATools\\HtmlElements\\Element\\ITypifiedElement';
+		}
 
 		parent::setUp();
 	}
@@ -40,7 +44,7 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
 
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -52,8 +56,8 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\ButtonChild';
 
-		$this->proxy->setClassName($expected);
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -63,7 +67,7 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testIsValidSubstitute()
 	{
-		$this->assertInstanceOf('\\aik099\\QATools\\HtmlElements\\Element\\ITypifiedElement', $this->proxy);
+		$this->assertInstanceOf('\\aik099\\QATools\\HtmlElements\\Element\\ITypifiedElement', $this->element);
 	}
 
 	/**
@@ -73,7 +77,19 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	 */
 	public function testGetName()
 	{
-		$this->assertEquals('sample-name', $this->proxy->getName());
+		$this->assertEquals('sample-name', $this->element->getName());
+	}
+
+	/**
+	 * Test description.
+	 *
+	 * @return void
+	 */
+	public function testSetName()
+	{
+		$expected = 'OK';
+		$this->assertSame($this->element, $this->element->setName($expected));
+		$this->assertEquals($expected, $this->element->getName());
 	}
 
 	/**
@@ -81,9 +97,9 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	 *
 	 * @return TypifiedElementProxy
 	 */
-	protected function createProxy()
+	protected function createElement()
 	{
-		return new $this->proxyClass($this->locator, $this->pageFactory, 'sample-name');
+		return new $this->collectionClass($this->locator, $this->pageFactory, 'sample-name');
 	}
 
 }

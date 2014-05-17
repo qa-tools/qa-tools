@@ -26,8 +26,12 @@ class BlockProxyTest extends AbstractProxyTestCase
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
-		$this->proxyClass = '\\aik099\\QATools\\BEM\\Proxy\\BlockProxy';
 		$this->locatorClass = '\\aik099\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
+
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\aik099\\QATools\\BEM\\Proxy\\BlockProxy';
+			$this->collectionElementClass = '\\aik099\\QATools\\BEM\\Element\\IBlock';
+		}
 
 		parent::setUp();
 	}
@@ -39,6 +43,8 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 */
 	protected function beforeSetUpFinish()
 	{
+		parent::beforeSetUpFinish();
+
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
 		$this->pageFactory->shouldReceive('createDecorator')->andReturn($decorator);
 		$this->pageFactory->shouldReceive('initElements')->andReturn($this->pageFactory);
@@ -63,7 +69,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\aik099\\QATools\\BEM\\Element\\Block';
 
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -75,8 +81,8 @@ class BlockProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\tests\\aik099\\QATools\\BEM\\Fixture\\Element\\BlockChild';
 
-		$this->proxy->setClassName($expected);
-		$this->assertInstanceOf($expected, $this->proxy->getObject());
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**
@@ -86,7 +92,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 */
 	public function testIsValidSubstitute()
 	{
-		$this->assertInstanceOf('\\aik099\\QATools\\BEM\\Element\\IBlock', $this->proxy);
+		$this->assertInstanceOf('\\aik099\\QATools\\BEM\\Element\\IBlock', $this->element);
 	}
 
 	/**
@@ -96,7 +102,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 */
 	public function testGetName()
 	{
-		$this->assertEquals('sample-name', $this->proxy->getName());
+		$this->assertEquals('sample-name', $this->element->getName());
 	}
 
 	/**
@@ -106,7 +112,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 */
 	public function testMethodForwardingSuccess()
 	{
-		$this->assertInternalType('array', $this->proxy->getNodes());
+		$this->assertInternalType('array', $this->element->getNodes());
 	}
 
 	/**
@@ -120,7 +126,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 		$this->locator->shouldReceive('findAll')->once()->andReturn(null);
 		$this->locator->shouldReceive('__toString')->once()->andReturn('OK');
 
-		$this->createProxy()->getObject();
+		$this->createElement()->getObject();
 	}
 
 	/**
@@ -128,9 +134,9 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 *
 	 * @return BlockProxy
 	 */
-	protected function createProxy()
+	protected function createElement()
 	{
-		return new $this->proxyClass('sample-name', $this->locator, $this->pageFactory);
+		return new $this->collectionClass('sample-name', $this->locator, $this->pageFactory);
 	}
 
 }

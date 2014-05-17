@@ -57,7 +57,7 @@ abstract class ElementContainer extends TypifiedElement implements IElementConta
 	}
 
 	/**
-	 * Creates WebElement instance based on existing NodeElement instance.
+	 * Creates Element instance based on existing NodeElement instance.
 	 *
 	 * @param NodeElement  $node_element Node element.
 	 * @param IPageFactory $page_factory Page factory.
