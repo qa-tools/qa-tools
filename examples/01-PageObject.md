@@ -97,14 +97,14 @@ class HomePage extends Page {
 ```
 
 
-## LoginSidebox (class: ElementContainer)
+## LoginSidebox (class: AbstractElementContainer)
 
 ```php
 <?php
-use aik099\QATools\PageObject\Element\ElementContainer;
+use aik099\QATools\PageObject\Element\AbstractElementContainer;
 use aik099\QATools\PageObject\Element\WebElement;
 
-class LoginSidebox extends ElementContainer {
+class LoginSidebox extends AbstractElementContainer {
 
 	/**
 	 * @var WebElement
@@ -158,16 +158,16 @@ class LoginSidebox extends ElementContainer {
 }
 ```
 
-## Sidebar (class: ElementContainer)
+## Sidebar (class: AbstractElementContainer)
 
 ```php
 <?php
-use aik099\QATools\PageObject\Element\ElementContainer;
+use aik099\QATools\PageObject\Element\AbstractElementContainer;
 
 /**
  * @find-by('id' => 'block-sidebar')
  */
-class Sidebar extends ElementContainer {
+class Sidebar extends AbstractElementContainer {
 
 	/**
 	 * Login Sidebox

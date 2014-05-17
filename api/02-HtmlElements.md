@@ -16,9 +16,9 @@ Solution of the major problem with PageObject implementation (that original libr
 
 | Name | Description |
 | ------------- | ------------- |
-| `TypifiedElement` | Base class for all other elements in this library, that wraps around WebElement and only exposes methods, that are common for all elements. |
+| `AbstractTypifiedElement` | Base class for all other elements in this library, that wraps around WebElement and only exposes methods, that are common for all elements. |
 | `AbstractTypifiedElementCollection` | Base class for all other elements in this library, that operate on a group of typified elements. |
-| `ElementContainer` | Base class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\ElementContainer` class). |
+| `AbstractElementContainer` | Base class for creating dedicated classes, that will encapsulate associated elements on a page (typified version of `\aik099\QATools\PageObject\AbstractElementContainer` class). |
 | `LabeledElement` | Element, that has associated LABEL element on a page (e.g. radio button or a checkbox). |
 | `Form` | Form. |
 | `Checkbox` | Checkbox. |

@@ -155,11 +155,11 @@ class HomePage extends TypifiedPage {
 }
 ```
 
-## LoginSidebox (class: ElementContainer)
+## LoginSidebox (class: AbstractElementContainer)
 
 ```php
 <?php
-use aik099\QATools\HtmlElements\Element\ElementContainer;
+use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 use aik099\QATools\HtmlElements\Element\TextInput;
 use aik099\QATools\HtmlElements\Element\Button;
 use aik099\QATools\HtmlElements\Element\TextBlock;
@@ -167,7 +167,7 @@ use aik099\QATools\HtmlElements\Element\TextBlock;
 /**
  * @element-name('default element name')
  */
-class LoginSidebox extends ElementContainer {
+class LoginSidebox extends AbstractElementContainer {
 
 	/**
 	 * @var TextInput
@@ -221,16 +221,16 @@ class LoginSidebox extends ElementContainer {
 }
 ```
 
-## Sidebar (class: ElementContainer)
+## Sidebar (class: AbstractElementContainer)
 
 ```php
 <?php
-use aik099\QATools\HtmlElements\Element\ElementContainer;
+use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 
 /**
  * @find-by('id' => 'block-sidebar')
  */
-class Sidebar extends ElementContainer {
+class Sidebar extends AbstractElementContainer {
 
 	/**
 	 * Login Sidebox

@@ -18,7 +18,7 @@ Implementation of Page Object pattern as done in Selenium Java library.
 | ------------- | ------------- |
 | `WebElement` | Class for interacting with __one__ element on page (descendant of [NodeElement](http://mink.behat.org/api/behat/mink/element/nodeelement.html)). |
 | `WebElementCollection` | Class for interacting with __several__ elements on page via iterator. |
-| `ElementContainer` | Base class for creating dedicated classes, that will encapsulate associated elements on a page. |
+| `AbstractElementContainer` | Base class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 #### Other
 
