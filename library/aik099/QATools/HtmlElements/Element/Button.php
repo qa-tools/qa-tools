@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents web page button control.
  */
-class Button extends TypifiedElement
+class Button extends AbstractTypifiedElement
 {
 
 	/**

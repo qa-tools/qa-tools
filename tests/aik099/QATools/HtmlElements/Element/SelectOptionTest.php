@@ -15,7 +15,7 @@ use aik099\QATools\HtmlElements\Element\Select;
 use aik099\QATools\HtmlElements\Element\SelectOption;
 use Mockery as m;
 
-class SelectOptionTest extends TypifiedElementTest
+class SelectOptionTest extends AbstractTypifiedElementTest
 {
 
 	const SELENIUM_DRIVER_CLASS = '\\Behat\\Mink\\Driver\\Selenium2Driver';

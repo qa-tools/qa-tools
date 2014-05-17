@@ -18,7 +18,7 @@ use Behat\Mink\Element\NodeElement;
 /**
  * Form element.
  */
-class Form extends ElementContainer
+class Form extends AbstractElementContainer
 {
 
 	const TEXT_INPUT = 'text';
@@ -91,7 +91,7 @@ class Form extends ElementContainer
 	}
 
 	/**
-	 * Create TypifiedElement from a given NodeElements.
+	 * Create AbstractTypifiedElement from a given NodeElements.
 	 *
 	 * @param array|NodeElement[] $node_elements Node Elements.
 	 *

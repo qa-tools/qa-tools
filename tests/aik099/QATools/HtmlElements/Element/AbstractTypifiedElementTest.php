@@ -12,11 +12,11 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 
 use Mockery as m;
-use aik099\QATools\HtmlElements\Element\TypifiedElement;
+use aik099\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use aik099\QATools\PageObject\Element\WebElement;
 use tests\aik099\QATools\TestCase;
 
-class TypifiedElementTest extends TestCase
+class AbstractTypifiedElementTest extends TestCase
 {
 
 	const WEB_ELEMENT_CLASS = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
@@ -38,7 +38,7 @@ class TypifiedElementTest extends TestCase
 	/**
 	 * Typified element.
 	 *
-	 * @var TypifiedElement
+	 * @var AbstractTypifiedElement
 	 */
 	protected $typifiedElement;
 
@@ -92,7 +92,7 @@ class TypifiedElementTest extends TestCase
 	{
 		$node_element = $this->createNodeElement();
 
-		/* @var $element_class TypifiedElement */
+		/* @var $element_class AbstractTypifiedElement */
 		$element_class = $this->elementClass;
 		$element = $element_class::fromNodeElement($node_element, $this->pageFactory);
 
@@ -213,7 +213,7 @@ class TypifiedElementTest extends TestCase
 	/**
 	 * Create element.
 	 *
-	 * @return TypifiedElement
+	 * @return AbstractTypifiedElement
 	 */
 	protected function createElement()
 	{
@@ -225,7 +225,7 @@ class TypifiedElementTest extends TestCase
 	 *
 	 * @param array $methods Methods to mock.
 	 *
-	 * @return TypifiedElement
+	 * @return AbstractTypifiedElement
 	 */
 	protected function mockElement(array $methods = array())
 	{

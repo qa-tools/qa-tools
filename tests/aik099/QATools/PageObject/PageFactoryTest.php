@@ -254,7 +254,7 @@ class PageFactoryTest extends TestCase
 	 */
 	public function testInitElementContainer()
 	{
-		$element_container = m::mock('\\aik099\\QATools\\PageObject\\Element\\ElementContainer');
+		$element_container = m::mock('\\aik099\\QATools\\PageObject\\Element\\AbstractElementContainer');
 		$this->assertSame($this->realFactory, $this->realFactory->initElementContainer($element_container));
 	}
 

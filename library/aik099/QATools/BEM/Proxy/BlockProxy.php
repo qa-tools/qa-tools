@@ -24,7 +24,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * @link http://bit.ly/14TbcR9
  */
-class BlockProxy extends PartProxy implements IBlock
+class BlockProxy extends AbstractPartProxy implements IBlock
 {
 
 	/**

@@ -11,10 +11,10 @@
 namespace tests\aik099\QATools\HtmlElements\Element;
 
 
-use aik099\QATools\HtmlElements\Element\ElementContainer;
+use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 use Mockery as m;
 
-class ElementContainerTest extends TypifiedElementTest
+class AbstractElementContainerTest extends AbstractTypifiedElementTest
 {
 
 	/**
@@ -111,7 +111,7 @@ class ElementContainerTest extends TypifiedElementTest
 	/**
 	 * Create element.
 	 *
-	 * @return ElementContainer
+	 * @return AbstractElementContainer
 	 */
 	protected function createElement()
 	{

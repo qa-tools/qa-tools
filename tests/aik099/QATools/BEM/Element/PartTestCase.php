@@ -11,7 +11,7 @@
 namespace tests\aik099\QATools\BEM\Element;
 
 
-use aik099\QATools\BEM\Element\Part;
+use aik099\QATools\BEM\Element\AbstractPart;
 use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
@@ -19,7 +19,7 @@ abstract class PartTestCase extends TestCase
 {
 
 	/**
-	 * Part class.
+	 * AbstractPart class.
 	 *
 	 * @var string
 	 */
@@ -43,7 +43,7 @@ abstract class PartTestCase extends TestCase
 	/**
 	 * Creates part to be tested.
 	 *
-	 * @return Part
+	 * @return AbstractPart
 	 */
 	abstract protected function createPart();
 

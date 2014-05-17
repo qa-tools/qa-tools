@@ -11,9 +11,9 @@
 namespace tests\aik099\QATools\HtmlElements\Fixture\Element;
 
 
-use aik099\QATools\HtmlElements\Element\TypifiedElement;
+use aik099\QATools\HtmlElements\Element\AbstractTypifiedElement;
 
-class TypifiedElementChild extends TypifiedElement
+class TypifiedElementChild extends AbstractTypifiedElement
 {
 
 }

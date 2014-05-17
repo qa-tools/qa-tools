@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Element;
 use aik099\QATools\PageObject\ISearchContext;
 
 /**
- * Interface to allow ElementContainer class detection in proxies.
+ * Interface to allow AbstractElementContainer class detection in proxies.
  */
 interface IElementContainer extends IContainerAware, ISearchContext
 {

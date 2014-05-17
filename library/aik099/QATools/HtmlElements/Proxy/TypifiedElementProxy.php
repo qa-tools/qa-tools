@@ -33,7 +33,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	private $_name;
 
 	/**
-	 * Initializes proxy for TypifiedElement.
+	 * Initializes proxy for AbstractTypifiedElement.
 	 *
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.

@@ -15,7 +15,7 @@ use aik099\QATools\HtmlElements\Element\Select;
 use Mockery as m;
 use aik099\QATools\HtmlElements\Element\SelectOption;
 
-class SelectTest extends TypifiedElementTest
+class SelectTest extends AbstractTypifiedElementTest
 {
 
 	const SELECT_OPTION_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\SelectOption';

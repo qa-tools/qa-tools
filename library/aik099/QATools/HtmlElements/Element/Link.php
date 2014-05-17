@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents hyperlink.
  */
-class Link extends TypifiedElement
+class Link extends AbstractTypifiedElement
 {
 
 	/**

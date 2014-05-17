@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\Element\WebElement;
  *
  * @method \Mockery\Expectation shouldReceive
  */
-class Element extends Part implements IElement
+class Element extends AbstractPart implements IElement
 {
 
 	/**

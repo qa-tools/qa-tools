@@ -14,7 +14,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 use aik099\QATools\HtmlElements\Element\FileInput;
 use Mockery as m;
 
-class FileInputTest extends TypifiedElementTest
+class FileInputTest extends AbstractTypifiedElementTest
 {
 
 	/**

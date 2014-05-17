@@ -44,7 +44,7 @@ abstract class AbstractTypifiedElementCollection extends AbstractElementCollecti
 	public function __construct(array $elements = array())
 	{
 		if ( !$this->elementClass ) {
-			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\TypifiedElement';
+			$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 		}
 
 		parent::__construct($elements);
@@ -61,7 +61,7 @@ abstract class AbstractTypifiedElementCollection extends AbstractElementCollecti
 	{
 		$this->container = $container;
 
-		/** @var TypifiedElement $element */
+		/** @var AbstractTypifiedElement $element */
 		foreach ( $this as $element ) {
 			$element->setContainer($container);
 		}

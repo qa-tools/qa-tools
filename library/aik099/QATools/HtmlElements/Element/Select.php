@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\How;
 /**
  * Represents web page select control.
  */
-class Select extends TypifiedElement implements ISimpleSetter
+class Select extends AbstractTypifiedElement implements ISimpleSetter
 {
 
 	/**

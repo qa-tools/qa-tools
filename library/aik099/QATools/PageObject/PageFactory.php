@@ -194,9 +194,9 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
-	 * Initializes ElementContainer.
+	 * Initializes AbstractElementContainer.
 	 *
-	 * @param IElementContainer $element_container ElementContainer to be initialized.
+	 * @param IElementContainer $element_container AbstractElementContainer to be initialized.
 	 *
 	 * @return self
 	 */
