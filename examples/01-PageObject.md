@@ -54,6 +54,7 @@ $home_page->setUsername('example user');
 <?php
 use aik099\QATools\PageObject\Page;
 use aik099\QATools\PageObject\Element\WebElement;
+use aik099\QATools\PageObject\Element\WebElementCollection;
 
 /**
  * @page-url('index')
@@ -74,12 +75,23 @@ class HomePage extends Page {
 	 */
 	protected $selectByTagName;
 
+	/**
+	 *
+	 * @var WebElementCollection
+	 * @find-by('css' => 'select')
+	 */
+	protected $allSelects;
+
 	public function setUsername($username)
 	{
 		$this->inputByName->setValue($username);
 		$this->selectByTagName->setValue('EUR');
 
 		$this->inputByName->setValue('another user');
+		
+		foreach ( $this->allSelects as $select ) {
+			$select->selectOption(/* ... */);
+		}
 	}
 }
 ```

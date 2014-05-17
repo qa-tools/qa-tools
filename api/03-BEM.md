@@ -17,10 +17,12 @@ But single HTML node (or it's element) can be within different blocks at same ti
 
 ### Class Overview
 
+#### Elements (namespace: `\aik099\QATools\BEM\Element`) 
+
 | Name | Description |
 | ------------- | ------------- |
-| `\aik099\QATools\BEM\Element\Element` | Represents a single element on a page, that must be placed within a Block. |
-| `\aik099\QATools\BEM\Element\Block` | Abstract class for creating dedicated classes, that will encapsulate associated elements on a page. |
+| `Element` | Represents a single element on a page, that must be placed within a Block. |
+| `Block` | Base class for creating dedicated classes, that will encapsulate associated elements on a page. |
 
 ### Annotation Overview
 

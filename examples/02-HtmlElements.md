@@ -56,6 +56,7 @@ use aik099\QATools\HtmlElements\TypifiedPage;
 use aik099\QATools\PageObject\Element\WebElement;
 use aik099\QATools\HtmlElements\Element\Select;
 use aik099\QATools\HtmlElements\Element\Button;
+use aik099\QATools\HtmlElements\Element\RadioGroup;
 
 /**
  * @page-url('index')
@@ -83,6 +84,14 @@ class HomePage extends TypifiedPage {
 	 * @element-name('Custom Element Name')
 	 */
 	protected $languageDropdown;
+
+	/**
+	 *
+	 * @var RadioGroup
+	 * @find-by('css' => 'input[name="radio-name"][type="radio"]')
+	 * @element-name('Custom Element Name')
+	 */
+	protected $radioGroup;
 
 	/**
 	 * Login Button
@@ -118,6 +127,14 @@ class HomePage extends TypifiedPage {
 	{
 //		$this->currencyDropdown->setValue('EUR');
 		$this->languageDropdown->selectByVisibleText('Russian');
+
+		foreach ( $this->radioGroup as $radioButton ) {
+			if ( $radioButton->isSelected() ) {
+				echo 'yes';
+			}
+		}
+
+		$this->radioGroup->selectButtonByValue(4);
 
 		// inline login
 		$this->usernameInput->setValue('user-a');
