@@ -64,19 +64,17 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 				$object = call_user_func(
 					array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
 				);
-
-				$this->injectContainer($object);
 			}
 			else {
 				$object = call_user_func(
 					array($this->className, 'fromNodeElement'), $this->locateElement(), $this->pageFactory
 				);
-
-				$object->setContainer($this->getContainer());
 			}
 
 			$object->setName($this->getName());
 			$this[] = $object;
+
+			$this->injectContainer();
 		}
 
 		return $this->current();

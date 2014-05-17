@@ -23,9 +23,20 @@ class TypifiedElementCollectionChild extends AbstractTypifiedElementCollection
 	 */
 	public function __construct(array $elements = array())
 	{
+		// Without this attempt to call "fromNodeElements" method from proxy test will fail.
 		$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\TextInput';
 
 		parent::__construct($elements);
+	}
+
+	/**
+	 * Method for testing proxy abilities.
+	 *
+	 * @return integer
+	 */
+	public function proxyMe()
+	{
+		return 1;
 	}
 
 }

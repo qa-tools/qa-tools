@@ -11,6 +11,7 @@
 namespace tests\aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\HtmlElements\Element\AbstractTypifiedElementCollection;
 use Mockery as m;
 use aik099\QATools\PageObject\Element\WebElement;
 use tests\aik099\QATools\PageObject\Element\AbstractElementCollectionTestCase;
@@ -81,5 +82,18 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 
 		$this->assertEquals($container, $this->element->getContainer());
 	}
+
+	public function testDefaultElementClass()
+	{
+		$collection = new DummyTypifiedElementCollection();
+		$collection[] = m::mock('\\aik099\\QATools\\HtmlElements\\Element\\TextInput');
+		$this->assertCount(1, $collection);
+	}
+
+}
+
+class DummyTypifiedElementCollection extends AbstractTypifiedElementCollection
+{
+
 
 }

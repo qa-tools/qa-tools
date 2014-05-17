@@ -61,6 +61,13 @@ abstract class AbstractTypifiedElementCollection extends AbstractElementCollecti
 	{
 		$this->container = $container;
 
+		/** @var TypifiedElement $element */
+		foreach ( $this as $element ) {
+			$element->setContainer($container);
+		}
+
+		$this->rewind();
+
 		return $this;
 	}
 

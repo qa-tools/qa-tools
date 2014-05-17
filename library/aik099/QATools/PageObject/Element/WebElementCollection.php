@@ -53,6 +53,13 @@ class WebElementCollection extends AbstractElementCollection implements IWebElem
 	{
 		$this->container = $container;
 
+		/** @var WebElement $element */
+		foreach ( $this as $element ) {
+			$element->setContainer($container);
+		}
+
+		$this->rewind();
+
 		return $this;
 	}
 

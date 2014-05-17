@@ -188,20 +188,20 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	}
 
 	/**
-	 * Sets proxy's container into each of given elements.
-	 *
-	 * @param AbstractElementCollection $elements Elements.
+	 * Sets proxy's container to each element.
 	 *
 	 * @return void
 	 */
-	protected function injectContainer(AbstractElementCollection $elements)
+	protected function injectContainer()
 	{
 		$container = $this->getContainer();
 
 		/** @var IContainerAware $element */
-		foreach ( $elements as $element ) {
+		foreach ( $this as $element ) {
 			$element->setContainer($container);
 		}
+
+		$this->rewind();
 	}
 
 }

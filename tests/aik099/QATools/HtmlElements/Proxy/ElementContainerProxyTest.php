@@ -57,9 +57,7 @@ class ElementContainerProxyTest extends TypifiedElementProxyTest
 	 */
 	public function testDefaultClassName()
 	{
-		$expected = self::ELEMENT_CLASS;
-
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
 	}
 
 	/**
