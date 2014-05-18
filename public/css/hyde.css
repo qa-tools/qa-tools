@@ -80,7 +80,12 @@ html {
   color: #fff;
   margin-top: 0;
   font-family: "Abril Fatface", serif;
-  font-size: 3.25rem;
+  font-size: 3rem;
+}
+
+.sidebar-about h1 a:hover,
+.sidebar-about h1 a:visited {
+  text-decoration: none;
 }
 
 /* Sidebar nav */
