@@ -128,7 +128,8 @@ class HomePage extends TypifiedPage {
 //		$this->currencyDropdown->setValue('EUR');
 		$this->languageDropdown->selectByVisibleText('Russian');
 
-		foreach ( $this->radioGroup as $radioButton ) {
+		// Need `getObject` to iterate over current collection in proxy and not a list of collection.
+		foreach ( $this->radioGroup->getObject() as $radioButton ) {
 			if ( $radioButton->isSelected() ) {
 				echo 'yes';
 			}

@@ -80,7 +80,7 @@ class HomePage extends Page {
 	 * @var WebElementCollection
 	 * @find-by('css' => 'select')
 	 */
-	protected $allSelects;
+	protected $selectCollection;
 
 	public function setUsername($username)
 	{
@@ -89,7 +89,8 @@ class HomePage extends Page {
 
 		$this->inputByName->setValue('another user');
 		
-		foreach ( $this->allSelects as $select ) {
+		// Need `getObject` to iterate over current collection in proxy and not a list of collection.
+		foreach ( $this->selectCollection->getObject() as $select ) {
 			$select->selectOption(/* ... */);
 		}
 	}
