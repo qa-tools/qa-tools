@@ -92,6 +92,8 @@ html {
 .sidebar-nav {
   padding-left: 0;
   list-style: none;
+  text-align: left;
+  display: inline-block;
 }
 .sidebar-nav ul {
 	margin-bottom: 0;
