@@ -23,15 +23,13 @@
 
 	"require-dev": {
 		"aik099/coding-standard": "dev-master",
-		"phpunit/phpunit": "~3.7",
-		"brianium/paratest": "0.6.1",
+		"brianium/paratest": "~0.7",
 		"behat/mink-selenium2-driver": "~1.1@dev",
 		"mockery/mockery": "~0.9"
 	},
 
 	"suggest": {
-		"aik099/phpunit-mink": "Allows to use PageObject inside PHPUnit tests and remotely collect code coverage information",
-		"phpunit/phpunit": "Allows to use PageObject inside PHPUnit tests"
+		"aik099/phpunit-mink": "Allows to use PageObject inside PHPUnit tests and remotely collect code coverage information"
 	},
 
 	"autoload": {
