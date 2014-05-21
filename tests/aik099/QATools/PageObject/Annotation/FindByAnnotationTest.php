@@ -17,11 +17,6 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $property_name Property name.
-	 *
-	 * @return void
 	 * @dataProvider selectorDataProvider
 	 */
 	public function testDirectSelector($property_name)
@@ -33,11 +28,6 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $property_name Property name.
-	 *
-	 * @return void
 	 * @dataProvider selectorDataProvider
 	 */
 	public function testHowAndUsingSelector($property_name)
@@ -69,9 +59,6 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */
@@ -82,9 +69,6 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */

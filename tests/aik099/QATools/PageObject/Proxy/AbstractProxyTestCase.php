@@ -50,11 +50,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		'testSetName', 'testArrayAccessInterface', 'testIteratorInterface', 'testFromNodeElements',
 	);
 
-	/**
-	 * Creates proxy.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->collectionClass) ) {
@@ -88,20 +83,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->locator->shouldReceive('findAll')->once()->andReturn(array($this->createNodeElement()));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetObjectSharing()
 	{
 		$this->assertSame($this->element->getObject(), $this->element->getObject());
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementNotFoundException
 	 */
 	public function testGetObjectEmptyLocator()
@@ -112,20 +99,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->createElement()->getObject();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertEquals('XPATH', $this->element->getXpath());
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
 	 */
@@ -134,11 +113,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->element->nonExistingMethod();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -147,21 +121,11 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertSame($container, $this->element->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetContainerFallback()
 	{
 		$this->assertNull($this->element->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testContainerToElement()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -170,25 +134,10 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertSame($container, $this->element->getObject()->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	abstract public function testDefaultClassName();
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	abstract public function testSetClassName();
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	abstract public function testIsValidSubstitute();
 
 	/**

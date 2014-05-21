@@ -55,11 +55,6 @@ class UrlBuilderFactoryTest extends TestCase
 		$this->assertEquals($expected_anchor, $url_builder->getAnchor());
 	}
 
-	/**
-	 * Provides data for testing testGetUrlBuilder.
-	 *
-	 * @return array
-	 */
 	public function getUrlBuilderDataProvider()
 	{
 		return array(

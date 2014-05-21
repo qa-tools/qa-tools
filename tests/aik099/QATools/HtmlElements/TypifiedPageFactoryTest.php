@@ -24,11 +24,6 @@ class TypifiedPageFactoryTest extends PageFactoryTest
 	 */
 	protected $typifiedProperty;
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->factoryClass = '\\aik099\\QATools\\HtmlElements\\TypifiedPageFactory';

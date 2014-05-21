@@ -17,11 +17,6 @@ use aik099\QATools\HtmlElements\Element\RadioButton;
 class RadioTest extends LabeledElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -31,11 +26,6 @@ class RadioTest extends LabeledElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelect()
 	{
 		$this->webElement->shouldReceive('getAttribute')->with('value')->once()->andReturn('OK');
@@ -46,11 +36,6 @@ class RadioTest extends LabeledElementTest
 		$this->assertSame($element, $element->select());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsSelected()
 	{
 		$expected = 'OK';

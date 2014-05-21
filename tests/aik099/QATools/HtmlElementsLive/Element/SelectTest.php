@@ -18,11 +18,6 @@ class SelectTest extends TypifiedElementTestCase
 
 	const SELECT_OPTION_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\SelectOption';
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -30,11 +25,6 @@ class SelectTest extends TypifiedElementTestCase
 		$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Select';
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetOptions()
 	{
 		/* @var $element Select */
@@ -46,11 +36,6 @@ class SelectTest extends TypifiedElementTestCase
 		$this->assertEquals('t1', $options[0]->getText());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetOptionsByValue()
 	{
 		/* @var $element Select */
@@ -62,11 +47,6 @@ class SelectTest extends TypifiedElementTestCase
 		$this->assertEquals('v1', $options[0]->getValue());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetOptionsByText()
 	{
 		/* @var $element Select */
@@ -78,11 +58,6 @@ class SelectTest extends TypifiedElementTestCase
 		$this->assertEquals('t1', $options[0]->getText());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelectByText()
 	{
 		/* @var $element Select */

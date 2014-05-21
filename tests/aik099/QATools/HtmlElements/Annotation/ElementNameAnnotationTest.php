@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Annotation\ElementNameAnnotation;
 class ElementNameAnnotationTest extends \PHPUnit_Framework_TestCase
 {
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testInitAnnotation()
 	{
 		$expected = 'test';

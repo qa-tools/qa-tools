@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Element\TextInput;
 class TextInputTest extends TypifiedElementTestCase
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -29,12 +24,6 @@ class TextInputTest extends TypifiedElementTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $element_id    Element ID.
-	 * @param string $expected_text Expected text.
-	 *
-	 * @return void
 	 * @dataProvider sendKeysDataProvider
 	 */
 	public function testSendKeys($element_id, $expected_text)
@@ -47,11 +36,6 @@ class TextInputTest extends TypifiedElementTestCase
 		$this->assertEquals($expected_text, $element->getText());
 	}
 
-	/**
-	 * Test data for "sendKeys" method.
-	 *
-	 * @return array
-	 */
 	public function sendKeysDataProvider()
 	{
 		return array(

@@ -17,11 +17,6 @@ use Mockery as m;
 class AbstractElementContainerTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -50,11 +45,6 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$this->pageFactory->shouldReceive('createDecorator')->times($times)->andReturn($decorator);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindAll()
 	{
 		$expected = 'C';
@@ -65,11 +55,6 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$this->assertSame($expected, $this->typifiedElement->find('A', 'B'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetPageFactory()
 	{
 		$element = $this->createElement();
@@ -79,11 +64,6 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$this->assertSame($this->pageFactory, $method->invoke($element));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testWaitFor()
 	{
 		$web_element = $this->webElement;

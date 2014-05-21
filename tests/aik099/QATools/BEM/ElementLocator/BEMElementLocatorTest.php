@@ -38,11 +38,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	 */
 	private $_locatorHelper;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->searchContextClass = '\\aik099\\QATools\\BEM\\Element\\IBlock';
@@ -52,11 +47,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectorSuccess()
 	{
 		$expected = array('xpath' => 'xpath1');
@@ -70,11 +60,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertEquals('block-name', $annotation->block, 'block name set to element annotation from parent block');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectorBlock()
 	{
 		$expected = array('xpath' => 'xpath1');
@@ -89,9 +74,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 */
@@ -104,11 +86,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertCount(0, $this->locator->findAll());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testToString()
 	{
 		$expected = 'OK';
@@ -134,11 +111,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		return $annotation;
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetBlockLocator()
 	{
 		$this->_locatorHelper
@@ -150,11 +122,6 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertEquals('OK', $this->locator->getBlockLocator('block-name', 'modificator-name', 'modificator-value'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetElementLocator()
 	{
 		$this->_locatorHelper

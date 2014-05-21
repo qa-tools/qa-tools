@@ -19,16 +19,6 @@ class UrlBuilderTest extends TestCase
 {
 
 	/**
-	 * Test the constructor.
-	 *
-	 * @param string $url             The url.
-	 * @param array  $params          The GET params.
-	 * @param string $expected_path   The resulting expected path.
-	 * @param array  $expected_params The resulting expected GET params.
-	 * @param string $expected_anchor The resulting expected anchor.
-	 *
-	 * @return void
-	 *
 	 * @dataProvider constructorDataProvider
 	 */
 	public function testConstructor($url, array $params, $expected_path, array $expected_params, $expected_anchor)
@@ -40,11 +30,6 @@ class UrlBuilderTest extends TestCase
 		$this->assertEquals($url_builder->getAnchor(), $expected_anchor);
 	}
 
-	/**
-	 * Data provider for testConstructor.
-	 *
-	 * @return array
-	 */
 	public function constructorDataProvider()
 	{
 		return array(
@@ -125,8 +110,6 @@ class UrlBuilderTest extends TestCase
 	/**
 	 * Test the constructor with empty url.
 	 *
-	 * @return void
-	 *
 	 * @expectedException \aik099\QATools\PageObject\Exception\UrlBuilderException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\UrlBuilderException::TYPE_EMPTY_PATH
 	 */
@@ -136,14 +119,6 @@ class UrlBuilderTest extends TestCase
 	}
 
 	/**
-	 * Test the build.
-	 *
-	 * @param string $url          The url.
-	 * @param array  $params       The GET params.
-	 * @param string $expected_url The resulting expected url.
-	 *
-	 * @return void
-	 *
 	 * @dataProvider buildDataProvider
 	 */
 	public function testBuild($url, array $params, $expected_url)
@@ -154,11 +129,6 @@ class UrlBuilderTest extends TestCase
 		$this->assertSame($actual_url, $expected_url);
 	}
 
-	/**
-	 * Data provider for testBuild.
-	 *
-	 * @return array
-	 */
 	public function buildDataProvider()
 	{
 		return array(

@@ -26,11 +26,6 @@ class BEMElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $locatorClass = '\\aik099\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testCreateLocator()
 	{
 		$annotation_manager = m::mock('\\mindplay\\annotations\\AnnotationManager');

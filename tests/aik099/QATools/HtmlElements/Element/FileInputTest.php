@@ -17,11 +17,6 @@ use Mockery as m;
 class FileInputTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -32,12 +27,6 @@ class FileInputTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param mixed   $attribute_value Attribute value.
-	 * @param boolean $multiple        Is multiple.
-	 *
-	 * @return void
 	 * @dataProvider isMultipleDataProvider
 	 */
 	public function testIsMultiple($attribute_value, $multiple)
@@ -47,11 +36,6 @@ class FileInputTest extends AbstractTypifiedElementTest
 		$this->assertSame($multiple, $this->getElement()->isMultiple());
 	}
 
-	/**
-	 * Provides attribute values for "isMultiple" test.
-	 *
-	 * @return array
-	 */
 	public function isMultipleDataProvider()
 	{
 		return array(
@@ -61,9 +45,6 @@ class FileInputTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\FileInputException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FileInputException::TYPE_FILE_NOT_FOUND
 	 * @expectedExceptionMessage File "/non-existing-file.txt" doesn't exist
@@ -73,11 +54,6 @@ class FileInputTest extends AbstractTypifiedElementTest
 		$this->getElement()->setFileToUpload('/non-existing-file.txt');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetExistingFileToUpload()
 	{
 		$element = $this->getElement();
@@ -86,11 +62,6 @@ class FileInputTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->setFileToUpload(__FILE__));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetValue()
 	{
 		/* @var $element FileInput */

@@ -33,11 +33,6 @@ class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
 	 */
 	private $_locatorHelper;
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -46,11 +41,6 @@ class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->_locatorHelper = m::mock('\\aik099\\QATools\\BEM\\ElementLocator\\LocatorHelper');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetElementSelector()
 	{
 		$this->_annotation->block = 'block-name';
@@ -65,11 +55,6 @@ class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('OK', $this->_annotation->getSelector($this->_locatorHelper));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetElementSelectorWithModificator()
 	{
 		$this->_annotation->block = 'block-name';
@@ -85,11 +70,6 @@ class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('OK', $this->_annotation->getSelector($this->_locatorHelper));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetBlockSelector()
 	{
 		$this->_annotation->block = 'block-name';
@@ -103,11 +83,6 @@ class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('OK', $this->_annotation->getSelector($this->_locatorHelper));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetBlockSelectorWithModificator()
 	{
 		$this->_annotation->block = 'block-name';

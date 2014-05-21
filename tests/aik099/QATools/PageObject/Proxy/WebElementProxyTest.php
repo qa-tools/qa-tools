@@ -16,11 +16,6 @@ use Mockery as m;
 class WebElementProxyTest extends AbstractProxyTestCase
 {
 
-	/**
-	 * Creates proxy.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->collectionClass) ) {
@@ -31,11 +26,6 @@ class WebElementProxyTest extends AbstractProxyTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
@@ -43,11 +33,6 @@ class WebElementProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetClassName()
 	{
 		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
@@ -56,11 +41,6 @@ class WebElementProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsValidSubstitute()
 	{
 		$this->assertInstanceOf('\\aik099\\QATools\\PageObject\\Element\\IWebElement', $this->element);

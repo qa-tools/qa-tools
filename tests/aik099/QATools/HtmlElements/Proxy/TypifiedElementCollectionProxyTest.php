@@ -19,21 +19,11 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 
 	const ELEMENT_CLASS = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementCollectionChild';
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertEquals(1, $this->element->proxyMe());

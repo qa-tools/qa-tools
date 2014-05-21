@@ -18,11 +18,6 @@ class RadioGroupTest extends TypifiedElementTestCase
 
 	const RADIO_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\RadioButton';
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -30,11 +25,6 @@ class RadioGroupTest extends TypifiedElementTestCase
 		$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\RadioGroup';
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetButtonsWithName()
 	{
 		/* @var $radio_group RadioGroup */
@@ -45,11 +35,6 @@ class RadioGroupTest extends TypifiedElementTestCase
 		$this->assertInstanceOf(self::RADIO_CLASS, $buttons[0]);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetButtonsWithoutName()
 	{
 		/* @var $radio_group RadioGroup */
@@ -62,11 +47,6 @@ class RadioGroupTest extends TypifiedElementTestCase
 		$this->assertInstanceOf(self::RADIO_CLASS, $buttons[0]);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelection()
 	{
 		/* @var $radio_group RadioGroup */

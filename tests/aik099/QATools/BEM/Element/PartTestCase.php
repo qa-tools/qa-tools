@@ -25,11 +25,6 @@ abstract class PartTestCase extends TestCase
 	 */
 	protected $partClass = '';
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');

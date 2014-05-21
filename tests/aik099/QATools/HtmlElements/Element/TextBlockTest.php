@@ -17,11 +17,6 @@ use aik099\QATools\HtmlElements\Element\TextBlock;
 class TextBlockTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -31,11 +26,6 @@ class TextBlockTest extends AbstractTypifiedElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetText()
 	{
 		$expected = 'OK';

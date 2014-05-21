@@ -17,14 +17,6 @@ class PageUrlAnnotationTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
-	 * Test description.
-	 *
-	 * @param array  $annotation_params Params for initing the annotation.
-	 * @param string $expected_url      The url which is expected.
-	 * @param array  $expected_params   The expected GET params.
-	 *
-	 * @return void
-	 *
 	 * @dataProvider initAnnotationDataProvider
 	 */
 	public function testInitAnnotation(array $annotation_params, $expected_url, array $expected_params)
@@ -36,11 +28,6 @@ class PageUrlAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected_params, $annotation->params);
 	}
 
-	/**
-	 * Data provider for testInitAnnotation.
-	 *
-	 * @return array
-	 */
 	public function initAnnotationDataProvider()
 	{
 		return array(

@@ -41,11 +41,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $annotationManager;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -56,11 +51,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->property = new $this->propertyClass($property, $this->annotationManager);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$reflection_property = new \ReflectionProperty($this, 'propertyClass');
@@ -71,12 +61,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $data_type Data type.
-	 * @param mixed  $result    Result.
-	 *
-	 * @return void
 	 * @dataProvider getDataTypeDataProvider
 	 */
 	public function testGetDataType($data_type, $result)
@@ -109,11 +93,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-	/**
-	 * Test data provider for getDataType.
-	 *
-	 * @return array
-	 */
 	public function getDataTypeDataProvider()
 	{
 		return array(
@@ -124,12 +103,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $data_type Data type.
-	 * @param mixed  $result    Result.
-	 *
-	 * @return void
 	 * @dataProvider getRawDataTypeDataProvider
 	 */
 	public function testGetRawDataType($data_type, $result)
@@ -139,11 +112,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($result, $this->property->getRawDataType());
 	}
 
-	/**
-	 * Test data provider for getDataType.
-	 *
-	 * @return array
-	 */
 	public function getRawDataTypeDataProvider()
 	{
 		return array(
@@ -154,12 +122,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $data_type Data type.
-	 * @param boolean $is_simple Is data type simple.
-	 *
-	 * @return void
 	 * @dataProvider dataTypeProvider
 	 */
 	public function testIsSimpleDataType($data_type, $is_simple)
@@ -173,11 +135,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($is_simple, $property->isSimpleDataType());
 	}
 
-	/**
-	 * Provides data types for test.
-	 *
-	 * @return array
-	 */
 	public function dataTypeProvider()
 	{
 		return array(
@@ -195,12 +152,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $data_type Data type.
-	 * @param boolean $is_array  Is data type an array.
-	 *
-	 * @return void
 	 * @dataProvider isDataTypeArrayProvider
 	 */
 	public function testIsDataTypeArray($data_type, $is_array)
@@ -210,11 +161,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($is_array, $this->property->isDataTypeArray());
 	}
 
-	/**
-	 * Provides data types for test.
-	 *
-	 * @return array
-	 */
 	public function isDataTypeArrayProvider()
 	{
 		return array(
@@ -224,11 +170,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetAnnotations()
 	{
 		$expected = 'OK';
@@ -241,11 +182,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $this->property->getAnnotations('A'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetAnnotationsFromPropertyOrClass()
 	{
 		$expected = 'OK';
@@ -258,11 +194,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $this->property->getAnnotationsFromPropertyOrClass('A'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetAnnotationsFromPropertyOrClassFallback()
 	{
 		$var_annotation = new VarAnnotation();
@@ -290,11 +221,6 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $this->property->getAnnotationsFromPropertyOrClass('A'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testToString()
 	{
 		$this->assertEquals(get_class($this) . '::propertyClass', (string)$this->property);

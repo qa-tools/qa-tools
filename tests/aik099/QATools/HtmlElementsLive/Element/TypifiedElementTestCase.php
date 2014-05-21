@@ -70,11 +70,6 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 		}
 	}
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();

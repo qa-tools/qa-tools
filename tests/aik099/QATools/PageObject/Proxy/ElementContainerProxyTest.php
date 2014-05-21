@@ -35,21 +35,11 @@ class ElementContainerProxyTest extends WebElementProxyTest
 		$this->pageFactory->shouldReceive('initElements')->andReturn($this->pageFactory);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetPageFactory()
 	{
 		$object = $this->element->getObject();

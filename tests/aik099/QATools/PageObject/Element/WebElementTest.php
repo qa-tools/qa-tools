@@ -25,11 +25,6 @@ class WebElementTest extends TestCase
 	 */
 	protected $elementClass = '\\aik099\\QATools\\PageObject\\Element\\WebElement';
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$element = $this->createElement();
@@ -38,11 +33,6 @@ class WebElementTest extends TestCase
 		$this->assertSame($this->session, $element->getSession());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFromNodeElement()
 	{
 		/* @var $element_class WebElement */
@@ -56,11 +46,6 @@ class WebElementTest extends TestCase
 		$this->assertEquals($node_element->getXpath(), $element->getXpath());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$element = $this->createElement();
@@ -70,11 +55,6 @@ class WebElementTest extends TestCase
 		$this->assertSame($container, $element->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetContainerFallback()
 	{
 		$expected = 'OK';
@@ -84,11 +64,6 @@ class WebElementTest extends TestCase
 		$this->assertEquals($expected, $element->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testToString()
 	{
 		$element = $this->createElement();

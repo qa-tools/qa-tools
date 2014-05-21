@@ -20,11 +20,6 @@ class SelectTest extends AbstractTypifiedElementTest
 
 	const SELECT_OPTION_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\SelectOption';
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -35,12 +30,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param mixed   $attribute_value Attribute value.
-	 * @param boolean $multiple        Is multiple.
-	 *
-	 * @return void
 	 * @dataProvider isMultipleDataProvider
 	 */
 	public function testIsMultiple($attribute_value, $multiple)
@@ -50,11 +39,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($multiple, $this->getElement()->isMultiple());
 	}
 
-	/**
-	 * Provides attribute values for "isMultiple" test.
-	 *
-	 * @return array
-	 */
 	public function isMultipleDataProvider()
 	{
 		return array(
@@ -63,11 +47,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetOptions()
 	{
 		$this->webElement->shouldReceive('findAll')->with('se', array('tagName' => 'option'))->once()->andReturn(
@@ -77,11 +56,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertValidOptions($this->getElement()->getOptions());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetOptionsByValue()
 	{
 		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
@@ -98,11 +72,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param boolean $exact_match Search exactly.
-	 *
-	 * @return void
 	 * @dataProvider trueFalseDataProvider
 	 */
 	public function testGetOptionsByText($exact_match)
@@ -123,11 +92,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertValidOptions($this->getElement()->getOptionsByText('SV', $exact_match));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectedOptions()
 	{
 		$selected_option = $this->createOption(true);
@@ -143,11 +107,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($selected_option, $options[0]);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetFirstSelectedOptionSuccess()
 	{
 		$selected_option1 = $this->createOption(true);
@@ -165,9 +124,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_SELECTED
 	 */
@@ -181,11 +137,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param boolean $is_multiple Select is multiple.
-	 *
-	 * @return void
 	 * @dataProvider trueFalseDataProvider
 	 */
 	public function testSelectByText($is_multiple)
@@ -199,9 +150,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
 	 */
@@ -214,11 +162,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectByText('TX'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDeselectByText()
 	{
 		$selected_option = $this->createOption(true);
@@ -232,11 +175,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param boolean $is_multiple Select is multiple.
-	 *
-	 * @return void
 	 * @dataProvider trueFalseDataProvider
 	 */
 	public function testSelectByValue($is_multiple)
@@ -250,9 +188,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
 	 */
@@ -265,11 +200,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectByValue('TX'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDeselectByValue()
 	{
 		$selected_option = $this->createOption(true);
@@ -303,11 +233,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		return array($option1, $option2);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelectAll()
 	{
 		/* @var $element Select */
@@ -319,9 +244,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
@@ -334,11 +256,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectAll());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetSelected()
 	{
 		/* @var $element Select */
@@ -356,9 +273,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
@@ -371,11 +285,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->setSelected(array()));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDeselectAll()
 	{
 		$selected_option = $this->createOption(true);
@@ -390,9 +299,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
 	 */
@@ -406,13 +312,6 @@ class SelectTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param mixed  $value         Value to set.
-	 * @param mixed  $final_value   Values, that goes to internal methods.
-	 * @param string $setter_method Setter method.
-	 *
-	 * @return void
 	 * @dataProvider setValueDataProvider
 	 */
 	public function testSetValue($value, $final_value, $setter_method)
@@ -424,11 +323,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->setValue($value));
 	}
 
-	/**
-	 * Provides test data for "setValue" method testing.
-	 *
-	 * @return array
-	 */
 	public function setValueDataProvider()
 	{
 		return array(
@@ -483,11 +377,6 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertEquals('XPATH', $options[0]->getXpath());
 	}
 
-	/**
-	 * Provides test data for boolean arguments.
-	 *
-	 * @return array
-	 */
 	public function trueFalseDataProvider()
 	{
 		return array(

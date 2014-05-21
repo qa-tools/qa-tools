@@ -17,11 +17,6 @@ use aik099\QATools\HtmlElements\Element\TextInput;
 class TextInputTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -31,11 +26,6 @@ class TextInputTest extends AbstractTypifiedElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testClear()
 	{
 		$this->webElement->shouldReceive('setValue')->with('')->once()->andReturnNull();
@@ -45,11 +35,6 @@ class TextInputTest extends AbstractTypifiedElementTest
 		$this->assertEquals($element, $element->clear());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSendKeys()
 	{
 		$expected = 'OK';
@@ -60,11 +45,6 @@ class TextInputTest extends AbstractTypifiedElementTest
 		$this->assertEquals($element, $element->sendKeys($expected));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetText()
 	{
 		$expected = 'OK';
@@ -73,11 +53,6 @@ class TextInputTest extends AbstractTypifiedElementTest
 		$this->assertEquals($expected, $this->getElement()->getText());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetValue()
 	{
 		/* @var $element TextInput */

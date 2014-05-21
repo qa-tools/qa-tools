@@ -42,11 +42,6 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected $typifiedElement;
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -73,21 +68,11 @@ class AbstractTypifiedElementTest extends TestCase
 
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$this->assertSame($this->webElement, $this->typifiedElement->getWrappedElement());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFromNodeElement()
 	{
 		$node_element = $this->createNodeElement();
@@ -101,11 +86,6 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($node_element->getXpath(), $element->getXpath());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetName()
 	{
 		$expected = 'OK';
@@ -113,22 +93,12 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($expected, $this->typifiedElement->getName());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSession()
 	{
 		$this->assertSame($this->session, $this->typifiedElement->getSession());
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $method_name Method name.
-	 *
-	 * @return void
 	 * @dataProvider simpleMethodDataProvider
 	 */
 	public function testSimpleMethod($method_name)
@@ -139,11 +109,6 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertSame($expected, $this->typifiedElement->$method_name());
 	}
 
-	/**
-	 * Provides sample data for simple methods test.
-	 *
-	 * @return array
-	 */
 	public function simpleMethodDataProvider()
 	{
 		return array(
@@ -155,11 +120,6 @@ class AbstractTypifiedElementTest extends TestCase
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testAttribute()
 	{
 		$expected = 'B';
@@ -170,11 +130,6 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertSame($expected, $this->typifiedElement->getAttribute('A'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -183,11 +138,6 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertSame($this->typifiedElement, $this->typifiedElement->setContainer($container));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetContainer()
 	{
 		$expected = 'OK';
@@ -196,11 +146,6 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($expected, $this->typifiedElement->getContainer());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testToString()
 	{
 		$element = $this->createElement();

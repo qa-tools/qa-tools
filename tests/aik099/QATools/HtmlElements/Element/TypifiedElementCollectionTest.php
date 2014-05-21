@@ -28,11 +28,6 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 	 */
 	protected $webElement;
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->collectionClass) ) {
@@ -46,11 +41,6 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetName()
 	{
 		$expected = 'OK';
@@ -58,11 +48,6 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 		$this->assertEquals($expected, $this->element->getName());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -70,11 +55,6 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 		$this->assertSame($this->element, $this->element->setContainer($container));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -94,6 +74,5 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 
 class DummyTypifiedElementCollection extends AbstractTypifiedElementCollection
 {
-
 
 }

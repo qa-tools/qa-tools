@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Element\Form;
 class FormTest extends TypifiedElementTestCase
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -28,11 +23,6 @@ class FormTest extends TypifiedElementTestCase
 		$this->elementClass = '\\aik099\\QATools\\HtmlElements\\Element\\Form';
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testWaitFor()
 	{
 		$page = $this->session->getPage();
