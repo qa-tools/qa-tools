@@ -73,13 +73,13 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 */
 	public function decorate(Property $property)
 	{
-		$locator = $this->locatorFactory->createLocator($property);
-
-		if ( !$this->canDecorate($property) || $locator == null ) {
+		if ( !$this->canDecorate($property) ) {
 			return null;
 		}
 
-		return $this->doDecorate($property, $locator);
+		$locator = $this->locatorFactory->createLocator($property);
+
+		return $locator != null ? $this->doDecorate($property, $locator) : null;
 	}
 
 	/**
