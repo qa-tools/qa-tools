@@ -12,6 +12,8 @@ namespace aik099\QATools\PageObject;
 
 
 use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
+use aik099\QATools\PageObject\Config\Config;
+use aik099\QATools\PageObject\Config\IConfig;
 use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
@@ -64,12 +66,20 @@ class PageFactory implements IPageFactory
 	protected $urlBuilderFactory;
 
 	/**
+	 * The current config.
+	 *
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
 	 * Creates PageFactory instance.
 	 *
 	 * @param Session                $session            Mink session.
+	 * @param IConfig                $config             Page factory configuration.
 	 * @param AnnotationManager|null $annotation_manager Annotation manager.
 	 */
-	public function __construct(Session $session, AnnotationManager $annotation_manager = null)
+	public function __construct(Session $session, IConfig $config = null, AnnotationManager $annotation_manager = null)
 	{
 		$this->_session = $session;
 
@@ -78,6 +88,7 @@ class PageFactory implements IPageFactory
 			$annotation_manager->cache = new AnnotationCache(sys_get_temp_dir());
 		}
 
+		$this->config = isset($config) ? $config : new Config();
 		$this->setAnnotationManager($annotation_manager)->attachSeleniumSelector();
 		$this->setUrlBuilderFactory(new UrlBuilderFactory());
 	}

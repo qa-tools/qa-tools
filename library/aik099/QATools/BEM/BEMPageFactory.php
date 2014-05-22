@@ -11,14 +11,15 @@
 namespace aik099\QATools\BEM;
 
 
-use aik099\QATools\BEM\ElementLocator\LocatorHelper;
-use Behat\Mink\Session;
-use mindplay\annotations\AnnotationManager;
 use aik099\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
+use aik099\QATools\BEM\ElementLocator\LocatorHelper;
 use aik099\QATools\BEM\PropertyDecorator\BEMPropertyDecorator;
+use aik099\QATools\PageObject\Config\IConfig;
 use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
+use Behat\Mink\Session;
+use mindplay\annotations\AnnotationManager;
 
 /**
  * Factory class to make using BEMPage Objects simpler and easier.
@@ -37,18 +38,20 @@ class BEMPageFactory extends PageFactory
 	 * Creates BEMPageFactory instance.
 	 *
 	 * @param Session                $session            Mink session.
+	 * @param IConfig                $config             Page factory configuration.
 	 * @param AnnotationManager|null $annotation_manager Annotation manager.
 	 * @param LocatorHelper          $locator_helper     Locator helper.
 	 */
 	public function __construct(
 		Session $session,
+		IConfig $config = null,
 		AnnotationManager $annotation_manager = null,
 		LocatorHelper $locator_helper = null
 	)
 	{
 		$this->annotationRegistry['bem'] = '\\aik099\\QATools\\BEM\\Annotation\\BEMAnnotation';
 
-		parent::__construct($session, $annotation_manager);
+		parent::__construct($session, $config, $annotation_manager);
 
 		$this->_locatorHelper = isset($locator_helper) ? $locator_helper : new LocatorHelper();
 	}
