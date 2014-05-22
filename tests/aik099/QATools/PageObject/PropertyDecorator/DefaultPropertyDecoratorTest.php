@@ -11,14 +11,18 @@
 namespace tests\aik099\QATools\PageObject\PropertyDecorator;
 
 
-use aik099\QATools\PageObject\Proxy\IProxy;
-use aik099\QATools\PageObject\ISearchContext;
-use Mockery as m;
+use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\ElementLocator\IElementLocatorFactory;
+use aik099\QATools\PageObject\IPageFactory;
+use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
+use aik099\QATools\PageObject\Proxy\IProxy;
 use aik099\QATools\PageObject\Proxy\WebElementProxy;
+use mindplay\annotations\AnnotationCache;
+use mindplay\annotations\AnnotationManager;
+use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
 class DefaultPropertyDecoratorTest extends TestCase
@@ -182,6 +186,34 @@ class DefaultPropertyDecoratorTest extends TestCase
 		return array(
 			array('\\aik099\\QATools\\PageObject\\Element\\WebElement', '\\aik099\\QATools\\PageObject\\Proxy\\WebElementProxy'),
 		);
+	}
+
+	public function testInterfacesAreNotDecorated()
+	{
+		/** @var $search_context ISearchContext */
+		$search_context = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
+		$annotation_manager = new AnnotationManager();
+		$annotation_manager->cache = new AnnotationCache(sys_get_temp_dir());
+
+		/** @var $page_factory IPageFactory */
+		$page_factory = m::mock('\\aik099\\QATools\\PageObject\\IPageFactory');
+		$locator_factory = new DefaultElementLocatorFactory($search_context, $annotation_manager);
+
+		/** @var $decorator IPropertyDecorator */
+		$decorator = new $this->decoratorClass($locator_factory, $page_factory);
+		$reflection_class = new \ReflectionClass(
+			'\\tests\\aik099\QATools\\PageObject\\Fixture\\InterfaceAnnotatedClass'
+		);
+
+		$properties = $reflection_class->getProperties();
+
+		foreach ( $properties as $reflected_property ) {
+			$property = new Property($reflected_property, $annotation_manager);
+
+			$proxy = $decorator->decorate($property);
+
+			$this->assertNull($proxy);
+		}
 	}
 
 }
