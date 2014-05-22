@@ -18,11 +18,6 @@ use tests\aik099\QATools\PageObject\Proxy\AbstractProxyTestCase;
 class BlockProxyTest extends AbstractProxyTestCase
 {
 
-	/**
-	 * Creates proxy.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
@@ -60,11 +55,6 @@ class BlockProxyTest extends AbstractProxyTestCase
 		$this->locator->shouldReceive('findAll')->once()->andReturn(array($this->createNodeElement()));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$expected = '\\aik099\\QATools\\BEM\\Element\\Block';
@@ -72,11 +62,6 @@ class BlockProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetClassName()
 	{
 		$expected = '\\tests\\aik099\\QATools\\BEM\\Fixture\\Element\\BlockChild';
@@ -85,40 +70,22 @@ class BlockProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsValidSubstitute()
 	{
 		$this->assertInstanceOf('\\aik099\\QATools\\BEM\\Element\\IBlock', $this->element);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetName()
 	{
 		$this->assertEquals('sample-name', $this->element->getName());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertInternalType('array', $this->element->getNodes());
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementNotFoundException
 	 */
 	public function testGetObjectEmptyLocator()

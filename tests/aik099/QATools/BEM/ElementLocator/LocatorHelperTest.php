@@ -23,11 +23,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	private $_locatorHelper;
 
-	/**
-	 * Prepares the test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -36,9 +31,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
 	 */
@@ -47,11 +39,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 		$this->_locatorHelper->getBlockLocator('');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetBlockLocator()
 	{
 		$locator = $this->_locatorHelper->getBlockLocator('block-name');
@@ -59,11 +46,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 		$this->_assertLocatorClassName($locator, 'block-name');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetBlockLocatorWithModificator()
 	{
 		$locator = $this->_locatorHelper->getBlockLocator('block-name', 'modificator-name', 'modificator-value');
@@ -72,9 +54,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\BEM\Exception\ElementException::TYPE_ELEMENT_REQUIRED
 	 */
@@ -84,9 +63,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
 	 */
@@ -95,11 +71,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 		$this->_locatorHelper->getElementLocator('element-name', '');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetElementLocator()
 	{
 		$locator = $this->_locatorHelper->getElementLocator('element-name', 'block-name');
@@ -107,11 +78,6 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 		$this->_assertLocatorClassName($locator, 'block-name__element-name');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetElementLocatorWithModificator()
 	{
 		$locator = $this->_locatorHelper->getElementLocator(

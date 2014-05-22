@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Element\Button;
 class ButtonTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -30,11 +25,6 @@ class ButtonTest extends AbstractTypifiedElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testClick()
 	{
 		$this->webElement->shouldReceive('click')->once()->andReturnNull();

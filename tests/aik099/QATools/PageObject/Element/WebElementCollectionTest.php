@@ -18,11 +18,6 @@ use tests\aik099\QATools\PageObject\Element\AbstractElementCollectionTestCase;
 class WebElementCollectionTest extends AbstractElementCollectionTestCase
 {
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->collectionClass) ) {
@@ -33,11 +28,6 @@ class WebElementCollectionTest extends AbstractElementCollectionTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -45,11 +35,6 @@ class WebElementCollectionTest extends AbstractElementCollectionTestCase
 		$this->assertSame($this->element, $this->element->setContainer($container));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');

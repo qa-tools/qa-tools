@@ -17,11 +17,6 @@ use tests\aik099\QATools\PageObject\Fixture\Element\ElementContainerChild;
 class AbstractElementContainerTest extends WebElementTest
 {
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -34,11 +29,6 @@ class AbstractElementContainerTest extends WebElementTest
 		$this->pageFactory->shouldReceive('createDecorator')->once()->andReturn($decorator);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetPageFactory()
 	{
 		$element = $this->createElement();

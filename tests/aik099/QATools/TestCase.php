@@ -46,11 +46,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	protected $pageFactory;
 
-	/**
-	 * Prepares page factory.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();

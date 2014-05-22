@@ -19,11 +19,6 @@ use Mockery\MockInterface;
 class RadioGroupTest extends TypifiedElementCollectionTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->collectionClass) ) {
@@ -50,21 +45,11 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		return $element;
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testHasSelectedButtonNotFound()
 	{
 		$this->assertFalse($this->mockCollection()->hasSelectedButton());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testHasSelectedButtonFound()
 	{
 		$radio = $this->createRadioButton();
@@ -74,9 +59,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_SELECTED
 	 */
@@ -85,11 +67,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->mockCollection()->getSelectedButton();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectedButtonFound()
 	{
 		$radio = $this->createRadioButton();
@@ -99,9 +76,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
@@ -110,11 +84,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->mockCollection()->selectButtonByLabelText('ANY');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelectButtonByLabelTextFound()
 	{
 		$radio = $this->createRadioButton();
@@ -126,9 +95,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
@@ -137,11 +103,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->mockCollection()->selectButtonByValue('ANY');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelectButtonByValueFound()
 	{
 		$radio = $this->createRadioButton();
@@ -153,9 +114,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
 	 */
@@ -164,11 +122,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->mockCollection()->selectButtonByIndex(100);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSelectButtonByIndexFound()
 	{
 		$radio = $this->createRadioButton();
@@ -178,11 +131,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertSame($element, $element->selectButtonByIndex(0));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetValue()
 	{
 		/* @var $element RadioGroup */

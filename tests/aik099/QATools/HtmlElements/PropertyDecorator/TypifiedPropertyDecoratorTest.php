@@ -18,11 +18,6 @@ use tests\aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorTe
 class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 {
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->decoratorClass = '\\aik099\\QATools\\HtmlElements\\PropertyDecorator\\TypifiedPropertyDecorator';
@@ -31,11 +26,6 @@ class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $element_class Element class.
-	 * @param string $proxy_class   Proxy class.
-	 *
 	 * @return WebElementProxy
 	 * @dataProvider proxyDataProvider
 	 */
@@ -54,11 +44,6 @@ class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		return $proxy;
 	}
 
-	/**
-	 * Provide test data for proxy.
-	 *
-	 * @return array
-	 */
 	public function proxyDataProvider()
 	{
 		$data = parent::proxyDataProvider();

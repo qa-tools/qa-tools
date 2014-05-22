@@ -26,11 +26,6 @@ class ElementTest extends PartTestCase
 	 */
 	private $_webElement;
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -39,11 +34,6 @@ class ElementTest extends PartTestCase
 		$this->_webElement = m::mock('\\aik099\\QATools\\PageObject\\Element\\WebElement');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$element = $this->createPart();

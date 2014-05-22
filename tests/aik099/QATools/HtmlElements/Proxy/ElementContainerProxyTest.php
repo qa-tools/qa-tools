@@ -35,11 +35,6 @@ class ElementContainerProxyTest extends TypifiedElementProxyTest
 		$this->pageFactory->shouldReceive('initElements')->andReturn($this->pageFactory);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetPageFactory()
 	{
 		$object = $this->element->getObject();
@@ -50,11 +45,6 @@ class ElementContainerProxyTest extends TypifiedElementProxyTest
 		$this->assertSame($this->pageFactory, $method->invoke($object));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());

@@ -20,11 +20,6 @@ class FormTest extends AbstractElementContainerTest
 
 	const TYPIFIED_ELEMENT_CLASS = '\\aik099\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -34,11 +29,6 @@ class FormTest extends AbstractElementContainerTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFill()
 	{
 		/** @var Form $form */
@@ -70,9 +60,6 @@ class FormTest extends AbstractElementContainerTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND
 	 * @expectedExceptionMessage Form field "field-name" not found
@@ -90,11 +77,6 @@ class FormTest extends AbstractElementContainerTest
 		$this->getElement()->getNodeElements('field-name');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetNodeElementsSuccess()
 	{
 		$node_elements = array($this->createNodeElement());
@@ -123,13 +105,6 @@ class FormTest extends AbstractElementContainerTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $tag_name      Tag name.
-	 * @param string $input_type    Input type.
-	 * @param string $element_class Element class.
-	 *
-	 * @return void
 	 * @dataProvider typifyDataProvider
 	 */
 	public function testTypify($tag_name, $input_type, $element_class)
@@ -148,11 +123,6 @@ class FormTest extends AbstractElementContainerTest
 		$this->assertInstanceOf($element_class, $form_element);
 	}
 
-	/**
-	 * Data provider for "typify" method testing.
-	 *
-	 * @return array
-	 */
 	public function typifyDataProvider()
 	{
 		return array(
@@ -169,9 +139,6 @@ class FormTest extends AbstractElementContainerTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD
 	 * @expectedExceptionMessage Unable create typified element for element (class: aik099\QATools\PageObject\Element\WebElement; xpath: XPATH)
@@ -185,9 +152,6 @@ class FormTest extends AbstractElementContainerTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\FormException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\FormException::TYPE_READONLY_FIELD
 	 * @expectedExceptionMessage Element ELEMENT NAME doesn't support value changing
@@ -200,11 +164,6 @@ class FormTest extends AbstractElementContainerTest
 		$this->getElement()->setValue($typified_element, 'the value');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetValueSuccess()
 	{
 		$mock_parts = array(
@@ -219,11 +178,6 @@ class FormTest extends AbstractElementContainerTest
 		$this->assertSame($form, $form->setValue($typified_element, 'the value'));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSubmit()
 	{
 		$this->webElement->shouldReceive('submit')->withNoArgs()->once()->andReturnNull();

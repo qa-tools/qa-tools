@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Element\LabeledElement;
 class LabeledElementTest extends TypifiedElementTestCase
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -29,12 +24,6 @@ class LabeledElementTest extends TypifiedElementTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $id         Element ID.
-	 * @param string $label_text Label text.
-	 *
-	 * @return void
 	 * @dataProvider labelDataProvider
 	 */
 	public function testGetLabel($id, $label_text)
@@ -52,12 +41,6 @@ class LabeledElementTest extends TypifiedElementTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $id         Element ID.
-	 * @param string $label_text Label text.
-	 *
-	 * @return void
 	 * @dataProvider labelDataProvider
 	 */
 	public function testGetLabelText($id, $label_text)
@@ -68,12 +51,6 @@ class LabeledElementTest extends TypifiedElementTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $id         Element ID.
-	 * @param string $label_text Label text.
-	 *
-	 * @return void
 	 * @dataProvider labelDataProvider
 	 */
 	public function testGetText($id, $label_text)

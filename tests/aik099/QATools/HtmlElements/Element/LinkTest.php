@@ -16,11 +16,6 @@ use aik099\QATools\HtmlElements\Element\Link;
 class LinkTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -30,11 +25,6 @@ class LinkTest extends AbstractTypifiedElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetUrl()
 	{
 		$expected = 'OK';
@@ -43,11 +33,6 @@ class LinkTest extends AbstractTypifiedElementTest
 		$this->assertSame($expected, $this->getElement()->getUrl());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testClick()
 	{
 		$this->webElement->shouldReceive('click')->once()->andReturnNull();
@@ -57,11 +42,6 @@ class LinkTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->click());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetText()
 	{
 		$expected = 'OK';

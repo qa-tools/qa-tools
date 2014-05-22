@@ -20,11 +20,6 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 
 	const TIMEOUT = 5000;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\WaitingElementLocator';
@@ -32,11 +27,6 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectorSuccessWithTimeout()
 	{
 		$search_context = $this->searchContext;
@@ -61,9 +51,6 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 */

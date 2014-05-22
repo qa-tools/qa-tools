@@ -25,11 +25,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $selector;
 
-	/**
-	 * Sets up a Selenium Selector fixture.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$selectors_handler = new SelectorsHandler();
@@ -38,11 +33,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Testing not implemented selectors.
-	 *
-	 * @param array $locator Locator.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_SELECTOR
 	 * @dataProvider notImplementedDataProvider
@@ -52,11 +42,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 		$this->selector->translateToXPath($locator);
 	}
 
-	/**
-	 * Returns locators, that are not yet implemented.
-	 *
-	 * @return array
-	 */
 	public function notImplementedDataProvider()
 	{
 		return array(
@@ -75,10 +60,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Testing logic, behind locator into xpath transformation.
 	 *
-	 * @param array  $locator        Locator.
-	 * @param string $expected_xpath Expected xpath.
-	 *
-	 * @return void
 	 * @dataProvider correctDataProvider
 	 */
 	public function testCorrect(array $locator, $expected_xpath)
@@ -124,9 +105,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Testing incorrect locators.
 	 *
-	 * @param mixed $locator Locator.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\ElementException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ElementException::TYPE_INCORRECT_SELECTOR
 	 * @dataProvider incorrectDataProvider

@@ -26,11 +26,6 @@ class DefaultElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $locatorClass = '\\aik099\\QATools\\PageObject\\ElementLocator\\WaitingElementLocator';
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testCreateLocator()
 	{
 		$annotation_manager = m::mock('\\mindplay\\annotations\\AnnotationManager');

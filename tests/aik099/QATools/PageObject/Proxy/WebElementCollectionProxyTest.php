@@ -17,11 +17,6 @@ use Mockery as m;
 class WebElementCollectionProxyTest extends WebElementProxyTest
 {
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$expected = '\\aik099\\QATools\\PageObject\\Element\\WebElementCollection';
@@ -29,11 +24,6 @@ class WebElementCollectionProxyTest extends WebElementProxyTest
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertEquals(1, $this->element->proxyMe());

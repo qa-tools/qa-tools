@@ -40,11 +40,6 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	 */
 	protected $element;
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -64,11 +59,6 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testArrayAccessInterface()
 	{
 		$element = $this->createValidElementMock();
@@ -87,9 +77,6 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @depends testArrayAccessInterface
 	 */
 	public function testIteratorInterface()

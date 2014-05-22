@@ -65,11 +65,6 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $locator;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -81,21 +76,11 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$this->locator = $this->createLocator();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSearchContext()
 	{
 		$this->assertSame($this->searchContext, $this->locator->getSearchContext());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindOne()
 	{
 		$locator = $this->createLocator(array('findAll'));
@@ -104,11 +89,6 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('OK', $locator->find());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindNone()
 	{
 		$locator = $this->createLocator(array('findAll'));
@@ -117,11 +97,6 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull($locator->find());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetSelectorSuccess()
 	{
 		$expected = array('xpath' => 'xpath1');
@@ -132,9 +107,6 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 */
@@ -147,11 +119,6 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertCount(0, $this->locator->findAll());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testToString()
 	{
 		$expected = 'OK';

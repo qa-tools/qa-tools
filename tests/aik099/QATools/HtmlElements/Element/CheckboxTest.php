@@ -17,11 +17,6 @@ use Mockery as m;
 class CheckboxTest extends LabeledElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -32,12 +27,6 @@ class CheckboxTest extends LabeledElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $test_method Test method.
-	 * @param boolean $checked     Checked.
-	 *
-	 * @return void
 	 * @dataProvider checkDataProvider
 	 */
 	public function testCheckUncheck($test_method, $checked)
@@ -50,12 +39,6 @@ class CheckboxTest extends LabeledElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $test_method Test method.
-	 * @param boolean $checked     Checked.
-	 *
-	 * @return void
 	 * @dataProvider checkDataProvider
 	 */
 	public function testToggle($test_method, $checked)
@@ -68,12 +51,6 @@ class CheckboxTest extends LabeledElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $test_method Test method.
-	 * @param boolean $checked     Checked.
-	 *
-	 * @return void
 	 * @dataProvider checkDataProvider
 	 */
 	public function testToggleInvert($test_method, $checked)
@@ -86,11 +63,6 @@ class CheckboxTest extends LabeledElementTest
 		$this->assertEquals('OK', $element->toggle());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsChecked()
 	{
 		$this->webElement->shouldReceive('isChecked')->once()->andReturn('OK');
@@ -112,12 +84,6 @@ class CheckboxTest extends LabeledElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param mixed   $value       Input value.
-	 * @param boolean $final_value Final value, that goes to toggle method.
-	 *
-	 * @return void
 	 * @dataProvider setValueDataProvider
 	 */
 	public function testSetValue($value, $final_value)
@@ -129,11 +95,6 @@ class CheckboxTest extends LabeledElementTest
 		$this->assertSame($checkbox, $checkbox->setValue($value));
 	}
 
-	/**
-	 * Test data for "setValue" method testing.
-	 *
-	 * @return array
-	 */
 	public function setValueDataProvider()
 	{
 		return array(

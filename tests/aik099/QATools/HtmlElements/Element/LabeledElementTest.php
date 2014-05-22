@@ -17,11 +17,6 @@ use aik099\QATools\HtmlElements\Element\LabeledElement;
 class LabeledElementTest extends AbstractTypifiedElementTest
 {
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -31,11 +26,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetLabelById()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
@@ -53,11 +43,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->assertEquals('FOUND1', $this->getElement()->getLabel());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetParentLabel()
 	{
 		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturnNull();
@@ -66,11 +51,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->assertEquals('FOUND2', $this->getElement()->getLabel());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetFollowingLabel()
 	{
 		$this->webElement
@@ -92,11 +72,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->assertEquals('FOUND3', $this->getElement()->getLabel());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetLabelTextNotFound()
 	{
 		/* @var $element LabeledElement */
@@ -106,11 +81,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->assertNull($element->getLabelText());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetLabelTextFound()
 	{
 		$expected = 'LABEL_TEXT';
@@ -124,11 +94,6 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->assertEquals($expected, $element->getLabelText());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetText()
 	{
 		$expected = 'OK';

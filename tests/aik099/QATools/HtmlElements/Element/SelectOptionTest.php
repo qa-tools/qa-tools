@@ -27,11 +27,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	 */
 	protected $select;
 
-	/**
-	 * Prepares test.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		if ( is_null($this->elementClass) ) {
@@ -44,11 +39,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param boolean $checked Checked.
-	 *
-	 * @return void
 	 * @dataProvider selectDeselectDataProvider
 	 */
 	public function testSelect($checked)
@@ -67,9 +57,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\SelectException::TYPE_UNBOUND_OPTION
 	 * @expectedExceptionMessage No SELECT element association defined
@@ -83,11 +70,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$option->select();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetSelect()
 	{
 		/** @var SelectOption $option */
@@ -97,12 +79,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param boolean $checked      Checked.
-	 * @param string  $driver_class Driver class.
-	 *
-	 * @return void
 	 * @dataProvider selectDeselectDataProvider
 	 */
 	public function testDeselect($checked, $driver_class)
@@ -128,11 +104,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->deselect());
 	}
 
-	/**
-	 * Data provider for "select/deselect" method test.
-	 *
-	 * @return array
-	 */
 	public function selectDeselectDataProvider()
 	{
 		return array(
@@ -144,12 +115,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $test_method Typified element method.
-	 * @param boolean $checked     Checked.
-	 *
-	 * @return void
 	 * @dataProvider selectDataProvider
 	 */
 	public function testToggle($test_method, $checked)
@@ -162,12 +127,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $test_method Typified element method.
-	 * @param boolean $checked     Checked.
-	 *
-	 * @return void
 	 * @dataProvider selectDataProvider
 	 */
 	public function testToggleInvert($test_method, $checked)
@@ -180,11 +139,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->assertEquals('OK', $element->toggle());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsSelected()
 	{
 		$this->webElement->shouldReceive('isSelected')->once()->andReturn('OK');
@@ -205,11 +159,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetValue()
 	{
 		$expected = 'OK';
@@ -218,11 +167,6 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->assertEquals($expected, $this->getElement()->getValue());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetText()
 	{
 		$expected = 'OK';

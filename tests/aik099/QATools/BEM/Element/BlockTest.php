@@ -41,11 +41,6 @@ class BlockTest extends PartTestCase
 	 */
 	private $_elementLocator;
 
-	/**
-	 * Prepares mocks for object creation.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -65,11 +60,6 @@ class BlockTest extends PartTestCase
 		$this->_elementLocator = m::mock('\\aik099\\QATools\\BEM\\ElementLocator\\BEMElementLocator');
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$block = $this->createPart();
@@ -78,12 +68,6 @@ class BlockTest extends PartTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $modificator_name  Modificator name.
-	 * @param string $modificator_value Modificator value.
-	 *
-	 * @return void
 	 * @dataProvider modificatorDataProvider
 	 */
 	public function testGetElement($modificator_name, $modificator_value)
@@ -103,12 +87,6 @@ class BlockTest extends PartTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $modificator_name  Modificator name.
-	 * @param string $modificator_value Modificator value.
-	 *
-	 * @return void
 	 * @dataProvider modificatorDataProvider
 	 */
 	public function testGetElementEmpty($modificator_name, $modificator_value)
@@ -128,12 +106,6 @@ class BlockTest extends PartTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $modificator_name  Modificator name.
-	 * @param string $modificator_value Modificator value.
-	 *
-	 * @return void
 	 * @dataProvider modificatorDataProvider
 	 */
 	public function testGetElements($modificator_name, $modificator_value)
@@ -155,12 +127,6 @@ class BlockTest extends PartTestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $modificator_name  Modificator name.
-	 * @param string $modificator_value Modificator value.
-	 *
-	 * @return void
 	 * @dataProvider modificatorDataProvider
 	 */
 	public function testGetElementsEmpty($modificator_name, $modificator_value)
@@ -179,11 +145,6 @@ class BlockTest extends PartTestCase
 		$this->assertCount(0, $nodes);
 	}
 
-	/**
-	 * Provides test data for modificator testing.
-	 *
-	 * @return array
-	 */
 	public function modificatorDataProvider()
 	{
 		return array(
@@ -192,11 +153,6 @@ class BlockTest extends PartTestCase
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFind()
 	{
 		$this->_prepareSearchFixture();
@@ -207,11 +163,6 @@ class BlockTest extends PartTestCase
 		$this->assertEquals('sub-xpath-1', $node->getXpath());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindEmpty()
 	{
 		$this->_prepareSearchFixture(true);
@@ -222,11 +173,6 @@ class BlockTest extends PartTestCase
 		$this->assertNull($node);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindAll()
 	{
 		$this->_prepareSearchFixture();
@@ -239,11 +185,6 @@ class BlockTest extends PartTestCase
 		$this->assertEquals('sub-xpath-2', $nodes[1]->getXpath());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testFindAllEmpty()
 	{
 		$this->_prepareSearchFixture(true);

@@ -18,11 +18,6 @@ use tests\aik099\QATools\PageObject\Proxy\AbstractProxyTestCase;
 class TypifiedElementProxyTest extends AbstractProxyTestCase
 {
 
-	/**
-	 * Creates proxy.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
@@ -35,11 +30,6 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testDefaultClassName()
 	{
 		$expected = '\\aik099\\QATools\\HtmlElements\\Element\\TextBlock';
@@ -47,11 +37,6 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetClassName()
 	{
 		$expected = '\\tests\\aik099\\QATools\\HtmlElements\\Fixture\\Element\\ButtonChild';
@@ -60,31 +45,16 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testIsValidSubstitute()
 	{
 		$this->assertInstanceOf('\\aik099\\QATools\\HtmlElements\\Element\\ITypifiedElement', $this->element);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetName()
 	{
 		$this->assertEquals('sample-name', $this->element->getName());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetName()
 	{
 		$expected = 'OK';

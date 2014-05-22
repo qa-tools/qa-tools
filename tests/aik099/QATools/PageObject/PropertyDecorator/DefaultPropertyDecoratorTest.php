@@ -66,11 +66,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 	 */
 	protected $decorator;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -89,11 +84,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->decorator = new $this->decoratorClass($this->locatorFactory, $this->pageFactory);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testEmptyLocatorPreventsDecoration()
 	{
 		$this->property->shouldReceive('isSimpleDataType')->andReturn(false);
@@ -103,12 +93,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string  $data_type           Data type.
-	 * @param boolean $is_simple_data_type Is data type simple.
-	 *
-	 * @return void
 	 * @dataProvider decorationAbortingDataProvider
 	 */
 	public function testDecorationAborting($data_type, $is_simple_data_type)
@@ -134,9 +118,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\PageFactoryException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageFactoryException::TYPE_UNKNOWN_CLASS
 	 */
@@ -149,11 +130,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->decorator->decorate($this->property);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testUnknownProxyClassPreventsDecoration()
 	{
 		$this->property->shouldReceive('getDataType')->andReturn(__CLASS__);
@@ -163,11 +139,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $element_class Element class.
-	 * @param string $proxy_class   Proxy class.
-	 *
 	 * @return WebElementProxy
 	 * @dataProvider proxyDataProvider
 	 */
@@ -206,11 +177,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->assertSame($proxy_container, $proxy->getContainer());
 	}
 
-	/**
-	 * Provide test data for proxy.
-	 *
-	 * @return array
-	 */
 	public function proxyDataProvider()
 	{
 		return array(

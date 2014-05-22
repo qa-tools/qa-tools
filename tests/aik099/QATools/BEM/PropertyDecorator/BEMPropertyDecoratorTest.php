@@ -18,11 +18,6 @@ use tests\aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorTe
 class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 {
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		$this->locatorClass = '\\aik099\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
@@ -31,11 +26,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		parent::setUp();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testBlockProxy()
 	{
 		$element_class = '\\aik099\\QATools\\BEM\\Element\\Block';
@@ -59,11 +49,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		$this->assertNotEmpty($proxy->getNodes());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testElementProxy()
 	{
 		$element_class = '\\aik099\\QATools\\BEM\\Element\\Element';
@@ -84,11 +69,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $part_class BEM part class.
-	 *
-	 * @return void
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
@@ -100,11 +80,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $part_class BEM part class.
-	 *
-	 * @return void
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
@@ -117,11 +92,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string $part_class BEM part class.
-	 *
-	 * @return void
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
@@ -149,9 +119,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */
@@ -168,9 +135,6 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
 	 */

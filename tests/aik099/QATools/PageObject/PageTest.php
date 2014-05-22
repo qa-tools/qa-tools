@@ -50,11 +50,6 @@ class PageTest extends TestCase
 	 */
 	protected $urlBuilderFactory;
 
-	/**
-	 * Prepares page.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -70,21 +65,11 @@ class PageTest extends TestCase
 		$this->page = new $this->pageClass($this->pageFactory);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructor()
 	{
 		$this->assertSame($this->session, $this->page->getSession());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetAbsoluteUrl()
 	{
 		$expected = 'RL';
@@ -95,11 +80,6 @@ class PageTest extends TestCase
 		$this->assertEquals($expected, $this->page->getAbsoluteUrl());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testOpenCorrect()
 	{
 		$expected = 'RL';
@@ -113,9 +93,6 @@ class PageTest extends TestCase
 	}
 
 	/**
-	 * Test with an url builder that returns no url.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\PageException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL
 	 */
@@ -129,9 +106,6 @@ class PageTest extends TestCase
 	}
 
 	/**
-	 * Test open with missing url builder.
-	 *
-	 * @return void
 	 * @expectedException \aik099\QATools\PageObject\Exception\PageException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\PageException::TYPE_MISSING_URL_BUILDER
 	 */
@@ -141,13 +115,7 @@ class PageTest extends TestCase
 	}
 
 	/**
-	 * Tests if params are correctly added to the URL.
-	 *
-	 * @param string $expected The expected merged url.
-	 * @param array  $params   The GET params.
-	 *
 	 * @dataProvider getAbsoluteUrlWithParamsDataProvider
-	 * @return void
 	 */
 	public function testGetAbsoluteUrlWithParams($expected, array $params)
 	{
@@ -160,11 +128,6 @@ class PageTest extends TestCase
 		$this->assertEquals($expected, $this->page->getAbsoluteUrl($params));
 	}
 
-	/**
-	 * Data Provider for the GET param test.
-	 *
-	 * @return array
-	 */
 	public function getAbsoluteUrlWithParamsDataProvider()
 	{
 		return array(
@@ -179,11 +142,6 @@ class PageTest extends TestCase
 		);
 	}
 
-	/**
-	 * Test that open is still working if params are passed.
-	 *
-	 * @return void
-	 */
 	public function testOpenWithParamsCorrect()
 	{
 		$url = 'RL';

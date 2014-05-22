@@ -71,11 +71,6 @@ class PageFactoryTest extends TestCase
 	 */
 	protected $urlBuilderFactory;
 
-	/**
-	 * Prepare factory.
-	 *
-	 * @return void
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -93,33 +88,18 @@ class PageFactoryTest extends TestCase
 		$this->realFactory = $this->createFactory();
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructorWithAnnotationManager()
 	{
 		$this->assertSame($this->session, $this->realFactory->getSession());
 		$this->assertSame($this->annotationManager, $this->realFactory->getAnnotationManager());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testConstructorWithoutAnnotationManager()
 	{
 		$factory = $this->createFactory(false);
 		$this->assertInstanceOf(self::ANNOTATION_MANAGER_CLASS, $factory->getAnnotationManager());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testSetAnnotationManager()
 	{
 		$annotation_manager = m::mock(self::ANNOTATION_MANAGER_CLASS);
@@ -127,11 +107,6 @@ class PageFactoryTest extends TestCase
 		$this->assertSame($annotation_manager, $this->realFactory->getAnnotationManager());
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testCreateDecorator()
 	{
 		$this->assertInstanceOf($this->decoratorClass, $this->createDefaultDecorator());
@@ -149,22 +124,12 @@ class PageFactoryTest extends TestCase
 		return $this->createFactory()->createDecorator($search_context);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testAnnotationRegistry()
 	{
 		$this->assertArrayHasKey('find-by', $this->annotationManager->registry);
 		$this->assertArrayHasKey('page-url', $this->annotationManager->registry);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testInitElementsChaining()
 	{
 		$decorator = $this->createNullDecorator();
@@ -174,14 +139,6 @@ class PageFactoryTest extends TestCase
 	}
 
 	/**
-	 * Test description.
-	 *
-	 * @param string|null $url             Url.
-	 * @param array       $params          Get params.
-	 * @param boolean     $use_url_builder Should setUrlBuilder called.
-	 *
-	 * @return void
-	 *
 	 * @dataProvider initPageDataProvider
 	 */
 	public function testInitPage($url, array $params, $use_url_builder)
@@ -247,22 +204,12 @@ class PageFactoryTest extends TestCase
 		);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testInitElementContainer()
 	{
 		$element_container = m::mock('\\aik099\\QATools\\PageObject\\Element\\AbstractElementContainer');
 		$this->assertSame($this->realFactory, $this->realFactory->initElementContainer($element_container));
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testProxyFields()
 	{
 		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
@@ -279,11 +226,6 @@ class PageFactoryTest extends TestCase
 		$this->assertEquals('OK', $page->elementWithUse);
 	}
 
-	/**
-	 * Test description.
-	 *
-	 * @return void
-	 */
 	public function testGetPage()
 	{
 		$factory = $this->createFactory(true, array('initPage', 'initElements', 'createDecorator'));
@@ -295,11 +237,6 @@ class PageFactoryTest extends TestCase
 		$this->assertInstanceOf($this->pageClass, $page);
 	}
 
-	/**
-	 * Tests getUrlBuilderFactory and setUrlBuilderFactory.
-	 *
-	 * @return void
-	 */
 	public function testGetUrlBuilderFactory()
 	{
 		/* @var IUrlBuilderFactory $url_builder_factory */
