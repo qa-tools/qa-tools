@@ -12,6 +12,7 @@ namespace tests\aik099\QATools\PageObject;
 
 
 use aik099\QATools\PageObject\Annotation\PageUrlAnnotation;
+use aik099\QATools\PageObject\Config\Config;
 use aik099\QATools\PageObject\Page;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\Property;
@@ -71,6 +72,13 @@ class PageFactoryTest extends TestCase
 	 */
 	protected $urlBuilderFactory;
 
+	/**
+	 * Page factory config.
+	 *
+	 * @var Config
+	 */
+	protected $config;
+
 	protected function setUp()
 	{
 		parent::setUp();
@@ -84,6 +92,7 @@ class PageFactoryTest extends TestCase
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->urlBuilderFactory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
+		$this->config = new Config();
 
 		$this->realFactory = $this->createFactory();
 	}
@@ -261,13 +270,13 @@ class PageFactoryTest extends TestCase
 		if ( $mock_methods ) {
 			$factory = m::mock(
 				$this->factoryClass . '[' . implode(',', $mock_methods) . ']',
-				array($this->session, $annotation_manager)
+				array($this->session, $this->config, $annotation_manager)
 			);
 
 			return $factory;
 		}
 
-		return new $this->factoryClass($this->session, $annotation_manager);
+		return new $this->factoryClass($this->session, $this->config, $annotation_manager);
 	}
 
 	/**
