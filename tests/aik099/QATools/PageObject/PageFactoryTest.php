@@ -265,18 +265,23 @@ class PageFactoryTest extends TestCase
 	 */
 	protected function createFactory($with_annotation_manager = true, array $mock_methods = array())
 	{
-		$annotation_manager = $with_annotation_manager ? $this->annotationManager : null;
+		/** @var PageFactory $factory */
 
 		if ( $mock_methods ) {
 			$factory = m::mock(
 				$this->factoryClass . '[' . implode(',', $mock_methods) . ']',
-				array($this->session, $this->config, $annotation_manager)
+				array($this->session, $this->config)
 			);
-
-			return $factory;
+		}
+		else {
+			$factory = new $this->factoryClass($this->session, $this->config);
 		}
 
-		return new $this->factoryClass($this->session, $this->config, $annotation_manager);
+		if ( $with_annotation_manager ) {
+			$factory->setAnnotationManager($this->annotationManager);
+		}
+
+		return $factory;
 	}
 
 	/**

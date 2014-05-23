@@ -18,7 +18,6 @@ use aik099\QATools\PageObject\ISearchContext;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use Behat\Mink\Session;
-use mindplay\annotations\AnnotationManager;
 
 /**
  * Factory class to make using Page Objects simpler and easier.
@@ -29,15 +28,14 @@ class TypifiedPageFactory extends PageFactory
 	/**
 	 * Creates TypifiedPageFactory instance.
 	 *
-	 * @param Session                $session            Mink session.
-	 * @param IConfig                $config             Page factory configuration..
-	 * @param AnnotationManager|null $annotation_manager Annotation manager.
+	 * @param Session $session Mink session.
+	 * @param IConfig $config  Page factory configuration..
 	 */
-	public function __construct(Session $session, IConfig $config = null, AnnotationManager $annotation_manager = null)
+	public function __construct(Session $session, IConfig $config = null)
 	{
 		$this->annotationRegistry['element-name'] = '\\aik099\\QATools\\HtmlElements\\Annotation\\ElementNameAnnotation';
 
-		parent::__construct($session, $config, $annotation_manager);
+		parent::__construct($session, $config);
 	}
 
 	/**
