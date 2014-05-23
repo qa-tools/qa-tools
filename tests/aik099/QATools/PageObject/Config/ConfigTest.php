@@ -48,7 +48,7 @@ class ConfigTest extends TestCase
 	 * @expectedException \aik099\QATools\PageObject\Exception\ConfigException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\ConfigException::TYPE_NOT_FOUND
 	 */
-	public function testContructorWithFailure()
+	public function testConstructorWithFailure()
 	{
 		new Config(array('non_predefined_key' => 'value'));
 	}
