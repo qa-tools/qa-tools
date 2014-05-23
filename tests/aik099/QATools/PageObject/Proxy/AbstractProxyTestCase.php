@@ -14,7 +14,6 @@ namespace tests\aik099\QATools\PageObject\Proxy;
 use aik099\QATools\PageObject\Proxy\AbstractProxy;
 use Mockery as m;
 use tests\aik099\QATools\PageObject\Element\AbstractElementCollectionTestCase;
-use tests\aik099\QATools\TestCase;
 
 abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 {

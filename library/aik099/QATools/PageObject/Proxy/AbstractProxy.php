@@ -16,7 +16,6 @@ use aik099\QATools\PageObject\Element\IContainerAware;
 use aik099\QATools\PageObject\ElementLocator\IElementLocator;
 use aik099\QATools\PageObject\Exception\ElementNotFoundException;
 use aik099\QATools\PageObject\Exception\ElementException;
-use aik099\QATools\PageObject\Exception\PageFactoryException;
 use aik099\QATools\PageObject\IPageFactory;
 use aik099\QATools\PageObject\ISearchContext;
 use Behat\Mink\Element\NodeElement;

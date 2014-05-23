@@ -12,8 +12,6 @@ namespace tests\aik099\QATools\PageObject\Element;
 
 
 use Mockery as m;
-use aik099\QATools\PageObject\Element\WebElement;
-use tests\aik099\QATools\PageObject\Element\AbstractElementCollectionTestCase;
 
 class WebElementCollectionTest extends AbstractElementCollectionTestCase
 {
