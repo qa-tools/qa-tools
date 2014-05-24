@@ -29,27 +29,28 @@ class UrlBuilderFactoryTest extends TestCase
 	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilder';
 
 	/**
-	 * Test the factory instantiated class.
-	 *
-	 * @param string $url             The url.
-	 * @param array  $params          GET params.
-	 * @param string $expected_path   The expected path in the builder.
-	 * @param array  $expected_params The expected params in the builder.
-	 * @param string $expected_anchor The expected anchor in the builder.
-	 *
-	 * @return void
-	 *
 	 * @dataProvider getUrlBuilderDataProvider
 	 */
-	public function testGetUrlBuilder($url, array $params, $expected_path, array $expected_params, $expected_anchor)
+	public function testGetUrlBuilder(
+		$url,
+		array $params,
+		$base_url,
+		$expected_protocol,
+		$expected_host,
+		$expected_path,
+		array $expected_params,
+		$expected_anchor
+	)
 	{
 		$factory = new UrlBuilderFactory();
 
 		/* @var UrlBuilder $url_builder */
-		$url_builder = $factory->getUrlBuilder($url, $params);
+		$url_builder = $factory->getUrlBuilder($url, $params, $base_url);
 
 		$this->assertInstanceOf(self::URL_BUILDER_INTERFACE, $url_builder);
 
+		$this->assertEquals($expected_protocol, $url_builder->getProtocol());
+		$this->assertEquals($expected_host, $url_builder->getHost());
 		$this->assertEquals($expected_path, $url_builder->getPath());
 		$this->assertEquals($expected_params, $url_builder->getParams());
 		$this->assertEquals($expected_anchor, $url_builder->getAnchor());
@@ -58,12 +59,66 @@ class UrlBuilderFactoryTest extends TestCase
 	public function getUrlBuilderDataProvider()
 	{
 		return array(
-			array('/path', array(), '/path', array(), ''),
-			array('/path?param=value', array(), '/path', array('param' => 'value'), ''),
-			array('/path', array('param' => 'value'), '/path', array('param' => 'value'), ''),
-			array('/path#anchor', array(), '/path', array(), 'anchor'),
-			array('/path?param=value#anchor', array(), '/path', array('param' => 'value'), 'anchor'),
-			array('/path#anchor', array('param' => 'value'), '/path', array('param' => 'value'), 'anchor'),
+			array(
+				'/path',
+				array(),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array(),
+				'',
+			),
+			array(
+				'/path?param=value',
+				array(),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array('param' => 'value'),
+				'',
+			),
+			array(
+				'/path',
+				array('param' => 'value'),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array('param' => 'value'),
+				'',
+			),
+			array(
+				'/path#anchor',
+				array(),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array(),
+				'anchor',
+			),
+			array(
+				'/path?param=value#anchor',
+				array(),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array('param' => 'value'),
+				'anchor',
+			),
+			array(
+				'/path#anchor',
+				array('param' => 'value'),
+				'http://domain.tld',
+				'http',
+				'domain.tld',
+				'/path',
+				array('param' => 'value'),
+				'anchor',
+			),
 		);
 	}
 

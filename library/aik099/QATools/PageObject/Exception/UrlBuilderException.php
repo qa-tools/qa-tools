@@ -19,4 +19,6 @@ class UrlBuilderException extends PageFactoryException
 
 	const TYPE_EMPTY_PATH = 101;
 
+	const TYPE_MISSING_BASE_URL = 102;
+
 }
