@@ -92,7 +92,7 @@ class PageFactoryTest extends TestCase
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->urlBuilderFactory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
-		$this->config = new Config();
+		$this->config = new Config(array('base_url' => 'http://domain.tld'));
 
 		$this->realFactory = $this->createFactory();
 	}
@@ -161,7 +161,7 @@ class PageFactoryTest extends TestCase
 		$this->realFactory->setUrlBuilderFactory($this->urlBuilderFactory);
 		$this->urlBuilderFactory
 			->shouldReceive('getUrlBuilder')
-			->with($url, $params)
+			->with($url, $params, 'http://domain.tld')
 			->times(isset($url) ? 1 : 0)
 			->andReturn($urlBuilder);
 

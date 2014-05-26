@@ -195,9 +195,17 @@ class PageFactory implements IPageFactory
 		/* @var $annotations PageUrlAnnotation[] */
 		$annotations = $this->annotationManager->getClassAnnotations($page, '@page-url');
 
-		if ( $annotations ) {
-			$page->setUrlBuilder($this->urlBuilderFactory->getUrlBuilder($annotations[0]->url, $annotations[0]->params));
+		if ( empty($annotations) ) {
+			return $this;
 		}
+
+		$page->setUrlBuilder(
+			$this->urlBuilderFactory->getUrlBuilder(
+				$annotations[0]->url,
+				$annotations[0]->params,
+				$this->config->getOption('base_url')
+			)
+		);
 
 		return $this;
 	}

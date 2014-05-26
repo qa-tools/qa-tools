@@ -36,6 +36,20 @@ class UrlBuilder implements IUrlBuilder
 	protected $anchor = '';
 
 	/**
+	 * The used protocol of the url.
+	 *
+	 * @var string
+	 */
+	protected $protocol = '';
+
+	/**
+	 * The host of the url.
+	 *
+	 * @var string
+	 */
+	protected $host = '';
+
+	/**
 	 * GET url parameters.
 	 *
 	 * @var array
@@ -43,31 +57,33 @@ class UrlBuilder implements IUrlBuilder
 	protected $params = array();
 
 	/**
-	 * Builds united array of params from given $path and $params. Also extracts anchor.
+	 * Builds united array of params from given $url and $params. Also extracts anchor.
 	 *
-	 * @param string $path   The given url path.
-	 * @param array  $params Additional GET params.
+	 * @param string $url      The given absolute or relative url.
+	 * @param array  $params   Additional GET params.
+	 * @param string $base_url The base url.
 	 *
-	 * @throws UrlBuilderException When the path of the given url is empty.
+	 * @throws UrlBuilderException When the path of the given url is empty or a base url is missing.
 	 */
-	public function __construct($path, array $params = array())
+	public function __construct($url, array $params = array(), $base_url = null)
 	{
-		$url_components = parse_url($path);
+		$url_parser = new UrlParser($base_url);
+		$url_parser->merge(new UrlParser($url));
 
-		$this->path = $url_components['path'];
+		$this->path = $url_parser->getComponent('path');
+		$this->host = $url_parser->getComponent('host');
+		$this->protocol = $url_parser->getComponent('scheme');
+		$this->anchor = $url_parser->getComponent('fragment');
 
 		if ( empty($this->path) ) {
 			throw new UrlBuilderException('URL path is missing', UrlBuilderException::TYPE_EMPTY_PATH);
 		}
 
-		$this->anchor = isset($url_components['fragment']) ? $url_components['fragment'] : '';
-		$this->params = $params;
-
-		if ( isset($url_components['query']) ) {
-			$parsed_params = array();
-			parse_str($url_components['query'], $parsed_params);
-			$this->params = array_merge($parsed_params, $this->params);
+		if ( empty($this->host) ) {
+			throw new UrlBuilderException('No base url specified', UrlBuilderException::TYPE_MISSING_BASE_URL);
 		}
+
+		$this->params = array_merge($url_parser->getParams(), $params);
 	}
 
 	/**
@@ -79,7 +95,7 @@ class UrlBuilder implements IUrlBuilder
 	 */
 	public function build(array $params = array())
 	{
-		$final_url = $this->getPath();
+		$final_url = $this->getProtocol() . '://' . $this->getHost() . $this->getPath();
 		$final_params = array_merge($this->getParams(), $params);
 
 		if ( !empty($final_params) ) {
@@ -121,6 +137,26 @@ class UrlBuilder implements IUrlBuilder
 	public function getAnchor()
 	{
 		return $this->anchor;
+	}
+
+	/**
+	 * Get host.
+	 *
+	 * @return string
+	 */
+	public function getHost()
+	{
+		return $this->host;
+	}
+
+	/**
+	 * Get used protocol.
+	 *
+	 * @return string
+	 */
+	public function getProtocol()
+	{
+		return $this->protocol;
 	}
 
 }

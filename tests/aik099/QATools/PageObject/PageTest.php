@@ -144,7 +144,7 @@ class PageTest extends TestCase
 
 	public function testOpenWithParamsCorrect()
 	{
-		$url = 'RL';
+		$url = 'http://domain.tld/RL';
 		$expected = $url . '?param=value';
 		$params = array('param' => 'value');
 		/* @var IUrlBuilderFactory $url_builder_factory */

@@ -22,11 +22,12 @@ interface IUrlBuilderFactory
 	/**
 	 * Returns an instance of a class implementing IUrlBuilder interface based on given arguments.
 	 *
-	 * @param string $path   The path of the URL after the domain.
-	 * @param array  $params Additional GET params as an array.
+	 * @param string $path     The path of the URL after the domain.
+	 * @param array  $params   Additional GET params as an array.
+	 * @param string $base_url The base url of the url builder.
 	 *
 	 * @return IUrlBuilder
 	 */
-	public function getUrlBuilder($path, array $params = array());
+	public function getUrlBuilder($path, array $params = array(), $base_url = '');
 
 }
