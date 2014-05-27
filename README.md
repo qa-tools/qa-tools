@@ -15,6 +15,9 @@ Library implements __PageObject pattern__, used in variety of testing frameworks
 
 * [http://www.qa-tools.io](http://www.qa-tools.io)
 
+## Asking Questions
+Feel free to ask any questions and share your experiences on the [Support Page](http://www.qa-tools.io/support/) and help to improve the documentation.
+
 ## Installation using Composer
 
 Define the dependencies in your ```composer.json```:
