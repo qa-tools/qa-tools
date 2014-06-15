@@ -11,12 +11,10 @@
 namespace aik099\QATools\PageObject\Url;
 
 
-use Mockery\Expectation;
-
 /**
  * Parses url and returns components.
  *
- * @method Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class UrlParser
 {

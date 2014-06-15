@@ -23,7 +23,7 @@ use Behat\Mink\Element\NodeElement;
 /**
  * Class for lazy-proxy creation to ensure, that elements are really accessed only at moment, when user needs them.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  *
  * @link http://bit.ly/14TbcR9
  */

@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\Exception\ElementException;
 /**
  * Class for handling Selenium-style element selectors.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  *
  * @link http://bit.ly/17fhZ7Z
  */

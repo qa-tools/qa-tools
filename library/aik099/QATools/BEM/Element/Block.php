@@ -18,7 +18,7 @@ use Behat\Mink\Element\NodeElement;
 /**
  * All BEM block classes must be descendants of this class.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class Block extends AbstractPart implements IBlock
 {

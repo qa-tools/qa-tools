@@ -17,7 +17,7 @@ use aik099\QATools\PageObject\Property;
 /**
  * Allows the PageFactory to decorate fields.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface IPropertyDecorator
 {

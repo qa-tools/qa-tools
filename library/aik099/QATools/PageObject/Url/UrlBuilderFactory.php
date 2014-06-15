@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Url;
 /**
  * Responsible for building the URL of pages.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class UrlBuilderFactory implements IUrlBuilderFactory
 {

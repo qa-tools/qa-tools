@@ -21,7 +21,7 @@ use aik099\QATools\PageObject\Property;
 /**
  * Class, that locates WebElements.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class DefaultElementLocator implements IElementLocator
 {

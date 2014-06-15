@@ -12,12 +12,11 @@ namespace aik099\QATools\PageObject\Config;
 
 
 use aik099\QATools\PageObject\Exception\ConfigException;
-use Mockery\Expectation;
 
 /**
  * Default config class which stores all kind of configurations for the library.
  *
- * @method Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class Config implements IConfig
 {

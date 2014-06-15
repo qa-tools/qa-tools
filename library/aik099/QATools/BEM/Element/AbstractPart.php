@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Part of BEM.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 abstract class AbstractPart implements IPart
 {

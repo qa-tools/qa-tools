@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents a an element that has simple method for value changing.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface ISimpleSetter
 {

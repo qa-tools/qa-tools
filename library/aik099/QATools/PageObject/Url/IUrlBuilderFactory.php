@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Url;
 /**
  * All url builder factories must implement this interface.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface IUrlBuilderFactory
 {

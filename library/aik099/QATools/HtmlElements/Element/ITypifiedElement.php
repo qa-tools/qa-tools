@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\Element\IContainerAware;
 /**
  * Represents a typified element.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface ITypifiedElement extends IContainerAware, INamed
 {

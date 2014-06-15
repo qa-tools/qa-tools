@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 /**
  * All page factories must implement this interface.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface IPageFactory
 {

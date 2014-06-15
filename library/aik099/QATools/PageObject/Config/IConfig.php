@@ -11,12 +11,10 @@
 namespace aik099\QATools\PageObject\Config;
 
 
-use Mockery\Expectation;
-
 /**
  * Interface for all kind of configurations for the library.
  *
- * @method Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface IConfig
 {

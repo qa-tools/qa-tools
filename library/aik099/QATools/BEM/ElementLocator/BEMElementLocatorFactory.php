@@ -20,7 +20,7 @@ use mindplay\annotations\AnnotationManager;
 /**
  * Factory to create BEM block/element locators.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 {

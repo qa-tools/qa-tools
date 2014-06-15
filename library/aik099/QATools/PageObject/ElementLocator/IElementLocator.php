@@ -17,7 +17,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Classes, that can search elements on a page must implement this interface.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 interface IElementLocator
 {

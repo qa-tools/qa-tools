@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\Exception\UrlBuilderException;
 /**
  * Responsible for building the URL of pages.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class UrlBuilder implements IUrlBuilder
 {

@@ -20,7 +20,7 @@ use mindplay\annotations\AnnotationManager;
 /**
  * Class, that locates WebElements that might not be present at the moment.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class WaitingElementLocator extends DefaultElementLocator
 {

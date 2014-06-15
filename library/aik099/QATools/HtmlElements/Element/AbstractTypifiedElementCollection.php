@@ -17,7 +17,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Represents a list of typified elements.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 abstract class AbstractTypifiedElementCollection extends AbstractElementCollection implements ITypifiedElement
 {

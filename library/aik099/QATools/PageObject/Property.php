@@ -18,7 +18,7 @@ use mindplay\annotations\standard\VarAnnotation;
 /**
  * Represents property, that can be decorated.
  *
- * @method \Mockery\Expectation shouldReceive
+ * @method \Mockery\Expectation shouldReceive()
  */
 class Property extends \ReflectionProperty
 {
