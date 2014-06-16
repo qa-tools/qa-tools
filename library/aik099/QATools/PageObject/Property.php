@@ -53,14 +53,14 @@ class Property extends \ReflectionProperty
 	/**
 	 * Determines property data type.
 	 *
-	 * @return string|boolean
+	 * @return string
 	 */
 	public function getDataType()
 	{
 		$data_type = $this->getRawDataType();
 
-		if ( $data_type === false ) {
-			return $data_type;
+		if ( !$data_type ) {
+			return '';
 		}
 
 		return preg_replace('/\[\]$/', '', $data_type);
@@ -69,7 +69,7 @@ class Property extends \ReflectionProperty
 	/**
 	 * Returns the raw data type.
 	 *
-	 * @return string|boolean
+	 * @return string
 	 */
 	public function getRawDataType()
 	{
@@ -77,7 +77,12 @@ class Property extends \ReflectionProperty
 			/* @var $annotations VarAnnotation[] */
 			$annotations = $this->annotationManager->getPropertyAnnotations($this, null, '@var');
 
-			$this->dataType = $annotations ? $annotations[0]->type : false;
+			if ( $annotations && ($annotations[0] instanceof VarAnnotation) ) {
+				$this->dataType = $annotations[0]->type;
+			}
+			else {
+				$this->dataType = '';
+			}
 		}
 
 		return $this->dataType;

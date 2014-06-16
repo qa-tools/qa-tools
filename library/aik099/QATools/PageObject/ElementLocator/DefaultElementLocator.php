@@ -103,7 +103,13 @@ class DefaultElementLocator implements IElementLocator
 	{
 		/* @var $annotations FindByAnnotation[] */
 		$annotations = $this->property->getAnnotationsFromPropertyOrClass('@find-by');
-		$selector = $annotations ? $annotations[0]->getSelector() : array();
+
+		if ( $annotations && ($annotations[0] instanceof FindByAnnotation) ) {
+			$selector = $annotations[0]->getSelector();
+		}
+		else {
+			$selector = array();
+		}
 
 		if ( !$selector ) {
 			$parameters = array((string)$this->property, $this->property->getDataType());

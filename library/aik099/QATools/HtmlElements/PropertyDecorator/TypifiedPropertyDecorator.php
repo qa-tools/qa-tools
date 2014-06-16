@@ -86,7 +86,11 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 		/* @var $annotations ElementNameAnnotation[] */
 		$annotations = $property->getAnnotationsFromPropertyOrClass('@element-name');
 
-		return $annotations ? $annotations[0]->name : (string)$property;
+		if ( $annotations && ($annotations[0] instanceof ElementNameAnnotation) ) {
+			return $annotations[0]->name;
+		}
+
+		return (string)$property;
 	}
 
 }

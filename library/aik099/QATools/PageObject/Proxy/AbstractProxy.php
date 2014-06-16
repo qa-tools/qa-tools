@@ -149,14 +149,14 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	/**
 	 * Locates element using the locator.
 	 *
-	 * @return NodeElement|null
+	 * @return NodeElement
 	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	protected function locateElement()
 	{
 		$elements = $this->locateElements();
 
-		return count($elements) ? current($elements) : null;
+		return $elements[0];
 	}
 
 	/**

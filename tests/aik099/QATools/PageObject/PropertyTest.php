@@ -98,7 +98,7 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array('SampleClass', 'SampleClass'),
 			array('SampleClass[]', 'SampleClass'),
-			array(null, false),
+			array(null, ''),
 		);
 	}
 
@@ -117,7 +117,7 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array('SampleClass', 'SampleClass'),
 			array('SampleClass[]', 'SampleClass[]'),
-			array(null, false),
+			array(null, ''),
 		);
 	}
 

@@ -12,6 +12,7 @@ namespace aik099\QATools\BEM\ElementLocator;
 
 
 use aik099\QATools\BEM\Annotation\BEMAnnotation;
+use aik099\QATools\BEM\Element\IBlock;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use aik099\QATools\PageObject\Exception\AnnotationException;
 use aik099\QATools\PageObject\ISearchContext;
@@ -93,7 +94,7 @@ class BEMElementLocator extends DefaultElementLocator
 		/* @var $annotations BEMAnnotation[] */
 		$annotations = $this->property->getAnnotations('@bem');
 
-		if ( !$annotations ) {
+		if ( !$annotations || !($annotations[0] instanceof BEMAnnotation) ) {
 			throw new AnnotationException(
 				'BEM block/element must be specified as annotation',
 				AnnotationException::TYPE_REQUIRED
@@ -102,7 +103,7 @@ class BEMElementLocator extends DefaultElementLocator
 
 		$bem_annotation = $annotations[0];
 
-		if ( $bem_annotation->element ) {
+		if ( $bem_annotation->element && ($this->searchContext instanceof IBlock) ) {
 			$bem_annotation->block = $this->searchContext->getName();
 		}
 

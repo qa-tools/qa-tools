@@ -195,7 +195,7 @@ class PageFactory implements IPageFactory
 		/* @var $annotations PageUrlAnnotation[] */
 		$annotations = $this->annotationManager->getClassAnnotations($page, '@page-url');
 
-		if ( empty($annotations) ) {
+		if ( !$annotations || !($annotations[0] instanceof PageUrlAnnotation) ) {
 			return $this;
 		}
 

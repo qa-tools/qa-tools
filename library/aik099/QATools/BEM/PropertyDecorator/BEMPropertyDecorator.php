@@ -82,6 +82,10 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 			$annotations = $property->getAnnotationsFromPropertyOrClass('@bem');
 			$this->_assertAnnotationUsage($annotations, $locator);
 
+			if ( !($annotations[0] instanceof BEMAnnotation) ) {
+				return null;
+			}
+
 			$name = $this->_isBEMBlock($property) ? $annotations[0]->block : $annotations[0]->element;
 
 			/* @var $proxy IProxy */
@@ -130,7 +134,7 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 	 */
 	private function _assertAnnotationUsage(array $annotations, IElementLocator $locator)
 	{
-		if ( !$annotations ) {
+		if ( !$annotations || !($annotations[0] instanceof BEMAnnotation) ) {
 			throw new AnnotationException(
 				'BEM block/element must be specified as annotation',
 				AnnotationException::TYPE_REQUIRED

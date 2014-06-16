@@ -144,13 +144,15 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	{
 		$data_type = $property->getDataType();
 
-		foreach ( $this->elementToProxyMapping as $element_class => $proxy_class ) {
-			if ( $this->classMatches($data_type, $element_class) ) {
-				return $proxy_class;
+		if ( $data_type ) {
+			foreach ( $this->elementToProxyMapping as $element_class => $proxy_class ) {
+				if ( $this->classMatches($data_type, $element_class) ) {
+					return $proxy_class;
+				}
 			}
 		}
 
-		return false;
+		return '';
 	}
 
 	/**
