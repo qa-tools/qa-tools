@@ -34,8 +34,8 @@ interface ISearchContext
 	/**
 	 * Finds all elements with specified selector.
 	 *
-	 * @param string $selector Selector engine name.
-	 * @param string $locator  Selector locator.
+	 * @param string       $selector Selector engine name.
+	 * @param string|array $locator  Selector locator.
 	 *
 	 * @return NodeElement[]
 	 */
