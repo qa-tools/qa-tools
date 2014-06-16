@@ -11,6 +11,7 @@
 namespace aik099\QATools\HtmlElements\Element;
 
 
+use aik099\QATools\HtmlElements\Exception\TypifiedElementException;
 use Behat\Mink\Element\NodeElement;
 use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\Element\WebElement;
@@ -63,9 +64,17 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
+	 * @throws TypifiedElementException When page factory is missing.
 	 */
 	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
+		if ( !isset($page_factory) ) {
+			throw new TypifiedElementException(
+				'Page factory is required to create this element',
+				TypifiedElementException::TYPE_PAGE_FACTORY_REQUIRED
+			);
+		}
+
 		$wrapped_element = WebElement::fromNodeElement($node_element);
 
 		return new static($wrapped_element, $page_factory);

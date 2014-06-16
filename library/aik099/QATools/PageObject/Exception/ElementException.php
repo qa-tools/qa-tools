@@ -23,4 +23,6 @@ class ElementException extends PageFactoryException
 	const TYPE_UNKNOWN_SELECTOR = 103;
 
 	const TYPE_NOT_FOUND = 104;
+
+	const TYPE_PAGE_FACTORY_REQUIRED = 105;
 }

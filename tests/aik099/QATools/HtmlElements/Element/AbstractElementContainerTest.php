@@ -13,6 +13,7 @@ namespace tests\aik099\QATools\HtmlElements\Element;
 
 use aik099\QATools\HtmlElements\Element\AbstractElementContainer;
 use Mockery as m;
+use tests\aik099\QATools\HtmlElements\Fixture\Element\ElementContainerChild;
 
 class AbstractElementContainerTest extends AbstractTypifiedElementTest
 {
@@ -62,6 +63,18 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$method->setAccessible(true);
 
 		$this->assertSame($this->pageFactory, $method->invoke($element));
+	}
+
+	/**
+	 * @expectedException \aik099\QATools\HtmlElements\Exception\TypifiedElementException
+	 * @expectedExceptionCode \aik099\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_PAGE_FACTORY_REQUIRED
+	 * @expectedExceptionMessage Page factory is required to create this element
+	 */
+	public function testFromNodeElementWithoutPageFactory()
+	{
+		/* @var $element_class ElementContainerChild */
+		$element_class = $this->elementClass;
+		$element_class::fromNodeElement($this->createNodeElement());
 	}
 
 	public function testWaitFor()

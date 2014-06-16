@@ -11,6 +11,7 @@
 namespace aik099\QATools\PageObject\Element;
 
 
+use aik099\QATools\PageObject\Exception\ElementException;
 use aik099\QATools\PageObject\How;
 use aik099\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
@@ -52,9 +53,17 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
+	 * @throws ElementException When page factory is missing.
 	 */
 	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
 	{
+		if ( !isset($page_factory) ) {
+			throw new ElementException(
+				'Page factory is required to create this element',
+				ElementException::TYPE_PAGE_FACTORY_REQUIRED
+			);
+		}
+
 		$selenium_selector = array(How::XPATH => $node_element->getXpath());
 
 		return new static($selenium_selector, $page_factory);
