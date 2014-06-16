@@ -21,7 +21,7 @@ use aik099\QATools\PageObject\IPageFactory;
  *
  * @link http://bit.ly/14TbcR9
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class ElementProxy extends AbstractPartProxy implements IElement
 {

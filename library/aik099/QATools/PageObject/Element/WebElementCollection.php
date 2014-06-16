@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Represents a list of elements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class WebElementCollection extends AbstractElementCollection implements IWebElement
 {

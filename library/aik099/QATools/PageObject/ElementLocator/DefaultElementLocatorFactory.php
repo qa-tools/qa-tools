@@ -18,7 +18,7 @@ use aik099\QATools\PageObject\Property;
 /**
  * Factory, that creates locators for finding WebElements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class DefaultElementLocatorFactory implements IElementLocatorFactory
 {

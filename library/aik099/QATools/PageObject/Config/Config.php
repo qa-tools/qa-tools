@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\Exception\ConfigException;
 /**
  * Default config class which stores all kind of configurations for the library.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class Config implements IConfig
 {

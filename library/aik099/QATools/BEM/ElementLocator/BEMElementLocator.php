@@ -21,7 +21,7 @@ use mindplay\annotations\AnnotationManager;
 /**
  * Locates BEM blocks/elements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class BEMElementLocator extends DefaultElementLocator
 {

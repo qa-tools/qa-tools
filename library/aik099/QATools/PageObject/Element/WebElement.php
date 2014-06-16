@@ -20,7 +20,7 @@ use aik099\QATools\PageObject\ISearchContext;
 /**
  * Regular element on a page, that is initialized using Selenium-style selector.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class WebElement extends NodeElement implements IWebElement, INodeElementAware
 {

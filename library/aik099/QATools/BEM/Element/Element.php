@@ -16,7 +16,7 @@ use aik099\QATools\PageObject\Element\WebElement;
 /**
  * BEM element.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class Element extends AbstractPart implements IElement
 {

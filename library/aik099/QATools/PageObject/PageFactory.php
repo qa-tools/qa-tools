@@ -27,7 +27,7 @@ use mindplay\annotations\AnnotationManager;
 /**
  * Factory class to make using Page Objects simpler and easier.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class PageFactory implements IPageFactory
 {

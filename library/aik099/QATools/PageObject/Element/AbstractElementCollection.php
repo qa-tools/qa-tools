@@ -18,7 +18,7 @@ use Behat\Mink\Element\NodeElement;
 /**
  * Represents a list of elements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 abstract class AbstractElementCollection implements \Iterator, \ArrayAccess, \Countable
 {

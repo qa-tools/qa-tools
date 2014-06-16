@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Config;
 /**
  * Interface for all kind of configurations for the library.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 interface IConfig
 {

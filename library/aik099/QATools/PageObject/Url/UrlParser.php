@@ -14,7 +14,7 @@ namespace aik099\QATools\PageObject\Url;
 /**
  * Parses url and returns components.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class UrlParser
 {

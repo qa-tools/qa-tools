@@ -18,7 +18,7 @@ use Behat\Mink\Element\DocumentElement;
 /**
  * The base class to be used for making classes representing pages, that can contain WebElements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 abstract class Page extends DocumentElement implements ISearchContext
 {

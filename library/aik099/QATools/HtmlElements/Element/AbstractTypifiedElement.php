@@ -23,7 +23,7 @@ use aik099\QATools\PageObject\ISearchContext;
  * The base class to be used for making classes representing typified elements (i.e web page controls such as
  * text inputs, buttons or more complex elements).
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElementAware
 {

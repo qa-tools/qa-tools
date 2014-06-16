@@ -14,7 +14,7 @@ namespace aik099\QATools\HtmlElements\Element;
 /**
  * Represents a named entity. Used to operate with names of blocks and typified elements.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 interface INamed
 {

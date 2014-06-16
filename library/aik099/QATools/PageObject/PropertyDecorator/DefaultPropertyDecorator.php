@@ -24,7 +24,7 @@ use aik099\QATools\PageObject\Property;
  * @FindBys annotation with a proxy that locates the elements using the passed
  * in ElementLocatorFactory.
  *
- * @method \Mockery\Expectation shouldReceive()
+ * @method \Mockery\Expectation shouldReceive(string $name)
  */
 class DefaultPropertyDecorator implements IPropertyDecorator
 {
