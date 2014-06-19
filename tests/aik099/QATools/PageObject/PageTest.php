@@ -85,7 +85,7 @@ class PageTest extends TestCase
 		$expected = 'RL';
 		$url_builder = $this->createUrlBuilderWithReturn($expected);
 
-		$this->session->shouldReceive('visit')->with($expected)->once()->andReturnNull();
+		$this->session->shouldReceive('visit')->with($expected)->once();
 
 		$this->page->setUrlBuilder($url_builder);
 
@@ -150,7 +150,7 @@ class PageTest extends TestCase
 		/* @var IUrlBuilderFactory $url_builder_factory */
 		$url_builder_factory = new $this->urlBuilderFactoryClass();
 
-		$this->session->shouldReceive('visit')->with($expected)->once()->andReturnNull();
+		$this->session->shouldReceive('visit')->with($expected)->once();
 
 		$this->page->setUrlBuilder($url_builder_factory->getUrlBuilder($url));
 

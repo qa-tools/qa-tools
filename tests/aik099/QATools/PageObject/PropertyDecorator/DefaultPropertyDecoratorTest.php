@@ -79,7 +79,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->locatorFactory = m::mock('\\aik099\\QATools\\PageObject\\ElementLocator\\IElementLocatorFactory');
 
 		if ( $this->getName() == 'testEmptyLocatorPreventsDecoration' ) {
-			$this->locatorFactory->shouldReceive('createLocator')->andReturnNull();
+			$this->locatorFactory->shouldReceive('createLocator');
 		}
 		else {
 			$this->locatorFactory->shouldReceive('createLocator')->andReturn($this->locator);

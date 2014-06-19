@@ -133,7 +133,7 @@ class AbstractTypifiedElementTest extends TestCase
 	public function testSetContainer()
 	{
 		$container = m::mock('\\aik099\\QATools\\PageObject\\ISearchContext');
-		$this->webElement->shouldReceive('setContainer')->with($container)->once()->andReturnNull();
+		$this->webElement->shouldReceive('setContainer')->with($container)->once();
 
 		$this->assertSame($this->typifiedElement, $this->typifiedElement->setContainer($container));
 	}

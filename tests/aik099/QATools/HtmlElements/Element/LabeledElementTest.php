@@ -45,7 +45,7 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 
 	public function testGetParentLabel()
 	{
-		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturnNull();
+		$this->webElement->shouldReceive('getAttribute')->with('id')->once();
 		$this->webElement->shouldReceive('find')->with('xpath', 'parent::label')->once()->andReturn('FOUND2');
 
 		$this->assertEquals('FOUND2', $this->getElement()->getLabel());
@@ -56,13 +56,11 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 		$this->webElement
 			->shouldReceive('getAttribute')
 			->with('id')
-			->once()
-			->andReturnNull();
+			->once();
 		$this->webElement
 			->shouldReceive('find')
 			->with('xpath', 'parent::label')
-			->once()
-			->andReturnNull();
+			->once();
 		$this->webElement
 			->shouldReceive('find')
 			->with('xpath', 'following-sibling::*[1][self::label]')
@@ -76,7 +74,7 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 	{
 		/* @var $element LabeledElement */
 		$element = $this->mockElement(array('getLabel'));
-		$element->shouldReceive('getLabel')->once()->andReturnNull();
+		$element->shouldReceive('getLabel')->once();
 
 		$this->assertNull($element->getLabelText());
 	}

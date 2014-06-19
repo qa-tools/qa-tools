@@ -47,7 +47,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->webElement->shouldReceive('getAttribute')->with('value')->andReturn('OK');
 
 		$web_element = m::mock(self::WEB_ELEMENT_CLASS);
-		$web_element->shouldReceive('selectOption')->with('OK', true)->times($checked ? 0 : 1)->andReturnNull();
+		$web_element->shouldReceive('selectOption')->with('OK', true)->times($checked ? 0 : 1);
 
 		$this->select->shouldReceive('getWrappedElement')->andReturn($web_element);
 
@@ -86,14 +86,14 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->webElement->shouldReceive('isSelected')->once()->andReturn(!$checked);
 
 		if ( $driver_class == self::SELENIUM_DRIVER_CLASS ) {
-			$this->webElement->shouldReceive('click')->times($checked ? 0 : 1)->andReturnNull();
+			$this->webElement->shouldReceive('click')->times($checked ? 0 : 1);
 		}
 		else {
 			if ( !$checked ) {
 				$this->setExpectedException('\\aik099\\QATools\\HtmlElements\\Exception\\TypifiedElementException');
 			}
 
-			$this->webElement->shouldReceive('click')->never()->andReturnNull();
+			$this->webElement->shouldReceive('click')->never();
 		}
 
 		$driver = m::mock($driver_class);

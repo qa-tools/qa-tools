@@ -80,7 +80,7 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	public function testGetSelectorFailure()
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
-		$this->property->shouldReceive('getDataType')->andReturnNull();
+		$this->property->shouldReceive('getDataType');
 		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn(array());
 
 		$this->assertCount(0, $this->locator->findAll());

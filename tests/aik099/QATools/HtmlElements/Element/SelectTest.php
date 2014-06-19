@@ -165,7 +165,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	public function testDeselectByText()
 	{
 		$selected_option = $this->createOption(true);
-		$selected_option->shouldReceive('deselect')->once()->andReturnNull();
+		$selected_option->shouldReceive('deselect')->once();
 
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptionsByText'));
@@ -203,7 +203,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	public function testDeselectByValue()
 	{
 		$selected_option = $this->createOption(true);
-		$selected_option->shouldReceive('deselect')->once()->andReturnNull();
+		$selected_option->shouldReceive('deselect')->once();
 
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptionsByValue'));
@@ -288,7 +288,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	public function testDeselectAll()
 	{
 		$selected_option = $this->createOption(true);
-		$selected_option->shouldReceive('deselect')->once()->andReturnNull();
+		$selected_option->shouldReceive('deselect')->once();
 
 		/* @var $element Select */
 		$element = $this->mockElement(array('isMultiple', 'getSelectedOptions'));

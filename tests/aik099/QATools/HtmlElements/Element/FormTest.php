@@ -180,7 +180,7 @@ class FormTest extends AbstractElementContainerTest
 
 	public function testSubmit()
 	{
-		$this->webElement->shouldReceive('submit')->withNoArgs()->once()->andReturnNull();
+		$this->webElement->shouldReceive('submit')->withNoArgs()->once();
 
 		$form = $this->getElement();
 		$this->assertSame($form, $form->submit());

@@ -88,7 +88,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	{
 		$radio = $this->createRadioButton();
 		$radio->shouldReceive('getLabelText')->once()->andReturn('EXAMPLE TEXT');
-		$radio->shouldReceive('select')->once()->andReturnNull();
+		$radio->shouldReceive('select')->once();
 
 		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByLabelText('LE T'));
@@ -107,7 +107,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	{
 		$radio = $this->createRadioButton();
 		$radio->shouldReceive('getValue')->once()->andReturn('V1');
-		$radio->shouldReceive('select')->once()->andReturnNull();
+		$radio->shouldReceive('select')->once();
 
 		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByValue('V1'));
@@ -125,7 +125,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	public function testSelectButtonByIndexFound()
 	{
 		$radio = $this->createRadioButton();
-		$radio->shouldReceive('select')->once()->andReturnNull();
+		$radio->shouldReceive('select')->once();
 
 		$element = $this->mockCollection(array(), array($radio));
 		$this->assertSame($element, $element->selectButtonByIndex(0));
@@ -134,7 +134,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	public function testSetValue()
 	{
 		/* @var $element RadioGroup */
-		$element = parent::mockCollection(array('selectButtonByValue'));
+		$element = $this->mockCollection(array('selectButtonByValue'));
 		$element->shouldReceive('selectButtonByValue')->with('555')->once()->andReturn($element);
 
 		$this->assertSame($element, $element->setValue(555));

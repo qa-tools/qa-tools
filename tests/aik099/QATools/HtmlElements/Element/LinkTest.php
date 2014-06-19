@@ -35,7 +35,7 @@ class LinkTest extends AbstractTypifiedElementTest
 
 	public function testClick()
 	{
-		$this->webElement->shouldReceive('click')->once()->andReturnNull();
+		$this->webElement->shouldReceive('click')->once();
 
 		$element = $this->getElement();
 

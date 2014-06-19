@@ -31,7 +31,7 @@ class CheckboxTest extends LabeledElementTest
 	 */
 	public function testCheckUncheck($test_method, $checked)
 	{
-		$this->webElement->shouldReceive($test_method)->once()->andReturnNull();
+		$this->webElement->shouldReceive($test_method)->once();
 
 		$element = $this->getElement();
 

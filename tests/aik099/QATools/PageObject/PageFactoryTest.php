@@ -88,7 +88,7 @@ class PageFactoryTest extends TestCase
 		$this->pageFactory->shouldReceive('initElements')->andReturn(\Mockery::self());
 
 		$this->selectorsHandler->shouldReceive('isSelectorRegistered')->andReturn(false);
-		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any())->andReturnNull();
+		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any());
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->urlBuilderFactory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
@@ -292,7 +292,7 @@ class PageFactoryTest extends TestCase
 	protected function createNullDecorator()
 	{
 		$decorator = m::mock($this->decoratorClass);
-		$decorator->shouldReceive('decorate')->andReturnNull();
+		$decorator->shouldReceive('decorate');
 
 		return $decorator;
 	}

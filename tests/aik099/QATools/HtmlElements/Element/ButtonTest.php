@@ -27,7 +27,7 @@ class ButtonTest extends AbstractTypifiedElementTest
 
 	public function testClick()
 	{
-		$this->webElement->shouldReceive('click')->once()->andReturnNull();
+		$this->webElement->shouldReceive('click')->once();
 
 		$this->assertSame($this->typifiedElement, $this->getElement()->click());
 	}

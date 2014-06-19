@@ -28,7 +28,7 @@ class TextInputTest extends AbstractTypifiedElementTest
 
 	public function testClear()
 	{
-		$this->webElement->shouldReceive('setValue')->with('')->once()->andReturnNull();
+		$this->webElement->shouldReceive('setValue')->with('')->once();
 
 		$element = $this->getElement();
 
@@ -38,7 +38,7 @@ class TextInputTest extends AbstractTypifiedElementTest
 	public function testSendKeys()
 	{
 		$expected = 'OK';
-		$this->webElement->shouldReceive('setValue')->with($expected)->once()->andReturnNull();
+		$this->webElement->shouldReceive('setValue')->with($expected)->once();
 
 		$element = $this->getElement();
 

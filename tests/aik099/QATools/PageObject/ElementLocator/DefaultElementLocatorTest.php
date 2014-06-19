@@ -113,7 +113,7 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	public function testGetSelectorFailure()
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
-		$this->property->shouldReceive('getDataType')->andReturnNull();
+		$this->property->shouldReceive('getDataType');
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());
 
 		$this->assertCount(0, $this->locator->findAll());

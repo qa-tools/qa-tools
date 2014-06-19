@@ -57,7 +57,7 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 	public function testGetSelectorFailureWithTimeout()
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
-		$this->property->shouldReceive('getDataType')->andReturnNull();
+		$this->property->shouldReceive('getDataType');
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());
 
 		$search_context = $this->searchContext;
