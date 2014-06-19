@@ -24,7 +24,7 @@ class TimeoutAnnotation extends Annotation
 	/**
 	 * Time to wait for element to be present (in milliseconds).
 	 *
-	 * @var string
+	 * @var integer
 	 */
 	public $duration;
 

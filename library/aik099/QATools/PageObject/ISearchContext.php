@@ -24,8 +24,8 @@ interface ISearchContext
 	/**
 	 * Finds first element with specified selector.
 	 *
-	 * @param string $selector Selector engine name.
-	 * @param string $locator  Selector locator.
+	 * @param string       $selector Selector engine name.
+	 * @param string|array $locator  Selector locator.
 	 *
 	 * @return NodeElement|null
 	 */
