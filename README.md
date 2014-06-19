@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/qa-tools/qa-tools.png?branch=master)](https://travis-ci.org/qa-tools/qa-tools)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
 [![Coverage Status](https://img.shields.io/coveralls/qa-tools/qa-tools.svg)](https://coveralls.io/r/qa-tools/qa-tools)
-[![Dependency Status](https://www.versioneye.com/user/projects/53a309fb83add7e578000004/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53a309fb83add7e578000004)
+[![Dependency Status](https://www.versioneye.com/user/projects/53a30a9b83add7881e000008/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53a30a9b83add7881e000008)
 
 [![Latest Stable Version](https://poser.pugx.org/aik099/qa-tools/v/stable.png)](https://packagist.org/packages/aik099/qa-tools)
 [![Total Downloads](https://poser.pugx.org/aik099/qa-tools/downloads.png)](https://packagist.org/packages/aik099/qa-tools)
