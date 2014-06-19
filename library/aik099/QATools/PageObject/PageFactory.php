@@ -68,7 +68,7 @@ class PageFactory implements IPageFactory
 	/**
 	 * The current config.
 	 *
-	 * @var Config
+	 * @var IConfig
 	 */
 	protected $config;
 
