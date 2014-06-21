@@ -36,6 +36,13 @@ class PageUrlAnnotation extends Annotation
 	public $params = array();
 
 	/**
+	 * Forces secure HTTPS or HTTP.
+	 *
+	 * @var mixed
+	 */
+	public $secure = null;
+
+	/**
 	 * Initialize the annotation.
 	 *
 	 * @param array $properties Annotation parameters.
@@ -44,7 +51,7 @@ class PageUrlAnnotation extends Annotation
 	 */
 	public function initAnnotation(array $properties)
 	{
-		$this->map($properties, array('url', 'params'));
+		$this->map($properties, array('url', 'params', 'secure'));
 
 		parent::initAnnotation($properties);
 	}
