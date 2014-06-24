@@ -11,14 +11,14 @@
 namespace aik099\QATools\PageObject\Url;
 
 
-use aik099\QATools\PageObject\Exception\UrlBuilderException;
+use aik099\QATools\PageObject\Exception\UrlException;
 
 /**
  * Responsible for building the URL of pages.
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-class UrlBuilder implements IUrlBuilder
+class Builder implements IBuilder
 {
 
 	/**
@@ -57,33 +57,27 @@ class UrlBuilder implements IUrlBuilder
 	protected $params = array();
 
 	/**
-	 * Builds united array of params from given $url and $params. Also extracts anchor.
+	 * Constructor for the url builder.
 	 *
-	 * @param string $url      The given absolute or relative url.
-	 * @param array  $params   Additional GET params.
-	 * @param string $base_url The base url.
+	 * @param array $components The url components.
 	 *
-	 * @throws UrlBuilderException When the path of the given url is empty or a base url is missing.
+	 * @throws UrlException When the path, host or protocol are missing.
 	 */
-	public function __construct($url, array $params = array(), $base_url = null)
+	public function __construct(array $components)
 	{
-		$url_parser = new UrlParser($base_url);
-		$url_parser->merge(new UrlParser($url));
-
-		$this->path = $url_parser->getComponent('path');
-		$this->host = $url_parser->getComponent('host');
-		$this->protocol = $url_parser->getComponent('scheme');
-		$this->anchor = $url_parser->getComponent('fragment');
-
-		if ( empty($this->path) ) {
-			throw new UrlBuilderException('URL path is missing', UrlBuilderException::TYPE_EMPTY_PATH);
+		if ( empty($components['scheme']) || empty($components['host']) || empty($components['path']) ) {
+			throw new UrlException('No base url specified', UrlException::TYPE_INVALID_URL);
 		}
 
-		if ( empty($this->host) ) {
-			throw new UrlBuilderException('No base url specified', UrlBuilderException::TYPE_MISSING_BASE_URL);
-		}
+		$this->path = $components['path'];
+		$this->host = $components['host'];
+		$this->protocol = $components['scheme'];
 
-		$this->params = array_merge($url_parser->getParams(), $params);
+		$this->anchor = !empty($components['fragment']) ? $components['fragment'] : '';
+
+		if ( !empty($components['query']) ) {
+			parse_str($components['query'], $this->params);
+		}
 	}
 
 	/**

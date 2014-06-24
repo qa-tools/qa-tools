@@ -12,7 +12,7 @@ namespace aik099\QATools\PageObject;
 
 
 use aik099\QATools\PageObject\Exception\PageException;
-use aik099\QATools\PageObject\Url\IUrlBuilder;
+use aik099\QATools\PageObject\Url\IBuilder;
 use Behat\Mink\Element\DocumentElement;
 
 /**
@@ -26,7 +26,7 @@ abstract class Page extends DocumentElement implements ISearchContext
 	/**
 	 * The builder which generates the url.
 	 *
-	 * @var IUrlBuilder
+	 * @var IBuilder
 	 */
 	protected $urlBuilder;
 
@@ -54,7 +54,7 @@ abstract class Page extends DocumentElement implements ISearchContext
 	{
 		if ( !is_object($this->urlBuilder) ) {
 			throw new PageException(
-				'The UrlBuilder of a page not set, have you used @page-url annotation?',
+				'The url builder of a page not set, have you used @page-url annotation?',
 				PageException::TYPE_MISSING_URL_BUILDER
 			);
 		}
@@ -86,13 +86,13 @@ abstract class Page extends DocumentElement implements ISearchContext
 	/**
 	 * Sets the url builder.
 	 *
-	 * @param IUrlBuilder $urlBuilder Url builder.
+	 * @param IBuilder $url_builder Url builder.
 	 *
 	 * @return self
 	 */
-	public function setUrlBuilder(IUrlBuilder $urlBuilder)
+	public function setUrlBuilder(IBuilder $url_builder)
 	{
-		$this->urlBuilder = $urlBuilder;
+		$this->urlBuilder = $url_builder;
 
 		return $this;
 	}

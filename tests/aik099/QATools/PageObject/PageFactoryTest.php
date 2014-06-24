@@ -17,7 +17,8 @@ use aik099\QATools\PageObject\Page;
 use aik099\QATools\PageObject\PageFactory;
 use aik099\QATools\PageObject\Property;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
-use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
+use aik099\QATools\PageObject\Url\IUrlFactory;
+use aik099\QATools\PageObject\Url\Normalizer;
 use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
@@ -26,9 +27,13 @@ class PageFactoryTest extends TestCase
 
 	const ANNOTATION_MANAGER_CLASS = '\\mindplay\\annotations\\AnnotationManager';
 
-	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilder';
+	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IBuilder';
 
-	const URL_BUILDER_FACTORY_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilderFactory';
+	const URL_FACTORY_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlFactory';
+
+	const URL_PARSER_CLASS = '\\aik099\\QATools\\PageObject\\Url\\Parser';
+
+	const URL_NORMALIZER_CLASS = '\\aik099\\QATools\\PageObject\\Url\\Normalizer';
 
 	/**
 	 * Page factory class.
@@ -68,9 +73,9 @@ class PageFactoryTest extends TestCase
 	/**
 	 * The url builder factory.
 	 *
-	 * @var IUrlBuilderFactory
+	 * @var IUrlFactory
 	 */
-	protected $urlBuilderFactory;
+	protected $urlFactory;
 
 	/**
 	 * Page factory config.
@@ -91,7 +96,7 @@ class PageFactoryTest extends TestCase
 		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any());
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
-		$this->urlBuilderFactory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
+		$this->urlFactory = m::mock(self::URL_FACTORY_INTERFACE);
 		$this->config = new Config(array('base_url' => 'http://domain.tld'));
 
 		$this->realFactory = $this->createFactory();
@@ -106,6 +111,12 @@ class PageFactoryTest extends TestCase
 	public function testConstructorWithoutAnnotationManager()
 	{
 		$factory = $this->createFactory(false);
+		$this->assertInstanceOf(self::ANNOTATION_MANAGER_CLASS, $factory->getAnnotationManager());
+	}
+
+	public function testConstructorWithConfig()
+	{
+		$factory = new $this->factoryClass($this->session, $this->config);
 		$this->assertInstanceOf(self::ANNOTATION_MANAGER_CLASS, $factory->getAnnotationManager());
 	}
 
@@ -150,20 +161,32 @@ class PageFactoryTest extends TestCase
 	/**
 	 * @dataProvider initPageDataProvider
 	 */
-	public function testInitPage($url, array $params, $use_url_builder)
+	public function testInitPage($url, array $params, $secure, $use_url_builder)
 	{
-		$this->expectPageUrlAnnotation($url, $params);
+		$url_components = parse_url($url);
+		$annotations = $this->expectPageUrlAnnotation($url, $params, $secure);
 
 		/* @var $page Page */
 		$page = m::mock($this->pageClass);
-		$urlBuilder = m::mock(self::URL_BUILDER_INTERFACE);
+		$url_builder = m::mock(self::URL_BUILDER_INTERFACE);
 
-		$this->realFactory->setUrlBuilderFactory($this->urlBuilderFactory);
-		$this->urlBuilderFactory
-			->shouldReceive('getUrlBuilder')
-			->with($url, $params, 'http://domain.tld')
+		/** @var Normalizer $url_normalizer */
+		$url_normalizer = m::mock(self::URL_NORMALIZER_CLASS);
+
+		$this->realFactory->setUrlFactory($this->urlFactory);
+		$this->realFactory->setUrlNormalizer($url_normalizer);
+
+		$url_normalizer
+			->shouldReceive('normalize')
+			->with(reset($annotations))
 			->times(isset($url) ? 1 : 0)
-			->andReturn($urlBuilder);
+			->andReturn($url_components);
+
+		$this->urlFactory
+			->shouldReceive('getBuilder')
+			->with($url_components)
+			->times(isset($url) ? 1 : 0)
+			->andReturn($url_builder);
 
 		$page->shouldReceive('setUrlBuilder')->times($use_url_builder ? 1 : 0)->andReturn($page);
 
@@ -171,14 +194,15 @@ class PageFactoryTest extends TestCase
 	}
 
 	/**
-	 * Sets expectation for a specific page url annotation.
+	 * Sets expectation for a specific page url annotation and returns them.
 	 *
 	 * @param string|null $url    Url.
 	 * @param array       $params Get params.
+	 * @param boolean     $secure Secure mode.
 	 *
-	 * @return void
+	 * @return array
 	 */
-	protected function expectPageUrlAnnotation($url = null, array $params = array())
+	protected function expectPageUrlAnnotation($url = null, array $params = array(), $secure = null)
 	{
 		$annotations = array();
 
@@ -186,11 +210,14 @@ class PageFactoryTest extends TestCase
 			$annotation = new PageUrlAnnotation();
 			$annotation->url = $url;
 			$annotation->params = $params;
+			$annotation->secure = $secure;
 
 			$annotations[] = $annotation;
 		}
 
 		$this->annotationManager->shouldReceive('getClassAnnotations')->with(m::any(), '@page-url')->andReturn($annotations);
+
+		return $annotations;
 	}
 
 	/**
@@ -201,15 +228,15 @@ class PageFactoryTest extends TestCase
 	public function initPageDataProvider()
 	{
 		return array(
-			array('TEST-URL', array(), true),
-			array('TEST-URL', array('param' => 'value'), true),
-			array('TEST-URL?param=value', array(), true),
-			array('TEST-URL?param1=value1', array('param2' => 'value2'), true),
-			array('TEST-URL#anchor', array(), true),
-			array('TEST-URL#anchor', array('param' => 'value'), true),
-			array('TEST-URL?param=value#anchor', array(), true),
-			array('TEST-URL?param1=value1#anchor', array('param2' => 'value2'), true),
-			array(null, array(), false),
+			array('TEST-URL', array(), null, true),
+			array('TEST-URL', array('param' => 'value'), null, true),
+			array('TEST-URL?param=value', array(), null, true),
+			array('TEST-URL?param1=value1', array('param2' => 'value2'), null, true),
+			array('TEST-URL#anchor', array(), null, true),
+			array('TEST-URL#anchor', array('param' => 'value'), null, true),
+			array('TEST-URL?param=value#anchor', array(), null, true),
+			array('TEST-URL?param1=value1#anchor', array('param2' => 'value2'), null, true),
+			array(null, array(), null, false),
 		);
 	}
 
@@ -248,11 +275,11 @@ class PageFactoryTest extends TestCase
 
 	public function testGetUrlBuilderFactory()
 	{
-		/* @var IUrlBuilderFactory $url_builder_factory */
-		$url_builder_factory = m::mock(self::URL_BUILDER_FACTORY_INTERFACE);
+		/* @var IUrlFactory $url_builder_factory */
+		$url_builder_factory = m::mock(self::URL_FACTORY_INTERFACE);
 
-		$this->realFactory->setUrlBuilderFactory($url_builder_factory);
-		$this->assertEquals($url_builder_factory, $this->realFactory->getUrlBuilderFactory());
+		$this->realFactory->setUrlFactory($url_builder_factory);
+		$this->assertEquals($url_builder_factory, $this->realFactory->getUrlFactory());
 	}
 
 	/**
@@ -274,7 +301,7 @@ class PageFactoryTest extends TestCase
 			);
 		}
 		else {
-			$factory = new $this->factoryClass($this->session, $this->config);
+			$factory = new $this->factoryClass($this->session);
 		}
 
 		if ( $with_annotation_manager ) {

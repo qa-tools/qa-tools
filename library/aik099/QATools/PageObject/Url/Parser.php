@@ -11,12 +11,14 @@
 namespace aik099\QATools\PageObject\Url;
 
 
+use aik099\QATools\PageObject\Exception\UrlException;
+
 /**
  * Parses url and returns components.
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-class UrlParser
+class Parser
 {
 
 	/**
@@ -27,13 +29,19 @@ class UrlParser
 	protected $components = array();
 
 	/**
-	 * Constructor for UrlParser.
+	 * Constructor for Parser.
 	 *
 	 * @param string $url The url to parse.
+	 *
+	 * @throws UrlException When url is invalid.
 	 */
 	public function __construct($url)
 	{
 		$this->components = parse_url($url);
+
+		if ( $this->components === false ) {
+			throw new UrlException($url . ' is not a valid url.', UrlException::TYPE_INVALID_URL);
+		}
 	}
 
 	/**
@@ -50,32 +58,56 @@ class UrlParser
 	}
 
 	/**
-	 * Get parsed query.
+	 * Gets the url components.
+	 *
+	 * @return array
+	 */
+	public function getComponents()
+	{
+		return $this->components;
+	}
+
+	/**
+	 * Gets parsed query.
 	 *
 	 * @return array
 	 */
 	public function getParams()
 	{
-		$result = array();
+		$ret = array();
 		$query = $this->getComponent('query');
 
 		if ( $query ) {
-			parse_str($query, $result);
+			parse_str($query, $ret);
 		}
 
-		return $result;
+		return $ret;
+	}
+
+	/**
+	 * Sets parsed query.
+	 *
+	 * @param array $params GET params.
+	 *
+	 * @return $this
+	 */
+	public function setParams(array $params)
+	{
+		$this->components['query'] = http_build_query($params);
+
+		return $this;
 	}
 
 	/**
 	 * Merge both url parsers.
 	 *
-	 * @param UrlParser $url_parser The url parser to merge.
+	 * @param Parser $parser The url parser to merge.
 	 *
 	 * @return $this
 	 */
-	public function merge(UrlParser $url_parser)
+	public function merge(Parser $parser)
 	{
-		$this->components = array_merge($this->components, $url_parser->components);
+		$this->components = array_merge($this->components, $parser->components);
 
 		return $this;
 	}

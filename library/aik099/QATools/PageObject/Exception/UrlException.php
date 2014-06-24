@@ -12,13 +12,11 @@ namespace aik099\QATools\PageObject\Exception;
 
 
 /**
- * Exception related to pages.
+ * Exception related to generation of urls.
  */
-class UrlBuilderException extends PageFactoryException
+class UrlException extends PageFactoryException
 {
 
-	const TYPE_EMPTY_PATH = 101;
-
-	const TYPE_MISSING_BASE_URL = 102;
+	const TYPE_INVALID_URL = 101;
 
 }

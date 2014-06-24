@@ -18,8 +18,9 @@ use aik099\QATools\PageObject\Element\IElementContainer;
 use aik099\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use aik099\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use aik099\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
-use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
-use aik099\QATools\PageObject\Url\UrlBuilderFactory;
+use aik099\QATools\PageObject\Url\IUrlFactory;
+use aik099\QATools\PageObject\Url\Normalizer;
+use aik099\QATools\PageObject\Url\UrlFactory;
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
@@ -61,9 +62,16 @@ class PageFactory implements IPageFactory
 	/**
 	 * The url builder factory.
 	 *
-	 * @var IUrlBuilderFactory
+	 * @var IUrlFactory
 	 */
-	protected $urlBuilderFactory;
+	protected $urlFactory;
+
+	/**
+	 * The url normalizer.
+	 *
+	 * @var Normalizer
+	 */
+	protected $urlNormalizer;
 
 	/**
 	 * The current config.
@@ -86,7 +94,8 @@ class PageFactory implements IPageFactory
 		$annotation_manager = new AnnotationManager();
 		$annotation_manager->cache = new AnnotationCache(sys_get_temp_dir());
 		$this->setAnnotationManager($annotation_manager);
-		$this->setUrlBuilderFactory(new UrlBuilderFactory());
+		$this->setUrlFactory(new UrlFactory());
+		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
 	}
 
 	/**
@@ -138,13 +147,13 @@ class PageFactory implements IPageFactory
 	/**
 	 * Sets the url builder factory.
 	 *
-	 * @param IUrlBuilderFactory $url_builder_factory Url builder factory.
+	 * @param IUrlFactory $url_builder_factory Url builder factory.
 	 *
-	 * @return IUrlBuilderFactory
+	 * @return IUrlFactory
 	 */
-	public function setUrlBuilderFactory(IUrlBuilderFactory $url_builder_factory)
+	public function setUrlFactory(IUrlFactory $url_builder_factory)
 	{
-		$this->urlBuilderFactory = $url_builder_factory;
+		$this->urlFactory = $url_builder_factory;
 
 		return $this;
 	}
@@ -152,11 +161,25 @@ class PageFactory implements IPageFactory
 	/**
 	 * Returns current url builder factory.
 	 *
-	 * @return IUrlBuilderFactory
+	 * @return IUrlFactory
 	 */
-	public function getUrlBuilderFactory()
+	public function getUrlFactory()
 	{
-		return $this->urlBuilderFactory;
+		return $this->urlFactory;
+	}
+
+	/**
+	 * Sets the url normalizer.
+	 *
+	 * @param Normalizer $normalizer The normalizer.
+	 *
+	 * @return $this
+	 */
+	public function setUrlNormalizer(Normalizer $normalizer)
+	{
+		$this->urlNormalizer = $normalizer;
+
+		return $this;
 	}
 
 	/**
@@ -200,10 +223,8 @@ class PageFactory implements IPageFactory
 		}
 
 		$page->setUrlBuilder(
-			$this->urlBuilderFactory->getUrlBuilder(
-				$annotations[0]->url,
-				$annotations[0]->params,
-				$this->config->getOption('base_url')
+			$this->urlFactory->getBuilder(
+				$this->urlNormalizer->normalize($annotations[0])
 			)
 		);
 

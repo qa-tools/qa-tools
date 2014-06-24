@@ -16,21 +16,16 @@ namespace aik099\QATools\PageObject\Url;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-class UrlBuilderFactory implements IUrlBuilderFactory
+interface IBuilder
 {
 
 	/**
-	 * Returns an instance of a class implementing IUrlBuilder interface based on given arguments.
+	 * Builds url using given GET parameters.
 	 *
-	 * @param string $path     The url/path.
-	 * @param array  $params   The additional GET params.
-	 * @param string $base_url The base url of the url builder.
+	 * @param array $params Additional GET params.
 	 *
-	 * @return IUrlBuilder
+	 * @return string
 	 */
-	public function getUrlBuilder($path, array $params = array(), $base_url = '')
-	{
-		return new UrlBuilder($path, $params, $base_url);
-	}
+	public function build(array $params = array());
 
 }

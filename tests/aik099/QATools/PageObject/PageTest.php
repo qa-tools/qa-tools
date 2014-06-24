@@ -12,15 +12,15 @@ namespace tests\aik099\QATools\PageObject;
 
 
 use aik099\QATools\PageObject\Page;
-use aik099\QATools\PageObject\Url\IUrlBuilder;
-use aik099\QATools\PageObject\Url\IUrlBuilderFactory;
+use aik099\QATools\PageObject\Url\IBuilder;
+use aik099\QATools\PageObject\Url\IUrlFactory;
 use Mockery as m;
 use tests\aik099\QATools\TestCase;
 
 class PageTest extends TestCase
 {
 
-	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IUrlBuilder';
+	const URL_BUILDER_INTERFACE = '\\aik099\\QATools\\PageObject\\Url\\IBuilder';
 
 	/**
 	 * Page class.
@@ -37,16 +37,16 @@ class PageTest extends TestCase
 	protected $page;
 
 	/**
-	 * UrlBuilderFactory class.
+	 * UrlFactory class.
 	 *
 	 * @var string
 	 */
-	protected $urlBuilderFactoryClass = '\\aik099\\QATools\\PageObject\\Url\\UrlBuilderFactory';
+	protected $urlFactoryClass = '\\aik099\\QATools\\PageObject\\Url\\UrlFactory';
 
 	/**
 	 * The url builder factory.
 	 *
-	 * @var IUrlBuilderFactory
+	 * @var IUrlFactory
 	 */
 	protected $urlBuilderFactory;
 
@@ -60,7 +60,7 @@ class PageTest extends TestCase
 		$decorator = m::mock('\\aik099\\QATools\\PageObject\\PropertyDecorator\\IPropertyDecorator');
 		$this->pageFactory->shouldReceive('createDecorator')->once()->andReturn($decorator);
 
-		$this->urlBuilderFactory = m::mock('\\aik099\\QATools\\PageObject\\Url\\IUrlBuilderFactory');
+		$this->urlBuilderFactory = m::mock('\\aik099\\QATools\\PageObject\\Url\\IUrlFactory');
 
 		$this->page = new $this->pageClass($this->pageFactory);
 	}
@@ -147,12 +147,11 @@ class PageTest extends TestCase
 		$url = 'http://domain.tld/RL';
 		$expected = $url . '?param=value';
 		$params = array('param' => 'value');
-		/* @var IUrlBuilderFactory $url_builder_factory */
-		$url_builder_factory = new $this->urlBuilderFactoryClass();
+		/* @var IUrlFactory $url_builder_factory */
+		$url_builder_factory = new $this->urlFactoryClass();
 
 		$this->session->shouldReceive('visit')->with($expected)->once();
-
-		$this->page->setUrlBuilder($url_builder_factory->getUrlBuilder($url));
+		$this->page->setUrlBuilder($url_builder_factory->getBuilder(parse_url($url)));
 
 		$this->assertSame($this->page, $this->page->open($params));
 	}
@@ -160,7 +159,7 @@ class PageTest extends TestCase
 	/**
 	 * Creates an empty mocked url builder.
 	 *
-	 * @return IUrlBuilder
+	 * @return IBuilder
 	 */
 	public function createUrlBuilder()
 	{
@@ -172,7 +171,7 @@ class PageTest extends TestCase
 	 *
 	 * @param mixed $return The return value of mocked build function.
 	 *
-	 * @return IUrlBuilder
+	 * @return IBuilder
 	 */
 	public function createUrlBuilderWithReturn($return = null)
 	{
