@@ -173,7 +173,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @param Normalizer $normalizer The normalizer.
 	 *
-	 * @return $this
+	 * @return self
 	 */
 	public function setUrlNormalizer(Normalizer $normalizer)
 	{

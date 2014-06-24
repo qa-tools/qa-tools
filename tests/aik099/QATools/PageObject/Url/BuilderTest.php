@@ -45,7 +45,6 @@ class BuilderTest extends TestCase
 	 * @expectedException \aik099\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
 	 */
-
 	public function testConstructorMissingProtocol()
 	{
 		$normalized_components = array(
@@ -63,7 +62,6 @@ class BuilderTest extends TestCase
 	 * @expectedException \aik099\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \aik099\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
 	 */
-
 	public function testConstructorMissingHost()
 	{
 		$normalized_components = array(

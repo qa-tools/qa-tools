@@ -91,14 +91,14 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Checks, that Locator has given CSS class.
 	 *
-	 * @param array  $Locator  Locator.
+	 * @param array  $locator  Locator.
 	 * @param string $expected Expected class name.
 	 *
 	 * @return void
 	 */
-	private function _assertLocatorClassName(array $Locator, $expected)
+	private function _assertLocatorClassName(array $locator, $expected)
 	{
-		$this->assertEquals(array('className' => $expected), $Locator);
+		$this->assertEquals(array('className' => $expected), $locator);
 	}
 
 }

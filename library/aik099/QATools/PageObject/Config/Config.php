@@ -50,7 +50,7 @@ class Config implements IConfig
 	 * @param string $name  Config option name.
 	 * @param mixed  $value Config option value.
 	 *
-	 * @return $this
+	 * @return self
 	 * @throws ConfigException Throws exception on attempt to set non-existing option.
 	 */
 	public function setOption($name, $value)
