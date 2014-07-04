@@ -1,5 +1,5 @@
 {
-	"name": "aik099/qa-tools",
+	"name": "qa-tools/qa-tools",
 	"description": "Library that provides easy-to-use way of interaction with web-page elements in functional tests using PageObject pattern.",
 	"keywords": ["PageObject", "HtmlElements", "BEM", "Mink", "PHPUnit", "functional", "acceptance", "Tests"],
 	"license": "BSD-3-Clause",
@@ -30,6 +30,10 @@
 
 	"suggest": {
 		"aik099/phpunit-mink": "Allows to use PageObject inside PHPUnit tests and remotely collect code coverage information"
+	},
+
+	"replace": {
+		"aik099/qa-tools": "self.version"
 	},
 
 	"autoload": {
