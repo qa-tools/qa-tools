@@ -5,8 +5,8 @@
 [![Coverage Status](https://img.shields.io/coveralls/qa-tools/qa-tools.svg)](https://coveralls.io/r/qa-tools/qa-tools)
 [![Dependency Status](https://www.versioneye.com/user/projects/53a30a9b83add7881e000008/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53a30a9b83add7881e000008)
 
-[![Latest Stable Version](https://poser.pugx.org/aik099/qa-tools/v/stable.png)](https://packagist.org/packages/aik099/qa-tools)
-[![Total Downloads](https://poser.pugx.org/aik099/qa-tools/downloads.png)](https://packagist.org/packages/aik099/qa-tools)
+[![Latest Stable Version](https://poser.pugx.org/qa-tools/qa-tools/v/stable.png)](https://packagist.org/packages/qa-tools/qa-tools)
+[![Total Downloads](https://poser.pugx.org/qa-tools/qa-tools/downloads.png)](https://packagist.org/packages/qa-tools/qa-tools)
 
 Quality assurance utilities for functional tests written on PHP.
 
@@ -26,7 +26,7 @@ Define the dependencies in your ```composer.json```:
 ```json
 {
 	"require": {
-		"aik099/qa-tools": "dev-master",
+		"qa-tools/qa-tools": "dev-master",
 		"mindplay/annotations": "dev-master"
 	}
 }
