@@ -13,14 +13,14 @@
 
 	<testsuites>
 		<testsuite name="PageObject">
-			<directory>tests/aik099/QATools/PageObject</directory>
+			<directory>tests/QATools/QATools/PageObject</directory>
 		</testsuite>
 		<testsuite name="HtmlElements">
-			<directory>tests/aik099/QATools/HtmlElements</directory>
-			<!--<directory>tests/aik099/QATools/HtmlElementsLive</directory>-->
+			<directory>tests/QATools/QATools/HtmlElements</directory>
+			<!--<directory>tests/QATools/QATools/HtmlElementsLive</directory>-->
 		</testsuite>
 		<testsuite name="BEM">
-			<directory>tests/aik099/QATools/BEM</directory>
+			<directory>tests/QATools/QATools/BEM</directory>
 		</testsuite>
 	</testsuites>
 
@@ -46,9 +46,9 @@
 
 	<filter>
 		<whitelist>
-			<directory>library/aik099/QATools/PageObject</directory>
-			<directory>library/aik099/QATools/HtmlElements</directory>
-			<directory>library/aik099/QATools/BEM</directory>
+			<directory>library/QATools/QATools/PageObject</directory>
+			<directory>library/QATools/QATools/HtmlElements</directory>
+			<directory>library/QATools/QATools/BEM</directory>
 		</whitelist>
 	</filter>
 </phpunit>
