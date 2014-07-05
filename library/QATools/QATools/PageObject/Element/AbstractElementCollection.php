@@ -20,22 +20,8 @@ use Behat\Mink\Element\NodeElement;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-abstract class AbstractElementCollection implements \Iterator, \ArrayAccess, \Countable
+abstract class AbstractElementCollection extends \ArrayObject
 {
-
-	/**
-	 * Currently active element.
-	 *
-	 * @var integer
-	 */
-	private $_position = 0;
-
-	/**
-	 * Elements in the collection.
-	 *
-	 * @var array
-	 */
-	private $_elements = array();
 
 	/**
 	 * Element class, that is allowed in the collection.
@@ -68,7 +54,7 @@ abstract class AbstractElementCollection implements \Iterator, \ArrayAccess, \Co
 			}
 		}
 
-		$this->_elements = $allowed_elements;
+		parent::__construct($allowed_elements);
 	}
 
 	/**
@@ -81,56 +67,6 @@ abstract class AbstractElementCollection implements \Iterator, \ArrayAccess, \Co
 	protected function acceptElement($element)
 	{
 		return true;
-	}
-
-	/**
-	 * Rewind the Iterator to the first element.
-	 *
-	 * @return void
-	 */
-	public function rewind()
-	{
-		$this->_position = 0;
-	}
-
-	/**
-	 * Return the current element.
-	 *
-	 * @return mixed
-	 */
-	public function current()
-	{
-		return $this->_elements[$this->_position];
-	}
-
-	/**
-	 * Return the key of the current element.
-	 *
-	 * @return integer
-	 */
-	public function key()
-	{
-		return $this->_position;
-	}
-
-	/**
-	 * Move forward to next element.
-	 *
-	 * @return void
-	 */
-	public function next()
-	{
-		++$this->_position;
-	}
-
-	/**
-	 * Checks if current position is valid.
-	 *
-	 * @return boolean
-	 */
-	public function valid()
-	{
-		return $this->offsetExists($this->_position);
 	}
 
 	/**
@@ -148,62 +84,7 @@ abstract class AbstractElementCollection implements \Iterator, \ArrayAccess, \Co
 			return;
 		}
 
-		if ( is_null($offset) ) {
-			$this->_elements[] = $value;
-		}
-		else {
-			$this->_elements[$offset] = $value;
-		}
-	}
-
-	/**
-	 * Whether a offset exists.
-	 *
-	 * @param integer $offset An offset to check for.
-	 *
-	 * @return boolean
-	 */
-	public function offsetExists($offset)
-	{
-		return isset($this->_elements[$offset]);
-	}
-
-	/**
-	 * Offset to unset.
-	 *
-	 * @param integer $offset The offset to unset.
-	 *
-	 * @return void
-	 */
-	public function offsetUnset($offset)
-	{
-		unset($this->_elements[$offset]);
-	}
-
-	/**
-	 * Offset to retrieve.
-	 *
-	 * @param integer $offset The offset to retrieve.
-	 *
-	 * @return mixed|null
-	 */
-	public function offsetGet($offset)
-	{
-		if ( isset($this->_elements[$offset]) ) {
-			return $this->_elements[$offset];
-		}
-
-		return null;
-	}
-
-	/**
-	 * Count elements of an object.
-	 *
-	 * @return integer
-	 */
-	public function count()
-	{
-		return count($this->_elements);
+		parent::offsetSet($offset, $value);
 	}
 
 	/**

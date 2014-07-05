@@ -66,7 +66,7 @@ abstract class AbstractTypifiedElementCollection extends AbstractElementCollecti
 			$element->setContainer($container);
 		}
 
-		$this->rewind();
+		$this->getIterator()->rewind();
 
 		return $this;
 	}

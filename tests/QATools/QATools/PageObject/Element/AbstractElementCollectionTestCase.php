@@ -69,7 +69,13 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 		$this->assertCount(1, $this->element);
 
 		$this->assertSame($element, $this->element[0]);
-		$this->assertNull($this->element[1]);
+
+		try {
+			$this->assertNull($this->element[1]);
+		}
+		catch ( \PHPUnit_Framework_Error_Notice $e ) {
+			// Ignore notice.
+		}
 
 		$this->assertTrue(isset($this->element[0]));
 		unset($this->element[0]);
