@@ -16,7 +16,7 @@ use QATools\QATools\HtmlElements\Exception\SelectException;
 /**
  * Represents one option in a web page select control. Please use "Select" typified element for manipulations.
  */
-class SelectOption extends AbstractTypifiedElement
+class SelectOption extends AbstractFormElement
 {
 
 	/**
