@@ -14,7 +14,7 @@ namespace QATools\QATools\HtmlElements\Element;
 /**
  * Represents text input control (such as &lt;input type="text"/&gt; or &lt;textarea/&gt;).
  */
-class TextInput extends AbstractTypifiedElement implements ISimpleSetter
+class TextInput extends AbstractFormElement implements ISimpleSetter
 {
 
 	/**
