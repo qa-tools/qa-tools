@@ -77,7 +77,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 			$this->injectContainer();
 		}
 
-		return $this->current();
+		return $this->getIterator()->current();
 	}
 
 	/**

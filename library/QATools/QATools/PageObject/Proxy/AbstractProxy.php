@@ -200,7 +200,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 			$element->setContainer($container);
 		}
 
-		$this->rewind();
+		$this->getIterator()->rewind();
 	}
 
 }

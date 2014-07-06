@@ -67,7 +67,7 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 			$this->injectContainer();
 		}
 
-		return $this->current();
+		return $this->getIterator()->current();
 	}
 
 }
