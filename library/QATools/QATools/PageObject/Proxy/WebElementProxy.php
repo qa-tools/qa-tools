@@ -13,7 +13,6 @@ namespace QATools\QATools\PageObject\Proxy;
 
 use QATools\QATools\PageObject\Element\IWebElement;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
-use QATools\QATools\PageObject\Element\WebElement;
 use QATools\QATools\PageObject\IPageFactory;
 
 /**
@@ -41,33 +40,29 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 	}
 
 	/**
-	 * Returns class instance, that was placed inside a proxy.
+	 * Locates object inside proxy.
 	 *
-	 * @return WebElement
+	 * @return void
 	 */
-	public function getObject()
+	protected function locateObject()
 	{
-		if ( !$this->locatorUsed ) {
-			// NodeElement + TargetElement(setContainer) = Proxy.
-			$this->locatorUsed = true;
-			/* @var $object IWebElement */
-
-			if ( $this->isElementCollection() ) {
-				$object = call_user_func(
-					array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
-				);
-			}
-			else {
-				$object = call_user_func(
-					array($this->className, 'fromNodeElement'), $this->locateElement(), $this->pageFactory
-				);
-			}
-
-			$this[] = $object;
-			$this->injectContainer();
+		if ( $this->locatorUsed ) {
+			return;
 		}
 
-		return $this->getIterator()->current();
+		// NodeElement + TargetElement(setContainer) = Proxy.
+		$this->locatorUsed = true;
+
+		foreach ( $this->locateElements() as $element ) {
+			/* @var $object IWebElement */
+			$object = call_user_func(
+				array($this->className, 'fromNodeElement'), $element, $this->pageFactory
+			);
+
+			$this[] = $object;
+		}
+
+		$this->injectContainer();
 	}
 
 }

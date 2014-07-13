@@ -38,6 +38,13 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 	private $_typifiedElementInterface = '\\QATools\\QATools\\HtmlElements\\Element\\ITypifiedElement';
 
 	/**
+	 * Typified element collection.
+	 *
+	 * @var string
+	 */
+	private $_typifiedElementCollection = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElementCollection';
+
+	/**
 	 * Creates decorator instance.
 	 *
 	 * @param IElementLocatorFactory $locator_factory Locator factory.
@@ -47,6 +54,7 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 	{
 		parent::__construct($locator_factory, $page_factory);
 
+		$this->elementToProxyMapping[$this->_typifiedElementCollection] = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementCollectionProxy';
 		$this->elementToProxyMapping[$this->_typifiedElementInterface] = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
 	}
 

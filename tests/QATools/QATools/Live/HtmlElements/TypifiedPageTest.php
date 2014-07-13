@@ -55,12 +55,59 @@ class TypifiedPageTest extends AbstractLiveTestCase
 		$page = new TypifiedElementPage($this->pageFactory);
 
 		$this->assertFalse($page->radioGroup->hasSelectedButton(), 'No radio button is selected initially');
-		$this->assertCount(1, $page->radioGroup);
+		$this->assertCount(4, $page->radioGroup);
 
 		for ( $i = 1; $i <= 4; $i++ ) {
 			$page->radioGroup->selectButtonByValue($i);
 			$this->assertEquals($i, $page->radioGroup->getSelectedButton()->getValue());
 		}
+
+		$count = 0;
+
+		foreach ( $page->radioGroup as $index => $radio ) {
+			$count++;
+			$radio->select();
+
+			$this->assertEquals($page->radioGroup[$index], $radio);
+			$this->assertEquals($index + 1, $page->radioGroup->getSelectedButton()->getValue());
+		}
+
+		$this->assertEquals(4, $count);
+	}
+
+	public function testTextInputsLocatedByCss()
+	{
+		/** @var TypifiedElementPage $page */
+		$page = new TypifiedElementPage($this->pageFactory);
+
+		$this->assertCount(3, $page->textInputs);
+
+		$page->textInputs->setValue('text');
+
+		$this->assertEquals('text', $page->textInputs[0]->getText());
+		$this->assertNotEquals('text', $page->textInputs[1]->getText());
+		$this->assertNotEquals('text', $page->textInputs[2]->getText());
+
+		$count = 0;
+
+		foreach ( $page->textInputs as $index => $input ) {
+			$count++;
+			$input->setValue('text' . $index);
+		}
+
+		$this->assertEquals(3, $count);
+
+		$this->assertEquals('text0', $page->textInputs[0]->getText());
+		$this->assertEquals('text1', $page->textInputs[1]->getText());
+		$this->assertEquals('text2', $page->textInputs[2]->getText());
+
+		foreach ( $page->textInputs as $input ) {
+			$input->clear();
+		}
+
+		$this->assertEquals('', $page->textInputs[0]->getText());
+		$this->assertEquals('', $page->textInputs[1]->getText());
+		$this->assertEquals('', $page->textInputs[2]->getText());
 	}
 
 }

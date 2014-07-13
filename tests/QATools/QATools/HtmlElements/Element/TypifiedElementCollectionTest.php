@@ -11,8 +11,8 @@
 namespace tests\QATools\QATools\HtmlElements\Element;
 
 
-use QATools\QATools\HtmlElements\Element\AbstractTypifiedElementCollection;
 use Mockery as m;
+use QATools\QATools\HtmlElements\Element\AbstractTypifiedElementCollection;
 use QATools\QATools\PageObject\Element\WebElement;
 use tests\QATools\QATools\PageObject\Element\AbstractElementCollectionTestCase;
 
@@ -51,6 +51,11 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 	public function testSetContainer()
 	{
 		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
+
+		$element = $this->createValidElementMock();
+		$element->shouldReceive('setContainer')->with($container)->once();
+
+		$this->element[] = $element;
 
 		$this->assertSame($this->element, $this->element->setContainer($container));
 	}

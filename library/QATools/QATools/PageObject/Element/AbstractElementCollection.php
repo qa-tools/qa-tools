@@ -72,19 +72,19 @@ abstract class AbstractElementCollection extends \ArrayObject
 	/**
 	 * Offset to set.
 	 *
-	 * @param integer $offset The offset to assign the value to.
-	 * @param mixed   $value  The value to set.
+	 * @param mixed $index  The offset to assign the value to.
+	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
 	 * @throws \InvalidArgumentException When invalid element given.
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet($index, $newval)
 	{
-		if ( !$this->assertElement($value) ) {
+		if ( !$this->assertElement($newval) ) {
 			return;
 		}
 
-		parent::offsetSet($offset, $value);
+		parent::offsetSet($index, $newval);
 	}
 
 	/**

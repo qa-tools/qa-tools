@@ -36,8 +36,16 @@ class WebElementPage extends Page
 	/**
 	 * Example radio buttons as WebElement.
 	 *
-	 * @var WebElement
+	 * @var WebElement[]
 	 * @find-by('name' => 'radio-group1')
 	 */
 	public $radioGroup;
+
+	/**
+	 * Example text inputs as WebElement.
+	 *
+	 * @var WebElement[]
+	 * @find-by('css' => '.test-input')
+	 */
+	public $textInputs;
 }

@@ -42,18 +42,30 @@ class ElementProxy extends AbstractPartProxy implements IElement
 	}
 
 	/**
+	 * Locates object inside proxy.
+	 *
+	 * @return void
+	 */
+	protected function locateObject()
+	{
+		if ( is_object($this->object) ) {
+			return;
+		}
+
+		$web_element = WebElement::fromNodeElement($this->locateElement());
+
+		$this->object = new $this->className($this->getName(), $web_element);
+		$this->object->setContainer($this->getContainer());
+	}
+
+	/**
 	 * Returns element instance.
 	 *
 	 * @return IElement
 	 */
 	public function getObject()
 	{
-		if ( !is_object($this->object) ) {
-			$web_element = WebElement::fromNodeElement($this->locateElement());
-
-			$this->object = new $this->className($this->getName(), $web_element);
-			$this->object->setContainer($this->getContainer());
-		}
+		$this->locateObject();
 
 		return $this->object;
 	}

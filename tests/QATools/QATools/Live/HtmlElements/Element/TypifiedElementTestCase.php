@@ -15,7 +15,6 @@ use Behat\Mink\Mink;
 use Behat\Mink\Session;
 use QATools\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use QATools\QATools\PageObject\Element\WebElement;
-use QATools\QATools\PageObject\PageFactory;
 use tests\QATools\QATools\Live\AbstractLiveTestCase;
 
 class TypifiedElementTestCase extends AbstractLiveTestCase
