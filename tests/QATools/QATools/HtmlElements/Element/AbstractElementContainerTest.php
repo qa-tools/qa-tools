@@ -82,7 +82,7 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$web_element = $this->webElement;
 		$this->webElement
 			->shouldReceive('waitFor')
-			->with(5000, m::type('callable'))
+			->with(5, m::type('callable'))
 			->once()
 			->andReturnUsing(function ($timeout, $callback) use ($web_element) {
 				return call_user_func($callback, $web_element);
@@ -92,7 +92,7 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$expected_result = 'OK';
 		$expected_element = $this->createElement();
 
-		$actual_result = $expected_element->waitFor(5000, function ($actual_element) use ($self, $expected_element, $expected_result) {
+		$actual_result = $expected_element->waitFor(5, function ($actual_element) use ($self, $expected_element, $expected_result) {
 			$self->assertSame($expected_element, $actual_element, 'typified element is given to callback');
 
 			return $expected_result;

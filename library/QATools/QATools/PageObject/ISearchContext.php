@@ -44,7 +44,7 @@ interface ISearchContext
 	/**
 	 * Waits for an element(-s) to appear and returns it.
 	 *
-	 * @param integer  $timeout  Maximal allowed waiting time in milliseconds.
+	 * @param integer  $timeout  Maximal allowed waiting time in seconds.
 	 * @param callable $callback Callback, which result is both used as waiting condition and returned.
 	 *                           Will receive reference to `this element` as first argument.
 	 *

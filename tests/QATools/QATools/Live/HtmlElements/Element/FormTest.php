@@ -32,12 +32,12 @@ class FormTest extends TypifiedElementTestCase
 
 		/** @var Form $form */
 		$form = $this->createElement(array('id' => 'test-form'));
-		$delayed_element = $form->waitFor(2000, function (Form $given_form) {
+		$delayed_element = $form->waitFor(2, function (Form $given_form) {
 			return $given_form->find('css', '#delayed-element');
 		});
 		$this->assertNull($delayed_element);
 
-		$delayed_element = $form->waitFor(3200, function (Form $given_form) {
+		$delayed_element = $form->waitFor(3.2, function (Form $given_form) {
 			return $given_form->find('css', '#delayed-element');
 		});
 		$this->assertInstanceOf('Behat\\Mink\\Element\\NodeElement', $delayed_element);
