@@ -13,6 +13,7 @@ namespace tests\QATools\QATools\PageObject\Config;
 
 use QATools\QATools\PageObject\Config\Config;
 use Mockery as m;
+use QATools\QATools\PageObject\Exception\ConfigException;
 use tests\QATools\QATools\TestCase;
 
 class ConfigTest extends TestCase
@@ -47,6 +48,7 @@ class ConfigTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ConfigException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ConfigException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Option "non_predefined_key" doesn't exist in configuration
 	 */
 	public function testConstructorWithFailure()
 	{
@@ -74,14 +76,16 @@ class ConfigTest extends TestCase
 
 	/**
 	 * @dataProvider getOptionWithFailureDataProvider
-	 *
-	 * @expectedException \QATools\QATools\PageObject\Exception\ConfigException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ConfigException::TYPE_NOT_FOUND
 	 */
 	public function testGetOptionWithFailure(array $options, $name)
 	{
-		$config = new Config($options);
+		$this->setExpectedException(
+			'QATools\\QATools\\PageObject\\Exception\\ConfigException',
+			'Option "' . $name . '" doesn\'t exist in configuration',
+			ConfigException::TYPE_NOT_FOUND
+		);
 
+		$config = new Config($options);
 		$config->getOption($name);
 	}
 

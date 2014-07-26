@@ -12,6 +12,7 @@ namespace tests\QATools\QATools\PageObject;
 
 
 use Behat\Mink\Selector\SelectorsHandler;
+use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\How;
 use QATools\QATools\PageObject\SeleniumSelector;
 
@@ -33,12 +34,16 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_SELECTOR
 	 * @dataProvider notImplementedDataProvider
 	 */
 	public function testNotImplemented(array $locator)
 	{
+		$this->setExpectedException(
+			'QATools\\QATools\\PageObject\\Exception\\ElementException',
+			'Selector type "' . key($locator) . '" not yet implemented',
+			ElementException::TYPE_UNKNOWN_SELECTOR
+		);
+
 		$this->selector->translateToXPath($locator);
 	}
 
@@ -107,6 +112,7 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_INCORRECT_SELECTOR
+	 * @expectedExceptionMessage Incorrect Selenium selector format
 	 * @dataProvider incorrectDataProvider
 	 */
 	public function testIncorrect($locator)

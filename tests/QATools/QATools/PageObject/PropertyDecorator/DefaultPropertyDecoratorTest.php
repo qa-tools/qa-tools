@@ -124,10 +124,11 @@ class DefaultPropertyDecoratorTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_UNKNOWN_CLASS
+	 * @expectedExceptionMessage "PropertyName" element not recognised. "\QATools\QATools\PageObject\MissingClass" class not found
 	 */
 	public function testNotExistentClassPreventsDecoration()
 	{
-		$this->property->shouldReceive('__toString')->andReturn('OK');
+		$this->property->shouldReceive('__toString')->andReturn('PropertyName');
 		$this->property->shouldReceive('isSimpleDataType')->andReturn(false);
 		$this->property->shouldReceive('getDataType')->andReturn('\\QATools\\QATools\\PageObject\\MissingClass');
 

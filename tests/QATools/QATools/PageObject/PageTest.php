@@ -95,6 +95,7 @@ class PageTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\PageException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL
+	 * @expectedExceptionMessage Page url not specified
 	 */
 	public function testOpenIncorrectUrlBuilder()
 	{
@@ -108,6 +109,7 @@ class PageTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\PageException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageException::TYPE_MISSING_URL_BUILDER
+	 * @expectedExceptionMessage The url builder of a page not set, have you used @page-url annotation?
 	 */
 	public function testOpenMissingUrlBuilder()
 	{

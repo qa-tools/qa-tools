@@ -44,6 +44,7 @@ class BuilderTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
+	 * @expectedExceptionMessage No base url specified
 	 */
 	public function testConstructorMissingProtocol()
 	{
@@ -61,6 +62,7 @@ class BuilderTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
+	 * @expectedExceptionMessage No base url specified
 	 */
 	public function testConstructorMissingHost()
 	{
@@ -78,6 +80,7 @@ class BuilderTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
+	 * @expectedExceptionMessage No base url specified
 	 */
 	public function testConstructorEmptyPath()
 	{

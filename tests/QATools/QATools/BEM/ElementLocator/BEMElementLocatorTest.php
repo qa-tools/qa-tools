@@ -76,6 +76,7 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
+	 * @expectedExceptionMessage BEM block/element must be specified as annotation
 	 */
 	public function testGetSelectorFailure()
 	{

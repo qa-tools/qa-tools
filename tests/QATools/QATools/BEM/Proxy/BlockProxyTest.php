@@ -87,6 +87,8 @@ class BlockProxyTest extends AbstractProxyTestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementNotFoundException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Block not found by selector: OK
 	 */
 	public function testGetObjectEmptyLocator()
 	{

@@ -41,6 +41,7 @@ class ParserTest extends TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
+	 * @expectedExceptionMessage http:///domain.tld is not a valid url
 	 */
 	public function testConstructorInvalidUrl()
 	{

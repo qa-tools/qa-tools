@@ -109,11 +109,12 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
+	 * @expectedExceptionMessage @find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock
 	 */
 	public function testGetSelectorFailure()
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
-		$this->property->shouldReceive('getDataType');
+		$this->property->shouldReceive('getDataType')->andReturn('PageClass');
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());
 
 		$this->assertCount(0, $this->locator->findAll());
