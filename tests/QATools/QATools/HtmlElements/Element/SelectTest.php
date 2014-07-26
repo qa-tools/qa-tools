@@ -126,6 +126,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_SELECTED
+	 * @expectedExceptionMessage No options are selected
 	 */
 	public function testGetFirstSelectedOptionError()
 	{
@@ -152,6 +153,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Cannot locate option with text: TX
 	 */
 	public function testSelectByTextWithoutExactMatch()
 	{
@@ -190,6 +192,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Cannot locate option with value: TX
 	 */
 	public function testSelectByValueWithoutExactMatch()
 	{
@@ -246,6 +249,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
+	 * @expectedExceptionMessage You may only deselect all options of a multi-select
 	 */
 	public function testSelectAllNotIsMultiple()
 	{
@@ -275,6 +279,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
+	 * @expectedExceptionMessage You may only deselect all options of a multi-select
 	 */
 	public function testSetSelectedNotIsMultiple()
 	{
@@ -301,6 +306,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
+	 * @expectedExceptionMessage You may only deselect all options of a multi-select
 	 */
 	public function testDeselectAllNotIsMultiple()
 	{

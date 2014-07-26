@@ -37,11 +37,13 @@ class Parser
 	 */
 	public function __construct($url)
 	{
-		$this->components = parse_url($url);
+		$components = parse_url($url);
 
-		if ( $this->components === false ) {
-			throw new UrlException($url . ' is not a valid url.', UrlException::TYPE_INVALID_URL);
+		if ( $components === false ) {
+			throw new UrlException($url . ' is not a valid url', UrlException::TYPE_INVALID_URL);
 		}
+
+		$this->components = $components;
 	}
 
 	/**

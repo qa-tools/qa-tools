@@ -89,6 +89,8 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementNotFoundException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage No elements found by selector: OK
 	 */
 	public function testGetObjectEmptyLocator()
 	{
@@ -106,6 +108,7 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
+	 * @expectedExceptionMessage "nonExistingMethod" method is not available on the
 	 */
 	public function testMethodForwardingFailure()
 	{

@@ -72,6 +72,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
+	 * @expectedExceptionMessage BEM block/element must be specified as annotation
 	 */
 	public function testMissingAnnotationError($part_class)
 	{
@@ -83,6 +84,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage Either 'block' or 'element' key with non-empty value must be specified in the annotation
 	 */
 	public function testEmptyAnnotationError($part_class)
 	{
@@ -95,6 +97,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	 * @dataProvider bemPartDataProvider
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage Either 'block' or 'element' key with non-empty value must be specified in the annotation
 	 */
 	public function testElementWithBlockAnnotationError($part_class)
 	{
@@ -121,6 +124,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage BEM block can only be used in BEMPage sub-class property
 	 */
 	public function testBlockUsedInWrongContext()
 	{
@@ -137,6 +141,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage BEM element can only be used in Block sub-class (or any class, implementing IBlock interface) property
 	 */
 	public function testElementUsedInWrongContext()
 	{

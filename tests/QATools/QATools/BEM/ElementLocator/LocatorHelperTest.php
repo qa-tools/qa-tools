@@ -33,6 +33,7 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
+	 * @expectedExceptionMessage BEM Block name cannot be empty
 	 */
 	public function testGetBlockLocatorWithoutName()
 	{
@@ -56,6 +57,7 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_ELEMENT_REQUIRED
+	 * @expectedExceptionMessage BEM element name cannot be empty
 	 */
 	public function testGetElementLocatorWithoutName()
 	{
@@ -65,6 +67,7 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
 	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
+	 * @expectedExceptionMessage BEM block name cannot be empty
 	 */
 	public function testGetElementLocatorWithoutBlockName()
 	{

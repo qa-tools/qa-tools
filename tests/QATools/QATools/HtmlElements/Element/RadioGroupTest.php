@@ -61,6 +61,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_SELECTED
+	 * @expectedExceptionMessage No selected button
 	 */
 	public function testGetSelectedButtonNotFound()
 	{
@@ -78,6 +79,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Cannot locate radio button with label text containing: ANY
 	 */
 	public function testSelectButtonByLabelTextNotFound()
 	{
@@ -97,6 +99,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Cannot locate radio button with value: ANY
 	 */
 	public function testSelectButtonByValueNotFound()
 	{
@@ -116,6 +119,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
+	 * @expectedExceptionMessage Cannot locate radio button with index: 100
 	 */
 	public function testSelectButtonByIndexNotFound()
 	{

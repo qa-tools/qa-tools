@@ -23,8 +23,8 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element class is not set
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementCollectionException::TYPE_ELEMENT_CLASS_MISSING
+	 * @expectedExceptionMessage Collection element class is not set
 	 */
 	public function testCollectionWithoutElementClassError()
 	{
@@ -73,8 +73,8 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element must be of "\stdClass" class, but element of "tests\QATools\QATools\PageObject\Element\NonMatchingClass" class given
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementCollectionException::TYPE_ELEMENT_CLASS_MISMATCH
+	 * @expectedExceptionMessage Collection element must be of "\stdClass" class, but element of "tests\QATools\QATools\PageObject\Element\NonMatchingClass" class given
 	 * @dataProvider nowLaterDataProvider
 	 */
 	public function testCreatingCollectionWithNoMatchByElementClass($from_constructor)
@@ -92,8 +92,8 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element must be of "\tests\QATools\QATools\PageObject\Element\ISampleElementInterface" class, but element of "tests\QATools\QATools\PageObject\Element\NonMatchingClass" class given
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementCollectionException::TYPE_ELEMENT_CLASS_MISMATCH
+	 * @expectedExceptionMessage Collection element must be of "\tests\QATools\QATools\PageObject\Element\ISampleElementInterface" class, but element of "tests\QATools\QATools\PageObject\Element\NonMatchingClass" class given
 	 * @dataProvider nowLaterDataProvider
 	 */
 	public function testCreatingCollectionWithNoMatchByElementInterface($from_constructor)
@@ -118,8 +118,8 @@ class ElementCollectionTest extends TestCase
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\ElementCollectionException
-	 * @expectedExceptionMessage Collection element class "\tests\QATools\QATools\PageObject\Element\ISampleElementInterface" must implement INodeElementAware interface
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementCollectionException::TYPE_INCORRECT_ELEMENT_CLASS
+	 * @expectedExceptionMessage Collection element class "\tests\QATools\QATools\PageObject\Element\ISampleElementInterface" must implement INodeElementAware interface
 	 */
 	public function testFromNodeElementElementCantWorkWithInterfaces()
 	{

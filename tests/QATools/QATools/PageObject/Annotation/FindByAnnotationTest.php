@@ -61,6 +61,7 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage FindBy annotation requires one of 'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath' or both 'how' and 'using' parameters specified
 	 */
 	public function testUnknownDirectSelector()
 	{
@@ -71,6 +72,7 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
+	 * @expectedExceptionMessage FindBy annotation expects 'how' to be one of \QATools\QATools\PageObject\How class constants
 	 */
 	public function testUnknownHowSelector()
 	{
