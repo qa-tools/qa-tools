@@ -8,18 +8,15 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElementsLive\Element;
+namespace tests\QATools\QATools\Live;
 
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
-use QATools\QATools\HtmlElements\Element\AbstractTypifiedElement;
-use QATools\QATools\HtmlElements\TypifiedPageFactory;
-use QATools\QATools\PageObject\Element\WebElement;
-use QATools\QATools\PageObject\PageFactory;
+use QATools\QATools\PageObject\IPageFactory;
 
-class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractLiveTestCase extends \PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -39,16 +36,16 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 	/**
 	 * Page factory.
 	 *
-	 * @var PageFactory
+	 * @var IPageFactory
 	 */
 	protected $pageFactory;
 
 	/**
-	 * Element class name.
+	 * Page factory class.
 	 *
 	 * @var string
 	 */
-	protected $elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
+	protected $pageFactoryClass;
 
 	/**
 	 * Creates one session per test case.
@@ -70,6 +67,11 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * Prepare session and page factory for the tests.
+	 *
+	 * @return void
+	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -79,29 +81,15 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Creates element.
-	 *
-	 * @param array $selector Selector.
-	 *
-	 * @return AbstractTypifiedElement
-	 */
-	protected function createElement(array $selector)
-	{
-		$web_element = new WebElement($selector, $this->session);
-
-		return new $this->elementClass($web_element, $this->pageFactory);
-	}
-
-	/**
 	 * Creates factory.
 	 *
-	 * @return TypifiedPageFactory
+	 * @return IPageFactory
 	 */
 	protected function createFactory()
 	{
 		$this->startSession();
 
-		return new TypifiedPageFactory($this->session);
+		return new $this->pageFactoryClass($this->session);
 	}
 
 	/**
@@ -115,7 +103,7 @@ class TypifiedElementTestCase extends \PHPUnit_Framework_TestCase
 			$this->session->start();
 		}
 
-		$this->session->visit($_SERVER['WEB_FIXTURE_URL'] . '/tests/QATools/QATools/HtmlElementsLive/Element/index.html');
+		$this->session->visit($_SERVER['WEB_FIXTURE_URL'] . '/tests/QATools/QATools/Live/PageObject/index.html');
 	}
 
 	/**

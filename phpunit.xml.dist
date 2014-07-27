@@ -22,7 +22,7 @@
 			<directory>tests/QATools/QATools/BEM</directory>
 		</testsuite>
 		<testsuite name="Live">
-			<directory>tests/QATools/QATools/HtmlElementsLive</directory>
+			<directory>tests/QATools/QATools/Live</directory>
 		</testsuite>
 	</testsuites>
 

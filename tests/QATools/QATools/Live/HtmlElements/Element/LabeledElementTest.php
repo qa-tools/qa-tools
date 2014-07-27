@@ -8,7 +8,7 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElementsLive\Element;
+namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
 use QATools\QATools\HtmlElements\Element\LabeledElement;
@@ -28,7 +28,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	 */
 	public function testGetLabel($id, $label_text)
 	{
-		/* @var $label_element LabeledElement */
+		/** @var LabeledElement $label_element */
 		$label_element = $this->createElement(array('id' => $id));
 		$label = $label_element->getLabel();
 
@@ -45,7 +45,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	 */
 	public function testGetLabelText($id, $label_text)
 	{
-		/* @var $label_element LabeledElement */
+		/** @var LabeledElement $label_element */
 		$label_element = $this->createElement(array('id' => $id));
 		$this->assertSame($label_text, $label_element->getLabelText());
 	}
@@ -55,7 +55,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	 */
 	public function testGetText($id, $label_text)
 	{
-		/* @var $label_element LabeledElement */
+		/** @var LabeledElement $label_element */
 		$label_element = $this->createElement(array('id' => $id));
 		$this->assertSame($label_text, $label_element->getText());
 	}
