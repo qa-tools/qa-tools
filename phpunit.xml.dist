@@ -17,10 +17,12 @@
 		</testsuite>
 		<testsuite name="HtmlElements">
 			<directory>tests/QATools/QATools/HtmlElements</directory>
-			<!--<directory>tests/QATools/QATools/HtmlElementsLive</directory>-->
 		</testsuite>
 		<testsuite name="BEM">
 			<directory>tests/QATools/QATools/BEM</directory>
+		</testsuite>
+		<testsuite name="Live">
+			<directory>tests/QATools/QATools/HtmlElementsLive</directory>
 		</testsuite>
 	</testsuites>
 
