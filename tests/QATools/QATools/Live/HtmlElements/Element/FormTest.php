@@ -8,7 +8,7 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElementsLive\Element;
+namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
 use QATools\QATools\HtmlElements\Element\Form;
@@ -30,7 +30,7 @@ class FormTest extends TypifiedElementTestCase
 
 		$page->findById('generate-btn')->click();
 
-		/* @var $form Form */
+		/** @var Form $form */
 		$form = $this->createElement(array('id' => 'test-form'));
 		$delayed_element = $form->waitFor(2000, function (Form $given_form) {
 			return $given_form->find('css', '#delayed-element');

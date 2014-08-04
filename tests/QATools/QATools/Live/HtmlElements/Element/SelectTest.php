@@ -8,7 +8,7 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElementsLive\Element;
+namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
 use QATools\QATools\HtmlElements\Element\Select;
@@ -27,7 +27,7 @@ class SelectTest extends TypifiedElementTestCase
 
 	public function testGetOptions()
 	{
-		/* @var $element Select */
+		/** @var Select $element */
 		$element = $this->createElement(array('id' => 'select-complex'));
 		$options = $element->getOptions();
 
@@ -38,7 +38,7 @@ class SelectTest extends TypifiedElementTestCase
 
 	public function testGetOptionsByValue()
 	{
-		/* @var $element Select */
+		/** @var Select $element */
 		$element = $this->createElement(array('id' => 'select-complex'));
 		$options = $element->getOptionsByValue('v1');
 
@@ -49,7 +49,7 @@ class SelectTest extends TypifiedElementTestCase
 
 	public function testGetOptionsByText()
 	{
-		/* @var $element Select */
+		/** @var Select $element */
 		$element = $this->createElement(array('id' => 'select-complex'));
 		$options = $element->getOptionsByText('t1');
 
@@ -60,7 +60,7 @@ class SelectTest extends TypifiedElementTestCase
 
 	public function testSelectByText()
 	{
-		/* @var $element Select */
+		/** @var Select $element */
 		$element = $this->createElement(array('id' => 'select-complex'));
 		$element->selectByText('t1');
 

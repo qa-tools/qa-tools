@@ -8,7 +8,7 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElementsLive\Element;
+namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
 use QATools\QATools\HtmlElements\Element\TextInput;
@@ -28,7 +28,7 @@ class TextInputTest extends TypifiedElementTestCase
 	 */
 	public function testSendKeys($element_id, $expected_text)
 	{
-		/* @var $element TextInput */
+		/** @var TextInput $element */
 		$element = $this->createElement(array('id' => $element_id));
 
 		$this->assertEmpty($element->getText());
