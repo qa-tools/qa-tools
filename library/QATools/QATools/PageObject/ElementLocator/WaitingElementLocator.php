@@ -11,11 +11,11 @@
 namespace QATools\QATools\PageObject\ElementLocator;
 
 
+use Behat\Mink\Element\NodeElement;
+use mindplay\annotations\AnnotationManager;
 use QATools\QATools\PageObject\Annotation\TimeoutAnnotation;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
-use Behat\Mink\Element\NodeElement;
-use mindplay\annotations\AnnotationManager;
 
 /**
  * Class, that locates WebElements that might not be present at the moment.

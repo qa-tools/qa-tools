@@ -55,11 +55,50 @@ class PageTest extends AbstractLiveTestCase
 		$page = new WebElementPage($this->pageFactory);
 
 		$this->assertFalse($page->radioGroup->isChecked());
-		$this->assertCount(1, $page->radioGroup);
+		$this->assertCount(4, $page->radioGroup);
 
 		$page->radioGroup->selectOption('1');
 
 		$this->assertTrue($page->radioGroup->isSelected());
+
+		$count = 0;
+
+		foreach ( $page->radioGroup as $index => $radio ) {
+			$count++;
+			$radio->click();
+
+			$this->assertEquals($page->radioGroup[$index], $radio);
+			$this->assertEquals($index + 1, $radio->getValue());
+		}
+
+		$this->assertEquals(4, $count);
+	}
+
+	public function testTextInputsLocatedByCss()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
+
+		$this->assertCount(3, $page->textInputs);
+
+		$page->textInputs->setValue('text');
+
+		$this->assertEquals('text', $page->textInputs[0]->getValue());
+		$this->assertNotEquals('text', $page->textInputs[1]->getValue());
+		$this->assertNotEquals('text', $page->textInputs[2]->getValue());
+
+		$count = 0;
+
+		foreach ( $page->textInputs as $index => $input ) {
+			$count++;
+			$input->setValue('text' . $index);
+		}
+
+		$this->assertEquals(3, $count);
+
+		$this->assertEquals('text0', $page->textInputs[0]->getValue());
+		$this->assertEquals('text1', $page->textInputs[1]->getValue());
+		$this->assertEquals('text2', $page->textInputs[2]->getValue());
 	}
 
 }

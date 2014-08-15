@@ -63,23 +63,25 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	{
 		$element = $this->createValidElementMock();
 
-		$this->assertCount(0, $this->element);
-		$this->element[] = $element;
-		$this->element[0] = $element;
-		$this->assertCount(1, $this->element);
+		$initial_count = count($this->element);
+		$new_count = $initial_count + 1;
 
-		$this->assertSame($element, $this->element[0]);
+		$this->element[] = $element;
+		$this->element[$initial_count] = $element;
+		$this->assertCount($new_count, $this->element);
+
+		$this->assertSame($element, $this->element[$initial_count]);
 
 		try {
-			$this->assertNull($this->element[1]);
+			$this->assertNull($this->element[$new_count]);
 		}
 		catch ( \PHPUnit_Framework_Error_Notice $e ) {
 			// Ignore notice.
 		}
 
-		$this->assertTrue(isset($this->element[0]));
-		unset($this->element[0]);
-		$this->assertFalse(isset($this->element[0]));
+		$this->assertArrayHasKey($initial_count, $this->element);
+		unset($this->element[$initial_count]);
+		$this->assertArrayNotHasKey($initial_count, $this->element);
 	}
 
 	/**
@@ -87,6 +89,8 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	 */
 	public function testIteratorInterface()
 	{
+		$start_index = count($this->element);
+
 		$elements = array(
 			$this->createValidElementMock(),
 			$this->createValidElementMock(),
@@ -98,7 +102,11 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 		}
 
 		foreach ( $this->element as $index => $element ) {
-			$this->assertSame($elements[$index], $element, 'element at correct index returned');
+			if ( $index < $start_index ) {
+				continue;
+			}
+
+			$this->assertSame($elements[$index - $start_index], $element, 'element at correct index returned');
 		}
 	}
 

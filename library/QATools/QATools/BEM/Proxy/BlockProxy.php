@@ -43,6 +43,28 @@ class BlockProxy extends AbstractPartProxy implements IBlock
 	}
 
 	/**
+	 * Locates object inside proxy.
+	 *
+	 * @return void
+	 * @throws ElementNotFoundException When block not found.
+	 */
+	protected function locateObject()
+	{
+		if ( is_object($this->object) ) {
+			return;
+		}
+
+		$nodes = $this->locator->findAll();
+
+		if ( !$nodes ) {
+			throw new ElementNotFoundException('Block not found by selector: ' . (string)$this->locator);
+		}
+
+		$this->object = new $this->className($this->getName(), $nodes, $this->pageFactory, $this->locator);
+		$this->object->setContainer($this->getContainer());
+	}
+
+	/**
 	 * Returns block instance.
 	 *
 	 * @return IBlock
@@ -50,16 +72,7 @@ class BlockProxy extends AbstractPartProxy implements IBlock
 	 */
 	public function getObject()
 	{
-		if ( !is_object($this->object) ) {
-			$nodes = $this->locator->findAll();
-
-			if ( !$nodes ) {
-				throw new ElementNotFoundException('Block not found by selector: ' . (string)$this->locator);
-			}
-
-			$this->object = new $this->className($this->getName(), $nodes, $this->pageFactory, $this->locator);
-			$this->object->setContainer($this->getContainer());
-		}
+		$this->locateObject();
 
 		return $this->object;
 	}

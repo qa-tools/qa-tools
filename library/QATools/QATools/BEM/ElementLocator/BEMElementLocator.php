@@ -11,13 +11,13 @@
 namespace QATools\QATools\BEM\ElementLocator;
 
 
+use mindplay\annotations\AnnotationManager;
 use QATools\QATools\BEM\Annotation\BEMAnnotation;
 use QATools\QATools\BEM\Element\IBlock;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use QATools\QATools\PageObject\Exception\AnnotationException;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
-use mindplay\annotations\AnnotationManager;
 
 /**
  * Locates BEM blocks/elements.
@@ -84,30 +84,56 @@ class BEMElementLocator extends DefaultElementLocator
 	}
 
 	/**
-	 * Returns final selector to be used for element locating.
+	 * Returns final selectors to be used for element locating.
 	 *
 	 * @return array
 	 * @throws AnnotationException When required @bem annotation is missing.
 	 */
-	protected function getSelector()
+	protected function getSelectors()
 	{
 		/* @var $annotations BEMAnnotation[] */
 		$annotations = $this->property->getAnnotations('@bem');
 
-		if ( !$annotations || !($annotations[0] instanceof BEMAnnotation) ) {
+		$this->assertAnnotationClass($annotations);
+
+		$selectors = array();
+
+		foreach ( $annotations as $bem_annotation ) {
+			if ( $bem_annotation->element && ($this->searchContext instanceof IBlock) ) {
+				$bem_annotation->block = $this->searchContext->getName();
+			}
+
+			$selectors[] = $bem_annotation->getSelector($this->_helper);
+		}
+
+		return $selectors;
+	}
+
+	/**
+	 * Asserts that required annotations are present.
+	 *
+	 * @param array $annotations Annotations to test.
+	 *
+	 * @return void
+	 * @throws AnnotationException Thrown if none or wrong annotations given.
+	 */
+	protected function assertAnnotationClass(array $annotations)
+	{
+		if ( !$annotations ) {
 			throw new AnnotationException(
 				'BEM block/element must be specified as annotation',
 				AnnotationException::TYPE_REQUIRED
 			);
 		}
 
-		$bem_annotation = $annotations[0];
-
-		if ( $bem_annotation->element && ($this->searchContext instanceof IBlock) ) {
-			$bem_annotation->block = $this->searchContext->getName();
+		foreach ( $annotations as $annotation ) {
+			if ( !($annotation instanceof BEMAnnotation) ) {
+				throw new AnnotationException(
+					'BEM block/element must be specified as annotation',
+					AnnotationException::TYPE_REQUIRED
+				);
+			}
 		}
-
-		return $bem_annotation->getSelector($this->_helper);
 	}
 
 }

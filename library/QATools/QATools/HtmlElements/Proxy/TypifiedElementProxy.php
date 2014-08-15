@@ -49,35 +49,30 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	}
 
 	/**
-	 * Returns class instance, that was placed inside a proxy.
+	 * Locates object inside proxy.
 	 *
-	 * @return ITypifiedElement
+	 * @return void
 	 */
-	public function getObject()
+	protected function locateObject()
 	{
-		if ( !$this->locatorUsed ) {
-			// NodeElement + WebElement(setContainer) + TargetElement(setName) = Proxy.
-			$this->locatorUsed = true;
-			/* @var $object ITypifiedElement */
+		if ( $this->locatorUsed ) {
+			return;
+		}
 
-			if ( $this->isElementCollection() ) {
-				$object = call_user_func(
-					array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
-				);
-			}
-			else {
-				$object = call_user_func(
-					array($this->className, 'fromNodeElement'), $this->locateElement(), $this->pageFactory
-				);
-			}
+		// NodeElement + WebElement(setContainer) + TargetElement(setName) = Proxy.
+		$this->locatorUsed = true;
+
+		foreach ( $this->locateElements() as $element ) {
+			/* @var $object ITypifiedElement */
+			$object = call_user_func(
+				array($this->className, 'fromNodeElement'), $element, $this->pageFactory
+			);
 
 			$object->setName($this->getName());
 			$this[] = $object;
-
-			$this->injectContainer();
 		}
 
-		return $this->getIterator()->current();
+		$this->injectContainer();
 	}
 
 	/**

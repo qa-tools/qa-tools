@@ -52,4 +52,12 @@ class TypifiedElementPage extends TypifiedPage
 	 */
 	public $radioGroup;
 
+	/**
+	 * Example text inputs as TextInput.
+	 *
+	 * @var TextInput[]
+	 * @find-by('css' => '.test-input')
+	 */
+	public $textInputs;
+
 }

@@ -97,52 +97,83 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull($locator->find());
 	}
 
-	public function testGetSelectorSuccess()
+	/**
+	 * @dataProvider selectorProvider
+	 */
+	public function testGetSelectorSuccess(array $selectors)
 	{
-		$expected = array('xpath' => 'xpath1');
-		$this->expectFindByAnnotation($expected);
-		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
+		$this->expectFindByAnnotations($selectors);
 
-		$this->assertCount(0, $this->locator->findAll());
+		foreach ( $selectors as $selector ) {
+			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK'));
+		}
+
+		$this->assertCount(count($selectors), $this->locator->findAll());
+	}
+
+	public function selectorProvider()
+	{
+		return array(
+			array(array(array('xpath' => 'xpath1'))),
+			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2'))),
+		);
 	}
 
 	/**
+	 * @dataProvider getSelectorFailureDataProvider
+	 *
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 * @expectedExceptionMessage @find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock
 	 */
-	public function testGetSelectorFailure()
+	public function testGetSelectorFailure($annotations)
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
 		$this->property->shouldReceive('getDataType')->andReturn('PageClass');
-		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());
+		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn($annotations);
 
 		$this->assertCount(0, $this->locator->findAll());
+	}
+
+	public function getSelectorFailureDataProvider()
+	{
+		return array(
+			array(array()),
+			array(array(m::mock('\\mindplay\\annotations\\Annotation'))),
+		);
 	}
 
 	public function testToString()
 	{
 		$expected = 'OK';
-		$this->expectFindByAnnotation('OK');
+		$this->expectFindByAnnotations('OK');
 
-		$this->assertEquals(var_export(array('se' => $expected), true), (string)$this->locator);
+		$this->assertEquals(var_export(array(array('se' => $expected)), true), (string)$this->locator);
 	}
 
 	/**
 	 * Adds expectation for @find-by annotation.
 	 *
-	 * @param mixed $selector Selector.
+	 * @param mixed $selectors Selector.
 	 *
 	 * @return FindByAnnotation
 	 */
-	protected function expectFindByAnnotation($selector)
+	protected function expectFindByAnnotations($selectors)
 	{
-		$annotation = m::mock(self::FIND_BY_CLASS);
-		$annotation->shouldReceive('getSelector')->andReturn($selector);
+		$selectors = (array)$selectors;
 
-		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array($annotation));
+		$annotations = array();
 
-		return $annotation;
+		foreach ( $selectors as $selector ) {
+			$annotation = m::mock(self::FIND_BY_CLASS);
+			$annotation->shouldReceive('getSelector')->andReturn($selector);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn($annotations);
+
+		return $annotations;
 	}
 
 	/**

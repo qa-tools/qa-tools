@@ -30,6 +30,11 @@ class WebElementCollectionTest extends AbstractElementCollectionTestCase
 	{
 		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
 
+		$element = $this->createValidElementMock();
+		$element->shouldReceive('setContainer')->with($container)->once();
+
+		$this->element[] = $element;
+
 		$this->assertSame($this->element, $this->element->setContainer($container));
 	}
 

@@ -47,42 +47,56 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		parent::setUp();
 	}
 
-	public function testGetSelectorSuccess()
+	/**
+	 * @dataProvider selectorProvider
+	 */
+	public function testGetSelectorSuccess(array $selectors)
 	{
-		$expected = array('xpath' => 'xpath1');
-		$annotation = $this->expectBEMAnnotation($expected);
-		$annotation->element = 'element-name';
+		$annotations = $this->expectBEMAnnotation($selectors);
 
-		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
-		$this->searchContext->shouldReceive('getName')->once()->andReturn('block-name');
+		foreach ( $annotations as $annotation ) {
+			$annotation->element = 'element-name';
+		}
 
-		$this->assertCount(0, $this->locator->findAll());
-		$this->assertEquals('block-name', $annotation->block, 'block name set to element annotation from parent block');
+		foreach ( $selectors as $selector ) {
+			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK'));
+		}
+
+		$this->searchContext->shouldReceive('getName')->times(count($selectors))->andReturn('block-name');
+
+		$this->assertCount(count($selectors), $this->locator->findAll());
+
+		foreach ( $annotations as $annotation ) {
+			$this->assertEquals('block-name', $annotation->block, 'block name set to element annotation from parent block');
+		}
 	}
 
 	public function testGetSelectorBlock()
 	{
 		$expected = array('xpath' => 'xpath1');
-		$annotation = $this->expectBEMAnnotation($expected);
-		$annotation->block = 'block-name';
+		$annotations = $this->expectBEMAnnotation(array($expected));
+
+		$annotations[0]->block = 'block-name';
 
 		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
 		$this->searchContext->shouldReceive('getName')->never();
 
-		$this->assertEquals('', $annotation->element, 'element name isn\'t touched');
+		$this->assertEquals('', $annotations[0]->element, 'element name isn\'t touched');
 		$this->assertCount(0, $this->locator->findAll());
 	}
 
 	/**
+	 * @dataProvider getSelectorFailureDataProvider
+	 *
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
 	 * @expectedExceptionMessage BEM block/element must be specified as annotation
 	 */
-	public function testGetSelectorFailure()
+	public function testGetSelectorFailure($annotations)
 	{
 		$this->property->shouldReceive('__toString')->andReturn('OK');
 		$this->property->shouldReceive('getDataType');
-		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn(array());
+		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn($annotations);
 
 		$this->assertCount(0, $this->locator->findAll());
 	}
@@ -92,24 +106,31 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$expected = 'OK';
 		$this->expectBEMAnnotation('OK');
 
-		$this->assertEquals(var_export(array('se' => $expected), true), (string)$this->locator);
+		$this->assertEquals(var_export(array(array('se' => $expected)), true), (string)$this->locator);
 	}
 
 	/**
 	 * Adds expectation for @bem annotation.
 	 *
-	 * @param mixed $selector Selector.
+	 * @param mixed $selectors Selector.
 	 *
 	 * @return BEMAnnotation
 	 */
-	protected function expectBEMAnnotation($selector)
+	protected function expectBEMAnnotation($selectors)
 	{
-		$annotation = m::mock(self::BEM_CLASS);
-		$annotation->shouldReceive('getSelector')->with($this->_locatorHelper)->andReturn($selector);
+		$annotations = array();
+		$selectors = (array)$selectors;
 
-		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn(array($annotation));
+		foreach ( $selectors as $selector ) {
+			$annotation = m::mock(self::BEM_CLASS);
+			$annotation->shouldReceive('getSelector')->with($this->_locatorHelper)->andReturn($selector);
 
-		return $annotation;
+			$annotations[] = $annotation;
+		}
+
+		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn($annotations);
+
+		return $annotations;
 	}
 
 	public function testGetBlockLocator()

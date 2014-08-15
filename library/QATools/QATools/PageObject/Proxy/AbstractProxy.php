@@ -177,16 +177,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	}
 
 	/**
-	 * Determines if a class to proxy in fact is an element collection.
-	 *
-	 * @return boolean
-	 */
-	protected function isElementCollection()
-	{
-		return is_subclass_of($this->className, 'QATools\\QATools\\PageObject\\Element\\AbstractElementCollection');
-	}
-
-	/**
 	 * Sets proxy's container to each element.
 	 *
 	 * @return void
@@ -195,12 +185,115 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	{
 		$container = $this->getContainer();
 
+		$iterator = $this->getIterator();
+
 		/** @var IContainerAware $element */
-		foreach ( $this as $element ) {
+		foreach ( $iterator as $element ) {
 			$element->setContainer($container);
 		}
 
-		$this->getIterator()->rewind();
+		$iterator->rewind();
+	}
+
+	/**
+	 * Offset to set.
+	 *
+	 * @param mixed $index  The offset to assign the value to.
+	 * @param mixed $newval The value to set.
+	 *
+	 * @return void
+	 * @throws \InvalidArgumentException When invalid element given.
+	 */
+	public function offsetSet($index, $newval)
+	{
+		$this->locateObject();
+
+		parent::offsetSet($index, $newval);
+	}
+
+	/**
+	 * Whether a offset exists.
+	 *
+	 * @param mixed $index An offset to check for.
+	 *
+	 * @return boolean
+	 */
+	public function offsetExists($index)
+	{
+		$this->locateObject();
+
+		return parent::offsetExists($index);
+	}
+
+	/**
+	 * Offset to unset.
+	 *
+	 * @param mixed $index The offset to unset.
+	 *
+	 * @return void
+	 */
+	public function offsetUnset($index)
+	{
+		$this->locateObject();
+
+		parent::offsetUnset($index);
+	}
+
+	/**
+	 * Offset to retrieve.
+	 *
+	 * @param mixed $index The offset to retrieve.
+	 *
+	 * @return mixed|null
+	 */
+	public function offsetGet($index)
+	{
+		$this->locateObject();
+
+		return parent::offsetGet($index);
+	}
+
+	/**
+	 * Count elements of an object.
+	 *
+	 * @return integer
+	 */
+	public function count()
+	{
+		$this->locateObject();
+
+		return parent::count();
+	}
+
+	/**
+	 * Returns the array iterator.
+	 *
+	 * @return \ArrayIterator
+	 */
+	public function getIterator()
+	{
+		$this->locateObject();
+
+		return parent::getIterator();
+	}
+
+	/**
+	 * Locates object inside proxy.
+	 *
+	 * @return mixed
+	 */
+	protected abstract function locateObject();
+
+	/**
+	 * Returns class instance, that was placed inside a proxy.
+	 *
+	 * @return mixed
+	 */
+	public function getObject()
+	{
+		$this->locateObject();
+
+		return $this->getIterator()->current();
 	}
 
 }

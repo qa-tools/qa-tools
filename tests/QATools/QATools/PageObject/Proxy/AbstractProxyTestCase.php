@@ -46,7 +46,7 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 */
 	protected $ignoreLocatorTests = array(
 		'testSetContainer', 'testGetContainerFallback', 'testGetObjectEmptyLocator', 'testIsValidSubstitute',
-		'testSetName', 'testArrayAccessInterface', 'testIteratorInterface', 'testFromNodeElements',
+		'testSetName', 'testFromNodeElements',
 	);
 
 	protected function setUp()

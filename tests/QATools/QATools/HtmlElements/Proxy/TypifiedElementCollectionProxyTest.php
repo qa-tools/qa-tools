@@ -19,9 +19,27 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 
 	const ELEMENT_CLASS = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementCollectionChild';
 
+	protected function setUp()
+	{
+		if ( is_null($this->collectionClass) ) {
+			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementCollectionProxy';
+			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\TextInput';
+		}
+
+		parent::setUp();
+	}
+
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
+	}
+
+	public function testSetClassName()
+	{
+		$expected = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\AlternateTypifiedElementCollection';
+
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	public function testMethodForwardingSuccess()

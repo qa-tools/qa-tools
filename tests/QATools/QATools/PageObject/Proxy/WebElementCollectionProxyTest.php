@@ -17,6 +17,14 @@ use Mockery as m;
 class WebElementCollectionProxyTest extends WebElementProxyTest
 {
 
+	protected function setUp()
+	{
+		$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\WebElementCollectionProxy';
+		$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
+
+		parent::setUp();
+	}
+
 	public function testDefaultClassName()
 	{
 		$expected = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
@@ -27,6 +35,14 @@ class WebElementCollectionProxyTest extends WebElementProxyTest
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertEquals(1, $this->element->proxyMe());
+	}
+
+	public function testSetClassName()
+	{
+		$expected = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
+
+		$this->element->setClassName($expected);
+		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
 	/**

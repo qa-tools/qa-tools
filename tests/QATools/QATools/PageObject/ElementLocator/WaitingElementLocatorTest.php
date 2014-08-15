@@ -27,14 +27,19 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 		parent::setUp();
 	}
 
-	public function testGetSelectorSuccessWithTimeout()
+	/**
+	 * @dataProvider selectorProvider
+	 */
+	public function testGetSelectorsSuccessWithTimeout(array $selectors)
 	{
 		$search_context = $this->searchContext;
 		$node_element = m::mock('\\Behat\\Mink\\Element\\NodeElement');
 
-		$expected = array('xpath' => 'xpath1');
-		$this->expectFindByAnnotation($expected);
-		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array($node_element));
+		$this->expectFindByAnnotations($selectors);
+
+		foreach ( $selectors as $selector ) {
+			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array($node_element));
+		}
 
 		$this->searchContext
 			->shouldReceive('waitFor')
@@ -46,7 +51,7 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 
 		$found_elements = $this->locator->findAll();
 
-		$this->assertCount(1, $found_elements);
+		$this->assertCount(count($selectors), $found_elements);
 		$this->assertSame($node_element, $found_elements[0]);
 	}
 

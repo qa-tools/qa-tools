@@ -11,10 +11,10 @@
 namespace QATools\QATools\PageObject\ElementLocator;
 
 
-use QATools\QATools\PageObject\Exception\AnnotationException;
 use Behat\Mink\Element\NodeElement;
 use mindplay\annotations\AnnotationManager;
 use QATools\QATools\PageObject\Annotation\FindByAnnotation;
+use QATools\QATools\PageObject\Exception\AnnotationException;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
 
@@ -90,35 +90,61 @@ class DefaultElementLocator implements IElementLocator
 	 */
 	public function findAll()
 	{
-		return $this->searchContext->findAll('se', $this->getSelector());
+		$elements = array();
+
+		foreach ( $this->getSelectors() as $selector ) {
+			$elements = array_merge($elements, $this->searchContext->findAll('se', $selector));
+		}
+
+		return $elements;
 	}
 
 	/**
-	 * Returns final selector to be used for element locating.
+	 * Returns final selectors to be used for element locating.
 	 *
 	 * @return array
 	 * @throws AnnotationException When required @find-by annotation is missing.
 	 */
-	protected function getSelector()
+	protected function getSelectors()
 	{
 		/* @var $annotations FindByAnnotation[] */
 		$annotations = $this->property->getAnnotationsFromPropertyOrClass('@find-by');
 
-		if ( $annotations && ($annotations[0] instanceof FindByAnnotation) ) {
-			$selector = $annotations[0]->getSelector();
-		}
-		else {
-			$selector = array();
+		$this->assertAnnotationClass($annotations);
+
+		$selectors = array();
+
+		foreach ( $annotations as $annotation ) {
+			$selectors[] = $annotation->getSelector();
 		}
 
-		if ( !$selector ) {
+		return $selectors;
+	}
+
+	/**
+	 * Asserts that required annotations are present.
+	 *
+	 * @param array $annotations Annotations to test.
+	 *
+	 * @return void
+	 *
+	 * @throws AnnotationException Thrown if none or wrong annotations given.
+	 */
+	protected function assertAnnotationClass(array $annotations)
+	{
+		if ( !$annotations ) {
 			$parameters = array((string)$this->property, $this->property->getDataType());
 			$message = '@find-by must be specified in the property "%s" DocBlock or in class "%s" DocBlock';
-
 			throw new AnnotationException(vsprintf($message, $parameters), AnnotationException::TYPE_REQUIRED);
 		}
 
-		return $selector;
+		foreach ( $annotations as $annotation ) {
+			if ( !($annotation instanceof FindByAnnotation) ) {
+				$parameters = array((string)$this->property, $this->property->getDataType());
+				$message = '@find-by must be specified in the property "%s" DocBlock or in class "%s" DocBlock';
+				throw new AnnotationException(vsprintf($message, $parameters), AnnotationException::TYPE_REQUIRED);
+			}
+		}
 	}
 
 	/**
@@ -128,7 +154,15 @@ class DefaultElementLocator implements IElementLocator
 	 */
 	public function __toString()
 	{
-		return var_export(array('se' => $this->getSelector()), true);
+		$exported_selectors = array();
+
+		$selectors = $this->getSelectors();
+
+		foreach ( $selectors as $selector ) {
+			$exported_selectors[] = array('se' => $selector);
+		}
+
+		return var_export($exported_selectors, true);
 	}
 
 }
