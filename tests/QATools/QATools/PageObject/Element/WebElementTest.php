@@ -72,6 +72,19 @@ class WebElementTest extends TestCase
 		$this->assertEquals($expected, (string)$element);
 	}
 
+	public function testWaitFor()
+	{
+		$element = $this->createElement();
+
+		$start = microtime(true);
+
+		$element->waitFor(1, function () {
+			return false;
+		});
+
+		$this->assertGreaterThanOrEqual(1, microtime(true) - $start);
+	}
+
 	/**
 	 * Create element.
 	 *

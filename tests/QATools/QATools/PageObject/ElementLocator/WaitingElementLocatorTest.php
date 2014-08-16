@@ -18,7 +18,7 @@ use QATools\QATools\PageObject\ElementLocator\IElementLocator;
 class WaitingElementLocatorTest extends DefaultElementLocatorTest
 {
 
-	const TIMEOUT = 5000;
+	const TIMEOUT = 5;
 
 	protected function setUp()
 	{
@@ -70,7 +70,7 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 
 		$this->searchContext
 			->shouldReceive('waitFor')
-			->with(5000, m::type('callable'))
+			->with(5, m::type('callable'))
 			->once()
 			->andReturnUsing(function ($timeout, $callback) use ($search_context) {
 				return call_user_func($callback, $search_context);

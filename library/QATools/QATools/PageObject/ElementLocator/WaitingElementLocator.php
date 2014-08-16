@@ -26,7 +26,7 @@ class WaitingElementLocator extends DefaultElementLocator
 {
 
 	/**
-	 * Time to wait for element to be ready (in milliseconds).
+	 * Time to wait for element to be ready (in seconds).
 	 *
 	 * @var integer
 	 */

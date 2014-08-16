@@ -22,7 +22,7 @@ class TimeoutAnnotation extends Annotation
 {
 
 	/**
-	 * Time to wait for element to be present (in milliseconds).
+	 * Time to wait for element to be present (in seconds).
 	 *
 	 * @var integer
 	 */
