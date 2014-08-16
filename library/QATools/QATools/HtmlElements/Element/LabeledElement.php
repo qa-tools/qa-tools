@@ -32,7 +32,11 @@ class LabeledElement extends AbstractTypifiedElement
 		if ( !is_null($id) ) {
 			// Label with matching "for" attribute.
 			$escaped_id = $this->getSelectorsHandler()->xpathLiteral($id);
-			$label = $this->getContainer()->find('xpath', 'descendant-or-self::label[@for = ' . $escaped_id . ']');
+			$xpath_expressions = array(
+				'preceding::label[@for = ' . $escaped_id . ']',
+				'following::label[@for = ' . $escaped_id . ']',
+			);
+			$label = $this->getWrappedElement()->find('xpath', '(' . implode(' | ', $xpath_expressions) . ')[1]');
 		}
 
 		if ( is_null($label) ) {

@@ -11,7 +11,6 @@
 namespace QATools\QATools\PageObject\Proxy;
 
 
-use QATools\QATools\PageObject\Element\IContainerAware;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\Exception\ElementNotFoundException;
 
@@ -20,7 +19,7 @@ use QATools\QATools\PageObject\Exception\ElementNotFoundException;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-interface IProxy extends IContainerAware
+interface IProxy
 {
 
 	/**

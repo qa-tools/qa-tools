@@ -95,16 +95,6 @@ class WebElementCollectionProxy extends WebElementProxy
 	}
 
 	/**
-	 * Sets proxy's container to the collection.
-	 *
-	 * @return void
-	 */
-	protected function injectContainer()
-	{
-		$this->getObject()->setContainer($this->getContainer());
-	}
-
-	/**
 	 * Locates object inside proxy.
 	 *
 	 * @return void
@@ -115,7 +105,7 @@ class WebElementCollectionProxy extends WebElementProxy
 			return;
 		}
 
-		// NodeElement + TargetElement(setContainer) = Proxy.
+		// NodeElement + TargetElement = Proxy.
 		$this->locatorUsed = true;
 
 		$object = call_user_func(
@@ -123,7 +113,6 @@ class WebElementCollectionProxy extends WebElementProxy
 		);
 
 		\ArrayObject::offsetSet(null, $object);
-		$this->injectContainer();
 	}
 
 	/**

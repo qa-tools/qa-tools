@@ -33,9 +33,10 @@ class LabeledElementTest extends TypifiedElementTestCase
 		$label = $label_element->getLabel();
 
 		if ( is_null($label_text) ) {
-			$this->assertNull($label);
+			$this->assertNull($label, '->getLabel() haven\'t found label on a page');
 		}
 		else {
+			$this->assertNotNull($label, '->getLabel() found label on a page');
 			$this->assertEquals($label_text, $label->getText());
 		}
 	}
@@ -69,8 +70,9 @@ class LabeledElementTest extends TypifiedElementTestCase
 	{
 		return array(
 			array('checkbox-without-label', null),
-			array('checkbox-with-label', 'label text 2'),
-			array('checkbox-inside-label', 'label text 3'),
+			array('checkbox-with-following-label', 'label text 2'),
+			array('checkbox-with-preceding-label', 'label text 3'),
+			array('checkbox-inside-label', 'label text 4'),
 		);
 	}
 

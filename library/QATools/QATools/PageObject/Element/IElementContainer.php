@@ -16,7 +16,7 @@ use QATools\QATools\PageObject\ISearchContext;
 /**
  * Interface to allow AbstractElementContainer class detection in proxies.
  */
-interface IElementContainer extends IContainerAware, ISearchContext
+interface IElementContainer extends ISearchContext
 {
 
 }

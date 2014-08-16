@@ -46,24 +46,6 @@ class WebElementTest extends TestCase
 		$this->assertEquals($node_element->getXpath(), $element->getXpath());
 	}
 
-	public function testSetContainer()
-	{
-		$element = $this->createElement();
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-
-		$this->assertSame($element, $element->setContainer($container));
-		$this->assertSame($container, $element->getContainer());
-	}
-
-	public function testGetContainerFallback()
-	{
-		$expected = 'OK';
-		$element = $this->createElement();
-		$this->session->shouldReceive('getPage')->once()->andReturn($expected);
-
-		$this->assertEquals($expected, $element->getContainer());
-	}
-
 	public function testToString()
 	{
 		$element = $this->createElement();

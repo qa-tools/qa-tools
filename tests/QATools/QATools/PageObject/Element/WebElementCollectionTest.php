@@ -26,24 +26,4 @@ class WebElementCollectionTest extends AbstractElementCollectionTestCase
 		parent::setUp();
 	}
 
-	public function testSetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-
-		$element = $this->createValidElementMock();
-		$element->shouldReceive('setContainer')->with($container)->once();
-
-		$this->element[] = $element;
-
-		$this->assertSame($this->element, $this->element->setContainer($container));
-	}
-
-	public function testGetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-		$this->element->setContainer($container);
-
-		$this->assertEquals($container, $this->element->getContainer());
-	}
-
 }

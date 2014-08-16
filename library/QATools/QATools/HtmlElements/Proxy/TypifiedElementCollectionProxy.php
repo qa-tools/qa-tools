@@ -97,16 +97,6 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 	}
 
 	/**
-	 * Sets proxy's container to the collection.
-	 *
-	 * @return void
-	 */
-	protected function injectContainer()
-	{
-		$this->getObject()->setContainer($this->getContainer());
-	}
-
-	/**
 	 * Locates object inside proxy.
 	 *
 	 * @return void
@@ -117,7 +107,7 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 			return;
 		}
 
-		// NodeElement + TargetElement(setContainer) = Proxy.
+		// NodeElement + TargetElement = Proxy.
 		$this->locatorUsed = true;
 
 		$object = call_user_func(
@@ -134,7 +124,6 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 		}
 
 		$iterator->rewind();
-		$this->injectContainer();
 	}
 
 	/**

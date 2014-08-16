@@ -28,15 +28,18 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 
 	public function testGetLabelById()
 	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-		$container
+		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturn('ID_VALUE');
+
+		$xpath_expressions = array(
+			'preceding::label[@for = ID_VALUE_ESCAPED]',
+			'following::label[@for = ID_VALUE_ESCAPED]',
+		);
+
+		$this->webElement
 			->shouldReceive('find')
-			->with('xpath', 'descendant-or-self::label[@for = ID_VALUE_ESCAPED]')
+			->with('xpath', '(' . implode(' | ', $xpath_expressions) . ')[1]')
 			->once()
 			->andReturn('FOUND1');
-
-		$this->webElement->shouldReceive('getContainer')->withNoArgs()->once()->andReturn($container);
-		$this->webElement->shouldReceive('getAttribute')->with('id')->once()->andReturn('ID_VALUE');
 
 		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('ID_VALUE')->andReturn('ID_VALUE_ESCAPED');
 

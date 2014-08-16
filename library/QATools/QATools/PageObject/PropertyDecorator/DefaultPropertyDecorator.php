@@ -129,7 +129,6 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 		/* @var $proxy IProxy */
 		$proxy = new $proxy_class($locator, $this->pageFactory);
 		$proxy->setClassName($property->getDataType());
-		$proxy->setContainer($locator->getSearchContext());
 
 		return $proxy;
 	}

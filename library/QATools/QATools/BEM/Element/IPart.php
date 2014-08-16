@@ -12,12 +12,11 @@ namespace QATools\QATools\BEM\Element;
 
 
 use QATools\QATools\HtmlElements\Element\INamed;
-use QATools\QATools\PageObject\Element\IContainerAware;
 
 /**
  * Interface, that every BEM block/element must implement.
  */
-interface IPart extends INamed, IContainerAware
+interface IPart extends INamed
 {
 
 }

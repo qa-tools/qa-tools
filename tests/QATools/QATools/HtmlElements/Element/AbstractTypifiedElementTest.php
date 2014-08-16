@@ -116,7 +116,6 @@ class AbstractTypifiedElementTest extends TestCase
 			array('isValid'),
 			array('getXpath'),
 			array('getTagName'),
-			array('getContainer'),
 		);
 	}
 
@@ -128,22 +127,6 @@ class AbstractTypifiedElementTest extends TestCase
 
 		$this->assertSame($expected, $this->typifiedElement->hasAttribute('A'));
 		$this->assertSame($expected, $this->typifiedElement->getAttribute('A'));
-	}
-
-	public function testSetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-		$this->webElement->shouldReceive('setContainer')->with($container)->once();
-
-		$this->assertSame($this->typifiedElement, $this->typifiedElement->setContainer($container));
-	}
-
-	public function testGetContainer()
-	{
-		$expected = 'OK';
-		$this->webElement->shouldReceive('getContainer')->once()->andReturn($expected);
-
-		$this->assertEquals($expected, $this->typifiedElement->getContainer());
 	}
 
 	public function testToString()

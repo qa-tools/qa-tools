@@ -77,7 +77,6 @@ class TypifiedPropertyDecorator extends DefaultPropertyDecorator
 		/* @var $proxy IProxy */
 		$proxy = new $proxy_class($locator, $this->pageFactory, $this->getElementName($property));
 		$proxy->setClassName($property->getDataType());
-		$proxy->setContainer($locator->getSearchContext());
 
 		return $proxy;
 	}
