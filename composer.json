@@ -6,11 +6,11 @@
 
 	"authors": [
 		{
-			"name":  "Alexander Obuhovich",
+			"name": "Alexander Obuhovich",
 			"email": "aik.bold@gmail.com"
 		},
 		{
-			"name":  "Dmitry Kushnikov",
+			"name": "Dmitry Kushnikov",
 			"email": "dkushnikov@gmail.com"
 		}
 	],
@@ -49,8 +49,8 @@
 	},
 
 	"extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-    }
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	}
 }
