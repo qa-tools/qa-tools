@@ -178,30 +178,6 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	}
 
 	/**
-	 * Sets container, where element is located.
-	 *
-	 * @param ISearchContext|null $container Element container.
-	 *
-	 * @return self
-	 */
-	public function setContainer(ISearchContext $container = null)
-	{
-		$this->getWrappedElement()->setContainer($container);
-
-		return $this;
-	}
-
-	/**
-	 * Returns container, where element is located.
-	 *
-	 * @return ISearchContext
-	 */
-	public function getContainer()
-	{
-		return $this->getWrappedElement()->getContainer();
-	}
-
-	/**
 	 * Returns selectors handler.
 	 *
 	 * @return SelectorsHandler

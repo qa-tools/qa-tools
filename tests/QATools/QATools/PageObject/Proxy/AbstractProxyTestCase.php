@@ -45,7 +45,7 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 * @var array
 	 */
 	protected $ignoreLocatorTests = array(
-		'testSetContainer', 'testGetContainerFallback', 'testGetObjectEmptyLocator', 'testIsValidSubstitute',
+		'testGetObjectEmptyLocator', 'testIsValidSubstitute',
 		'testSetName', 'testFromNodeElements',
 	);
 
@@ -113,27 +113,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	public function testMethodForwardingFailure()
 	{
 		$this->element->nonExistingMethod();
-	}
-
-	public function testSetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-
-		$this->assertSame($this->element, $this->element->setContainer($container));
-		$this->assertSame($container, $this->element->getContainer());
-	}
-
-	public function testGetContainerFallback()
-	{
-		$this->assertNull($this->element->getContainer());
-	}
-
-	public function testContainerToElement()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-		$this->element->setContainer($container);
-
-		$this->assertSame($container, $this->element->getObject()->getContainer());
 	}
 
 	abstract public function testDefaultClassName();

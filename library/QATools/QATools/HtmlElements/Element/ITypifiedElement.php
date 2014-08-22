@@ -11,14 +11,12 @@
 namespace QATools\QATools\HtmlElements\Element;
 
 
-use QATools\QATools\PageObject\Element\IContainerAware;
-
 /**
  * Represents a typified element.
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-interface ITypifiedElement extends IContainerAware, INamed
+interface ITypifiedElement extends INamed
 {
 
 	/**

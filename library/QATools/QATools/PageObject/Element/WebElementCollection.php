@@ -22,13 +22,6 @@ class WebElementCollection extends AbstractElementCollection implements IWebElem
 {
 
 	/**
-	 * Container, where element is located.
-	 *
-	 * @var ISearchContext
-	 */
-	protected $container;
-
-	/**
 	 * Initializes collection with a list of elements.
 	 *
 	 * @param array $elements Elements.
@@ -40,37 +33,6 @@ class WebElementCollection extends AbstractElementCollection implements IWebElem
 		}
 
 		parent::__construct($elements);
-	}
-
-	/**
-	 * Sets container, where element is located.
-	 *
-	 * @param ISearchContext|null $container Element container.
-	 *
-	 * @return self
-	 */
-	public function setContainer(ISearchContext $container = null)
-	{
-		$this->container = $container;
-
-		/** @var WebElement $element */
-		foreach ( $this as $element ) {
-			$element->setContainer($container);
-		}
-
-		$this->getIterator()->rewind();
-
-		return $this;
-	}
-
-	/**
-	 * Returns page element.
-	 *
-	 * @return ISearchContext
-	 */
-	public function getContainer()
-	{
-		return $this->container;
 	}
 
 }

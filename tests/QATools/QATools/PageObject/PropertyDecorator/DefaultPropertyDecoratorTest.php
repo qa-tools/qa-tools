@@ -159,7 +159,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$this->property->shouldReceive('getDataType')->andReturn($element_class);
 
 		$proxy = $this->decorator->decorate($this->property);
-		$this->assertProxy($proxy, $proxy_class, $search_context, $element_class);
+		$this->assertProxy($proxy, $proxy_class, $element_class);
 		$this->assertEquals($node_element->getXpath(), $proxy->getXpath());
 
 		return $proxy;
@@ -168,18 +168,16 @@ class DefaultPropertyDecoratorTest extends TestCase
 	/**
 	 * Verifies, that proxy did that's needed.
 	 *
-	 * @param IProxy         $proxy           Proxy object.
-	 * @param string         $proxy_class     Proxy class.
-	 * @param ISearchContext $proxy_container Container object set to proxy.
-	 * @param string         $element_class   Element class given to proxy.
+	 * @param IProxy $proxy         Proxy object.
+	 * @param string $proxy_class   Proxy class.
+	 * @param string $element_class Element class given to proxy.
 	 *
 	 * @return void
 	 */
-	protected function assertProxy(IProxy $proxy, $proxy_class, ISearchContext $proxy_container, $element_class)
+	protected function assertProxy(IProxy $proxy, $proxy_class, $element_class)
 	{
 		$this->assertInstanceOf($proxy_class, $proxy);
 		$this->assertInstanceOf($element_class, $proxy->getObject());
-		$this->assertSame($proxy_container, $proxy->getContainer());
 	}
 
 	public function proxyDataProvider()

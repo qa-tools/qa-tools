@@ -91,7 +91,6 @@ class BEMPropertyDecorator extends DefaultPropertyDecorator
 			/* @var $proxy IProxy */
 			$proxy = new $proxy_class($name, $locator, $this->pageFactory);
 			$proxy->setClassName($property->getDataType());
-			$proxy->setContainer($locator->getSearchContext());
 
 			return $proxy;
 		}

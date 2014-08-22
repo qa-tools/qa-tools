@@ -29,13 +29,6 @@ abstract class AbstractPart implements IPart
 	private $_name;
 
 	/**
-	 * Container, where element is located.
-	 *
-	 * @var ISearchContext
-	 */
-	protected $container;
-
-	/**
 	 * Creates BEM part.
 	 *
 	 * @param string $name BEM part name.
@@ -53,30 +46,6 @@ abstract class AbstractPart implements IPart
 	public function getName()
 	{
 		return $this->_name;
-	}
-
-	/**
-	 * Sets container, where element is located.
-	 *
-	 * @param ISearchContext|null $container Element container.
-	 *
-	 * @return self
-	 */
-	public function setContainer(ISearchContext $container = null)
-	{
-		$this->container = $container;
-
-		return $this;
-	}
-
-	/**
-	 * Returns container, where element is located.
-	 *
-	 * @return ISearchContext
-	 */
-	public function getContainer()
-	{
-		return $this->container;
 	}
 
 }

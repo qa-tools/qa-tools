@@ -16,7 +16,7 @@ namespace QATools\QATools\PageObject\Element;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-interface IWebElement extends IContainerAware
+interface IWebElement
 {
 
 

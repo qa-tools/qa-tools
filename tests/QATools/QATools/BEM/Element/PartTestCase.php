@@ -25,16 +25,6 @@ abstract class PartTestCase extends TestCase
 	 */
 	protected $partClass = '';
 
-	public function testSetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-
-		$part = $this->createPart();
-
-		$this->assertSame($part, $part->setContainer($container));
-		$this->assertSame($container, $part->getContainer());
-	}
-
 	/**
 	 * Creates part to be tested.
 	 *

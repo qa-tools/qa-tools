@@ -12,12 +12,10 @@ namespace QATools\QATools\PageObject\Proxy;
 
 
 use QATools\QATools\PageObject\Element\AbstractElementCollection;
-use QATools\QATools\PageObject\Element\IContainerAware;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
 use QATools\QATools\PageObject\Exception\ElementNotFoundException;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\IPageFactory;
-use QATools\QATools\PageObject\ISearchContext;
 use Behat\Mink\Element\NodeElement;
 
 /**
@@ -66,13 +64,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	protected $pageFactory;
 
 	/**
-	 * Container, where element is located.
-	 *
-	 * @var ISearchContext
-	 */
-	protected $container;
-
-	/**
 	 * Initializes proxy for the element.
 	 *
 	 * @param IElementLocator $locator      Element selector.
@@ -98,30 +89,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 		$this->className = $class_name;
 
 		return $this;
-	}
-
-	/**
-	 * Sets container, where element is located.
-	 *
-	 * @param ISearchContext|null $container Element container.
-	 *
-	 * @return self
-	 */
-	public function setContainer(ISearchContext $container = null)
-	{
-		$this->container = $container;
-
-		return $this;
-	}
-
-	/**
-	 * Returns container, where element is located.
-	 *
-	 * @return ISearchContext
-	 */
-	public function getContainer()
-	{
-		return $this->container;
 	}
 
 	/**
@@ -174,25 +141,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 		}
 
 		return $elements;
-	}
-
-	/**
-	 * Sets proxy's container to each element.
-	 *
-	 * @return void
-	 */
-	protected function injectContainer()
-	{
-		$container = $this->getContainer();
-
-		$iterator = $this->getIterator();
-
-		/** @var IContainerAware $element */
-		foreach ( $iterator as $element ) {
-			$element->setContainer($container);
-		}
-
-		$iterator->rewind();
 	}
 
 	/**

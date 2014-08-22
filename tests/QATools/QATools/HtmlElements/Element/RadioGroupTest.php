@@ -144,18 +144,6 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertSame($element, $element->setValue(555));
 	}
 
-	public function testSetContainer()
-	{
-		$container = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-
-		$element = $this->createRadioButton();
-		$element->shouldReceive('setContainer')->with($container)->once();
-
-		$this->element[] = $element;
-
-		$this->assertSame($this->element, $this->element->setContainer($container));
-	}
-
 	/**
 	 * Creates a radio button.
 	 *

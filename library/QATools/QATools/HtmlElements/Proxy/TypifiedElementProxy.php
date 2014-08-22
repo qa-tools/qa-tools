@@ -59,7 +59,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 			return;
 		}
 
-		// NodeElement + WebElement(setContainer) + TargetElement(setName) = Proxy.
+		// NodeElement + WebElement + TargetElement(setName) = Proxy.
 		$this->locatorUsed = true;
 
 		foreach ( $this->locateElements() as $element ) {
@@ -71,8 +71,6 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 			$object->setName($this->getName());
 			$this[] = $object;
 		}
-
-		$this->injectContainer();
 	}
 
 	/**

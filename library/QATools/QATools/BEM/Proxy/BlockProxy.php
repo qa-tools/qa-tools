@@ -61,7 +61,6 @@ class BlockProxy extends AbstractPartProxy implements IBlock
 		}
 
 		$this->object = new $this->className($this->getName(), $nodes, $this->pageFactory, $this->locator);
-		$this->object->setContainer($this->getContainer());
 	}
 
 	/**

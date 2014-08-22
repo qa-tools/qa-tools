@@ -45,7 +45,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		$this->pageFactory->shouldReceive('initElements')->once()->andReturn($this->pageFactory);
 
 		$proxy = $this->decorator->decorate($this->property);
-		$this->assertProxy($proxy, '\\QATools\\QATools\\BEM\\Proxy\\BlockProxy', $search_context, $element_class);
+		$this->assertProxy($proxy, '\\QATools\\QATools\\BEM\\Proxy\\BlockProxy', $element_class);
 		$this->assertNotEmpty($proxy->getNodes());
 	}
 
@@ -64,7 +64,7 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		$this->_expectBEMAnnotation($element_class, array($annotation));
 
 		$proxy = $this->decorator->decorate($this->property);
-		$this->assertProxy($proxy, '\\QATools\\QATools\\BEM\\Proxy\\ElementProxy', $search_context, $element_class);
+		$this->assertProxy($proxy, '\\QATools\\QATools\\BEM\\Proxy\\ElementProxy', $element_class);
 		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Element\\IWebElement', $proxy->getWrappedElement());
 	}
 

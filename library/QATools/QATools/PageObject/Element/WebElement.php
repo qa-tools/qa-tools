@@ -33,13 +33,6 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	protected $seleniumSelector;
 
 	/**
-	 * Container, where element is located.
-	 *
-	 * @var ISearchContext
-	 */
-	protected $container;
-
-	/**
 	 * Initializes web element.
 	 *
 	 * @param array   $selenium_selector Element selector.
@@ -92,34 +85,6 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	protected function seleniumSelectorToXpath(Session $session)
 	{
 		return $session->getSelectorsHandler()->selectorToXpath('se', $this->seleniumSelector);
-	}
-
-	/**
-	 * Sets container, where element is located.
-	 *
-	 * @param ISearchContext|null $container Element container.
-	 *
-	 * @return self
-	 */
-	public function setContainer(ISearchContext $container = null)
-	{
-		$this->container = $container;
-
-		return $this;
-	}
-
-	/**
-	 * Returns page element.
-	 *
-	 * @return ISearchContext
-	 */
-	public function getContainer()
-	{
-		if ( is_object($this->container) ) {
-			return $this->container;
-		}
-
-		return $this->getSession()->getPage();
 	}
 
 	/**

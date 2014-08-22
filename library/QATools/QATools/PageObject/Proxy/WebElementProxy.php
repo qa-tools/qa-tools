@@ -50,7 +50,7 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 			return;
 		}
 
-		// NodeElement + TargetElement(setContainer) = Proxy.
+		// NodeElement + TargetElement = Proxy.
 		$this->locatorUsed = true;
 
 		foreach ( $this->locateElements() as $element ) {
@@ -61,8 +61,6 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 
 			$this[] = $object;
 		}
-
-		$this->injectContainer();
 	}
 
 }
