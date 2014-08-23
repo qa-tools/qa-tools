@@ -17,17 +17,17 @@ namespace QATools\QATools\PageObject;
 final class How
 {
 
-	const CLASS_NAME = 'className';
+	const ID = 'id';
+
+	const NAME = 'name';
+
+	const ID_OR_NAME = 'idOrName';
 
 	const CSS = 'css';
 
-	const ID = 'id';
-
-	/*const ID_OR_NAME = '?';*/
+	const CLASS_NAME = 'className';
 
 	const LINK_TEXT = 'linkText';
-
-	const NAME = 'name';
 
 	const PARTIAL_LINK_TEXT = 'partialLinkText';
 

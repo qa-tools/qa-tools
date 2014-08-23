@@ -51,12 +51,6 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			array(
-				array(How::LINK_TEXT => ''),
-			),
-			array(
-				array(How::PARTIAL_LINK_TEXT => ''),
-			),
-			array(
 				array('what-the-heck' => ''),
 			),
 		);
@@ -80,27 +74,39 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	public function correctDataProvider()
 	{
 		return array(
-			array(
+			How::CLASS_NAME => array(
 				array(How::CLASS_NAME => 'sample-class'),
 				"descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' sample-class ')]",
 			),
-			array(
+			How::CSS => array(
 				array(How::CSS => 'body > ul'),
 				'descendant-or-self::body/ul',
 			),
-			array(
+			How::ID => array(
 				array(How::ID => 'test[element]'),
 				"descendant-or-self::*[@id = 'test[element]']",
 			),
-			array(
+			How::NAME => array(
 				array(How::NAME => 'section-title[arrow]'),
 				"descendant-or-self::*[@name = 'section-title[arrow]']",
 			),
-			array(
+			How::ID_OR_NAME => array(
+				array(How::ID_OR_NAME => 'section-title[arrow]'),
+				"descendant-or-self::*[@id = 'section-title[arrow]' or @name = 'section-title[arrow]']",
+			),
+			How::LINK_TEXT => array(
+				array(How::LINK_TEXT => 'cheese'),
+				"descendant-or-self::a[./@href][normalize-space(string(.)) = 'cheese']",
+			),
+			How::PARTIAL_LINK_TEXT => array(
+				array(How::PARTIAL_LINK_TEXT => 'cheese'),
+				"descendant-or-self::a[./@href][contains(normalize-space(string(.)), 'cheese')]",
+			),
+			How::TAG_NAME => array(
 				array(How::TAG_NAME => 'test-tag'),
 				'descendant-or-self::test-tag',
 			),
-			array(
+			How::XPATH => array(
 				array(How::XPATH => '_return-as-is_'),
 				'_return-as-is_',
 			),
