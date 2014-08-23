@@ -12,7 +12,6 @@ namespace QATools\QATools\HtmlElements\Element;
 
 
 use QATools\QATools\PageObject\Element\AbstractElementCollection;
-use QATools\QATools\PageObject\ISearchContext;
 
 /**
  * Represents a list of typified elements.

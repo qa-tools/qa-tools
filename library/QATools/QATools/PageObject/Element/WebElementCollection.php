@@ -11,8 +11,6 @@
 namespace QATools\QATools\PageObject\Element;
 
 
-use QATools\QATools\PageObject\ISearchContext;
-
 /**
  * Represents a list of elements.
  *

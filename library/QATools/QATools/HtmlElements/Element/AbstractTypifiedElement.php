@@ -17,7 +17,6 @@ use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use QATools\QATools\PageObject\Element\WebElement;
-use QATools\QATools\PageObject\ISearchContext;
 
 /**
  * The base class to be used for making classes representing typified elements (i.e web page controls such as

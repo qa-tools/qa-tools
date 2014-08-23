@@ -11,8 +11,6 @@
 namespace QATools\QATools\BEM\Element;
 
 
-use QATools\QATools\PageObject\ISearchContext;
-
 /**
  * Part of BEM.
  *

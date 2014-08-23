@@ -15,7 +15,6 @@ use QATools\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
 use QATools\QATools\PageObject\How;
-use QATools\QATools\PageObject\ISearchContext;
 
 /**
  * Regular element on a page, that is initialized using Selenium-style selector.
