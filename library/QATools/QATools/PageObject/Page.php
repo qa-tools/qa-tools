@@ -24,6 +24,13 @@ abstract class Page extends DocumentElement implements ISearchContext
 {
 
 	/**
+	 * Page factory, used to create a Page.
+	 *
+	 * @var IPageFactory
+	 */
+	protected $pageFactory = null;
+
+	/**
 	 * The builder which generates the url.
 	 *
 	 * @var IBuilder
@@ -39,7 +46,9 @@ abstract class Page extends DocumentElement implements ISearchContext
 	{
 		parent::__construct($page_factory->getSession());
 
-		$page_factory->initPage($this)->initElements($this, $page_factory->createDecorator($this));
+		$this->pageFactory = $page_factory;
+
+		$this->pageFactory->initPage($this)->initElements($this, $this->pageFactory->createDecorator($this));
 	}
 
 	/**
