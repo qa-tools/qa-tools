@@ -16,6 +16,8 @@ use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Element\IElementContainer;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
+use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
+use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
@@ -74,6 +76,13 @@ class PageFactory implements IPageFactory
 	protected $urlNormalizer;
 
 	/**
+	 * The page locator.
+	 *
+	 * @var IPageLocator
+	 */
+	protected $pageLocator;
+
+	/**
 	 * The current config.
 	 *
 	 * @var IConfig
@@ -96,6 +105,7 @@ class PageFactory implements IPageFactory
 		$this->setAnnotationManager($annotation_manager);
 		$this->setUrlFactory(new UrlFactory());
 		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
+		$this->setPageLocator(new DefaultPageLocator((array)$this->config->getOption('page_namespace_prefix')));
 	}
 
 	/**
@@ -178,6 +188,20 @@ class PageFactory implements IPageFactory
 	public function setUrlNormalizer(Normalizer $normalizer)
 	{
 		$this->urlNormalizer = $normalizer;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the page locator.
+	 *
+	 * @param IPageLocator $page_locator The page locator.
+	 *
+	 * @return self
+	 */
+	public function setPageLocator(IPageLocator $page_locator)
+	{
+		$this->pageLocator = $page_locator;
 
 		return $this;
 	}

@@ -28,6 +28,7 @@ class Config implements IConfig
 	 */
 	protected $options = array(
 		'base_url' => '',
+		'page_namespace_prefix' => '',
 	);
 
 	/**
