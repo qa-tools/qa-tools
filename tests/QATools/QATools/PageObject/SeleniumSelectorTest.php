@@ -61,9 +61,17 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider correctDataProvider
 	 */
-	public function testCorrect(array $locator, $expected_xpath)
+	public function testCorrect(array $locator, $expected_count)
 	{
-		$this->assertEquals($expected_xpath, $this->selector->translateToXPath($locator));
+		$dom = new \DOMDocument('1.0', 'UTF-8');
+		$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
+
+		$xpath = $this->selector->translateToXPath($locator);
+
+		$dom_xpath = new \DOMXPath($dom);
+		$node_list = $dom_xpath->query($xpath);
+
+		$this->assertEquals($expected_count, $node_list->length);
 	}
 
 	/**
@@ -74,41 +82,44 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	public function correctDataProvider()
 	{
 		return array(
-			How::CLASS_NAME => array(
-				array(How::CLASS_NAME => 'sample-class'),
-				"descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' sample-class ')]",
+			How::CLASS_NAME . ' (partial)' => array(
+				array(How::CLASS_NAME => 'class-one'), 2,
 			),
-			How::CSS => array(
-				array(How::CSS => 'body > ul'),
-				'descendant-or-self::body/ul',
+			How::CLASS_NAME . ' (exact)' => array(
+				array(How::CLASS_NAME => 'class-two'), 1,
+			),
+			How::CSS . ' (tag name)' => array(
+				array(How::CSS => 'p'), 2,
+			),
+			How::CSS . ' (id)' => array(
+				array(How::CSS => '#the-paragraph'), 1,
+			),
+			How::CSS . ' (class name)' => array(
+				array(How::CSS => '.class-one'), 2,
+			),
+			How::CSS . ' (mix)' => array(
+				array(How::CSS => '.class-one.class-two'), 1,
 			),
 			How::ID => array(
-				array(How::ID => 'test[element]'),
-				"descendant-or-self::*[@id = 'test[element]']",
+				array(How::ID => 'the-paragraph'), 1,
 			),
 			How::NAME => array(
-				array(How::NAME => 'section-title[arrow]'),
-				"descendant-or-self::*[@name = 'section-title[arrow]']",
+				array(How::NAME => 'field'), 3,
 			),
 			How::ID_OR_NAME => array(
-				array(How::ID_OR_NAME => 'section-title[arrow]'),
-				"descendant-or-self::*[@id = 'section-title[arrow]' or @name = 'section-title[arrow]']",
+				array(How::ID_OR_NAME => 'field'), 4,
 			),
 			How::LINK_TEXT => array(
-				array(How::LINK_TEXT => 'cheese'),
-				"descendant-or-self::a[./@href][normalize-space(string(.)) = 'cheese']",
+				array(How::LINK_TEXT => 'cheese'), 1,
 			),
 			How::PARTIAL_LINK_TEXT => array(
-				array(How::PARTIAL_LINK_TEXT => 'cheese'),
-				"descendant-or-self::a[./@href][contains(normalize-space(string(.)), 'cheese')]",
+				array(How::PARTIAL_LINK_TEXT => 'cheese'), 2,
 			),
 			How::TAG_NAME => array(
-				array(How::TAG_NAME => 'test-tag'),
-				'descendant-or-self::test-tag',
+				array(How::TAG_NAME => 'a'), 3,
 			),
 			How::XPATH => array(
-				array(How::XPATH => '_return-as-is_'),
-				'_return-as-is_',
+				array(How::XPATH => 'descendant-or-self::a[@name]'), 1,
 			),
 		);
 	}
