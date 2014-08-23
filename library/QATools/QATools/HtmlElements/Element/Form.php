@@ -84,7 +84,7 @@ class Form extends AbstractElementContainer
 
 		// Needed for Mink 1.x and below.
 		if ( method_exists($selectors_handler, 'xpathLiteral') ) {
-			return $selectors_handler->xpathLiteral($string);
+			$string = $selectors_handler->xpathLiteral($string);
 		}
 
 		return $string;

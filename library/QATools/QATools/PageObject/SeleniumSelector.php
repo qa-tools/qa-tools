@@ -76,8 +76,23 @@ class SeleniumSelector implements SelectorInterface
 		elseif ( $selector == How::NAME ) {
 			return 'descendant-or-self::*[@name = ' . $this->_handler->xpathLiteral($locator) . ']';
 		}
+		elseif ( $selector == How::ID_OR_NAME ) {
+			$locator = $this->_handler->xpathLiteral($locator);
+
+			return 'descendant-or-self::*[@id = ' . $locator . ' or @name = ' . $locator . ']';
+		}
 		elseif ( $selector == How::TAG_NAME ) {
 			return 'descendant-or-self::' . $locator;
+		}
+		elseif ( $selector == How::LINK_TEXT ) {
+			$locator = $this->_handler->xpathLiteral($locator);
+
+			return 'descendant-or-self::a[./@href][normalize-space(string(.)) = ' . $locator . ']';
+		}
+		elseif ( $selector == How::PARTIAL_LINK_TEXT ) {
+			$locator = $this->_handler->xpathLiteral($locator);
+
+			return 'descendant-or-self::a[./@href][contains(normalize-space(string(.)), ' . $locator . ')]';
 		}
 		elseif ( $selector == How::XPATH ) {
 			return $locator;
