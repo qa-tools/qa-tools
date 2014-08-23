@@ -20,7 +20,7 @@ use QATools\QATools\PageObject\IPageFactory;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  *
- * @link http://bit.ly/14TbcR9
+ * @link http://bit.ly/qa-tools-page-factory-lazy-initialization
  */
 class WebElementProxy extends AbstractProxy implements IWebElement
 {

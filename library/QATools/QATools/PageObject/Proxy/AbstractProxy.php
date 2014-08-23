@@ -23,7 +23,7 @@ use Behat\Mink\Element\NodeElement;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  *
- * @link http://bit.ly/14TbcR9
+ * @link http://bit.ly/qa-tools-page-factory-lazy-initialization
  */
 abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 {

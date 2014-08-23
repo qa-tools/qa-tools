@@ -20,7 +20,7 @@ use QATools\QATools\PageObject\Exception\ElementException;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  *
- * @link http://bit.ly/17fhZ7Z
+ * @link http://bit.ly/qa-tools-findby-selector
  */
 class SeleniumSelector implements SelectorInterface
 {

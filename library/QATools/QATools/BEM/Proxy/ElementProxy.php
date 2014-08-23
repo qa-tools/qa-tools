@@ -19,7 +19,7 @@ use QATools\QATools\PageObject\IPageFactory;
 /**
  * Class for lazy-proxy creation to ensure, that BEM elements are really accessed only at moment, when user needs them
  *
- * @link http://bit.ly/14TbcR9
+ * @link http://bit.ly/qa-tools-page-factory-lazy-initialization
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
