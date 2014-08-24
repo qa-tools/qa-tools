@@ -17,25 +17,6 @@ abstract class BEMPage extends Page
 {
 
 	/**
-	 * Page Factory, used to create a Page.
-	 *
-	 * @var BEMPageFactory
-	 */
-	protected $pageFactory = null;
-
-	/**
-	 * Initialize the page.
-	 *
-	 * @param BEMPageFactory $page_factory Page factory.
-	 */
-	public function __construct(BEMPageFactory $page_factory)
-	{
-		parent::__construct($page_factory);
-
-		$this->pageFactory = $page_factory;
-	}
-
-	/**
 	 * Initializes BEM page elements.
 	 *
 	 * @return void
