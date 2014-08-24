@@ -35,7 +35,7 @@ class DefaultPageLocator implements IPageLocator
 	 */
 	public function __construct(array $page_namespace_prefixes)
 	{
-		$this->pageNamespacePrefixes = (array)$page_namespace_prefixes;
+		$this->pageNamespacePrefixes = $page_namespace_prefixes;
 	}
 
 	/**
@@ -44,25 +44,28 @@ class DefaultPageLocator implements IPageLocator
 	 * @param string $name The name of the page.
 	 *
 	 * @return string
-	 * @throws PageFactoryException When no class is found.
+	 * @throws PageFactoryException When page class is not found.
 	 */
-	public function getFullyQualifiedClassNameByName($name)
+	public function resolvePage($name)
 	{
 		$class_name = $this->buildClassNameFromName($name);
 
-		if ( $this->isClassExisting($class_name) ) {
+		if ( class_exists($class_name) ) {
 			return $class_name;
 		}
 
 		foreach ( $this->pageNamespacePrefixes as $prefix ) {
 			$fully_qualified_class_name = $prefix . '\\' . $class_name;
 
-			if ( $this->isClassExisting($fully_qualified_class_name) ) {
+			if ( class_exists($fully_qualified_class_name) ) {
 				return $fully_qualified_class_name;
 			}
 		}
 
-		throw new PageFactoryException(sprintf('"%s" was not found.'), PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND);
+		throw new PageFactoryException(
+			sprintf('"%s" was not found.', $name),
+			PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND
+		);
 	}
 
 	/**
@@ -76,25 +79,7 @@ class DefaultPageLocator implements IPageLocator
 	{
 		$class_name_parts = explode(' ', $name);
 
-		$class_name = '';
-
-		foreach ( $class_name_parts as $part ) {
-			$class_name .= ucfirst($part);
-		}
-
-		return $class_name;
-	}
-
-	/**
-	 * Checks if the given class is existing.
-	 *
-	 * @param string $fully_qualified_class_name The fully qualified class name to check.
-	 *
-	 * @return boolean
-	 */
-	protected function isClassExisting($fully_qualified_class_name)
-	{
-		return class_exists($fully_qualified_class_name);
+		return count($class_name_parts) == 1 ? $name : implode('', array_map('ucfirst', $class_name_parts));
 	}
 
 }

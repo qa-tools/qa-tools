@@ -26,6 +26,6 @@ interface IPageLocator
 	 *
 	 * @return string
 	 */
-	public function getFullyQualifiedClassNameByName($name);
+	public function resolvePage($name);
 
 }

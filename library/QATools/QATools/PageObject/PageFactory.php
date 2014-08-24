@@ -330,7 +330,9 @@ class PageFactory implements IPageFactory
 	 */
 	public function getPage($class_name)
 	{
-		$reflection = new \ReflectionClass($class_name);
+		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
+
+		$reflection = new \ReflectionClass($resolved_page_class);
 
 		return $reflection->newInstanceArgs(array($this));
 	}
