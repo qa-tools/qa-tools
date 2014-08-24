@@ -29,7 +29,7 @@ Define the dependencies in your ```composer.json```:
 {
 	"require": {
 		"qa-tools/qa-tools": "~1.0",
-		"mindplay/annotations": "dev-master"
+		"mindplay/annotations": "~1.2@dev"
 	}
 }
 ```
