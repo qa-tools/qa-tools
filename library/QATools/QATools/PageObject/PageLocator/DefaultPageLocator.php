@@ -26,7 +26,7 @@ class DefaultPageLocator implements IPageLocator
 	 *
 	 * @var array
 	 */
-	protected $pageNamespacePrefixes;
+	protected $pageNamespacePrefixes = array();
 
 	/**
 	 * Creates the DefaultPageLocator.
@@ -35,7 +35,9 @@ class DefaultPageLocator implements IPageLocator
 	 */
 	public function __construct(array $page_namespace_prefixes)
 	{
-		$this->pageNamespacePrefixes = $page_namespace_prefixes;
+		foreach ( $page_namespace_prefixes as $namespace ) {
+			$this->pageNamespacePrefixes[] = $this->normalize($namespace);
+		}
 	}
 
 	/**
@@ -48,24 +50,54 @@ class DefaultPageLocator implements IPageLocator
 	 */
 	public function resolvePage($name)
 	{
-		$class_name = $this->buildClassNameFromName($name);
+		$possible_pages = $this->buildPossiblePages($name);
+		$page_class = $this->findExistingPage($possible_pages);
 
-		if ( class_exists($class_name) ) {
-			return $class_name;
-		}
-
-		foreach ( $this->pageNamespacePrefixes as $prefix ) {
-			$fully_qualified_class_name = $prefix . '\\' . $class_name;
-
-			if ( class_exists($fully_qualified_class_name) ) {
-				return $fully_qualified_class_name;
-			}
+		if ( $page_class !== false ) {
+			return $page_class;
 		}
 
 		throw new PageFactoryException(
 			sprintf('"%s" was not found.', $name),
 			PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND
 		);
+	}
+
+	/**
+	 * Builds all possible page classes from passed name and current prefixes.
+	 *
+	 * @param string $name Page name.
+	 *
+	 * @return array
+	 */
+	protected function buildPossiblePages($name)
+	{
+		$class_name = $this->buildClassNameFromName($name);
+		$possible_classes = (array)$class_name;
+
+		foreach ( $this->pageNamespacePrefixes as $prefix ) {
+			$possible_classes[] = $prefix . $class_name;
+		}
+
+		return $possible_classes;
+	}
+
+	/**
+	 * Returns first existing class passed in array.
+	 *
+	 * @param array $possible_pages Possible page classes.
+	 *
+	 * @return string|bool
+	 */
+	protected function findExistingPage(array $possible_pages)
+	{
+		foreach ( $possible_pages as $page_class ) {
+			if ( class_exists($page_class) ) {
+				return $page_class;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -80,6 +112,24 @@ class DefaultPageLocator implements IPageLocator
 		$class_name_parts = explode(' ', $name);
 
 		return count($class_name_parts) == 1 ? $name : implode('', array_map('ucfirst', $class_name_parts));
+	}
+
+	/**
+	 * Normalizes passed namespace.
+	 *
+	 * @param string $namespace Namespace.
+	 *
+	 * @return string
+	 */
+	protected function normalize($namespace)
+	{
+		$normalized_namespace = trim($namespace, '\\') . '\\';
+
+		if ( strpos($normalized_namespace, '\\') !== 0 ) {
+			$normalized_namespace = '\\' . $normalized_namespace;
+		}
+
+		return $normalized_namespace;
 	}
 
 }

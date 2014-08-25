@@ -43,7 +43,7 @@ class DefaultPageLocatorTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array(''),
 			array('SomeNonExistingClassName'),
-			array('Example\\SomeNonExistingClassName'),
+			array('\\Example\\SomeNonExistingClassName'),
 		);
 	}
 
@@ -65,7 +65,7 @@ class DefaultPageLocatorTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array('ResolvePageMockedExistingClass', 'ResolvePageMockedExistingClass'),
 			array('resolve page mocked existing class', 'ResolvePageMockedExistingClass'),
-			array('Example\\ResolvePageMockedExistingClass', 'Example\\ResolvePageMockedExistingClass'),
+			array('\\Example\\ResolvePageMockedExistingClass', '\\Example\\ResolvePageMockedExistingClass'),
 		);
 	}
 
@@ -92,8 +92,8 @@ class DefaultPageLocatorTest extends \PHPUnit_Framework_TestCase
 			),
 			array(
 				'ResolvePageMockedPrefixedClassInNamespace',
-				array('Example'),
-				'Example\\ResolvePageMockedPrefixedClassInNamespace',
+				array('\\Dummy', 'Example'),
+				'\\Example\\ResolvePageMockedPrefixedClassInNamespace',
 			),
 			array(
 				'resolve page mocked prefixed class',
@@ -102,8 +102,8 @@ class DefaultPageLocatorTest extends \PHPUnit_Framework_TestCase
 			),
 			array(
 				'resolve page mocked prefixed class in namespace',
-				array('Example'),
-				'Example\\ResolvePageMockedPrefixedClassInNamespace',
+				array('Example', '\\Dummy'),
+				'\\Example\\ResolvePageMockedPrefixedClassInNamespace',
 			),
 		);
 	}
