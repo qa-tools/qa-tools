@@ -110,6 +110,14 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 		}
 	}
 
+	public function testCurrent()
+	{
+		$this->element[] = $this->createValidElementMock();
+
+		$this->assertEquals(0, key($this->element));
+		$this->assertInstanceOf($this->collectionElementClass, current($this->element));
+	}
+
 	/**
 	 * Creates valid collection element mock.
 	 *
