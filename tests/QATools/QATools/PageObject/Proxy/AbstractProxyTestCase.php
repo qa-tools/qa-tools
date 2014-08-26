@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\PageObject\Proxy;
 
 
+use Behat\Mink\Element\NodeElement;
 use QATools\QATools\PageObject\Proxy\AbstractProxy;
 use Mockery as m;
 use tests\QATools\QATools\PageObject\Element\AbstractElementCollectionTestCase;
@@ -46,7 +47,7 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 */
 	protected $ignoreLocatorTests = array(
 		'testGetObjectEmptyLocator', 'testIsValidSubstitute',
-		'testSetName', 'testFromNodeElements',
+		'testSetName', 'testFromNodeElements', 'testInternalPointerPointingOnFirstElement',
 	);
 
 	protected function setUp()
@@ -80,6 +81,30 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	protected function expectLocatorCall()
 	{
 		$this->locator->shouldReceive('findAll')->once()->andReturn(array($this->createNodeElement()));
+	}
+
+	/**
+	 * Sets expectation for a locator call with 2 resulting node elements.
+	 *
+	 * @return NodeElement[]
+	 */
+	protected function expectLocatorCallReturningTwoNodeElements()
+	{
+		$node_elements = array(
+			$this->createNodeElement('XPATH1'),
+			$this->createNodeElement('XPATH2'),
+		);
+
+		foreach ( $node_elements as $node_element ) {
+			$this->selectorsHandler
+				->shouldReceive('selectorToXpath')
+				->with('se', array('xpath' => $node_element->getXpath()))
+				->andReturn($node_element->getXpath());
+		}
+
+		$this->locator->shouldReceive('findAll')->once()->andReturn($node_elements);
+
+		return $node_elements;
 	}
 
 	public function testGetObjectSharing()

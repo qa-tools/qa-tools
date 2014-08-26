@@ -65,6 +65,16 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		$this->assertEquals($expected, $this->element->getName());
 	}
 
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$this->expectLocatorCallReturningTwoNodeElements();
+
+		$proxy = $this->createElement();
+
+		$this->assertCount(2, $proxy);
+		$this->assertEquals('XPATH1', $proxy->getObject()->getXPath());
+	}
+
 	/**
 	 * Creates a proxy.
 	 *
