@@ -45,6 +45,13 @@ class WebElementCollectionProxyTest extends WebElementProxyTest
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
 
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$this->expectLocatorCallReturningTwoNodeElements();
+
+		$this->assertEquals(1, $this->element->getObject()->proxyMe());
+	}
+
 	/**
 	 * Creates a proxy.
 	 *
