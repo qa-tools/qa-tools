@@ -122,8 +122,6 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 		foreach ( $iterator as $element ) {
 			$element->setName($this->getName());
 		}
-
-		$iterator->rewind();
 	}
 
 	/**

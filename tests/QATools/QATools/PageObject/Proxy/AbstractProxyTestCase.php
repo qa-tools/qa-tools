@@ -46,7 +46,7 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 */
 	protected $ignoreLocatorTests = array(
 		'testGetObjectEmptyLocator', 'testIsValidSubstitute',
-		'testSetName', 'testFromNodeElements',
+		'testSetName', 'testFromNodeElements', 'testInternalPointerPointingOnFirstElement',
 	);
 
 	protected function setUp()
@@ -80,6 +80,28 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	protected function expectLocatorCall()
 	{
 		$this->locator->shouldReceive('findAll')->once()->andReturn(array($this->createNodeElement()));
+	}
+
+	/**
+	 * Sets expectation for a locator call with 2 resulting node elements.
+	 *
+	 * @return void
+	 */
+	protected function expectLocatorCallReturningTwoNodeElements()
+	{
+		$node_elements = array(
+			$this->createNodeElement('XPATH1'),
+			$this->createNodeElement('XPATH2'),
+		);
+
+		foreach ( $node_elements as $node_element ) {
+			$this->selectorsHandler
+				->shouldReceive('selectorToXpath')
+				->with('se', array('xpath' => $node_element->getXPath()))
+				->andReturn($node_element->getXPath());
+		}
+
+		$this->locator->shouldReceive('findAll')->once()->andReturn($node_elements);
 	}
 
 	public function testGetObjectSharing()

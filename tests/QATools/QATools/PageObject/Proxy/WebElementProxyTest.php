@@ -46,4 +46,14 @@ class WebElementProxyTest extends AbstractProxyTestCase
 		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Element\\IWebElement', $this->element);
 	}
 
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$this->expectLocatorCallReturningTwoNodeElements();
+
+		$proxy = $this->createElement();
+
+		$this->assertCount(2, $proxy);
+		$this->assertEquals('XPATH1', $proxy->getObject()->getXPath());
+	}
+
 }
