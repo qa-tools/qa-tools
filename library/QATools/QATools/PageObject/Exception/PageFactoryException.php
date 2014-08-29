@@ -17,5 +17,6 @@ namespace QATools\QATools\PageObject\Exception;
 class PageFactoryException extends \Exception
 {
 	const TYPE_UNKNOWN_CLASS = 1;
+	const TYPE_PAGE_CLASS_NOT_FOUND = 2;
 
 }
