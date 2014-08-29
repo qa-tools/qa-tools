@@ -16,7 +16,7 @@ use Behat\Mink\Element\NodeElement;
 /**
  * Represents web page control with optional associated label.
  */
-class LabeledElement extends AbstractTypifiedElement
+class LabeledElement extends AbstractFormElement
 {
 
 	/**
