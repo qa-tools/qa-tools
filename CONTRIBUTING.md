@@ -9,7 +9,7 @@ Feel free to ask any questions and share your experiences on the [Support Page](
 - If you are going to make a big, substantial change, let's discuss it first.
 
 ## Working with Pull Requests
-1. Create your feature addition or a bug fix branch based on `master` branch in your repository's fork.
+1. Create your feature addition or a bug fix branch based on __`develop`__ branch in your repository's fork.
 2. Make necessary changes, but __don't mix__ code reformatting with code changes on topic.
 3. Add tests for those changes (please look into `tests/` folder for some examples). This is important so we don't break it in a future version unintentionally.
 4. Check your code using "Coding Standard" (see below).
