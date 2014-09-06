@@ -8,7 +8,10 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a)
 
 [![Latest Stable Version](https://poser.pugx.org/qa-tools/qa-tools/v/stable.png)](https://packagist.org/packages/qa-tools/qa-tools)
+[![Latest Unstable Version](https://poser.pugx.org/qa-tools/qa-tools/v/unstable.svg)](https://packagist.org/packages/qa-tools/qa-tools)
 [![Total Downloads](https://poser.pugx.org/qa-tools/qa-tools/downloads.png)](https://packagist.org/packages/qa-tools/qa-tools)
+
+[![License](https://poser.pugx.org/qa-tools/qa-tools/license.svg)](https://packagist.org/packages/qa-tools/qa-tools)
 
 Quality assurance utilities for functional tests written on PHP.
 
