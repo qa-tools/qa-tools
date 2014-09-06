@@ -1,7 +1,7 @@
 # QA-Tools
 
-[![Build Status](https://travis-ci.org/qa-tools/qa-tools.png?branch=master)](https://travis-ci.org/qa-tools/qa-tools)
-[![HHVM Status](http://hhvm.h4cc.de/badge/qa-tools/qa-tools.png)](http://hhvm.h4cc.de/package/qa-tools/qa-tools)
+[![Build Status](https://travis-ci.org/qa-tools/qa-tools.svg?branch=master)](https://travis-ci.org/qa-tools/qa-tools)
+[![HHVM Status](http://hhvm.h4cc.de/badge/qa-tools/qa-tools.svg)](http://hhvm.h4cc.de/package/qa-tools/qa-tools)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
 [![Coverage Status](https://img.shields.io/coveralls/qa-tools/qa-tools.svg)](https://coveralls.io/r/qa-tools/qa-tools)
