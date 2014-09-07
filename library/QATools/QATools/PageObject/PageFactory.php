@@ -88,7 +88,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function __construct(Session $session, IConfig $config = null)
 	{
-		$this->_session = $this->attachSeleniumSelector($session);
+		$this->setSession($session);
 		$this->config = isset($config) ? $config : new Config();
 
 		$annotation_manager = new AnnotationManager();
@@ -96,24 +96,6 @@ class PageFactory implements IPageFactory
 		$this->setAnnotationManager($annotation_manager);
 		$this->setUrlFactory(new UrlFactory());
 		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
-	}
-
-	/**
-	 * Attaches Selenium selector, that is later used during annotation processing.
-	 *
-	 * @param Session $session Mink session.
-	 *
-	 * @return self
-	 */
-	protected function attachSeleniumSelector(Session $session)
-	{
-		$selectors_handler = $session->getSelectorsHandler();
-
-		if ( !$selectors_handler->isSelectorRegistered('se') ) {
-			$selectors_handler->registerSelector('se', new SeleniumSelector($selectors_handler));
-		}
-
-		return $session;
 	}
 
 	/**
@@ -197,7 +179,27 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
-	 * Returns element session.
+	 * Sets session.
+	 *
+	 * @param Session $session Session.
+	 *
+	 * @return self
+	 */
+	public function setSession(Session $session)
+	{
+		$selectors_handler = $session->getSelectorsHandler();
+
+		if ( !$selectors_handler->isSelectorRegistered('se') ) {
+			$selectors_handler->registerSelector('se', new SeleniumSelector($selectors_handler));
+		}
+
+		$this->_session = $session;
+
+		return $this;
+	}
+
+	/**
+	 * Returns session.
 	 *
 	 * @return Session
 	 */
