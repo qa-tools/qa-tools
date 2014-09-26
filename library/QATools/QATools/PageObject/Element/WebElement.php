@@ -45,21 +45,6 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	}
 
 	/**
-	 * Waits for an element(-s) to appear and returns it.
-	 *
-	 * @param integer  $timeout  Maximal allowed waiting time in seconds.
-	 * @param callable $callback Callback, which result is both used as waiting condition and returned.
-	 *                           Will receive reference to `this element` as first argument.
-	 *
-	 * @return mixed
-	 * @throws \InvalidArgumentException When invalid callback given.
-	 */
-	public function waitFor($timeout, $callback)
-	{
-		return parent::waitFor($timeout * 1000, $callback);
-	}
-
-	/**
 	 * Creates Element instance based on existing NodeElement instance.
 	 *
 	 * @param NodeElement  $node_element Node element.
