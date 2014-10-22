@@ -64,7 +64,13 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	public function testCorrect(array $locator, $expected_count)
 	{
 		$dom = new \DOMDocument('1.0', 'UTF-8');
-		$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
+
+		if ( defined('HHVM_VERSION') ) {
+			$dom->loadHTML(file_get_contents(__DIR__ . '/Fixture/selector_test.html'));
+		}
+		else {
+			$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
+		}
 
 		$xpath = $this->selector->translateToXPath($locator);
 
