@@ -81,6 +81,13 @@ class FindByAnnotation extends Annotation
 	public $xpath;
 
 	/**
+	 * Label.
+	 *
+	 * @var string
+	 */
+	public $label;
+
+	/**
 	 * How class constant.
 	 *
 	 * @var string
@@ -105,7 +112,9 @@ class FindByAnnotation extends Annotation
 	 */
 	public function getSelector()
 	{
-		$direct_settings = array('className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath');
+		$direct_settings = array(
+			'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath', 'label',
+		);
 
 		foreach ( $direct_settings as $direct_setting ) {
 			if ( $this->$direct_setting ) {
