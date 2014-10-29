@@ -18,5 +18,33 @@
 		<a href="#">cheese</a>
 		<a href="#">also cheese</a>
 	</div>
+    <div>
+        <div>
+              <input type="checkbox" id="checkbox-without-label"/>
+        </div>
+        
+        <div>
+          <input type="checkbox" id="checkbox-with-following-label"/><label for="checkbox-with-following-label">label text 2</label>
+        </div>
+        <div>
+          <label for="checkbox-with-preceding-label">label text 3</label><input type="checkbox" id="checkbox-with-preceding-label"/>
+        </div>
+        <div>
+          <label><input type="checkbox" id="checkbox-inside-label"/>label text 4</label>
+        </div>
+        <div>
+            <label for="textarea_label">label textarea</label>
+            <textarea id="textarea_label" ></textarea>
+        </div>
+        <div>
+            <label for="select_label">label select</label>
+            <select id="select_label">
+                <option disabled="disabled" selected="selected" value="">Disabled Option</option>
+                <option value="1">First Option</option>
+                <option value="2">Second Option</option>
+            </select>
+        </div>
+
+	</div>
 </body>
 </html>
