@@ -19,7 +19,7 @@ use QATools\QATools\PageObject\How;
  * Annotation for describing element selector in Selenium style.
  *
  * @link http://bit.ly/qa-tools-find-by-annotation
- * @usage('class'=>true, 'property'=>true, 'inherited'=>true)
+ * @usage('class'=>true, 'property'=>true, 'inherited'=>true, 'multiple'=>true)
  */
 class FindByAnnotation extends Annotation
 {
