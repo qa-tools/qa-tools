@@ -53,7 +53,7 @@ class WebElementPage extends Page
 	 * Example text inputs with multiple find-by annotations as WebElement.
 	 *
 	 * @var WebElement[]
- 	 * @find-by('name' => 'test1')
+	 * @find-by('name' => 'test1')
 	 * @find-by('name' => 'test2')
 	 * @find-by('name' => 'test3')
 	 */
