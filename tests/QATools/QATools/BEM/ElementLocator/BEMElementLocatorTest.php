@@ -177,7 +177,10 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		}
 
 		return new $this->locatorClass(
-			$this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper
+			$this->property,
+			$this->searchContext,
+			$this->annotationManager,
+			$this->_locatorHelper
 		);
 	}
 

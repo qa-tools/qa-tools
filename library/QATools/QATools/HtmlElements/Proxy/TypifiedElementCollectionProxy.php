@@ -111,7 +111,10 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 		$this->locatorUsed = true;
 
 		$object = call_user_func(
-			array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
+			array($this->className, 'fromNodeElements'),
+			$this->locateElements(),
+			null,
+			$this->pageFactory
 		);
 
 		AbstractElementCollection::offsetSet(null, $object);
