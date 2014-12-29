@@ -26,6 +26,8 @@ class FormTest extends AbstractElementContainerTest
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Form';
 		}
 
+		$this->ignoreExpectTypifiedNodeCheck[] = 'testTypify';
+
 		parent::setUp();
 	}
 
@@ -109,15 +111,20 @@ class FormTest extends AbstractElementContainerTest
 	 */
 	public function testTypify($tag_name, $input_type, $element_class)
 	{
-		// 2 times for radio, because radio is wrapped within a collection and is asserted.
-		$call_count = $input_type == 'radio' ? 2 : 1;
+		// 3 times for radio, because radio is wrapped within a collection and is asserted.
+		$call_count = $input_type == 'radio' ? 3 : 2;
 
 		$node_element = new NodeElement('XPATH', $this->session);
 		$this->driver->shouldReceive('getTagName')->with('XPATH')->times($call_count)->andReturn($tag_name);
 
 		if ( $tag_name == 'input' ) {
-			$this->driver->shouldReceive('getAttribute')->with('XPATH', 'type')->times($call_count)->andReturn($input_type);
+			$this->driver
+				->shouldReceive('getAttribute')
+				->with('XPATH', 'type')->atLeast($call_count - 1)
+				->andReturn($input_type);
 		}
+
+		$this->typifiedElement = $this->createElement();
 
 		$form_element = $this->getElement()->typify(array($node_element));
 		$this->assertInstanceOf($element_class, $form_element);

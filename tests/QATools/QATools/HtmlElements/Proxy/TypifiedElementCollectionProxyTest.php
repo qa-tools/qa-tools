@@ -29,6 +29,13 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 		parent::setUp();
 	}
 
+	protected function beforeSetUpFinish()
+	{
+		parent::beforeSetUpFinish();
+
+		$this->expectDriverGetTagName('textarea');
+	}
+
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
