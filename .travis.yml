@@ -25,8 +25,9 @@ before_script:
     - sudo sed -i -e "s,/var/www,$(pwd),g" /etc/apache2/sites-available/default
     - sudo /etc/init.d/apache2 restart
 
-script:
     - mkdir -p build/logs
+
+script:
     - ./vendor/bin/paratest --coverage-clover build/logs/clover.xml
 
 after_script:
