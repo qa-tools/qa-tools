@@ -28,7 +28,7 @@
 	"require-dev": {
 		"aik099/coding-standard": "dev-master",
 		"brianium/paratest": "~0.7",
-		"behat/mink-selenium2-driver": "~1.2@dev",
+		"behat/mink-selenium2-driver": "~1.2",
 		"mockery/mockery": "~0.9"
 	},
 
