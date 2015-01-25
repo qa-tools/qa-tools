@@ -147,7 +147,9 @@ class SelectTest extends AbstractTypifiedElementTest
 
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptions'));
-		$element->shouldReceive('getOptions')->andReturn(array($not_selected_option, $selected_option1, $selected_option2));
+		$element
+			->shouldReceive('getOptions')
+			->andReturn(array($not_selected_option, $selected_option1, $selected_option2));
 
 		$option = $element->getFirstSelectedOption();
 		$this->assertValidOptions(array($option));

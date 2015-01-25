@@ -40,6 +40,7 @@ class ButtonTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\TypifiedElementException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT
+	 * @expectedExceptionMessageRegExp /^Wrapped element "Mockery.*?" does not match "QATools\\QATools\\HtmlElements\\Element\\Button" criteria$/
 	 */
 	public function testAssertWrappedElementTagNotMatching()
 	{
@@ -57,6 +58,7 @@ class ButtonTest extends AbstractTypifiedElementTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\TypifiedElementException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT
+	 * @expectedExceptionMessageRegExp /^Wrapped element "Mockery.*?" does not match "QATools\\QATools\\HtmlElements\\Element\\Button" criteria$/
 	 */
 	public function testAssertWrappedElementAttributeNotMatching()
 	{

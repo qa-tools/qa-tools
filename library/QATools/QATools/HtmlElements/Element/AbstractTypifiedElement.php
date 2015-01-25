@@ -29,7 +29,7 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 {
 	const CRITERION_TAG = 'tag';
 
-	const CRITERION_ATTR = 'attrs';
+	const CRITERION_ATTRS = 'attrs';
 
 	/**
 	 * Name of the element.
@@ -134,11 +134,11 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	 */
 	protected function isAttributeMatching(array $criterion)
 	{
-		if ( !isset($criterion[self::CRITERION_ATTR]) ) {
+		if ( !isset($criterion[self::CRITERION_ATTRS]) ) {
 			return true;
 		}
 
-		foreach ( $criterion[self::CRITERION_ATTR] as $attribute => $definition ) {
+		foreach ( $criterion[self::CRITERION_ATTRS] as $attribute => $definition ) {
 			if ( $this->isValueMatchingCriterionDefinition($this->getAttribute($attribute), $definition) ) {
 				return true;
 			}
@@ -157,9 +157,7 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	 */
 	protected function isValueMatchingCriterionDefinition($value, $criterion)
 	{
-		$criterion = '/^(' . str_replace('*', '.*', $criterion) . ')$/';
-
-		return preg_match($criterion, $value);
+		return preg_match('/^(' . str_replace('*', '.*', $criterion) . ')$/', $value);
 	}
 
 	/**
