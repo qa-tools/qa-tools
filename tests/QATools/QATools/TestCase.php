@@ -66,6 +66,32 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Mocks getTagName in the driver.
+	 *
+	 * @param string $tag_name Mocked return value.
+	 *
+	 * @return void
+	 */
+	protected function expectDriverGetTagName($tag_name)
+	{
+		$this->driver->shouldReceive('getTagName')->with('XPATH')->andReturn($tag_name);
+	}
+
+	/**
+	 * Mocks getAttribute in the driver.
+	 *
+	 * @param array $attributes Mocked attributes.
+	 *
+	 * @return void
+	 */
+	protected function expectDriverGetAttribute(array $attributes)
+	{
+		foreach ( $attributes as $attribute => $value ) {
+			$this->driver->shouldReceive('getAttribute')->with('XPATH', $attribute)->andReturn($value);
+		}
+	}
+
+	/**
 	 * Creates NodeElement mock.
 	 *
 	 * @param string|null $xpath XPath of the element.

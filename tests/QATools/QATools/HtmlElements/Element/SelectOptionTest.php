@@ -34,6 +34,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		}
 
 		$this->select = m::mock('\\QATools\\QATools\\HtmlElements\\Element\\Select');
+		$this->expectedTagName = 'option';
 
 		parent::setUp();
 	}

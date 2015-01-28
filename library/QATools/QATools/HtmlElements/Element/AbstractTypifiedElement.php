@@ -11,12 +11,13 @@
 namespace QATools\QATools\HtmlElements\Element;
 
 
-use QATools\QATools\PageObject\Element\INodeElementAware;
-use QATools\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
+use QATools\QATools\HtmlElements\Exception\TypifiedElementException;
+use QATools\QATools\PageObject\Element\INodeElementAware;
 use QATools\QATools\PageObject\Element\WebElement;
+use QATools\QATools\PageObject\IPageFactory;
 
 /**
  * The base class to be used for making classes representing typified elements (i.e web page controls such as
@@ -26,6 +27,9 @@ use QATools\QATools\PageObject\Element\WebElement;
  */
 abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElementAware
 {
+	const CRITERION_TAG = 'tag';
+
+	const CRITERION_ATTRS = 'attrs';
 
 	/**
 	 * Name of the element.
@@ -42,6 +46,13 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	private $_wrappedElement;
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array();
+
+	/**
 	 * Specifies wrapped WebElement.
 	 *
 	 * @param WebElement $wrapped_element Element to be wrapped.
@@ -49,6 +60,8 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	public function __construct(WebElement $wrapped_element)
 	{
 		$this->_wrappedElement = $wrapped_element;
+
+		$this->assertWrappedElement();
 	}
 
 	/**
@@ -64,6 +77,87 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 		$wrapped_element = WebElement::fromNodeElement($node_element);
 
 		return new static($wrapped_element);
+	}
+
+	/**
+	 * Checks that wrapped element meets the acceptance criteria.
+	 *
+	 * @return void
+	 * @throws TypifiedElementException When no criteria matches.
+	 */
+	protected function assertWrappedElement()
+	{
+		if ( !$this->acceptanceCriteria ) {
+			return;
+		}
+
+		foreach ( $this->acceptanceCriteria as $criterion ) {
+			if ( !$this->isTagNameMatching($criterion) ) {
+				continue;
+			}
+
+			if ( $this->isAttributeMatching($criterion) ) {
+				return;
+			}
+		}
+
+		$message = 'Wrapped element "%s" does not match "%s" criteria';
+
+		throw new TypifiedElementException(
+			sprintf($message, $this->getWrappedElement(), get_class($this)),
+			TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT
+		);
+	}
+
+	/**
+	 * Checks if the tag name(s) of the criterion are matching.
+	 *
+	 * @param array $criterion The criterion.
+	 *
+	 * @return boolean
+	 */
+	protected function isTagNameMatching(array $criterion)
+	{
+		if ( !isset($criterion[self::CRITERION_TAG]) ) {
+			return true;
+		}
+
+		return $this->isValueMatchingCriterionDefinition($this->getTagName(), $criterion[self::CRITERION_TAG]);
+	}
+
+	/**
+	 * Checks if the attributes of the criterion are matching.
+	 *
+	 * @param array $criterion The criterion.
+	 *
+	 * @return boolean
+	 */
+	protected function isAttributeMatching(array $criterion)
+	{
+		if ( !isset($criterion[self::CRITERION_ATTRS]) ) {
+			return true;
+		}
+
+		foreach ( $criterion[self::CRITERION_ATTRS] as $attribute => $definition ) {
+			if ( $this->isValueMatchingCriterionDefinition($this->getAttribute($attribute), $definition) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if passed value matching the defined criterion.
+	 *
+	 * @param string $value     Value to match.
+	 * @param string $criterion The criterion.
+	 *
+	 * @return boolean
+	 */
+	protected function isValueMatchingCriterionDefinition($value, $criterion)
+	{
+		return preg_match('/^(' . str_replace('*', '.*', $criterion) . ')$/', $value);
 	}
 
 	/**

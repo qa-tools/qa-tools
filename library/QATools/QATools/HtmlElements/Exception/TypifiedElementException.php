@@ -18,5 +18,5 @@ use QATools\QATools\PageObject\Exception\ElementException;
  */
 class TypifiedElementException extends ElementException
 {
-
+	const TYPE_INCORRECT_WRAPPED_ELEMENT = 201;
 }

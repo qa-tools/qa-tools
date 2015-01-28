@@ -23,6 +23,8 @@ class RadioTest extends LabeledElementTest
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 
+		$this->expectedAttributes = array('type' => 'radio');
+
 		parent::setUp();
 	}
 
