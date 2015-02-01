@@ -15,6 +15,7 @@ use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
+use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\Property;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
@@ -303,6 +304,13 @@ class PageFactoryTest extends TestCase
 		else {
 			$factory = new $this->factoryClass($this->session);
 		}
+
+		/**
+		 * @var IPageLocator $mocked_page_locator
+		 */
+		$mocked_page_locator = m::mock('\\QATools\\QATools\\PageObject\\PageLocator\\IPageLocator');
+		$mocked_page_locator->shouldReceive('resolvePage')->andReturn($this->pageClass);
+		$factory->setPageLocator($mocked_page_locator);
 
 		if ( $with_annotation_manager ) {
 			$factory->setAnnotationManager($this->annotationManager);
