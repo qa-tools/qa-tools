@@ -7,36 +7,39 @@ php:
     - 5.6
     - hhvm
 
+env:
+    global:
+        - BUILD_TYPE=code
+
+matrix:
+    include:
+        - php: 5.6 # A PHP version needs to be selected even if we won't use it there
+          env: BUILD_TYPE=doc
+
+before_install:
+    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then composer require satooshi/php-coveralls:dev-master --dev --no-update; fi;
+
+install:
+    - if [ "$BUILD_TYPE" = "code" ]; then composer update --prefer-source; fi;
+    - if [ "$BUILD_TYPE" = "doc" ]; then sudo pip install Sphinx sphinx_rtd_theme; fi;
+
 before_script:
     - export WEB_FIXTURES_HOST=http://localhost
     - export WEB_FIXTURES_BROWSER=firefox
-
-    - sh -e /etc/init.d/xvfb start
     - export DISPLAY=:99.0
-    - sleep 4
 
-    - curl -L http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar > selenium.jar
-    - java -jar selenium.jar > /dev/null 2> /tmp/webdriver_output.txt &
-
-    - composer require satooshi/php-coveralls:dev-master --dev --prefer-source
-
-    - sudo apt-get update > /dev/null
-    - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 > /dev/null
-    - sudo sed -i -e "s,/var/www,$(pwd),g" /etc/apache2/sites-available/default
-    - sudo /etc/init.d/apache2 restart
-
-    - sudo easy_install -U Sphinx
-    - sudo pip install sphinx_rtd_theme
+    - if [ "$BUILD_TYPE" = "code" ]; then ./tests/run_selenium.sh; fi;
+    - if [ "$BUILD_TYPE" = "code" ]; then sudo ./tests/install_webserver.sh; fi;
 
 script:
     - mkdir -p build/logs
-    - ./vendor/bin/paratest --coverage-clover build/logs/clover.xml
-    - sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html
+    - if [ "$BUILD_TYPE" = "code" ]; then ./vendor/bin/paratest --coverage-clover build/logs/clover.xml; else echo "Nothing to do for this build"; fi;
+    - if [ "$BUILD_TYPE" = "doc" ]; then sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html; else echo "Nothing to do for this build"; fi;
 
 after_script:
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar -t 3; fi;'
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;'
+    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;
+    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar -t 3; fi;
+    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
 
 after_failure:
     - cat /tmp/webdriver_output.txt
