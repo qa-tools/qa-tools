@@ -76,4 +76,13 @@ interface IPageFactory
 	 */
 	public function getPage($class_name);
 
+	/**
+	 * Fetches the FQCN of a page by given class name.
+	 *
+	 * @param string $class_name Page class name.
+	 *
+	 * @return string
+	 */
+	public function getPageClass($class_name);
+
 }

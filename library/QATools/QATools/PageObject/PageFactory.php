@@ -332,9 +332,21 @@ class PageFactory implements IPageFactory
 	 */
 	public function getPage($class_name)
 	{
-		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
+		$resolved_page_class = $this->getPageClass($class_name);
 
 		return new $resolved_page_class($this);
+	}
+
+	/**
+	 * Fetches the FQCN of a page by given class name.
+	 *
+	 * @param string $class_name Page class name.
+	 *
+	 * @return string
+	 */
+	public function getPageClass($class_name)
+	{
+		return $this->pageLocator->resolvePage($class_name);
 	}
 
 }

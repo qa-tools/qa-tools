@@ -158,6 +158,27 @@ class PageTest extends TestCase
 		$this->assertSame($this->page, $this->page->open($params));
 	}
 
+	public function testMatches()
+	{
+		$this->pageFactory->shouldReceive('getPageClass')->with('Default Page')->once()->andReturn($this->pageClass);
+
+		$this->page->matches('Default Page');
+
+		$this->assertTrue(true);
+	}
+
+	/**
+	 * @throws \QATools\QATools\PageObject\Exception\PageException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageException::TYPE_PAGE_NOT_MATCHING
+	 * @expectedExceptionMessage Page is not "Wrong Page":
+	 */
+	public function testMatchesThrowsException()
+	{
+		$this->pageFactory->shouldReceive('getPageClass')->with('Wrong Page')->once()->andReturn($this->pageClass);
+
+		$this->page->matches('Wrong Page');
+	}
+
 	/**
 	 * Creates an empty mocked url builder.
 	 *

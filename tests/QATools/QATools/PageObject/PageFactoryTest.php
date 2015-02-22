@@ -263,6 +263,17 @@ class PageFactoryTest extends TestCase
 		$this->assertEquals('OK', $page->elementWithUse);
 	}
 
+	public function testgetPageClass()
+	{
+		$factory = $this->createFactory(true, array('initPage', 'initElements', 'createDecorator'));
+		$factory->shouldReceive('initPage')->andReturn($factory);
+		$factory->shouldReceive('initElements')->andReturn($factory);
+		$factory->shouldReceive('createDecorator')->andReturn($this->createNullDecorator());
+
+		$class = $factory->getPageClass($this->pageClass);
+		$this->assertEquals($this->pageClass, $class);
+	}
+
 	public function testGetPage()
 	{
 		$factory = $this->createFactory(true, array('initPage', 'initElements', 'createDecorator'));

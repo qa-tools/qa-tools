@@ -20,4 +20,6 @@ class PageException extends PageFactoryException
 	const TYPE_EMPTY_URL = 101;
 
 	const TYPE_MISSING_URL_BUILDER = 102;
+
+	const TYPE_PAGE_NOT_MATCHING = 103;
 }
