@@ -106,4 +106,18 @@ abstract class Page extends DocumentElement implements ISearchContext
 		return $this;
 	}
 
+	/**
+	 * Checks if page is of the given name.
+	 *
+	 * @param string $name Name of the page.
+	 *
+	 * @return bool
+	 */
+	public function matches($name)
+	{
+		$class = $this->pageFactory->getPageClass($name);
+
+		return $this instanceof $class;
+	}
+
 }

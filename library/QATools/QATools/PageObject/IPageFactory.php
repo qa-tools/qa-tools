@@ -68,12 +68,21 @@ interface IPageFactory
 	public function initElements(ISearchContext $search_context, IPropertyDecorator $property_decorator);
 
 	/**
-	 * Creates page by given class name.
+	 * Creates page by given name.
 	 *
-	 * @param string $class_name Page class name.
+	 * @param string $name Page name.
 	 *
 	 * @return Page
 	 */
-	public function getPage($class_name);
+	public function getPage($name);
+
+	/**
+	 * Fetches the FQCN of a page by given name.
+	 *
+	 * @param string $name Page name.
+	 *
+	 * @return string
+	 */
+	public function getPageClass($name);
 
 }

@@ -324,17 +324,29 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
-	 * Creates page by given class name.
+	 * Creates page by given name.
 	 *
-	 * @param string $class_name Page class name.
+	 * @param string $name Page name.
 	 *
 	 * @return Page
 	 */
-	public function getPage($class_name)
+	public function getPage($name)
 	{
-		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
+		$resolved_page_class = $this->getPageClass($name);
 
 		return new $resolved_page_class($this);
+	}
+
+	/**
+	 * Fetches the FQCN of a page by given name.
+	 *
+	 * @param string $name Page name.
+	 *
+	 * @return string
+	 */
+	public function getPageClass($name)
+	{
+		return $this->pageLocator->resolvePage($name);
 	}
 
 }

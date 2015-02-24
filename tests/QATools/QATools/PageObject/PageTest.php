@@ -158,6 +158,20 @@ class PageTest extends TestCase
 		$this->assertSame($this->page, $this->page->open($params));
 	}
 
+	public function testMatches()
+	{
+		$this->pageFactory->shouldReceive('getPageClass')->with('Default Page')->once()->andReturn($this->pageClass);
+
+		$this->assertTrue($this->page->matches('Default Page'));
+	}
+
+	public function testMatchesFailing()
+	{
+		$this->pageFactory->shouldReceive('getPageClass')->with('Wrong Page')->once()->andReturn('WrongClass');
+
+		$this->assertFalse($this->page->matches('Wrong Page'));
+	}
+
 	/**
 	 * Creates an empty mocked url builder.
 	 *
