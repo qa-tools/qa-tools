@@ -12,7 +12,11 @@ namespace tests\QATools\QATools;
 
 
 use Behat\Mink\Element\NodeElement;
+use mindplay\annotations\AnnotationManager;
 use Mockery as m;
+use QATools\QATools\PageObject\Annotation\UrlMatchComponentAnnotation;
+use QATools\QATools\PageObject\Annotation\UrlMatchFullAnnotation;
+use QATools\QATools\PageObject\Annotation\UrlMatchRegexpAnnotation;
 use QATools\QATools\PageObject\IPageFactory;
 
 class TestCase extends \PHPUnit_Framework_TestCase
@@ -109,6 +113,93 @@ class TestCase extends \PHPUnit_Framework_TestCase
 		$node_element->shouldReceive('getSession')->andReturn($this->session);
 
 		return $node_element;
+	}
+
+	/**
+	 * Sets expectation for full url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $values             Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectUrlMatchFullAnnotation(AnnotationManager $annotation_manager, $values = null)
+	{
+		$annotations = array();
+
+		if ( !empty($values) ) {
+			foreach ( $values as $value ) {
+				$annotation = new UrlMatchFullAnnotation();
+				$annotation->initAnnotation((array)$value);
+
+				$annotations[] = $annotation;
+			}
+		}
+
+		$annotation_manager
+			->shouldReceive('getClassAnnotations')
+			->with(m::any(), '@url-match-full')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for regexp url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $values             Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectUrlMatchRegexpAnnotation(AnnotationManager $annotation_manager, $values = null)
+	{
+		$annotations = array();
+
+		if ( !empty($values) ) {
+			foreach ( $values as $value ) {
+				$annotation = new UrlMatchRegexpAnnotation();
+				$annotation->initAnnotation((array)$value);
+
+				$annotations[] = $annotation;
+			}
+		}
+
+		$annotation_manager
+			->shouldReceive('getClassAnnotations')
+			->with(m::any(), '@url-match-regexp')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $values             Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectUrlMatchComponentAnnotation(AnnotationManager $annotation_manager, $values = null)
+	{
+		$annotations = array();
+
+		if ( !empty($values) ) {
+			foreach ( $values as $value ) {
+				$annotation = new UrlMatchComponentAnnotation();
+				$annotation->initAnnotation((array)$value);
+
+				$annotations[] = $annotation;
+			}
+		}
+
+		$annotation_manager
+			->shouldReceive('getClassAnnotations')
+			->with(m::any(), '@url-match-component')
+			->andReturn($annotations);
+
+		return $annotations;
 	}
 
 }

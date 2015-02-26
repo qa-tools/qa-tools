@@ -14,6 +14,11 @@ namespace tests\QATools\QATools\Live\PageObject\Pages;
 use QATools\QATools\PageObject\Element\WebElement;
 use QATools\QATools\PageObject\Page;
 
+/**
+ * Simple page containing web elements.
+ *
+ * @url-match-component('anchor' => 'test_anchor')
+ */
 class WebElementPage extends Page
 {
 
@@ -58,4 +63,12 @@ class WebElementPage extends Page
 	 * @find-by('name' => 'test3')
 	 */
 	public $textInputsMultipleFindBy;
+
+	/**
+	 * Link for anchor match test.
+	 *
+	 * @var WebElement
+	 * @find-by('id' => 'anchor_tester')
+	 */
+	public $linkAnchorTest;
 }

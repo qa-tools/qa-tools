@@ -106,4 +106,14 @@ abstract class Page extends DocumentElement implements ISearchContext
 		return $this;
 	}
 
+	/**
+	 * Checks if the page is opened based on the specified url match.
+	 *
+	 * @return boolean
+	 */
+	public function opened()
+	{
+		return $this->pageFactory->opened($this);
+	}
+
 }

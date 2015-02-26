@@ -270,3 +270,43 @@ then it will override any default annotation, that might have been specified on 
 @bem
 ----
 ...
+
+@url-match-full
+---------------
+
+.. literalinclude:: examples/page_url_simple.php
+    :linenos:
+    :emphasize-lines: 6
+
+This annotation allows to check if a specific page is open comparing the full specified URL against the current open URL.
+
+@url-match-regexp
+-----------------
+This annotation allows to check if a specific page is open using a regular expression against the current open URL.
+
+.. code-block:: ruby
+
+    @url-match-full('/shoes\.html\?color=.+?$/')
+    @url-match-full('regexp' => '/shoes\.html\?color=.+?$/')
+
+@url-match-component
+--------------------
+This annotation allows to check if a specific page is open comparing different components of a URL against the current open URL.
+
+Annotation can have 4 parameters, similar to ``@page-url``:
+
+#. ``path`` - specifies the path of an url
+#. ``params`` - specifies parameters in associative array format
+#. ``secure`` - specifies if secure connection is used
+#. ``anchor`` - specifies the fragment/anchor of an url
+
+.. code-block:: ruby
+
+    // possible components
+    @url-match-component('path' => '/products/shoes.html')
+    @url-match-component('secure' => false)
+    @url-match-component('params' => array('color' => 'red'))
+    @url-match-component('anchor' => 'fragment')
+    // or combined
+    @url-match-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false)
+
