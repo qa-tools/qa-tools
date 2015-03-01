@@ -216,7 +216,9 @@ class PageFactoryTest extends TestCase
 			$annotations[] = $annotation;
 		}
 
-		$this->annotationManager->shouldReceive('getClassAnnotations')->with(m::any(), '@page-url')->andReturn($annotations);
+		$this->annotationManager->shouldReceive('getClassAnnotations')
+			->with(m::any(), '@page-url')
+			->andReturn($annotations);
 
 		return $annotations;
 	}

@@ -183,7 +183,10 @@ class DefaultPropertyDecoratorTest extends TestCase
 	public function proxyDataProvider()
 	{
 		return array(
-			array('\\QATools\\QATools\\PageObject\\Element\\WebElement', '\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy'),
+			array(
+				'\\QATools\\QATools\\PageObject\\Element\\WebElement',
+				'\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy',
+			),
 		);
 	}
 

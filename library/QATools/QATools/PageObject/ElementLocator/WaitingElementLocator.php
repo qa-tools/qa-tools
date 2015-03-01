@@ -39,8 +39,11 @@ class WaitingElementLocator extends DefaultElementLocator
 	 * @param ISearchContext    $search_context     The context to use when finding the element.
 	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 */
-	public function __construct(Property $property, ISearchContext $search_context, AnnotationManager $annotation_manager)
-	{
+	public function __construct(
+		Property $property,
+		ISearchContext $search_context,
+		AnnotationManager $annotation_manager
+	) {
 		parent::__construct($property, $search_context, $annotation_manager);
 
 		/** @var TimeoutAnnotation[] $annotations */

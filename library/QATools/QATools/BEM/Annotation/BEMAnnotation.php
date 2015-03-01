@@ -55,7 +55,12 @@ class BEMAnnotation extends Annotation
 		list($modificator_name, $modificator_value) = $this->getModificator();
 
 		if ( $this->element ) {
-			return $locator_helper->getElementLocator($this->element, $this->block, $modificator_name, $modificator_value);
+			return $locator_helper->getElementLocator(
+				$this->element,
+				$this->block,
+				$modificator_name,
+				$modificator_value
+			);
 		}
 
 		return $locator_helper->getBlockLocator($this->block, $modificator_name, $modificator_value);
