@@ -2,4 +2,3 @@ vendor
 composer.phar
 phpunit.xml
 build
-_site
