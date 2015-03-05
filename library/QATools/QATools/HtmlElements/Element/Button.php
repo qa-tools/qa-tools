@@ -18,6 +18,17 @@ class Button extends AbstractTypifiedElement
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'input', 'attrs' => array('type' => 'submit|button')),
+		array('tag' => 'button'),
+		array('attrs' => array('role' => 'button')),
+	);
+
+	/**
 	 * Clicks the button.
 	 *
 	 * @return self

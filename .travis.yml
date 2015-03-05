@@ -37,8 +37,9 @@ before_script:
     - ./tests/run_selenium.sh
     - sudo ./tests/install_webserver.sh
 
-script:
     - mkdir -p build/logs
+
+script:
     - ./vendor/bin/paratest --coverage-clover build/logs/clover.xml
 
 after_script:

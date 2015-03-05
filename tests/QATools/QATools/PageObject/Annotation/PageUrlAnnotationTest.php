@@ -24,8 +24,7 @@ class PageUrlAnnotationTest extends \PHPUnit_Framework_TestCase
 		$expected_url,
 		array $expected_params,
 		$expected_secure
-	)
-	{
+	) {
 		$annotation = new PageUrlAnnotation();
 		$annotation->initAnnotation($annotation_params);
 

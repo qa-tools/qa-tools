@@ -18,6 +18,15 @@ class Checkbox extends LabeledElement implements ISimpleSetter
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'input', 'attrs' => array('type' => 'checkbox')),
+	);
+
+	/**
 	 * Checks checkbox if it is not already checked.
 	 *
 	 * @return self

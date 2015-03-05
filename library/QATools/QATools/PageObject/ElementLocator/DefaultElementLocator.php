@@ -54,8 +54,11 @@ class DefaultElementLocator implements IElementLocator
 	 * @param ISearchContext    $search_context     The context to use when finding the element.
 	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 */
-	public function __construct(Property $property, ISearchContext $search_context, AnnotationManager $annotation_manager)
-	{
+	public function __construct(
+		Property $property,
+		ISearchContext $search_context,
+		AnnotationManager $annotation_manager
+	) {
 		$this->property = $property;
 		$this->searchContext = $search_context;
 		$this->annotationManager = $annotation_manager;

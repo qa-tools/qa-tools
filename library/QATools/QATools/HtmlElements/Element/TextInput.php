@@ -18,6 +18,15 @@ class TextInput extends AbstractTypifiedElement implements ISimpleSetter
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'input|textarea'),
+	);
+
+	/**
 	 * Clears all the text entered into this text input.
 	 *
 	 * @return self

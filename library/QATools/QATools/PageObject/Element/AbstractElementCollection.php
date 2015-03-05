@@ -97,8 +97,11 @@ abstract class AbstractElementCollection extends \ArrayObject
 	 * @return static
 	 * @throws ElementCollectionException When element class used doesn't allow adding NodeElements inside.
 	 */
-	public static function fromNodeElements(array $node_elements, $element_class = null, IPageFactory $page_factory = null)
-	{
+	public static function fromNodeElements(
+		array $node_elements,
+		$element_class = null,
+		IPageFactory $page_factory = null
+	) {
 		$collection = new static();
 
 		if ( !isset($element_class) ) {

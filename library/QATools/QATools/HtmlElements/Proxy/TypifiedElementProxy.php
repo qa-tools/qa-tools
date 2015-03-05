@@ -65,7 +65,9 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 		foreach ( $this->locateElements() as $element ) {
 			/* @var $object ITypifiedElement */
 			$object = call_user_func(
-				array($this->className, 'fromNodeElement'), $element, $this->pageFactory
+				array($this->className, 'fromNodeElement'),
+				$element,
+				$this->pageFactory
 			);
 
 			$object->setName($this->getName());

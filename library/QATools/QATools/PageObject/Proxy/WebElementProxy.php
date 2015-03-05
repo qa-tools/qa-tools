@@ -56,7 +56,9 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 		foreach ( $this->locateElements() as $element ) {
 			/* @var $object IWebElement */
 			$object = call_user_func(
-				array($this->className, 'fromNodeElement'), $element, $this->pageFactory
+				array($this->className, 'fromNodeElement'),
+				$element,
+				$this->pageFactory
 			);
 
 			$this[] = $object;

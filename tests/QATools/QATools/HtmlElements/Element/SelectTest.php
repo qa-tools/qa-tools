@@ -26,7 +26,23 @@ class SelectTest extends AbstractTypifiedElementTest
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Select';
 		}
 
+		$this->ignoreExpectTypifiedNodeCheck[] = 'testGetOptions';
+		$this->ignoreExpectTypifiedNodeCheck[] = 'testGetOptionsByValue';
+		$this->ignoreExpectTypifiedNodeCheck[] = 'testGetOptionsByText';
+
+		$this->expectedTagName = 'select';
+
 		parent::setUp();
+	}
+
+	/**
+	 * Occurs before element creation in setUp.
+	 *
+	 * @return void
+	 */
+	protected function setUpBeforeCreateElement()
+	{
+		$this->expectWebElementGetTagName('select');
 	}
 
 	/**
@@ -49,15 +65,21 @@ class SelectTest extends AbstractTypifiedElementTest
 
 	public function testGetOptions()
 	{
+		$this->expectDriverGetTagName('option');
+
 		$this->webElement->shouldReceive('findAll')->with('se', array('tagName' => 'option'))->once()->andReturn(
 			array($this->createNodeElement())
 		);
+
+		$this->typifiedElement = $this->createElement();
 
 		$this->assertValidOptions($this->getElement()->getOptions());
 	}
 
 	public function testGetOptionsByValue()
 	{
+		$this->expectDriverGetTagName('option');
+
 		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
 
 		$this->webElement
@@ -68,6 +90,8 @@ class SelectTest extends AbstractTypifiedElementTest
 				array($this->createNodeElement())
 			);
 
+		$this->typifiedElement = $this->createElement();
+
 		$this->assertValidOptions($this->getElement()->getOptionsByValue('SV'));
 	}
 
@@ -76,6 +100,8 @@ class SelectTest extends AbstractTypifiedElementTest
 	 */
 	public function testGetOptionsByText($exact_match)
 	{
+		$this->expectDriverGetTagName('option');
+
 		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
 
 		if ( $exact_match ) {
@@ -89,11 +115,15 @@ class SelectTest extends AbstractTypifiedElementTest
 			array($this->createNodeElement())
 		);
 
+		$this->typifiedElement = $this->createElement();
+
 		$this->assertValidOptions($this->getElement()->getOptionsByText('SV', $exact_match));
 	}
 
 	public function testGetSelectedOptions()
 	{
+		$this->expectDriverGetTagName('option');
+
 		$selected_option = $this->createOption(true);
 		$not_selected_option = $this->createOption(false);
 
@@ -109,13 +139,17 @@ class SelectTest extends AbstractTypifiedElementTest
 
 	public function testGetFirstSelectedOptionSuccess()
 	{
+		$this->expectDriverGetTagName('option');
+
 		$selected_option1 = $this->createOption(true);
 		$selected_option2 = $this->createOption(true);
 		$not_selected_option = $this->createOption(false);
 
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptions'));
-		$element->shouldReceive('getOptions')->andReturn(array($not_selected_option, $selected_option1, $selected_option2));
+		$element
+			->shouldReceive('getOptions')
+			->andReturn(array($not_selected_option, $selected_option1, $selected_option2));
 
 		$option = $element->getFirstSelectedOption();
 		$this->assertValidOptions(array($option));
@@ -130,6 +164,8 @@ class SelectTest extends AbstractTypifiedElementTest
 	 */
 	public function testGetFirstSelectedOptionError()
 	{
+		$this->expectDriverGetTagName('option');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptions'));
 		$element->shouldReceive('getOptions')->andReturn(array());

@@ -55,13 +55,14 @@ class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
 			array('partialLinkText'),
 			array('tagName'),
 			array('xpath'),
+			array('label'),
 		);
 	}
 
 	/**
 	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
 	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage FindBy annotation requires one of 'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath' or both 'how' and 'using' parameters specified
+	 * @expectedExceptionMessage FindBy annotation requires one of 'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath', 'label' or both 'how' and 'using' parameters specified
 	 */
 	public function testUnknownDirectSelector()
 	{

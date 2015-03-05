@@ -36,7 +36,9 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 	{
 		parent::setUpBeforeCreateElement();
 
-		$two_times_tests = array('testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory', 'testWaitFor');
+		$two_times_tests = array(
+			'testFromNodeElement', 'testToString', 'testFill', 'testGetPageFactory', 'testWaitFor',
+		);
 		$times = in_array($this->getName(), $two_times_tests) ? 2 : 1;
 
 		$this->pageFactory->shouldReceive('initElementContainer')->times($times)->andReturn($this->pageFactory);

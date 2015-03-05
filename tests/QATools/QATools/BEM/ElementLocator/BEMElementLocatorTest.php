@@ -67,7 +67,11 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertCount(count($selectors), $this->locator->findAll());
 
 		foreach ( $annotations as $annotation ) {
-			$this->assertEquals('block-name', $annotation->block, 'block name set to element annotation from parent block');
+			$this->assertEquals(
+				'block-name',
+				$annotation->block,
+				'block name set to element annotation from parent block'
+			);
 		}
 	}
 
@@ -141,7 +145,10 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 			->once()
 			->andReturn('OK');
 
-		$this->assertEquals('OK', $this->locator->getBlockLocator('block-name', 'modificator-name', 'modificator-value'));
+		$this->assertEquals(
+			'OK',
+			$this->locator->getBlockLocator('block-name', 'modificator-name', 'modificator-value')
+		);
 	}
 
 	public function testGetElementLocator()
@@ -177,7 +184,10 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		}
 
 		return new $this->locatorClass(
-			$this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper
+			$this->property,
+			$this->searchContext,
+			$this->annotationManager,
+			$this->_locatorHelper
 		);
 	}
 

@@ -27,6 +27,15 @@ class SelectOption extends AbstractTypifiedElement
 	protected $select;
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'option'),
+	);
+
+	/**
 	 * Sets reference to parent SELECT element.
 	 *
 	 * @param Select $select Associated SELECT element.

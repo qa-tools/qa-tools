@@ -25,7 +25,7 @@ use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 /**
  * Default decorator for use with PageFactory. Will decorate 1) all of the
  * WebElement fields and 2) List<WebElement> fields that have @FindBy or
- * @FindBys annotation with a proxy that locates the elements using the passed
+ * \@FindBys annotation with a proxy that locates the elements using the passed
  * in ElementLocatorFactory.
  *
  * @method \Mockery\Expectation shouldReceive(string $name)

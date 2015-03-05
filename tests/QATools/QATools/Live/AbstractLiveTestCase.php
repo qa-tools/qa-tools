@@ -60,7 +60,7 @@ abstract class AbstractLiveTestCase extends \PHPUnit_Framework_TestCase
 			self::$mink = new Mink();
 
 			$server_url = 'http://' . $_SERVER['WEB_FIXTURE_HOST'] . ':' . $_SERVER['WEB_FIXTURE_PORT'] . '/wd/hub';
-			$driver = new Selenium2Driver('firefox', null, $server_url);
+			$driver = new Selenium2Driver($_SERVER['WEB_FIXTURE_BROWSER'], null, $server_url);
 
 			self::$mink->registerSession('phpunit', new Session($driver));
 			self::$mink->setDefaultSessionName('phpunit');

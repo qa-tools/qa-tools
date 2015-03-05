@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\Live\PageObject;
 
 
+use QATools\QATools\PageObject\Element\WebElement;
 use tests\QATools\QATools\Live\AbstractLiveTestCase;
 use tests\QATools\QATools\Live\PageObject\Pages\WebElementPage;
 
@@ -79,26 +80,44 @@ class PageTest extends AbstractLiveTestCase
 		/** @var WebElementPage $page */
 		$page = new WebElementPage($this->pageFactory);
 
-		$this->assertCount(3, $page->textInputs);
+		$this->assertTextInputs($page->textInputs);
+	}
 
-		$page->textInputs->setValue('text');
+	public function testTextInputsLocatedByMultipleFindByAnnotations()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
 
-		$this->assertEquals('text', $page->textInputs[0]->getValue());
-		$this->assertNotEquals('text', $page->textInputs[1]->getValue());
-		$this->assertNotEquals('text', $page->textInputs[2]->getValue());
+		$this->assertTextInputs($page->textInputsMultipleFindBy);
+	}
+
+	/**
+	 * Asserts count and values of text inputs.
+	 *
+	 * @param WebElement[] $text_inputs Given text inputs.
+	 */
+	protected function assertTextInputs($text_inputs)
+	{
+		$this->assertCount(3, $text_inputs);
+
+		$text_inputs->setValue('text');
+
+		$this->assertEquals('text', $text_inputs[0]->getValue());
+		$this->assertNotEquals('text', $text_inputs[1]->getValue());
+		$this->assertNotEquals('text', $text_inputs[2]->getValue());
 
 		$count = 0;
 
-		foreach ( $page->textInputs as $index => $input ) {
+		foreach ( $text_inputs as $index => $input ) {
 			$count++;
 			$input->setValue('text' . $index);
 		}
 
 		$this->assertEquals(3, $count);
 
-		$this->assertEquals('text0', $page->textInputs[0]->getValue());
-		$this->assertEquals('text1', $page->textInputs[1]->getValue());
-		$this->assertEquals('text2', $page->textInputs[2]->getValue());
+		$this->assertEquals('text0', $text_inputs[0]->getValue());
+		$this->assertEquals('text1', $text_inputs[1]->getValue());
+		$this->assertEquals('text2', $text_inputs[2]->getValue());
 	}
 
 }
