@@ -14,32 +14,36 @@ env:
 matrix:
     include:
         - php: 5.6 # A PHP version needs to be selected even if we won't use it there
-          env: BUILD_TYPE=doc
+          env: BUILD_TYPE=doc # marker environment variable to make the build matrix more readable in the UI
+          # Override the different steps of the build config
+          before_install: []
+          install: sudo pip install Sphinx sphinx_rtd_theme
+          before_script: []
+          script: sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html
+          after_script: []
 
 before_install:
-    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then composer require satooshi/php-coveralls:dev-master --dev --no-update; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then composer require satooshi/php-coveralls:dev-master --dev --no-update; fi;
 
 install:
-    - if [ "$BUILD_TYPE" = "code" ]; then composer update --prefer-source; fi;
-    - if [ "$BUILD_TYPE" = "doc" ]; then sudo pip install Sphinx sphinx_rtd_theme; fi;
+    - composer update --prefer-source
 
 before_script:
     - export WEB_FIXTURES_HOST=http://localhost
     - export WEB_FIXTURES_BROWSER=firefox
     - export DISPLAY=:99.0
 
-    - if [ "$BUILD_TYPE" = "code" ]; then ./tests/run_selenium.sh; fi;
-    - if [ "$BUILD_TYPE" = "code" ]; then sudo ./tests/install_webserver.sh; fi;
+    - ./tests/run_selenium.sh
+    - sudo ./tests/install_webserver.sh
 
 script:
     - mkdir -p build/logs
-    - if [ "$BUILD_TYPE" = "code" ]; then ./vendor/bin/paratest --coverage-clover build/logs/clover.xml; else echo "Nothing to do for this build"; fi;
-    - if [ "$BUILD_TYPE" = "doc" ]; then sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html; else echo "Nothing to do for this build"; fi;
+    - ./vendor/bin/paratest --coverage-clover build/logs/clover.xml
 
 after_script:
-    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;
-    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar -t 3; fi;
-    - if [ "$BUILD_TYPE" = "code" ] && [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar -t 3; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
 
 after_failure:
     - cat /tmp/webdriver_output.txt
