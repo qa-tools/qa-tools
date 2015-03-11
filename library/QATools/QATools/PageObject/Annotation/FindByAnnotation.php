@@ -105,6 +105,13 @@ class FindByAnnotation extends Annotation
 	public $using;
 
 	/**
+	 * Whatever or not found elements, found by IElementLocator should be internally cached.
+	 *
+	 * @var boolean
+	 */
+	public $cache = false;
+
+	/**
 	 * Returns a selector, created based on annotation parameters.
 	 *
 	 * @return array

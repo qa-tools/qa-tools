@@ -48,6 +48,20 @@ class DefaultElementLocator implements IElementLocator
 	protected $property;
 
 	/**
+	 * Cache found elements locally.
+	 *
+	 * @var boolean
+	 */
+	protected $shouldCache = false;
+
+	/**
+	 * Cached NodeElement list.
+	 *
+	 * @var NodeElement[]
+	 */
+	protected $cachedElements;
+
+	/**
 	 * Creates a new element locator.
 	 *
 	 * @param Property          $property           Property.
@@ -93,10 +107,18 @@ class DefaultElementLocator implements IElementLocator
 	 */
 	public function findAll()
 	{
+		if ( isset($this->cachedElements) && $this->shouldCache ) {
+			return $this->cachedElements;
+		}
+
 		$elements = array();
 
 		foreach ( $this->getSelectors() as $selector ) {
 			$elements = array_merge($elements, $this->searchContext->findAll('se', $selector));
+		}
+
+		if ( $this->shouldCache ) {
+			$this->cachedElements = $elements;
 		}
 
 		return $elements;
