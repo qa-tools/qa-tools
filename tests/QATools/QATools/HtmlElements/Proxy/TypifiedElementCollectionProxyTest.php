@@ -54,6 +54,17 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 		$this->assertEquals(1, $this->element->proxyMe());
 	}
 
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$node_elements = $this->expectLocatorCallReturningTwoNodeElements();
+
+		foreach ( $node_elements as $node_element ) {
+			$this->driver->shouldReceive('getTagName')->with($node_element->getXpath())->andReturn('textarea');
+		}
+
+		$this->assertEquals(1, $this->element->getObject()->proxyMe());
+	}
+
 	/**
 	 * Creates a proxy.
 	 *
