@@ -100,9 +100,12 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider selectorProvider
 	 */
-	public function testGetSelectorSuccess(array $selectors)
+	public function testGetSelectorSuccess(array $selectors, $is_array, $is_collection)
 	{
 		$this->expectFindByAnnotations($selectors);
+
+		$this->property->shouldReceive('isDataTypeArray')->andReturn($is_array);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn($is_collection);
 
 		foreach ( $selectors as $selector ) {
 			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK'));
@@ -114,9 +117,33 @@ class DefaultElementLocatorTest extends \PHPUnit_Framework_TestCase
 	public function selectorProvider()
 	{
 		return array(
-			array(array(array('xpath' => 'xpath1'))),
-			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2'))),
+			array(array(array('xpath' => 'xpath1')), false, false),
+			array(array(array('xpath' => 'xpath1')), true, false),
+			array(array(array('xpath' => 'xpath1')), false, true),
+			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2')), true, false),
+			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2')), false, true),
 		);
+	}
+
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND
+	 * @expectedExceptionMessage The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.
+	 */
+	public function testGetSelectorMultipleNotArrayOrCollection()
+	{
+		$selector = array('xpath' => 'xpath1');
+
+		$this->expectFindByAnnotations(array($selector));
+
+		$this->property->shouldReceive('isDataTypeArray')->andReturn(false);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn(false);
+		$this->property->shouldReceive('getRawDataType')->andReturn('SingleElement');
+		$this->property->shouldReceive('__toString')->andReturn('TestPage::button');
+
+		$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK1', 'OK2'));
+
+		$this->locator->findAll();
 	}
 
 	/**

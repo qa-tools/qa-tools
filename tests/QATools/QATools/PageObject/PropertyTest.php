@@ -173,6 +173,24 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	/**
+	 * @dataProvider isDataTypeCollectionProvider
+	 */
+	public function testIsDataTypeCollection($data_type, $is_collection)
+	{
+		$this->expectVarAnnotation($data_type);
+
+		$this->assertSame($is_collection, $this->property->isDataTypeCollection());
+	}
+
+	public function isDataTypeCollectionProvider()
+	{
+		return array(
+			array('stdClass', false),
+			array('tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\WebElementCollectionChild', true),
+		);
+	}
+
 	public function testGetAnnotations()
 	{
 		$expected = 'OK';
