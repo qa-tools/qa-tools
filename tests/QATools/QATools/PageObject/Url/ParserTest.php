@@ -32,6 +32,7 @@ class ParserTest extends TestCase
 	{
 		return array(
 			array('http://domain.tld', parse_url('http://domain.tld')),
+			array('http://domain.tld:8080', parse_url('http://domain.tld:8080')),
 			array('http://domain.tld/path', parse_url('http://domain.tld/path')),
 			array('http://domain.tld/path?param=value', parse_url('http://domain.tld/path?param=value')),
 			array('http://domain.tld/path?param=value#anchor', parse_url('http://domain.tld/path?param=value#anchor')),
@@ -50,13 +51,14 @@ class ParserTest extends TestCase
 
 	public function testGetComponent()
 	{
-		$url_parser = new Parser('http://domain.tld/path?param=value#anchor');
+		$url_parser = new Parser('http://domain.tld:8080/path?param=value#anchor');
 
 		$this->assertEquals('http', $url_parser->getComponent('scheme'));
 		$this->assertEquals('domain.tld', $url_parser->getComponent('host'));
 		$this->assertEquals('/path', $url_parser->getComponent('path'));
 		$this->assertEquals('param=value', $url_parser->getComponent('query'));
 		$this->assertEquals('anchor', $url_parser->getComponent('fragment'));
+		$this->assertEquals(8080, $url_parser->getComponent('port'));
 	}
 
 	public function testGetComponentDefault()
@@ -68,6 +70,7 @@ class ParserTest extends TestCase
 		$this->assertEquals('default_path', $url_parser->getComponent('path', 'default_path'));
 		$this->assertEquals('default_query', $url_parser->getComponent('query', 'default_query'));
 		$this->assertEquals('default_fragment', $url_parser->getComponent('fragment', 'default_fragment'));
+		$this->assertEquals(8080, $url_parser->getComponent('port', 8080));
 	}
 
 	public function testSetGetParams()
@@ -103,10 +106,11 @@ class ParserTest extends TestCase
 			array('http://domain.tld#anchor', '/path?param=value', 'query', 'param=value'),
 			array('http://domain.tld#anchor', '/path?param=value', 'fragment', 'anchor'),
 			// Test the priority on merge.
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'scheme', 'https'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'host', 'another.tld'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'path', '/path2'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'fragment', 'anchor2'),
+			array('http://domain.tld/path#anchor', 'https://another.tld:8080/path2#anchor2', 'scheme', 'https'),
+			array('http://domain.tld/path#anchor', 'https://another.tld:8080/path2#anchor2', 'host', 'another.tld'),
+			array('http://domain.tld/path#anchor', 'https://another.tld:8080/path2#anchor2', 'path', '/path2'),
+			array('http://domain.tld/path#anchor', 'https://another.tld:8080/path2#anchor2', 'fragment', 'anchor2'),
+			array('http://domain.tld/path#anchor', 'https://another.tld:8080/path2#anchor2', 'port', 8080),
 		);
 	}
 

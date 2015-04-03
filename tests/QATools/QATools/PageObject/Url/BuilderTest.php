@@ -26,6 +26,7 @@ class BuilderTest extends TestCase
 			'path' => '/path',
 			'query' => 'param=value',
 			'fragment' => 'anchor',
+			'port' => '8080',
 		);
 
 		$expected_params = array();
@@ -39,6 +40,7 @@ class BuilderTest extends TestCase
 		$this->assertEquals($normalized_components['path'], $builder->getPath());
 		$this->assertEquals($expected_params, $builder->getParams());
 		$this->assertEquals($normalized_components['fragment'], $builder->getAnchor());
+		$this->assertEquals($normalized_components['port'], $builder->getPort());
 	}
 
 	/**
@@ -139,6 +141,36 @@ class BuilderTest extends TestCase
 				),
 				array(),
 				'http://domain.tld/path?param=value#anchor',
+			),
+			array(
+				array(
+					'scheme' => 'http',
+					'host' => 'domain.tld',
+					'path' => '/path',
+					'port' => 8080,
+				),
+				array(),
+				'http://domain.tld:8080/path',
+			),
+			array(
+				array(
+					'scheme' => 'http',
+					'host' => 'domain.tld',
+					'path' => '/path',
+					'port' => 80,
+				),
+				array(),
+				'http://domain.tld/path',
+			),
+			array(
+				array(
+					'scheme' => 'https',
+					'host' => 'domain.tld',
+					'path' => '/path',
+					'port' => 443,
+				),
+				array(),
+				'https://domain.tld/path',
 			),
 		);
 	}
