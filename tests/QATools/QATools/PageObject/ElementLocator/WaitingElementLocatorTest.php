@@ -30,12 +30,15 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 	/**
 	 * @dataProvider selectorProvider
 	 */
-	public function testGetSelectorsSuccessWithTimeout(array $selectors)
+	public function testGetSelectorsSuccessWithTimeout(array $selectors, $is_array, $is_collection)
 	{
 		$search_context = $this->searchContext;
 		$node_element = m::mock('\\Behat\\Mink\\Element\\NodeElement');
 
 		$this->expectFindByAnnotations($selectors);
+
+		$this->property->shouldReceive('isDataTypeArray')->andReturn($is_array);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn($is_collection);
 
 		foreach ( $selectors as $selector ) {
 			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array($node_element));

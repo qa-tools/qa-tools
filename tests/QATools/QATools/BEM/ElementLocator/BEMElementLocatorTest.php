@@ -50,9 +50,12 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	/**
 	 * @dataProvider selectorProvider
 	 */
-	public function testGetSelectorSuccess(array $selectors)
+	public function testGetSelectorSuccess(array $selectors, $is_array, $is_collection)
 	{
 		$annotations = $this->expectBEMAnnotation($selectors);
+
+		$this->property->shouldReceive('isDataTypeArray')->andReturn($is_array);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn($is_collection);
 
 		foreach ( $annotations as $annotation ) {
 			$annotation->element = 'element-name';
@@ -80,6 +83,9 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$expected = array('xpath' => 'xpath1');
 		$annotations = $this->expectBEMAnnotation(array($expected));
 
+		$this->property->shouldReceive('isDataTypeArray')->andReturn(false);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn(false);
+
 		$annotations[0]->block = 'block-name';
 
 		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
@@ -87,6 +93,27 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 
 		$this->assertEquals('', $annotations[0]->element, 'element name isn\'t touched');
 		$this->assertCount(0, $this->locator->findAll());
+	}
+
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND
+	 * @expectedExceptionMessage The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.
+	 */
+	public function testGetSelectorMultipleNotArrayOrCollection()
+	{
+		$selector = array('xpath' => 'xpath1');
+
+		$this->expectBEMAnnotation(array($selector));
+
+		$this->property->shouldReceive('isDataTypeArray')->andReturn(false);
+		$this->property->shouldReceive('isDataTypeCollection')->andReturn(false);
+		$this->property->shouldReceive('getRawDataType')->andReturn('SingleElement');
+		$this->property->shouldReceive('__toString')->andReturn('TestPage::button');
+
+		$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK1', 'OK2'));
+
+		$this->locator->findAll();
 	}
 
 	/**
