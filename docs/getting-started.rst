@@ -54,6 +54,8 @@ The following configuration options are available:
 
 * ``base_url`` - allows to specify Base URL to be used to transform all relative urls from :ref:`@page-url annotations <page-url>` into absolute urls.
 
+If port is specified as part of `base_url` then it will be used in every built url unless specified exactly in the `@page-url` annotation.
+
 Connecting to Behat
 -------------------
 .. note:: Throughout this tutorial it's assumed that working Behat with MinkExtension is configured and connected to a project that needs to be tested.

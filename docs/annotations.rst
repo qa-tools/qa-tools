@@ -227,6 +227,16 @@ By specifying ``secure`` annotation parameter (3rd) value it's possible to force
     @page-url('url' => 'products/shoes.html', 'secure' => false)
     @page-url('url' => 'https://www.example.com/products/shoes.html', 'secure' => false)
 
+Custom ports
+^^^^^^^^^^^^
+Like for `base_url` it is possible to include a port in an absolute URL:
+
+.. code-block:: ruby
+
+    @page-url('http://www.example.com:8080/products/shoes.html')
+
+
+
 @timeout
 --------
 This annotation is used to specify maximum waiting time (in seconds), after which search attempt for an element, that
