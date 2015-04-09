@@ -53,6 +53,8 @@ Configuration Options
 The following configuration options are available:
 
 * ``base_url`` - allows to specify Base URL to be used to transform all relative urls from :ref:`@page-url annotations <page-url>` into absolute urls.
+* ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <page-locator>` will search for page classes defaulted with ``array('\\')``
+
 
 If port is specified as part of `base_url` then it will be used in every built url unless specified exactly in the `@page-url` annotation.
 
