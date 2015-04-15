@@ -30,9 +30,9 @@ Defining a custom locator
 In some cases it might be necessary to build a custom page locator. For example to map page names to specific classes.
 
 .. literalinclude:: examples/custom_page_locator.php
-:linenos:
+   :linenos:
 
-    Now it is possible to either locate the page manually by its name
+Now it is possible to either locate the page manually by its name
 
 .. code-block:: php
 
