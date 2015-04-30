@@ -9,3 +9,4 @@ QA-Tools Documentation
    glossary
    annotations
    best-practices
+   howto
