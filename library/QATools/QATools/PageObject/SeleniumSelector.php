@@ -13,6 +13,7 @@ namespace QATools\QATools\PageObject;
 
 use Behat\Mink\Selector\SelectorInterface;
 use Behat\Mink\Selector\SelectorsHandler;
+use Behat\Mink\Selector\Xpath\Escaper;
 use QATools\QATools\PageObject\Exception\ElementException;
 
 /**
@@ -33,6 +34,13 @@ class SeleniumSelector implements SelectorInterface
 	private $_handler;
 
 	/**
+	 * The XPath escaper.
+	 *
+	 * @var Escaper
+	 */
+	private $_xpathEscaper;
+
+	/**
 	 * Creates instance of SeleniumSelector class.
 	 *
 	 * @param SelectorsHandler $selectors_handler Mink selectors handler.
@@ -40,6 +48,8 @@ class SeleniumSelector implements SelectorInterface
 	public function __construct(SelectorsHandler $selectors_handler)
 	{
 		$this->_handler = $selectors_handler;
+
+		$this->_xpathEscaper = new Escaper();
 	}
 
 	/**
@@ -63,7 +73,7 @@ class SeleniumSelector implements SelectorInterface
 		$locator = trim($locator);
 
 		if ( $selector == How::CLASS_NAME ) {
-			$locator = $this->_handler->xpathLiteral(' ' . $locator . ' ');
+			$locator = $this->_xpathEscaper->escapeLiteral(' ' . $locator . ' ');
 
 			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), " . $locator . ')]';
 		}
@@ -71,13 +81,13 @@ class SeleniumSelector implements SelectorInterface
 			return $this->_handler->selectorToXpath('css', $locator);
 		}
 		elseif ( $selector == How::ID ) {
-			return 'descendant-or-self::*[@id = ' . $this->_handler->xpathLiteral($locator) . ']';
+			return 'descendant-or-self::*[@id = ' . $this->_xpathEscaper->escapeLiteral($locator) . ']';
 		}
 		elseif ( $selector == How::NAME ) {
-			return 'descendant-or-self::*[@name = ' . $this->_handler->xpathLiteral($locator) . ']';
+			return 'descendant-or-self::*[@name = ' . $this->_xpathEscaper->escapeLiteral($locator) . ']';
 		}
 		elseif ( $selector == How::ID_OR_NAME ) {
-			$locator = $this->_handler->xpathLiteral($locator);
+			$locator = $this->_xpathEscaper->escapeLiteral($locator);
 
 			return 'descendant-or-self::*[@id = ' . $locator . ' or @name = ' . $locator . ']';
 		}
@@ -85,12 +95,12 @@ class SeleniumSelector implements SelectorInterface
 			return 'descendant-or-self::' . $locator;
 		}
 		elseif ( $selector == How::LINK_TEXT ) {
-			$locator = $this->_handler->xpathLiteral($locator);
+			$locator = $this->_xpathEscaper->escapeLiteral($locator);
 
 			return 'descendant-or-self::a[./@href][normalize-space(string(.)) = ' . $locator . ']';
 		}
 		elseif ( $selector == How::LABEL ) {
-			$locator = $this->_handler->xpathLiteral($locator);
+			$locator = $this->_xpathEscaper->escapeLiteral($locator);
 			$xpath_pieces = array();
 			$xpath_pieces[] = 'descendant-or-self::*[@id = (//label[normalize-space(string(.)) = ' . $locator . ']/@for)]';
 			$xpath_pieces[] = 'descendant-or-self::label[normalize-space(string(.)) = ' . $locator . ']//input';
@@ -98,7 +108,7 @@ class SeleniumSelector implements SelectorInterface
 			return implode('|', $xpath_pieces);
 		}
 		elseif ( $selector == How::PARTIAL_LINK_TEXT ) {
-			$locator = $this->_handler->xpathLiteral($locator);
+			$locator = $this->_xpathEscaper->escapeLiteral($locator);
 
 			return 'descendant-or-self::a[./@href][contains(normalize-space(string(.)), ' . $locator . ')]';
 		}
