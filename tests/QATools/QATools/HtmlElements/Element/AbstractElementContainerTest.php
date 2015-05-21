@@ -79,6 +79,9 @@ class AbstractElementContainerTest extends AbstractTypifiedElementTest
 		$element_class::fromNodeElement($this->createNodeElement());
 	}
 
+	/**
+	 * @medium
+	 */
 	public function testWaitFor()
 	{
 		$web_element = $this->webElement;
