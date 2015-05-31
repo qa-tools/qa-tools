@@ -91,6 +91,14 @@ class PageTest extends AbstractLiveTestCase
 		$this->assertTextInputs($page->textInputsMultipleFindBy);
 	}
 
+	public function testGroupedInputContainer()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
+
+		$this->assertTextInputs($page->groupedInputContainer->textInputsMultipleFindBy);
+	}
+
 	/**
 	 * Asserts count and values of text inputs.
 	 *

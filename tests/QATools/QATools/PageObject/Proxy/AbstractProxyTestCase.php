@@ -140,6 +140,16 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->element->nonExistingMethod();
 	}
 
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY
+	 * @expectedExceptionMessage "nonExistingProperty" property is not available on the
+	 */
+	public function testPropertyForwardingFailure()
+	{
+		$this->element->nonExistingProperty;
+	}
+
 	abstract public function testDefaultClassName();
 
 	abstract public function testSetClassName();

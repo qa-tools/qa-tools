@@ -114,6 +114,49 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	}
 
 	/**
+	 * Proxies get access of properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __get($property)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		return $sub_object->{$property};
+	}
+
+	/**
+	 * Proxies set access of properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 * @param mixed  $value    Value of the property.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __set($property, $value)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		$sub_object->{$property} = $value;
+	}
+
+	/**
 	 * Locates element using the locator.
 	 *
 	 * @return NodeElement

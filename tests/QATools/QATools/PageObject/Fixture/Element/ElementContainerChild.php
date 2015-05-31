@@ -16,4 +16,11 @@ use QATools\QATools\PageObject\Element\AbstractElementContainer;
 class ElementContainerChild extends AbstractElementContainer
 {
 
+	/**
+	 * Example property.
+	 *
+	 * @var string
+	 */
+	public $existingProperty = 'value';
+
 }

@@ -50,4 +50,25 @@ interface IProxy
 	 */
 	public function __call($method, array $arguments);
 
+	/**
+	 * Proxies get access of properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __get($property);
+
+	/**
+	 * Proxies set access of properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 * @param mixed  $value    Value of the property.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __set($property, $value);
+
 }

@@ -13,6 +13,7 @@ namespace tests\QATools\QATools\Live\PageObject\Pages;
 
 use QATools\QATools\PageObject\Element\WebElement;
 use QATools\QATools\PageObject\Page;
+use tests\QATools\QATools\Live\PageObject\Element\GroupedInputContainer;
 
 class WebElementPage extends Page
 {
@@ -58,4 +59,13 @@ class WebElementPage extends Page
 	 * @find-by('name' => 'test3')
 	 */
 	public $textInputsMultipleFindBy;
+
+	/**
+	 * Example for a container.
+	 *
+	 * @var GroupedInputContainer
+	 * @find-by('css' => '.grouped-inputs')
+	 */
+	public $groupedInputContainer;
+
 }
