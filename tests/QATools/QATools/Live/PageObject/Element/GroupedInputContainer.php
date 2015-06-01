@@ -18,6 +18,14 @@ class GroupedInputContainer extends AbstractElementContainer
 {
 
 	/**
+	 * First example text input as WebElement.
+	 *
+	 * @var WebElement
+	 * @find-by('name' => 'test1')
+	 */
+	public $textInput1;
+
+	/**
 	 * Example text inputs with multiple find-by annotations as WebElement.
 	 *
 	 * @var WebElement[]

@@ -91,12 +91,22 @@ class PageTest extends AbstractLiveTestCase
 		$this->assertTextInputs($page->textInputsMultipleFindBy);
 	}
 
-	public function testGroupedInputContainer()
+	public function testGroupedInputContainerProxyCollectionProperty()
 	{
 		/** @var WebElementPage $page */
 		$page = new WebElementPage($this->pageFactory);
 
 		$this->assertTextInputs($page->groupedInputContainer->textInputsMultipleFindBy);
+	}
+
+	public function testGroupedInputContainerProxySingleProperty()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
+
+		$page->groupedInputContainer->textInput1->setValue('text');
+
+		$this->assertEquals('text', $page->groupedInputContainer->textInput1->getValue());
 	}
 
 	/**
