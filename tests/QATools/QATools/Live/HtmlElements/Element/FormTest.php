@@ -23,6 +23,9 @@ class FormTest extends TypifiedElementTestCase
 		$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Form';
 	}
 
+	/**
+	 * @medium
+	 */
 	public function testWaitFor()
 	{
 		$page = $this->session->getPage();

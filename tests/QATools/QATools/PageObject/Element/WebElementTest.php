@@ -54,6 +54,9 @@ class WebElementTest extends TestCase
 		$this->assertEquals($expected, (string)$element);
 	}
 
+	/**
+	 * @medium
+	 */
 	public function testWaitFor()
 	{
 		$element = $this->createElement();
