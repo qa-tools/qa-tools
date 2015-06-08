@@ -17,7 +17,7 @@ Feel free to ask any questions and share your experiences on the [Support Page](
 6. Squash your commits by topic to preserve a clean and readable log.
 7. Create Pull Request.
 
-## Running tests
+## Running the Tests
 Make sure that you don't break anything with your changes by running:
 
 ```bash
@@ -33,3 +33,9 @@ $> phpcs --standard="vendor/aik099/coding-standard/CodingStandard" library tests
 ```
 
 or by making your IDE ([instructions for PhpStorm](http://www.jetbrains.com/phpstorm/webhelp/using-php-code-sniffer-tool.html)) to check them automatically.
+
+## Contributor Code of Conduct
+
+Please note that this project is released with a [Contributor Code of
+Conduct](http://contributor-covenant.org/). By participating in this project
+you agree to abide by its terms. See [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) file.
