@@ -57,4 +57,4 @@ See [CONTRIBUTING](CONTRIBUTING.md) file.
 
 ## License
 
-QA-Tools is released under the BSD-3-Clause License. See the bundled LICENSE file for details.
+QA-Tools is released under the BSD-3-Clause License. See the bundled [LICENSE](LICENSE) file for details.
