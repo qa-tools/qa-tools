@@ -13,8 +13,7 @@ The library can be installed easily via Composer.
 
     {
         "require": {
-            "qa-tools/qa-tools": "~1.0",
-            "mindplay/annotations": "~1.2@dev"
+            "qa-tools/qa-tools": "~1.0"
         }
     }
 
