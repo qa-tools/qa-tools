@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5a6fc2de9b60ce55644789f559c32ba",
+    "hash": "1ca3a2e413d5fef5f5f89cdb870ed53b",
     "packages": [
         {
             "name": "behat/mink",
@@ -63,7 +63,7 @@
         },
         {
             "name": "mindplay/annotations",
-            "version": "dev-master",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-annotations/php-annotations.git",
@@ -113,7 +113,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/CssSelector.git",
@@ -436,7 +436,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mindplay/annotations": 20,
         "aik099/coding-standard": 20
     },
     "prefer-stable": false,
