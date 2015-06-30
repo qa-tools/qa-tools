@@ -14,7 +14,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/qa-tools/qa-tools/v/unstable.svg)](https://packagist.org/packages/qa-tools/qa-tools)
 [![License](https://poser.pugx.org/qa-tools/qa-tools/license.svg)](https://packagist.org/packages/qa-tools/qa-tools)
 
-Quality assurance utilities for functional tests written on PHP.
+QA-Tools is a set of quality assurance tools to be used during acceptance tests writing on PHP.
 
 Library implements __PageObject pattern__, used in variety of testing frameworks (e.g. Selenium browser automation framework).
 
@@ -23,9 +23,10 @@ Library implements __PageObject pattern__, used in variety of testing frameworks
 * [http://www.qa-tools.io](http://www.qa-tools.io)
 
 ## Asking Questions
+
 Feel free to ask any questions and share your experiences in the [Chat Room](https://gitter.im/qa-tools/qa-tools) and help to improve the documentation.
 
-## Installation using Composer
+## Installation
 
 Define the dependencies in your ```composer.json```:
 
@@ -44,3 +45,17 @@ Install/update your vendors:
 $ curl http://getcomposer.org/installer | php
 $ php composer.phar install
 ```
+
+## Requirements
+
+* If [Behat](https://github.com/Behat/Behat) is used, then [MinkExtension](https://github.com/Behat/MinkExtension).
+* If [PHPUnit](https://github.com/sebastianbergmann/phpunit) is used, then [PHPUnit-Mink](https://github.com/minkphp/phpunit-mink).
+* If other testing solution is used, then [Mink](https://github.com/minkphp/Mink).
+
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md) file.
+
+## License
+
+QA-Tools is released under the BSD-3-Clause License. See the bundled LICENSE file for details.
