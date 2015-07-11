@@ -18,7 +18,7 @@ use QATools\QATools\PageObject\How;
 /**
  * Represents web page select control.
  */
-class Select extends AbstractTypifiedElement implements ISimpleSetter
+class Select extends AbstractFormElement implements ISimpleSetter
 {
 
 	/**
@@ -294,7 +294,6 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 		$ret = array();
 
 		foreach ( $nodes as $node_element ) {
-			/** @var SelectOption $option */
 			$option = SelectOption::fromNodeElement($node_element);
 			$ret[] = $option->setSelect($this);
 		}

@@ -16,7 +16,7 @@ use QATools\QATools\HtmlElements\Exception\FileInputException;
 /**
  * Represents web page file upload element.
  */
-class FileInput extends AbstractTypifiedElement implements ISimpleSetter
+class FileInput extends AbstractFormElement implements ISimpleSetter
 {
 
 	/**
