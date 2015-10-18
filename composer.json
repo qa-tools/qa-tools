@@ -32,7 +32,7 @@
 	},
 
 	"suggest": {
-		"aik099/phpunit-mink": "Allows to use PageObject inside PHPUnit tests and remotely collect code coverage information"
+		"qa-tools/phpunit-extension": "PHPUnit extension for QA-Tools"
 	},
 
 	"replace": {
