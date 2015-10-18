@@ -28,28 +28,14 @@ Feel free to ask any questions and share your experiences in the [Chat Room](htt
 
 ## Installation
 
-Define the dependencies in your ```composer.json```:
-
-```json
-{
-	"require": {
-		"qa-tools/qa-tools": "~1.0"
-	}
-}
-```
-
-Install/update your vendors:
-
-```bash
-$ curl http://getcomposer.org/installer | php
-$ php composer.phar install
-```
+* execute this command to add dependencies: `php composer.phar require qa-tools/qa-tools:^1.0`
 
 ## Requirements
 
-* If [Behat](https://github.com/Behat/Behat) is used, then [MinkExtension](https://github.com/Behat/MinkExtension).
-* If [PHPUnit](https://github.com/sebastianbergmann/phpunit) is used, then [PHPUnit-Mink](https://github.com/minkphp/phpunit-mink).
-* If other testing solution is used, then [Mink](https://github.com/minkphp/Mink).
+* [Composer](https://getcomposer.org/download/)
+* [MinkExtension](https://github.com/Behat/MinkExtension), when [Behat](https://github.com/Behat/Behat) is used.
+* [QA-Tools / PHPUnit Extension](https://github.com/qa-tools/phpunit-extension), when [PHPUnit](https://github.com/sebastianbergmann/phpunit) is used.
+* [Mink](https://github.com/minkphp/Mink) in other cases.
 
 ## Contributing
 
