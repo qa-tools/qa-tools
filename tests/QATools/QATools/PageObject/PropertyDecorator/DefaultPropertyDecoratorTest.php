@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\PageObject\PropertyDecorator;
 
 
+use Behat\Mink\Element\NodeElement;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
 use QATools\QATools\PageObject\ElementLocator\IElementLocatorFactory;
@@ -152,17 +153,54 @@ class DefaultPropertyDecoratorTest extends TestCase
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
 		$this->locator->shouldReceive('getSearchContext')->andReturn($search_context);
 
-		$node_element = $this->createNodeElement();
-		$this->locator->shouldReceive('findAll')->andReturn(array($node_element));
+		$node_elements = array(
+			$this->createNodeElement('xpath1'),
+			$this->createNodeElement('xpath2'),
+		);
+
+		$this->locator->shouldReceive('findAll')->andReturn($node_elements);
 
 		$this->property->shouldReceive('isSimpleDataType')->andReturn(false);
 		$this->property->shouldReceive('getDataType')->andReturn($element_class);
 
 		$proxy = $this->decorator->decorate($this->property);
 		$this->assertProxy($proxy, $proxy_class, $element_class);
-		$this->assertEquals($node_element->getXpath(), $proxy->getXpath());
+
+		if ( strpos($proxy_class, 'Collection') !== false ) {
+			foreach ( $proxy->getObject() as $index => $proxied_element ) {
+				$this->assertEquals(
+					$node_elements[$index]->getXpath(),
+					$proxied_element->getXpath(),
+					'The method call is proxied to collection element.'
+				);
+			}
+		}
+		else {
+			$this->assertEquals($node_elements[0]->getXpath(), $proxy->getXpath(), 'The method call is proxied.');
+		}
 
 		return $proxy;
+	}
+
+	/**
+	 * Creates NodeElement mock.
+	 *
+	 * @param string|null $xpath XPath of the element.
+	 *
+	 * @return NodeElement
+	 */
+	protected function createNodeElement($xpath = null)
+	{
+		$element = parent::createNodeElement($xpath);
+
+		if ( $this->getName(false) === 'testProxyWebElement' ) {
+			$this->selectorsHandler
+				->shouldReceive('selectorToXpath')
+				->with('se', array('xpath' => $xpath))
+				->andReturn($xpath);
+		}
+
+		return $element;
 	}
 
 	/**
@@ -183,9 +221,13 @@ class DefaultPropertyDecoratorTest extends TestCase
 	public function proxyDataProvider()
 	{
 		return array(
-			array(
+			'web element' => array(
 				'\\QATools\\QATools\\PageObject\\Element\\WebElement',
 				'\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy',
+			),
+			'web element collection' => array(
+				'\\QATools\\QATools\\PageObject\\Element\\WebElementCollection',
+				'\\QATools\\QATools\\PageObject\\Proxy\\WebElementCollectionProxy',
 			),
 		);
 	}
