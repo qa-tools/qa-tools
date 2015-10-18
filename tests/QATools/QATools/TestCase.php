@@ -72,9 +72,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 */
-	protected function expectDriverGetTagName($tag_name)
+	protected function expectDriverGetTagName($tag_name, $xpath = 'XPATH')
 	{
-		$this->driver->shouldReceive('getTagName')->with('XPATH')->andReturn($tag_name);
+		$this->driver->shouldReceive('getTagName')->with($xpath)->andReturn($tag_name);
 	}
 
 	/**
@@ -84,10 +84,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 */
-	protected function expectDriverGetAttribute(array $attributes)
+	protected function expectDriverGetAttribute(array $attributes, $xpath = 'XPATH')
 	{
 		foreach ( $attributes as $attribute => $value ) {
-			$this->driver->shouldReceive('getAttribute')->with('XPATH', $attribute)->andReturn($value);
+			$this->driver->shouldReceive('getAttribute')->with($xpath, $attribute)->andReturn($value);
 		}
 	}
 
