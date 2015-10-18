@@ -2,7 +2,7 @@
 QA-Tools is an open source, community-driven project. If you'd like to contribute, feel free to do this, but remember to follow these few simple rules:
 
 ## Asking Questions
-Feel free to ask any questions and share your experiences on the [Support Page](http://www.qa-tools.io/support/) and help to improve the documentation.
+Feel free to ask any questions and share your experiences in the [Chat Room](https://gitter.im/qa-tools/qa-tools) and help to improve the documentation.
 
 ## Submitting an issues
 - A reproducible example is required for every bug report, otherwise it will most probably be __closed without warning__.
