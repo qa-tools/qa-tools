@@ -109,7 +109,23 @@ class Parser
 	 */
 	public function merge(Parser $parser)
 	{
+		$left_path = $this->getComponent('path');
+		$right_path = $parser->getComponent('path');
+
+		$left_params = $this->getParams();
+		$right_params = $parser->getParams();
+
 		$this->components = array_merge($this->components, $parser->components);
+
+		if ( $left_path && $right_path ) {
+			$this->components['path'] = rtrim($left_path, '/') . '/' . ltrim($right_path, '/');
+		}
+
+		if ( $left_params && $right_params ) {
+			$this->components['query'] = http_build_query(
+				array_replace_recursive($left_params, $right_params)
+			);
+		}
 
 		return $this;
 	}

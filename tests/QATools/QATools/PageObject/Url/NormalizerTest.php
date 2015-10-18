@@ -37,11 +37,13 @@ class NormalizerTest extends TestCase
 		$this->assertEquals($expected_normalized_components, $normalizer->normalize($page_url_annotation));
 	}
 
+	/**
+	 * @see ParserTest::mergeDataProvider
+	 */
 	public function normalizeDataProvider()
 	{
 		return array(
-			// Missing base url.
-			array(
+			'missing base url' => array(
 				'',
 				'http://domain.tld/path?param=value#anchor',
 				null,
@@ -53,8 +55,7 @@ class NormalizerTest extends TestCase
 					'fragment' => 'anchor',
 				),
 			),
-			// Defined base url.
-			array(
+			'defined base url' => array(
 				'http://base.tld',
 				'/path?param=value#anchor',
 				null,
@@ -66,8 +67,7 @@ class NormalizerTest extends TestCase
 					'fragment' => 'anchor',
 				),
 			),
-			// Defined secure mode.
-			array(
+			'secure mode enabled' => array(
 				'http://base.tld',
 				'/path?param=value#anchor',
 				true,
@@ -79,7 +79,7 @@ class NormalizerTest extends TestCase
 					'fragment' => 'anchor',
 				),
 			),
-			array(
+			'secure mode disabled' => array(
 				'https://base.tld',
 				'/path?param=value#anchor',
 				false,
@@ -91,15 +91,14 @@ class NormalizerTest extends TestCase
 					'fragment' => 'anchor',
 				),
 			),
-			// Merge priority.
-			array(
+			'merge priority' => array(
 				'http://base.tld/path',
 				'https://another.tld/path2?param=value#anchor',
 				null,
 				array(
 					'scheme' => 'https',
 					'host' => 'another.tld',
-					'path' => '/path2',
+					'path' => '/path/path2',
 					'query' => 'param=value',
 					'fragment' => 'anchor',
 				),
