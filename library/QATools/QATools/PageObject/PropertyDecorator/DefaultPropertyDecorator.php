@@ -49,8 +49,8 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 	 * @var array
 	 */
 	protected $elementToProxyMapping = array(
-		'\\QATools\\QATools\\PageObject\\Element\\IWebElement' => '\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy',
 		'\\QATools\\QATools\\PageObject\\Element\\WebElementCollection' => '\\QATools\\QATools\\PageObject\\Proxy\\WebElementCollectionProxy',
+		'\\QATools\\QATools\\PageObject\\Element\\IWebElement' => '\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy',
 	);
 
 	/**
