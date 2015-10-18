@@ -103,6 +103,9 @@ class ParserTest extends TestCase
 		}
 	}
 
+	/**
+	 * @see NormalizerTest::normalizeDataProvider
+	 */
 	public function mergeDataProvider()
 	{
 		return array(
