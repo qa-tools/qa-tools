@@ -49,7 +49,7 @@ class RegExpUrlPageMatcher extends AbstractPageMatcher
 	 * @param Page $page Page to match.
 	 *
 	 * @return boolean
-	 * @throws \QATools\QATools\PageObject\Exception\PageMatcherException When no matches specified.
+	 * @throws PageMatcherException When no matches specified.
 	 */
 	public function matches(Page $page)
 	{

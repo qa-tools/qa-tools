@@ -50,7 +50,6 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 	 * @param Page $page Page to match.
 	 *
 	 * @return boolean
-	 * @throws \QATools\QATools\PageObject\Exception\PageMatcherException When no matches specified.
 	 */
 	public function matches(Page $page)
 	{
@@ -75,6 +74,7 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 	 * @param string                      $url        The current url.
 	 *
 	 * @return boolean
+	 * @throws PageMatcherException When no matches specified.
 	 */
 	protected function matchComponent(UrlMatchComponentAnnotation $annotation, $url)
 	{
