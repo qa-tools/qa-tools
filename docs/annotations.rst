@@ -299,6 +299,10 @@ Annotation can have 4 parameters, similar to ``@page-url``:
 #. ``params`` - specifies parameters in associative array format
 #. ``secure`` - specifies if secure connection is used
 #. ``anchor`` - specifies the fragment/anchor of an url
+#. ``host`` - specifies the host of an url
+#. ``port`` - specifies the port of an url
+#. ``user`` - specifies the user of an url
+#. ``pass`` - specifies the pass of an url
 
 .. code-block:: ruby
 
@@ -307,6 +311,10 @@ Annotation can have 4 parameters, similar to ``@page-url``:
     @url-match-component('secure' => false)
     @url-match-component('params' => array('color' => 'red'))
     @url-match-component('anchor' => 'fragment')
+    @url-match-component('host' => 'domain.tld')
+    @url-match-component('port' => 80)
+    @url-match-component('user' => 'username')
+    @url-match-component('pass' => 'password')
     // or combined
-    @url-match-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false)
+    @url-match-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false, 'host' => 'domain.tld', 'port' => 80, 'user' => 'username', 'pass' => 'password')
 

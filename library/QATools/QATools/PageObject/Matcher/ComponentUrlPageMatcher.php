@@ -90,7 +90,11 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 		return $this->matchPath($annotation, $parser)
 			&& $this->matchParams($annotation, $parser)
 			&& $this->matchSecure($annotation, $parser)
-			&& $this->matchAnchor($annotation, $parser);
+			&& $this->matchAnchor($annotation, $parser)
+			&& $this->matchHost($annotation, $parser)
+			&& $this->matchPort($annotation, $parser)
+			&& $this->matchUser($annotation, $parser)
+			&& $this->matchPass($annotation, $parser);
 	}
 
 	/**
@@ -121,10 +125,7 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 	protected function matchParams(UrlMatchComponentAnnotation $annotation, Parser $parser)
 	{
 		if ( $annotation->params !== null ) {
-			$params = array();
-			parse_str($parser->getComponent('query'), $params);
-
-			if ( $annotation->params != $params ) {
+			if ( $annotation->params != $parser->getParams() ) {
 				return false;
 			}
 		}
@@ -164,6 +165,74 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 	protected function matchAnchor(UrlMatchComponentAnnotation $annotation, Parser $parser)
 	{
 		if ( !empty($annotation->anchor) && $annotation->anchor !== $parser->getComponent('fragment') ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Matches host.
+	 *
+	 * @param UrlMatchComponentAnnotation $annotation The annotation.
+	 * @param Parser                      $parser     Parser instance to match against.
+	 *
+	 * @return boolean
+	 */
+	protected function matchHost(UrlMatchComponentAnnotation $annotation, Parser $parser)
+	{
+		if ( !empty($annotation->host) && $annotation->host !== $parser->getComponent('host') ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Matches port.
+	 *
+	 * @param UrlMatchComponentAnnotation $annotation The annotation.
+	 * @param Parser                      $parser     Parser instance to match against.
+	 *
+	 * @return boolean
+	 */
+	protected function matchPort(UrlMatchComponentAnnotation $annotation, Parser $parser)
+	{
+		if ( !empty($annotation->port) && $annotation->port !== $parser->getComponent('port') ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Matches user.
+	 *
+	 * @param UrlMatchComponentAnnotation $annotation The annotation.
+	 * @param Parser                      $parser     Parser instance to match against.
+	 *
+	 * @return boolean
+	 */
+	protected function matchUser(UrlMatchComponentAnnotation $annotation, Parser $parser)
+	{
+		if ( !empty($annotation->user) && $annotation->user !== $parser->getComponent('user') ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Matches pass.
+	 *
+	 * @param UrlMatchComponentAnnotation $annotation The annotation.
+	 * @param Parser                      $parser     Parser instance to match against.
+	 *
+	 * @return boolean
+	 */
+	protected function matchPass(UrlMatchComponentAnnotation $annotation, Parser $parser)
+	{
+		if ( !empty($annotation->pass) && $annotation->pass !== $parser->getComponent('pass') ) {
 			return false;
 		}
 

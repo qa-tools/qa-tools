@@ -17,11 +17,6 @@ use QATools\QATools\PageObject\Matcher\ComponentUrlPageMatcher;
 use QATools\QATools\PageObject\Page;
 use tests\QATools\QATools\TestCase;
 
-/**
- * Class FullUrlPageMatcherTest
- *
- * @package tests\QATools\QATools\PageObject\Matcher
- */
 class ComponentUrlPageMatcherTest extends TestCase
 {
 	/**
@@ -108,6 +103,51 @@ class ComponentUrlPageMatcherTest extends TestCase
 			),
 			array(
 				array(array('anchor' => 'wrong')),
+				'http://domain.tld/relative?param=value#fragment',
+				false,
+			),
+			array(
+				array(array('host' => 'domain.tld')),
+				'http://domain.tld/relative?param=value#fragment',
+				true,
+			),
+			array(
+				array(array('host' => 'wrong.tld')),
+				'http://domain.tld/relative?param=value#fragment',
+				false,
+			),
+			array(
+				array(array('port' => 80)),
+				'http://domain.tld:80/relative?param=value#fragment',
+				true,
+			),
+			array(
+				array(array('port' => 80)),
+				'http://domain.tld/relative?param=value#fragment',
+				false,
+			),
+			array(
+				array(array('user' => 'username')),
+				'http://username@domain.tld/relative?param=value#fragment',
+				true,
+			),
+			array(
+				array(array('user' => 'username')),
+				'http://domain.tld/relative?param=value#fragment',
+				false,
+			),
+			array(
+				array(array('pass' => 'password')),
+				'http://username:password@domain.tld/relative?param=value#fragment',
+				true,
+			),
+			array(
+				array(array('user' => 'username', 'pass' => 'password')),
+				'http://username:password@domain.tld/relative?param=value#fragment',
+				true,
+			),
+			array(
+				array(array('pass' => 'password')),
 				'http://domain.tld/relative?param=value#fragment',
 				false,
 			),

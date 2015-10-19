@@ -16,11 +16,6 @@ use QATools\QATools\PageObject\Matcher\MatcherRegistry;
 use QATools\QATools\PageObject\Page;
 use tests\QATools\QATools\TestCase;
 
-/**
- * Class MatcherRegistryTest
- *
- * @package tests\QATools\QATools\PageObject\Matcher
- */
 class MatcherRegistryTest extends TestCase
 {
 	const ANNOTATION_MANAGER_CLASS = '\\mindplay\\annotations\\AnnotationManager';

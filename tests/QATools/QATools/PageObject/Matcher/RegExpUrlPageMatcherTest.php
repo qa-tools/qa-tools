@@ -17,11 +17,6 @@ use QATools\QATools\PageObject\Matcher\RegExpUrlPageMatcher;
 use QATools\QATools\PageObject\Page;
 use tests\QATools\QATools\TestCase;
 
-/**
- * Class FullUrlPageMatcherTest
- *
- * @package tests\QATools\QATools\PageObject\Matcher
- */
 class RegExpUrlPageMatcherTest extends TestCase
 {
 	/**

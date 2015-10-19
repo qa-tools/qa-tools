@@ -24,7 +24,11 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 		$expected_path,
 		$expected_params,
 		$expected_anchor,
-		$expected_secure
+		$expected_secure,
+		$expected_host,
+		$expected_port,
+		$expected_user,
+		$expected_pass
 	) {
 		$annotation = new UrlMatchComponentAnnotation();
 		$annotation->initAnnotation($annotation_params);
@@ -33,17 +37,25 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected_params, $annotation->params);
 		$this->assertEquals($expected_anchor, $annotation->anchor);
 		$this->assertEquals($expected_secure, $annotation->secure);
+		$this->assertEquals($expected_host, $annotation->host);
+		$this->assertEquals($expected_port, $annotation->port);
+		$this->assertEquals($expected_user, $annotation->user);
+		$this->assertEquals($expected_pass, $annotation->pass);
 	}
 
 	public function initAnnotationDataProvider()
 	{
 		return array(
 			array(
-				array('path', array('param'), 'anchor', true),
+				array('path', array('param'), 'anchor', true, 'host', 80, 'username', 'password'),
 				'path',
 				array('param'),
 				'anchor',
 				true,
+				'host',
+				80,
+				'username',
+				'password',
 			),
 			array(
 				array('secure' => true),
@@ -51,6 +63,10 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 				null,
 				null,
 				true,
+				null,
+				null,
+				null,
+				null,
 			),
 			array(
 				array('secure' => false),
@@ -58,10 +74,18 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 				null,
 				null,
 				false,
+				null,
+				null,
+				null,
+				null,
 			),
 			array(
 				array('path' => '/test'),
 				'/test',
+				null,
+				null,
+				null,
+				null,
 				null,
 				null,
 				null,
@@ -72,6 +96,10 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 				array('param' => 'value'),
 				null,
 				null,
+				null,
+				null,
+				null,
+				null,
 			),
 			array(
 				array('anchor' => 'test'),
@@ -79,6 +107,54 @@ class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
 				null,
 				'test',
 				null,
+				null,
+				null,
+				null,
+				null,
+			),
+			array(
+				array('host' => 'host'),
+				null,
+				null,
+				null,
+				null,
+				'host',
+				null,
+				null,
+				null,
+			),
+			array(
+				array('port' => 80),
+				null,
+				null,
+				null,
+				null,
+				null,
+				80,
+				null,
+				null,
+			),
+			array(
+				array('user' => 'username'),
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				'username',
+				null,
+			),
+			array(
+				array('pass' => 'password'),
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				'password',
 			),
 		);
 	}

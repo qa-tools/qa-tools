@@ -50,6 +50,34 @@ class UrlMatchComponentAnnotation extends Annotation implements IUrlMatcherAnnot
 	public $anchor;
 
 	/**
+	 * Match for the host.
+	 *
+	 * @var string|null
+	 */
+	public $host;
+
+	/**
+	 * Match for the port.
+	 *
+	 * @var int|null
+	 */
+	public $port;
+
+	/**
+	 * Match for the user.
+	 *
+	 * @var string|null
+	 */
+	public $user;
+
+	/**
+	 * Match for the password.
+	 *
+	 * @var string|null
+	 */
+	public $pass;
+
+	/**
 	 * Initialize the annotation.
 	 *
 	 * @param array $properties Annotation parameters.
@@ -58,7 +86,7 @@ class UrlMatchComponentAnnotation extends Annotation implements IUrlMatcherAnnot
 	 */
 	public function initAnnotation(array $properties)
 	{
-		$this->map($properties, array('path', 'params', 'anchor', 'secure'));
+		$this->map($properties, array('path', 'params', 'anchor', 'secure', 'host', 'port', 'user', 'pass'));
 
 		parent::initAnnotation($properties);
 	}
@@ -73,7 +101,11 @@ class UrlMatchComponentAnnotation extends Annotation implements IUrlMatcherAnnot
 		return $this->secure !== null
 			|| $this->path !== null
 			|| $this->params !== null
-			|| $this->anchor !== null;
+			|| $this->anchor !== null
+			|| $this->host !== null
+			|| $this->port !== null
+			|| $this->user !== null
+			|| $this->pass !== null;
 	}
 
 }
