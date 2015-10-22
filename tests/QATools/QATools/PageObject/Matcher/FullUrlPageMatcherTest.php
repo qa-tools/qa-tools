@@ -41,11 +41,9 @@ class FullUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchFullAnnotation($annotation_manager, $annotations);
 
 		$matcher = new FullUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn($url);
-
-		$this->assertEquals($expected_matches, $matcher->matches($page));
+		$this->assertEquals($expected_matches, $matcher->matches($page, $url));
 	}
 
 	public function matchesDataProvider()
@@ -60,6 +58,11 @@ class FullUrlPageMatcherTest extends TestCase
 				array(array('url' => '/not_matching')),
 				'/relative',
 				false,
+			),
+			array(
+				array(array('url' => '/not_matching'), array('url' => '/relative')),
+				'/relative',
+				true,
 			),
 		);
 	}
@@ -78,11 +81,9 @@ class FullUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchFullAnnotation($annotation_manager, array(null));
 
 		$matcher = new FullUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn('/');
-
-		$matcher->matches($page);
+		$matcher->matches($page, '/');
 	}
 
 }

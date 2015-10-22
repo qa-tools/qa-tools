@@ -14,7 +14,7 @@ namespace QATools\QATools\PageObject\Annotation;
 /**
  * Interface for matching annotations.
  */
-interface IUrlMatcherAnnotation
+interface IUrlMatchAnnotation
 {
 
 	/**

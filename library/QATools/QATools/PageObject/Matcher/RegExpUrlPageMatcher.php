@@ -27,16 +27,15 @@ class RegExpUrlPageMatcher extends AbstractPageMatcher
 	const ANNOTATION = 'url-match-regexp';
 
 	/**
-	 * Initializes the Page Matcher.
+	 * Registers annotations, used by matcher.
 	 *
 	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 * @param Session           $session            The current mink session.
 	 *
 	 * @return self
 	 */
-	public function register(AnnotationManager $annotation_manager, Session $session)
+	public function registerAnnotations(AnnotationManager $annotation_manager)
 	{
-		parent::register($annotation_manager, $session);
+		parent::registerAnnotations($annotation_manager);
 
 		$this->annotationManager->registry[self::ANNOTATION] = '\\QATools\\QATools\\PageObject\\Annotation\\UrlMatchRegexpAnnotation';
 
@@ -46,17 +45,16 @@ class RegExpUrlPageMatcher extends AbstractPageMatcher
 	/**
 	 * Matches the given page against the open.
 	 *
-	 * @param Page $page Page to match.
+	 * @param Page   $page Page to match.
+	 * @param String $url  The URL.
 	 *
 	 * @return boolean
 	 * @throws PageMatcherException When no matches specified.
 	 */
-	public function matches(Page $page)
+	public function matches(Page $page, $url)
 	{
 		/* @var $annotations UrlMatchRegexpAnnotation[] */
 		$annotations = $this->annotationManager->getClassAnnotations($page, '@' . self::ANNOTATION);
-
-		$url = $this->session->getCurrentUrl();
 
 		foreach ( $annotations as $annotation ) {
 			if ( !$annotation->isValid() ) {

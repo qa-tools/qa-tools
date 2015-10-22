@@ -18,7 +18,7 @@ use mindplay\annotations\Annotation;
  *
  * @usage('class'=>true, 'inherited'=>true, 'multiple'=>true)
  */
-class UrlMatchComponentAnnotation extends Annotation implements IUrlMatcherAnnotation
+class UrlMatchComponentAnnotation extends Annotation implements IUrlMatchAnnotation
 {
 
 	/**
@@ -98,10 +98,10 @@ class UrlMatchComponentAnnotation extends Annotation implements IUrlMatcherAnnot
 	 */
 	public function isValid()
 	{
-		return $this->secure !== null
-			|| $this->path !== null
+		return $this->path !== null
 			|| $this->params !== null
 			|| $this->anchor !== null
+			|| $this->secure !== null
 			|| $this->host !== null
 			|| $this->port !== null
 			|| $this->user !== null

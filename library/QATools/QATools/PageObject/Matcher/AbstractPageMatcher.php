@@ -30,23 +30,14 @@ abstract class AbstractPageMatcher implements IPageMatcher
 	protected $annotationManager;
 
 	/**
-	 * Instance of Mink session.
-	 *
-	 * @var Session
-	 */
-	protected $session;
-
-	/**
-	 * Initializes the Page Matcher.
+	 * Registers annotations, used by matcher.
 	 *
 	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 * @param Session           $session            The current mink session.
 	 *
 	 * @return self
 	 */
-	public function register(AnnotationManager $annotation_manager, Session $session)
+	public function registerAnnotations(AnnotationManager $annotation_manager)
 	{
-		$this->session = $session;
 		$this->annotationManager = $annotation_manager;
 
 		return $this;

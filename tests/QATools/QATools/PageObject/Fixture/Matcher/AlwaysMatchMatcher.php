@@ -25,12 +25,13 @@ class AlwaysMatchMatcher extends AbstractPageMatcher
 	/**
 	 * Matches the given page against the open.
 	 *
-	 * @param Page $page Page to match.
+	 * @param Page   $page Page to match.
+	 * @param String $url  The URL.
 	 *
 	 * @return boolean
 	 * @throws \QATools\QATools\PageObject\Exception\PageMatcherException When no matches specified.
 	 */
-	public function matches(Page $page)
+	public function matches(Page $page, $url)
 	{
 		return true;
 	}

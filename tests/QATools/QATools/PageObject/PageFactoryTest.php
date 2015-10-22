@@ -315,7 +315,8 @@ class PageFactoryTest extends TestCase
 		/* @var $registry MatcherRegistry */
 		$registry = m::mock('\\QATools\\QATools\\PageObject\\Matcher\\MatcherRegistry');
 
-		$registry->shouldReceive('match')->with($page)->andReturn($expected);
+		$this->session->shouldReceive('getCurrentUrl')->andReturn('/');
+		$registry->shouldReceive('match')->with($page, '/')->andReturn($expected);
 
 		$this->realFactory->setMatcherRegistry($registry);
 

@@ -41,11 +41,9 @@ class ComponentUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchComponentAnnotation($annotation_manager, $annotations);
 
 		$matcher = new ComponentUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn($url);
-
-		$this->assertEquals($expected_matches, $matcher->matches($page));
+		$this->assertEquals($expected_matches, $matcher->matches($page, $url));
 	}
 
 	public function matchesDataProvider()
@@ -151,6 +149,11 @@ class ComponentUrlPageMatcherTest extends TestCase
 				'http://domain.tld/relative?param=value#fragment',
 				false,
 			),
+			array(
+				array(array('host' => 'wrong.tld'), array('path' => '/relative')),
+				'http://domain.tld/relative?param=value#fragment',
+				true,
+			),
 		);
 	}
 
@@ -168,11 +171,9 @@ class ComponentUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchComponentAnnotation($annotation_manager, array(null));
 
 		$matcher = new ComponentUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn('/');
-
-		$matcher->matches($page);
+		$matcher->matches($page, '/');
 	}
 
 }

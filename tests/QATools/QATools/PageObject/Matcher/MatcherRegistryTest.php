@@ -31,72 +31,83 @@ class MatcherRegistryTest extends TestCase
 	 */
 	protected $annotationManager;
 
+	/**
+	 * The page.
+	 *
+	 * @var Page
+	 */
+	protected $page;
+
 	protected function setUp()
 	{
 		parent::setUp();
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
+
+		$this->page = m::mock('\\QATools\\QATools\\PageObject\\Page');
 	}
 
 	public function testConstructor()
 	{
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
+		$registry = new MatcherRegistry($this->annotationManager);
 
 		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Matcher\\MatcherRegistry', $registry);
 	}
 
-	public function testRegisterMatcherOrderAsc()
+	public function testMatchMatcherOrderAsc()
 	{
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
+		$registry = new MatcherRegistry($this->annotationManager);
 
 		$matcher1 = $this->createMatcher();
 		$matcher2 = $this->createMatcher();
 
-		$registry->registerMatcher($matcher1, 1);
-		$registry->registerMatcher($matcher2, 2);
+		$registry->add($matcher1, 1);
+		$registry->add($matcher2, 2);
 
-		$this->assertEquals($registry, $registry->initialize());
+		$this->assertFalse($registry->match($this->page, '/'));
 	}
 
-	public function testRegisterMatcherOrderDesc()
+	public function testMatchMatcherOrderDesc()
 	{
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
+		$registry = new MatcherRegistry($this->annotationManager);
 
 		$matcher1 = $this->createMatcher();
 		$matcher2 = $this->createMatcher();
 
-		$registry->registerMatcher($matcher2, 2);
-		$registry->registerMatcher($matcher1, 1);
+		$registry->add($matcher2, 2);
+		$registry->add($matcher1, 1);
 
-		$this->assertEquals($registry, $registry->initialize());
+		$this->assertFalse($registry->match($this->page, '/'));
 	}
 
-	public function testRegisterMatcherOrderEqual()
+	public function testMatchMatcherOrderEqual()
 	{
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
+		$registry = new MatcherRegistry($this->annotationManager);
 
 		$matcher1 = $this->createMatcher();
 		$matcher2 = $this->createMatcher(false);
 		$matcher3 = $this->createMatcher(false);
 		$matcher4 = $this->createMatcher();
 
-		$registry->registerMatcher($matcher3, 0);
-		$registry->registerMatcher($matcher4, 1);
-		$registry->registerMatcher($matcher2, 0);
-		$registry->registerMatcher($matcher1, -1);
+		$registry->add($matcher3, 0);
+		$registry->add($matcher4, 1);
+		$registry->add($matcher2, 0);
+		$registry->add($matcher1, -1);
 
-		$this->assertEquals($registry, $registry->initialize());
+		$this->assertFalse($registry->match($this->page, '/'));
 	}
 
-	protected function createMatcher($ordered = true)
+	protected function createMatcher($orderedMatch = true)
 	{
 		$matcher = m::mock(self::MATCHER_INTERFACE);
 
-		if ( $ordered ) {
-			$matcher->shouldReceive('register')->once()->andReturnSelf()->globally()->ordered();
+		$matcher->shouldReceive('registerAnnotations')->once()->andReturnSelf();
+
+		if ( $orderedMatch ) {
+			$matcher->shouldReceive('matches')->once()->andReturn(false)->globally()->ordered();
 		}
 		else {
-			$matcher->shouldReceive('register')->once()->andReturnSelf();
+			$matcher->shouldReceive('matches')->once()->andReturn(false);
 		}
 
 		return $matcher;
@@ -104,27 +115,20 @@ class MatcherRegistryTest extends TestCase
 
 	public function testMatchTrue()
 	{
-		/** @var Page $page */
-		$page = m::mock('\\QATools\\QATools\\PageObject\\Page');
+		$registry = new MatcherRegistry($this->annotationManager);
 
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
+		$instance_name = self::MATCHER_TRUE;
 
-		$registry->registerMatcher(self::MATCHER_TRUE, 0);
-		$registry->initialize();
+		$registry->add(new $instance_name, 0);
 
-		$this->assertTrue($registry->match($page));
+		$this->assertTrue($registry->match($this->page, '/'));
 	}
 
 	public function testMatchEmptyFalse()
 	{
-		/** @var Page $page */
-		$page = m::mock('\\QATools\\QATools\\PageObject\\Page');
+		$registry = new MatcherRegistry($this->annotationManager);
 
-		$registry = new MatcherRegistry($this->annotationManager, $this->session);
-
-		$registry->initialize();
-
-		$this->assertFalse($registry->match($page));
+		$this->assertFalse($registry->match($this->page, '/'));
 	}
 
 }

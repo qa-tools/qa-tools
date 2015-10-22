@@ -27,19 +27,19 @@ interface IPageMatcher
 	 * Initializes page matcher.
 	 *
 	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 * @param Session           $session            The current mink session.
 	 *
 	 * @return self
 	 */
-	public function register(AnnotationManager $annotation_manager, Session $session);
+	public function registerAnnotations(AnnotationManager $annotation_manager);
 
 	/**
 	 * Matches the given page against the displayed page.
 	 *
-	 * @param Page $page Page to match.
+	 * @param Page   $page Page to match.
+	 * @param String $url  The URL.
 	 *
 	 * @return boolean
 	 */
-	public function matches(Page $page);
+	public function matches(Page $page, $url);
 
 }

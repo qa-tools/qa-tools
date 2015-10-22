@@ -41,11 +41,9 @@ class RegExpUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchRegexpAnnotation($annotation_manager, $annotations);
 
 		$matcher = new RegExpUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn($url);
-
-		$this->assertEquals($expected_matches, $matcher->matches($page));
+		$this->assertEquals($expected_matches, $matcher->matches($page, $url));
 	}
 
 	public function matchesDataProvider()
@@ -60,6 +58,11 @@ class RegExpUrlPageMatcherTest extends TestCase
 				array(array('regexp' => '/^\/not_matching$/')),
 				'/relative',
 				false,
+			),
+			array(
+				array(array('regexp' => '/^\/not_matching$/'), array('regexp' => '/^\/relative$/')),
+				'/relative',
+				true,
 			),
 		);
 	}
@@ -78,11 +81,9 @@ class RegExpUrlPageMatcherTest extends TestCase
 		$this->expectUrlMatchRegexpAnnotation($annotation_manager, array(null));
 
 		$matcher = new RegExpUrlPageMatcher();
-		$matcher->register($annotation_manager, $this->session);
+		$matcher->registerAnnotations($annotation_manager);
 
-		$this->session->shouldReceive('getCurrentUrl')->andReturn('/');
-
-		$matcher->matches($page);
+		$matcher->matches($page, '/');
 	}
 
 }

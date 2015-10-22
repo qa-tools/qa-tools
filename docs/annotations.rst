@@ -2,6 +2,151 @@ Annotations
 ===========
 Annotations are widely used to provide access to the library's functionality without a need to write any code.
 
+@page-url
+---------
+This annotation is used to specify URL associated with each page class. For example:
+
+.. literalinclude:: examples/page_url_simple.php
+    :linenos:
+    :emphasize-lines: 5
+
+There are several parameters to configure the URL:
+
+#. ``url`` - specifies absolute or relative URL to the page (mandatory)
+#. ``params`` - specifies additional URL parameters in associative array format (defaults to ``array()``)
+#. ``secure`` - specifies if secure connection (the ``https://`` protocol) needs to be used (defaults to ``null``)
+
+.. warning:: If some/all parameter names are omitted (as seen in above example), then parameter order must be preserved.
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+Below is an example of annotation, where ``url`` parameter name is omitted, but ``secure`` parameter name is not:
+
+.. code-block:: ruby
+
+    @page-url('http://www.example.com/products/shoes.html', 'secure' => false)
+
+Parameters in the URL
+^^^^^^^^^^^^^^^^^^^^^
+Parameters in the url can be specified using 3 ways:
+
+* after question mark (``?``) in ``url`` annotation parameter (first)
+* in ``params`` annotation parameter via associative array (second)
+* as a combination of both methods from above
+
+All of the following annotations will produce exactly same URL:
+
+.. code-block:: ruby
+
+    @page-url('http://www.example.com/products/shoes.html?color=red&size=42')
+    @page-url('http://www.example.com/products/shoes.html', array('color' => 'red', 'size' => 42))
+    @page-url('http://www.example.com/products/shoes.html?color=red', array('size' => 42))
+
+Same annotations can also be written in long form:
+
+.. code-block:: ruby
+
+    @page-url('url' => 'http://www.example.com/products/shoes.html?color=red&size=42')
+    @page-url('url' => 'http://www.example.com/products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
+    @page-url('url' => 'http://www.example.com/products/shoes.html?color=red', 'params' => array('size' => 42))
+
+.. note:: If same URL parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value
+from ``params`` takes precedence.
+
+Relative URLs
+^^^^^^^^^^^^^
+Specifying absolute URLs in each of created Page classes introduces fair amount of code duplication. This becomes even
+larger problem, when need arises to use Page classes in parallel on 2+ different domains (e.g. local development environment
+and Continuous Integration server).
+
+After setting ``base_url`` :ref:`configuration option <configuration-options>` it will be possible to use relative URLs
+**along side** (can use both at same time for different pages) with absolute ones:
+
+.. code-block:: ruby
+
+    @page-url('products/shoes.html?color=red&size=42')
+    @page-url('products/shoes.html', array('color' => 'red', 'size' => 42))
+    @page-url('products/shoes.html?color=red', array('size' => 42))
+
+    @page-url('url' => 'products/shoes.html?color=red&size=42')
+    @page-url('url' => 'products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
+    @page-url('url' => 'products/shoes.html?color=red', 'params' => array('size' => 42))
+
+Secure/unsecure URLs
+^^^^^^^^^^^^^^^^^^^^
+If ``secure`` annotation parameter not specified, then protocol from following sources is used:
+
+* for absolute urls: the ``url`` parameter of ``@page-url`` annotation
+* for relative urls: ``base_url`` configuration option
+
+By specifying ``secure`` annotation parameter (3rd) value it's possible to force secure/unsecure connection. For example:
+
+.. code-block:: ruby
+
+    // force secure:
+    @page-url('products/shoes.html', true)
+    @page-url('url' => 'products/shoes.html', 'secure' => true)
+    @page-url('url' => 'http://www.example.com/products/shoes.html', 'secure' => true)
+
+    // force non-secure:
+    @page-url('products/shoes.html', false)
+    @page-url('url' => 'products/shoes.html', 'secure' => false)
+    @page-url('url' => 'https://www.example.com/products/shoes.html', 'secure' => false)
+
+@url-match-full
+---------------
+This annotation allows to check if a specific page is open by comparing the specified full URL against the currently opened URL.
+
+.. literalinclude:: examples/page_url_simple.php
+    :linenos:
+    :emphasize-lines: 6
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+@url-match-regexp
+-----------------
+This annotation allows to check if a specific page is opened using a regular expression against the currently opened URL.
+
+.. code-block:: ruby
+
+    @url-match-full('/shoes\.html\?color=.+?$/')
+    @url-match-full('regexp' => '/shoes\.html\?color=.+?$/')
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+@url-match-component
+--------------------
+This annotation allows to check if a specific page is opened by comparing different components of the URL against the currently opened URL.
+
+There are several parameters to configure the matching, similar to ``@page-url``:
+
+#. ``path`` - specifies the path of an URL
+#. ``params`` - specifies parameters in associative array format
+#. ``secure`` - specifies if secure connection is used
+#. ``anchor`` - specifies the fragment/anchor of an URL
+#. ``host`` - specifies the host of an URL
+#. ``port`` - specifies the port of an URL
+#. ``user`` - specifies the user of an URL
+#. ``pass`` - specifies the password of an URL
+
+.. code-block:: ruby
+
+    // possible components
+    @url-match-component('path' => '/products/shoes.html')
+    @url-match-component('secure' => false)
+    @url-match-component('params' => array('color' => 'red'))
+    @url-match-component('anchor' => 'fragment')
+    @url-match-component('host' => 'domain.tld')
+    @url-match-component('port' => 80)
+    @url-match-component('user' => 'username')
+    @url-match-component('pass' => 'password')
+    // or combined
+    @url-match-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false, 'host' => 'domain.tld', 'port' => 80, 'user' => 'username', 'pass' => 'password')
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+.. note:: Multiple ``@url-match`` annotations will be evaluated with an *OR* operator.
+
 @find-by
 --------
 This annotation is used to specify means, by which elements can be found on a page. For example:
@@ -138,115 +283,9 @@ The above annotations would find ``A`` tags which ``href`` attribute value match
 
 .. _page-url:
 
-@page-url
----------
-This annotation is used to specify URL associated with each page class. For example:
-
-.. literalinclude:: examples/page_url_simple.php
-   :linenos:
-   :emphasize-lines: 5
-
-Annotation can have 3 parameters:
-
-#. ``url`` - specifies absolute or relative url to the page (mandatory)
-#. ``params`` - specifies additional url parameters in associative array format (defaults to ``array()``)
-#. ``secure`` - specifies if secure connection (the ``https://`` protocol) needs to be used (defaults to ``null``)
-
-.. warning:: If some/all parameter names are omitted (as seen in above example), then parameter order must be preserved.
-
-Below is an example of annotation, where ``url`` parameter name is omitted, but ``secure`` parameter name is not:
-
-.. code-block:: ruby
-
-    @page-url('http://www.example.com/products/shoes.html', 'secure' => false)
-
-Parameters in the URL
-^^^^^^^^^^^^^^^^^^^^^
-Parameters in the url can be specified using 3 ways:
-
-* after question mark (``?``) in ``url`` annotation parameter (first)
-* in ``params`` annotation parameter via associative array (second)
-* as a combination of both methods from above
-
-All of the following annotations will produce exactly same url:
-
-.. code-block:: ruby
-
-    @page-url('http://www.example.com/products/shoes.html?color=red&size=42')
-    @page-url('http://www.example.com/products/shoes.html', array('color' => 'red', 'size' => 42))
-    @page-url('http://www.example.com/products/shoes.html?color=red', array('size' => 42))
-
-Same annotations can also be written in long form:
-
-.. code-block:: ruby
-
-    @page-url('url' => 'http://www.example.com/products/shoes.html?color=red&size=42')
-    @page-url('url' => 'http://www.example.com/products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
-    @page-url('url' => 'http://www.example.com/products/shoes.html?color=red', 'params' => array('size' => 42))
-
-.. note:: If same url parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value
-          from ``params`` takes precedence.
-
-Relative URLs
-^^^^^^^^^^^^^
-Specifying absolute urls in each of created Page classes introduces fair amount of code duplication. This becomes even
-larger problem, when need arises to use Page classes in parallel on 2+ different domains (e.g. local development environment
-and Continuous Integration server).
-
-After setting ``base_url`` :ref:`configuration option <configuration-options>` it will be possible to use relative urls
-**along side** (can use both at same time for different pages) with absolute ones:
-
-.. code-block:: ruby
-
-    @page-url('products/shoes.html?color=red&size=42')
-    @page-url('products/shoes.html', array('color' => 'red', 'size' => 42))
-    @page-url('products/shoes.html?color=red', array('size' => 42))
-
-    @page-url('url' => 'products/shoes.html?color=red&size=42')
-    @page-url('url' => 'products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
-    @page-url('url' => 'products/shoes.html?color=red', 'params' => array('size' => 42))
-
-Secure/unsecure URLs
-^^^^^^^^^^^^^^^^^^^^
-If ``secure`` annotation parameter not specified, then protocol from following sources is used:
-
-* for absolute urls: the ``url`` parameter of ``@page-url`` annotation
-* for relative urls: ``base_url`` configuration option
-
-By specifying ``secure`` annotation parameter (3rd) value it's possible to force secure/unsecure connection. For example:
-
-.. code-block:: ruby
-
-    // force secure:
-    @page-url('products/shoes.html', true)
-    @page-url('url' => 'products/shoes.html', 'secure' => true)
-    @page-url('url' => 'http://www.example.com/products/shoes.html', 'secure' => true)
-
-    // force non-secure:
-    @page-url('products/shoes.html', false)
-    @page-url('url' => 'products/shoes.html', 'secure' => false)
-    @page-url('url' => 'https://www.example.com/products/shoes.html', 'secure' => false)
-
-@timeout
---------
-This annotation is used to specify maximum waiting time (in seconds), after which search attempt for an element, that
-is absent on a page, will be considered as `failure` and exception will the thrown.
-
-.. note:: When ``@timeout`` annotation is not specified, then search attempt will be considered as `failure` immediately
-          after element won't be found on a page.
-
-For example:
-
-.. literalinclude:: examples/annotation_inheritance.php
-   :linenos:
-   :emphasize-lines: 7,10,17-19,28
-
-When defining an element (line 10) it's possible to specify default ``@timeout`` annotation (line 7), that will be used when
-none was specified on a page property (line 17-19). If ``@timeout`` annotation was specified on a page property (line 28),
-then it will override any default annotation, that might have been specified on the element's class.
-
-.. note:: This annotation can be particularly useful, when dealing with AJAX requests in which element in question would be only
-          present on a page after AJAX request is over.
+@bem
+----
+...
 
 @element-name
 -------------
@@ -267,54 +306,23 @@ then it will override any default annotation, that might have been specified on 
 .. note:: If element name is not specified, then page property name, e.g. ``HomePage::$breadcrumbsDefault``, would be
           used instead.
 
-@bem
-----
-...
+@timeout
+--------
+This annotation is used to specify maximum waiting time (in seconds), after which search attempt for an element, that
+is absent on a page, will be considered as `failure` and exception will the thrown.
 
-@url-match-full
----------------
+.. note:: When ``@timeout`` annotation is not specified, then search attempt will be considered as `failure` immediately
+after element won't be found on a page.
 
-.. literalinclude:: examples/page_url_simple.php
-    :linenos:
-    :emphasize-lines: 6
+For example:
 
-This annotation allows to check if a specific page is open comparing the full specified URL against the current open URL.
+.. literalinclude:: examples/annotation_inheritance.php
+:linenos:
+   :emphasize-lines: 7,10,17-19,28
 
-@url-match-regexp
------------------
-This annotation allows to check if a specific page is open using a regular expression against the current open URL.
+    When defining an element (line 10) it's possible to specify default ``@timeout`` annotation (line 7), that will be used when
+none was specified on a page property (line 17-19). If ``@timeout`` annotation was specified on a page property (line 28),
+then it will override any default annotation, that might have been specified on the element's class.
 
-.. code-block:: ruby
-
-    @url-match-full('/shoes\.html\?color=.+?$/')
-    @url-match-full('regexp' => '/shoes\.html\?color=.+?$/')
-
-@url-match-component
---------------------
-This annotation allows to check if a specific page is open comparing different components of a URL against the current open URL.
-
-Annotation can have 4 parameters, similar to ``@page-url``:
-
-#. ``path`` - specifies the path of an url
-#. ``params`` - specifies parameters in associative array format
-#. ``secure`` - specifies if secure connection is used
-#. ``anchor`` - specifies the fragment/anchor of an url
-#. ``host`` - specifies the host of an url
-#. ``port`` - specifies the port of an url
-#. ``user`` - specifies the user of an url
-#. ``pass`` - specifies the pass of an url
-
-.. code-block:: ruby
-
-    // possible components
-    @url-match-component('path' => '/products/shoes.html')
-    @url-match-component('secure' => false)
-    @url-match-component('params' => array('color' => 'red'))
-    @url-match-component('anchor' => 'fragment')
-    @url-match-component('host' => 'domain.tld')
-    @url-match-component('port' => 80)
-    @url-match-component('user' => 'username')
-    @url-match-component('pass' => 'password')
-    // or combined
-    @url-match-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false, 'host' => 'domain.tld', 'port' => 80, 'user' => 'username', 'pass' => 'password')
-
+.. note:: This annotation can be particularly useful, when dealing with AJAX requests in which element in question would be only
+present on a page after AJAX request is over.

@@ -18,11 +18,11 @@ use mindplay\annotations\Annotation;
  *
  * @usage('class'=>true, 'inherited'=>true, 'multiple'=>true)
  */
-class UrlMatchFullAnnotation extends Annotation implements IUrlMatcherAnnotation
+class UrlMatchFullAnnotation extends Annotation implements IUrlMatchAnnotation
 {
 
 	/**
-	 * Perfect match for the url.
+	 * Exact match for the URL.
 	 *
 	 * @var string
 	 */

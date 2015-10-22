@@ -24,13 +24,6 @@ class MatcherRegistry
 {
 
 	/**
-	 * Instance of Mink session.
-	 *
-	 * @var Session
-	 */
-	protected $session;
-
-	/**
 	 * Annotation manager.
 	 *
 	 * @var AnnotationManager
@@ -38,79 +31,39 @@ class MatcherRegistry
 	protected $annotationManager;
 
 	/**
-	 * The current config.
-	 *
-	 * @var array
-	 */
-	protected $matchers = array();
-
-	/**
 	 * Current active page matchers.
 	 *
 	 * @var IPageMatcher[]
 	 */
-	protected $pageMatchers = array();
+	protected $matchers = array();
 
 	/**
-	 * Creates PageFactory instance.
+	 * Creates MatcherRegistry instance.
 	 *
 	 * @param AnnotationManager $annotation_manager Annotation manager.
-	 * @param Session           $session            Current session.
-	 * @param array             $matchers           Array of FQCN of matchers.
 	 */
-	public function __construct(AnnotationManager $annotation_manager, Session $session, array $matchers = array())
+	public function __construct(AnnotationManager $annotation_manager)
 	{
 		$this->annotationManager = $annotation_manager;
-		$this->session = $session;
-
-		foreach ( $matchers as $index => $matcher ) {
-			$this->registerMatcher($matcher, $index);
-		}
 	}
 
 	/**
-	 * Registers new matcher.
+	 * Adds a page matcher instance.
 	 *
-	 * @param string  $page_matcher The matcher FQCN.
-	 * @param integer $priority     Priority of the matcher.
-	 *
-	 * @return self
-	 */
-	public function registerMatcher($page_matcher, $priority = 0)
-	{
-		$this->matchers[] = array($page_matcher, $priority);
-
-		return $this;
-	}
-
-	/**
-	 * Initializes page matchers.
+	 * @param IPageMatcher $page_matcher The page matcher instance.
+	 * @param integer      $priority     Priority of the matcher.
 	 *
 	 * @return self
 	 */
-	public function initialize()
+	public function add(IPageMatcher $page_matcher, $priority = 0)
 	{
-		if ( count($this->matchers) === count($this->pageMatchers) ) {
-			return $this;
-		}
+		$page_matcher->registerAnnotations($this->annotationManager);
+
+		$this->matchers[] = array('instance' => $page_matcher, 'priority' => $priority);
 
 		usort($this->matchers, function ($a, $b) {
-			if ( $a[1] === $b[1] ) {
-				return 0;
-			}
-
-			return ($a[1] < $b[1]) ? -1 : 1;
+			return strcmp($a['priority'], $b['priority']);
 		});
-
-		$this->pageMatchers = array();
-
-		foreach ( $this->matchers as $matcher ) {
-			/* @var $instance IPageMatcher */
-			$instance = is_string($matcher[0]) ? new $matcher[0]() : $matcher[0];
-			$instance->register($this->annotationManager, $this->session);
-
-			$this->pageMatchers[] = $instance;
-		}
 
 		return $this;
 	}
@@ -118,14 +71,15 @@ class MatcherRegistry
 	/**
 	 * Matches the page against registered matchers.
 	 *
-	 * @param Page $page Page to match.
+	 * @param Page   $page Page to match.
+	 * @param String $url  The URL.
 	 *
 	 * @return boolean
 	 */
-	public function match(Page $page)
+	public function match(Page $page, $url)
 	{
-		foreach ( $this->pageMatchers as $matcher ) {
-			if ( $matcher->matches($page) ) {
+		foreach ( $this->matchers as $matcher ) {
+			if ( $matcher['instance']->matches($page, $url) ) {
 				return true;
 			}
 		}

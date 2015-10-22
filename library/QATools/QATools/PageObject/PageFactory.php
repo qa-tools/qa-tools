@@ -114,11 +114,7 @@ class PageFactory implements IPageFactory
 		$this->setUrlFactory(new UrlFactory());
 		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
 		$this->setPageLocator(new DefaultPageLocator((array)$this->config->getOption('page_namespace_prefix')));
-		$this->setMatcherRegistry(
-			new MatcherRegistry($annotation_manager, $session, $this->config->getOption('page_matchers'))
-		);
-
-		$this->matcherRegistry->initialize();
+		$this->setMatcherRegistry($this->buildMatcherRegistry());
 	}
 
 	/**
@@ -291,7 +287,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function opened(Page $page)
 	{
-		return $this->matcherRegistry->match($page);
+		return $this->matcherRegistry->match($page, $this->_session->getCurrentUrl());
 	}
 
 	/**
@@ -372,6 +368,24 @@ class PageFactory implements IPageFactory
 		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
 
 		return new $resolved_page_class($this);
+	}
+
+	/**
+	 * Builds the matcher registry.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 *
+	 * @return MatcherRegistry
+	 */
+	protected function buildMatcherRegistry()
+	{
+		$matcher_registry = new MatcherRegistry($this->annotationManager);
+
+		foreach ( $this->config->getOption('page_matchers') as $index => $matcher_class ) {
+			$matcher_registry->add(new $matcher_class, $index);
+		}
+
+		return $matcher_registry;
 	}
 
 	/**
