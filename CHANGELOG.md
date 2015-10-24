@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+...
+
+### Changed
+...
+
+### Fixed
+...
+
+## [1.1.0] - 2015-10-24
+### Added
 - Added `Page::getPageFactory` method by @evangelion1204.
 - Added `PageFactory::setSession` method.
 - Added documentation on the ReadTheDocs service.
