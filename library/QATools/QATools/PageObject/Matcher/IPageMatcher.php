@@ -36,7 +36,7 @@ interface IPageMatcher
 	 * Matches the given page against the displayed page.
 	 *
 	 * @param Page   $page Page to match.
-	 * @param String $url  The URL.
+	 * @param string $url  The URL.
 	 *
 	 * @return boolean
 	 */

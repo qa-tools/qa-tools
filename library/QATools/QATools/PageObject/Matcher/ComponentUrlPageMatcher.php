@@ -47,7 +47,7 @@ class ComponentUrlPageMatcher extends AbstractPageMatcher
 	 * Matches the given page against the open.
 	 *
 	 * @param Page   $page Page to match.
-	 * @param String $url  The URL.
+	 * @param string $url  The URL.
 	 *
 	 * @return boolean
 	 */

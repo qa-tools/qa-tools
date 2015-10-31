@@ -72,7 +72,7 @@ class MatcherRegistry
 	 * Matches the page against registered matchers.
 	 *
 	 * @param Page   $page Page to match.
-	 * @param String $url  The URL.
+	 * @param string $url  The URL.
 	 *
 	 * @return boolean
 	 */
