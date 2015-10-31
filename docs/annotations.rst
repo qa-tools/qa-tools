@@ -316,10 +316,10 @@ after element won't be found on a page.
 For example:
 
 .. literalinclude:: examples/annotation_inheritance.php
-:linenos:
+   :linenos:
    :emphasize-lines: 7,10,17-19,28
 
-    When defining an element (line 10) it's possible to specify default ``@timeout`` annotation (line 7), that will be used when
+When defining an element (line 10) it's possible to specify default ``@timeout`` annotation (line 7), that will be used when
 none was specified on a page property (line 17-19). If ``@timeout`` annotation was specified on a page property (line 28),
 then it will override any default annotation, that might have been specified on the element's class.
 
