@@ -50,8 +50,7 @@ Same annotations can also be written in long form:
     @page-url('url' => 'http://www.example.com/products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
     @page-url('url' => 'http://www.example.com/products/shoes.html?color=red', 'params' => array('size' => 42))
 
-.. note:: If same URL parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value
-from ``params`` takes precedence.
+.. note:: If same URL parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value from ``params`` takes precedence.
 
 Relative URLs
 ^^^^^^^^^^^^^
