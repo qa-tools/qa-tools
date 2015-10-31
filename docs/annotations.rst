@@ -311,7 +311,7 @@ This annotation is used to specify maximum waiting time (in seconds), after whic
 is absent on a page, will be considered as `failure` and exception will the thrown.
 
 .. note:: When ``@timeout`` annotation is not specified, then search attempt will be considered as `failure` immediately
-after element won't be found on a page.
+          after element won't be found on a page.
 
 For example:
 
@@ -324,4 +324,4 @@ none was specified on a page property (line 17-19). If ``@timeout`` annotation w
 then it will override any default annotation, that might have been specified on the element's class.
 
 .. note:: This annotation can be particularly useful, when dealing with AJAX requests in which element in question would be only
-present on a page after AJAX request is over.
+          present on a page after AJAX request is over.
