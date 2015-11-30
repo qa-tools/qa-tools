@@ -88,9 +88,9 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 			$annotations[] = $annotation;
 		}
 
-		$this->annotationManager->shouldReceive('getPropertyAnnotations')->with($this->property, null, '@var')->andReturn(
-			$annotations
-		);
+		$this->annotationManager->shouldReceive('getPropertyAnnotations')
+			->with($this->property, null, '@var')
+			->andReturn($annotations);
 	}
 
 	public function getDataTypeDataProvider()
@@ -129,7 +129,10 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 		$reflection_property = new \ReflectionProperty($this, 'propertyClass');
 
 		/* @var $property Property */
-		$property = m::mock($this->propertyClass . '[getDataType]', array($reflection_property, $this->annotationManager));
+		$property = m::mock(
+			$this->propertyClass . '[getDataType]',
+			array($reflection_property, $this->annotationManager)
+		);
 		$property->shouldReceive('getDataType')->once()->andReturn($data_type);
 
 		$this->assertSame($is_simple, $property->isSimpleDataType());
@@ -167,6 +170,24 @@ class PropertyTest extends \PHPUnit_Framework_TestCase
 			array('SampleClass[]', true),
 			array('SampleClass', false),
 			array(null, false),
+		);
+	}
+
+	/**
+	 * @dataProvider isDataTypeCollectionProvider
+	 */
+	public function testIsDataTypeCollection($data_type, $is_collection)
+	{
+		$this->expectVarAnnotation($data_type);
+
+		$this->assertSame($is_collection, $this->property->isDataTypeCollection());
+	}
+
+	public function isDataTypeCollectionProvider()
+	{
+		return array(
+			array('stdClass', false),
+			array('tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\WebElementCollectionChild', true),
 		);
 	}
 

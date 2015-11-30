@@ -41,6 +41,9 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\ButtonChild';
 
+		$this->expectDriverGetTagName('button');
+		$this->expectDriverGetAttribute(array('type' => 'submit'));
+
 		$this->element->setClassName($expected);
 		$this->assertInstanceOf($expected, $this->element->getObject());
 	}
@@ -60,6 +63,16 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		$expected = 'OK';
 		$this->assertSame($this->element, $this->element->setName($expected));
 		$this->assertEquals($expected, $this->element->getName());
+	}
+
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$this->expectLocatorCallReturningTwoNodeElements();
+
+		$proxy = $this->createElement();
+
+		$this->assertCount(2, $proxy);
+		$this->assertEquals('XPATH1', $proxy->getObject()->getXPath());
 	}
 
 	/**

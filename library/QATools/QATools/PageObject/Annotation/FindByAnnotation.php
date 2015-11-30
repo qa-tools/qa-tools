@@ -19,7 +19,7 @@ use QATools\QATools\PageObject\How;
  * Annotation for describing element selector in Selenium style.
  *
  * @link http://bit.ly/qa-tools-find-by-annotation
- * @usage('class'=>true, 'property'=>true, 'inherited'=>true)
+ * @usage('class'=>true, 'property'=>true, 'inherited'=>true, 'multiple'=>true)
  */
 class FindByAnnotation extends Annotation
 {
@@ -81,6 +81,13 @@ class FindByAnnotation extends Annotation
 	public $xpath;
 
 	/**
+	 * Label.
+	 *
+	 * @var string
+	 */
+	public $label;
+
+	/**
 	 * How class constant.
 	 *
 	 * @var string
@@ -105,7 +112,9 @@ class FindByAnnotation extends Annotation
 	 */
 	public function getSelector()
 	{
-		$direct_settings = array('className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath');
+		$direct_settings = array(
+			'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath', 'label',
+		);
 
 		foreach ( $direct_settings as $direct_setting ) {
 			if ( $this->$direct_setting ) {

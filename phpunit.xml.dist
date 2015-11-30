@@ -41,6 +41,7 @@
 		<ini name="error_reporting" value="32767"/>
 		<ini name="memory_limit" value="512M"/>
 
+		<server name="WEB_FIXTURE_BROWSER" value="firefox"/>
 		<server name="WEB_FIXTURE_HOST" value="localhost"/>
 		<server name="WEB_FIXTURE_PORT" value="4444"/>
 		<server name="WEB_FIXTURE_URL" value="http://localhost"/>

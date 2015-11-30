@@ -114,6 +114,19 @@ class Property extends \ReflectionProperty
 	}
 
 	/**
+	 * Determines if property data type is a collection.
+	 *
+	 * @return boolean
+	 */
+	public function isDataTypeCollection()
+	{
+		return is_subclass_of(
+			'\\' . $this->getDataType(),
+			'\\QATools\\QATools\\PageObject\\Element\\AbstractElementCollection'
+		);
+	}
+
+	/**
 	 * Returns annotation of a property.
 	 *
 	 * @param string $annotation_class Annotation name.

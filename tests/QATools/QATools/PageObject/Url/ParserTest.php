@@ -32,6 +32,7 @@ class ParserTest extends TestCase
 	{
 		return array(
 			array('http://domain.tld', parse_url('http://domain.tld')),
+			array('http://domain.tld:8080', parse_url('http://domain.tld:8080')),
 			array('http://domain.tld/path', parse_url('http://domain.tld/path')),
 			array('http://domain.tld/path?param=value', parse_url('http://domain.tld/path?param=value')),
 			array('http://domain.tld/path?param=value#anchor', parse_url('http://domain.tld/path?param=value#anchor')),
@@ -50,13 +51,14 @@ class ParserTest extends TestCase
 
 	public function testGetComponent()
 	{
-		$url_parser = new Parser('http://domain.tld/path?param=value#anchor');
+		$url_parser = new Parser('http://domain.tld:8080/path?param=value#anchor');
 
 		$this->assertEquals('http', $url_parser->getComponent('scheme'));
 		$this->assertEquals('domain.tld', $url_parser->getComponent('host'));
 		$this->assertEquals('/path', $url_parser->getComponent('path'));
 		$this->assertEquals('param=value', $url_parser->getComponent('query'));
 		$this->assertEquals('anchor', $url_parser->getComponent('fragment'));
+		$this->assertEquals(8080, $url_parser->getComponent('port'));
 	}
 
 	public function testGetComponentDefault()
@@ -68,6 +70,7 @@ class ParserTest extends TestCase
 		$this->assertEquals('default_path', $url_parser->getComponent('path', 'default_path'));
 		$this->assertEquals('default_query', $url_parser->getComponent('query', 'default_query'));
 		$this->assertEquals('default_fragment', $url_parser->getComponent('fragment', 'default_fragment'));
+		$this->assertEquals(8080, $url_parser->getComponent('port', 8080));
 	}
 
 	public function testSetGetParams()
@@ -86,27 +89,138 @@ class ParserTest extends TestCase
 	/**
 	 * @dataProvider mergeDataProvider
 	 */
-	public function testMerge($first_url, $second_url, $expected_component, $expected_value)
+	public function testMerge($first_url, $second_url, array $expected_components)
 	{
 		$url_parser = new Parser($first_url);
 		$url_parser->merge(new Parser($second_url));
 
-		$this->assertEquals($expected_value, $url_parser->getComponent($expected_component));
+		foreach ( $expected_components as $expected_component => $expected_value ) {
+			$this->assertEquals(
+				$expected_value,
+				$url_parser->getComponent($expected_component),
+				'The "' . $expected_component . '" has expected value.'
+			);
+		}
 	}
 
+	/**
+	 * @see NormalizerTest::normalizeDataProvider
+	 */
 	public function mergeDataProvider()
 	{
 		return array(
-			array('http://domain.tld#anchor', '/path?param=value', 'scheme', 'http'),
-			array('http://domain.tld#anchor', '/path?param=value', 'host', 'domain.tld'),
-			array('http://domain.tld#anchor', '/path?param=value', 'path', '/path'),
-			array('http://domain.tld#anchor', '/path?param=value', 'query', 'param=value'),
-			array('http://domain.tld#anchor', '/path?param=value', 'fragment', 'anchor'),
-			// Test the priority on merge.
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'scheme', 'https'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'host', 'another.tld'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'path', '/path2'),
-			array('http://domain.tld/path#anchor', 'https://another.tld/path2#anchor2', 'fragment', 'anchor2'),
+			'absolute and absolute url' => array(
+				'http://user1:pass1@domain1:1111/folder1/?param1=value1#anchor1',
+				'https://user2:pass2@domain2:2222/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain2',
+					'port' => 2222,
+					'user' => 'user2',
+					'pass' => 'pass2',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'absolute and relative url' => array(
+				'http://user1:pass1@domain1:1111/folder1/?param1=value1#anchor1',
+				'/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => 'http',
+					'host' => 'domain1',
+					'port' => 1111,
+					'user' => 'user1',
+					'pass' => 'pass1',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'relative and absolute url' => array(
+				'/folder1/?param1=value1#anchor1',
+				'https://user2:pass2@domain2:2222/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain2',
+					'port' => 2222,
+					'user' => 'user2',
+					'pass' => 'pass2',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'domain replacement' => array(
+				'http://user1:pass1@domain1:1111/folder1/?param1=value1#anchor1',
+				'https://domain2/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain2',
+					'port' => 1111,
+					'user' => 'user1',
+					'pass' => 'pass1',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'adding user, pass, port' => array(
+				'http://domain1/folder1/?param1=value1#anchor1',
+				'https://user2:pass2@domain1:2222/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain1',
+					'port' => 2222,
+					'user' => 'user2',
+					'pass' => 'pass2',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'relative and relative url' => array(
+				'/folder1/?param1=value1#anchor1',
+				'/folder2/?param2=value2#anchor2',
+				array(
+					'scheme' => '',
+					'host' => '',
+					'port' => '',
+					'user' => '',
+					'pass' => '',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value1&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'query string param replace' => array(
+				'http://user1:pass1@domain1:1111/folder1/?param1=value1#anchor1',
+				'https://user2:pass2@domain2:2222/folder2/?param2=value2&param1=value3#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain2',
+					'port' => 2222,
+					'user' => 'user2',
+					'pass' => 'pass2',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1=value3&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
+			'nested query string param replace' => array(
+				'http://user1:pass1@domain1:1111/folder1/?param1[key1]=value1&param1[key2]=value2#anchor1',
+				'https://user2:pass2@domain2:2222/folder2/?param2=value2&param1[key1]=value3#anchor2',
+				array(
+					'scheme' => 'https',
+					'host' => 'domain2',
+					'port' => 2222,
+					'user' => 'user2',
+					'pass' => 'pass2',
+					'path' => '/folder1/folder2/',
+					'query' => 'param1%5Bkey1%5D=value3&param1%5Bkey2%5D=value2&param2=value2',
+					'fragment' => 'anchor2',
+				),
+			),
 		);
 	}
 

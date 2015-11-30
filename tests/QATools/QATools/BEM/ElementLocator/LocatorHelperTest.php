@@ -84,8 +84,10 @@ class LocatorHelperTest extends \PHPUnit_Framework_TestCase
 	public function testGetElementLocatorWithModificator()
 	{
 		$locator = $this->_locatorHelper->getElementLocator(
-			'element-name', 'block-name',
-			'modificator-name', 'modificator-value'
+			'element-name',
+			'block-name',
+			'modificator-name',
+			'modificator-value'
 		);
 
 		$this->_assertLocatorClassName($locator, 'block-name__element-name_modificator-name_modificator-value');

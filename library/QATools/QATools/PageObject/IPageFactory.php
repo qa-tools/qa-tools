@@ -67,4 +67,13 @@ interface IPageFactory
 	 */
 	public function initElements(ISearchContext $search_context, IPropertyDecorator $property_decorator);
 
+	/**
+	 * Creates page by given class name.
+	 *
+	 * @param string $class_name Page class name.
+	 *
+	 * @return Page
+	 */
+	public function getPage($class_name);
+
 }

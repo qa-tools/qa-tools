@@ -23,6 +23,8 @@ class CheckboxTest extends LabeledElementTest
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Checkbox';
 		}
 
+		$this->expectedAttributes = array('type' => 'checkbox');
+
 		parent::setUp();
 	}
 

@@ -43,8 +43,7 @@ class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 		ISearchContext $search_context,
 		AnnotationManager $annotation_manager,
 		LocatorHelper $locator_helper
-	)
-	{
+	) {
 		parent::__construct($search_context, $annotation_manager);
 		$this->_locatorHelper = $locator_helper;
 	}

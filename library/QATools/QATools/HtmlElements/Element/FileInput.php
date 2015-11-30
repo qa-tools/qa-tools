@@ -20,6 +20,15 @@ class FileInput extends AbstractTypifiedElement implements ISimpleSetter
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'input', 'attrs' => array('type' => 'file')),
+	);
+
+	/**
 	 * Indicates whether this select element support selecting multiple options at the same time.
 	 *
 	 * @return boolean

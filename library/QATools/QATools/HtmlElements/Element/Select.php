@@ -22,6 +22,15 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'select'),
+	);
+
+	/**
 	 * Indicates whether this select element support selecting multiple options at the same time.
 	 *
 	 * @return boolean

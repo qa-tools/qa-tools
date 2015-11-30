@@ -16,6 +16,8 @@ use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Element\IElementContainer;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
+use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
+use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
@@ -74,6 +76,13 @@ class PageFactory implements IPageFactory
 	protected $urlNormalizer;
 
 	/**
+	 * The page locator.
+	 *
+	 * @var IPageLocator
+	 */
+	protected $pageLocator;
+
+	/**
 	 * The current config.
 	 *
 	 * @var IConfig
@@ -88,7 +97,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function __construct(Session $session, IConfig $config = null)
 	{
-		$this->_session = $this->attachSeleniumSelector($session);
+		$this->setSession($session);
 		$this->config = isset($config) ? $config : new Config();
 
 		$annotation_manager = new AnnotationManager();
@@ -96,24 +105,7 @@ class PageFactory implements IPageFactory
 		$this->setAnnotationManager($annotation_manager);
 		$this->setUrlFactory(new UrlFactory());
 		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
-	}
-
-	/**
-	 * Attaches Selenium selector, that is later used during annotation processing.
-	 *
-	 * @param Session $session Mink session.
-	 *
-	 * @return self
-	 */
-	protected function attachSeleniumSelector(Session $session)
-	{
-		$selectors_handler = $session->getSelectorsHandler();
-
-		if ( !$selectors_handler->isSelectorRegistered('se') ) {
-			$selectors_handler->registerSelector('se', new SeleniumSelector($selectors_handler));
-		}
-
-		return $session;
+		$this->setPageLocator(new DefaultPageLocator((array)$this->config->getOption('page_namespace_prefix')));
 	}
 
 	/**
@@ -183,6 +175,20 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
+	 * Sets the page locator.
+	 *
+	 * @param IPageLocator $page_locator The page locator.
+	 *
+	 * @return self
+	 */
+	public function setPageLocator(IPageLocator $page_locator)
+	{
+		$this->pageLocator = $page_locator;
+
+		return $this;
+	}
+
+	/**
 	 * Creates default decorator.
 	 *
 	 * @param ISearchContext $search_context Search context.
@@ -197,7 +203,27 @@ class PageFactory implements IPageFactory
 	}
 
 	/**
-	 * Returns element session.
+	 * Sets session.
+	 *
+	 * @param Session $session Session.
+	 *
+	 * @return self
+	 */
+	public function setSession(Session $session)
+	{
+		$selectors_handler = $session->getSelectorsHandler();
+
+		if ( !$selectors_handler->isSelectorRegistered('se') ) {
+			$selectors_handler->registerSelector('se', new SeleniumSelector($selectors_handler));
+		}
+
+		$this->_session = $session;
+
+		return $this;
+	}
+
+	/**
+	 * Returns session.
 	 *
 	 * @return Session
 	 */
@@ -306,9 +332,9 @@ class PageFactory implements IPageFactory
 	 */
 	public function getPage($class_name)
 	{
-		$reflection = new \ReflectionClass($class_name);
+		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
 
-		return $reflection->newInstanceArgs(array($this));
+		return new $resolved_page_class($this);
 	}
 
 }

@@ -35,4 +35,6 @@ final class How
 
 	const XPATH = 'xpath';
 
+	const LABEL = 'label';
+
 }

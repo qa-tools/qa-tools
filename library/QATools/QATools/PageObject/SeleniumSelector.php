@@ -89,6 +89,14 @@ class SeleniumSelector implements SelectorInterface
 
 			return 'descendant-or-self::a[./@href][normalize-space(string(.)) = ' . $locator . ']';
 		}
+		elseif ( $selector == How::LABEL ) {
+			$locator = $this->_handler->xpathLiteral($locator);
+			$xpath_pieces = array();
+			$xpath_pieces[] = 'descendant-or-self::*[@id = (//label[normalize-space(string(.)) = ' . $locator . ']/@for)]';
+			$xpath_pieces[] = 'descendant-or-self::label[normalize-space(string(.)) = ' . $locator . ']//input';
+
+			return implode('|', $xpath_pieces);
+		}
 		elseif ( $selector == How::PARTIAL_LINK_TEXT ) {
 			$locator = $this->_handler->xpathLiteral($locator);
 

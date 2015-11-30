@@ -42,6 +42,27 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected $typifiedElement;
 
+	/**
+	 * List of tests where not to mock getTagName in setUp.
+	 *
+	 * @var array List of tests.
+	 */
+	protected $ignoreExpectTypifiedNodeCheck = array();
+
+	/**
+	 * Expected tag for web element.
+	 *
+	 * @var string
+	 */
+	protected $expectedTagName = 'input';
+
+	/**
+	 * List of expected attributes.
+	 *
+	 * @var array
+	 */
+	protected $expectedAttributes = array();
+
 	protected function setUp()
 	{
 		parent::setUp();
@@ -53,9 +74,19 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->webElement = m::mock(self::WEB_ELEMENT_CLASS);
 		$this->webElement->shouldReceive('getSession')->withNoArgs()->andReturn($this->session);
 
-		$this->setUpBeforeCreateElement();
+		if ( !in_array($this->getName(false), $this->ignoreExpectTypifiedNodeCheck) ) {
+			$this->expectWebElementGetTagName($this->expectedTagName);
+			$this->expectDriverGetTagName($this->expectedTagName);
+			$this->expectWebElementGetAttribute($this->expectedAttributes);
+			$this->expectDriverGetAttribute($this->expectedAttributes);
 
-		$this->typifiedElement = $this->createElement();
+			$this->setUpBeforeCreateElement();
+
+			$this->typifiedElement = $this->createElement();
+		}
+		else {
+			$this->setUpBeforeCreateElement();
+		}
 	}
 
 	/**
@@ -101,9 +132,8 @@ class AbstractTypifiedElementTest extends TestCase
 	/**
 	 * @dataProvider simpleMethodDataProvider
 	 */
-	public function testSimpleMethod($method_name)
+	public function testSimpleMethod($method_name, $expected)
 	{
-		$expected = 'C';
 		$this->webElement->shouldReceive($method_name)->once()->andReturn($expected);
 
 		$this->assertSame($expected, $this->typifiedElement->$method_name());
@@ -112,10 +142,9 @@ class AbstractTypifiedElementTest extends TestCase
 	public function simpleMethodDataProvider()
 	{
 		return array(
-			array('isVisible'),
-			array('isValid'),
-			array('getXpath'),
-			array('getTagName'),
+			array('isVisible', true),
+			array('isValid', true),
+			array('getXpath', 'XPATH'),
 		);
 	}
 
@@ -146,6 +175,32 @@ class AbstractTypifiedElementTest extends TestCase
 	protected function createElement()
 	{
 		return new $this->elementClass($this->webElement);
+	}
+
+	/**
+	 * Mocks getTagName in the web element.
+	 *
+	 * @param string $tag_name Returned tag name.
+	 *
+	 * @return void
+	 */
+	protected function expectWebElementGetTagName($tag_name)
+	{
+		$this->webElement->shouldReceive('getTagName')->withNoArgs()->andReturn($tag_name);
+	}
+
+	/**
+	 * Mocks getAttribute in the web element.
+	 *
+	 * @param array $attributes Mocked attributes.
+	 *
+	 * @return void
+	 */
+	protected function expectWebElementGetAttribute(array $attributes)
+	{
+		foreach ( $attributes as $attribute => $value ) {
+			$this->webElement->shouldReceive('getAttribute')->with($attribute)->andReturn($value);
+		}
 	}
 
 	/**

@@ -64,7 +64,13 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	public function testCorrect(array $locator, $expected_count)
 	{
 		$dom = new \DOMDocument('1.0', 'UTF-8');
-		$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
+
+		if ( defined('HHVM_VERSION') ) {
+			$dom->loadHTML(file_get_contents(__DIR__ . '/Fixture/selector_test.html'));
+		}
+		else {
+			$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
+		}
 
 		$xpath = $this->selector->translateToXPath($locator);
 
@@ -120,6 +126,24 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 			),
 			How::XPATH => array(
 				array(How::XPATH => 'descendant-or-self::a[@name]'), 1,
+			),
+			How::LABEL . ' (incomplete label)' => array(
+				array(How::LABEL => 'label'), 0,
+			),
+			How::LABEL . ' (preceding-label)' => array(
+				array(How::LABEL => 'label text 2'), 1,
+			),
+			How::LABEL . ' (following-label)' => array(
+				array(How::LABEL => 'label text 3'), 1,
+			),
+			How::LABEL . ' (label-input-inside)' => array(
+				array(How::LABEL => 'label text 4'), 1,
+			),
+			How::LABEL . ' (label-textarea)' => array(
+				array(How::LABEL => 'label textarea'), 1,
+			),
+			How::LABEL . ' (label-select)' => array(
+				array(How::LABEL => 'label select'), 1,
 			),
 		);
 	}

@@ -58,7 +58,10 @@ class ElementProxyTest extends AbstractProxyTestCase
 
 	public function testMethodForwardingSuccess()
 	{
-		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Element\\IWebElement', $this->element->getWrappedElement());
+		$this->assertInstanceOf(
+			'\\QATools\\QATools\\PageObject\\Element\\IWebElement',
+			$this->element->getWrappedElement()
+		);
 	}
 
 	/**

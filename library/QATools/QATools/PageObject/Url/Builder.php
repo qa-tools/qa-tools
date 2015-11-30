@@ -50,6 +50,13 @@ class Builder implements IBuilder
 	protected $host = '';
 
 	/**
+	 * The port of the url.
+	 *
+	 * @var integer|null
+	 */
+	protected $port = null;
+
+	/**
 	 * GET url parameters.
 	 *
 	 * @var array
@@ -73,6 +80,7 @@ class Builder implements IBuilder
 		$this->host = $components['host'];
 		$this->protocol = $components['scheme'];
 
+		$this->port = !empty($components['port']) ? $components['port'] : '';
 		$this->anchor = !empty($components['fragment']) ? $components['fragment'] : '';
 
 		if ( !empty($components['query']) ) {
@@ -89,7 +97,7 @@ class Builder implements IBuilder
 	 */
 	public function build(array $params = array())
 	{
-		$final_url = $this->getProtocol() . '://' . $this->getHost() . $this->getPath();
+		$final_url = $this->getProtocol() . '://' . $this->getHost() . $this->getPortForBuild() . $this->getPath();
 		$final_params = array_merge($this->getParams(), $params);
 
 		if ( !empty($final_params) ) {
@@ -101,6 +109,26 @@ class Builder implements IBuilder
 		}
 
 		return $final_url;
+	}
+
+	/**
+	 * Get the final port for build.
+	 *
+	 * @return string
+	 */
+	protected function getPortForBuild()
+	{
+		if ( !$this->getPort() ) {
+			return '';
+		}
+
+		$default_ports = array('http' => 80, 'https' => 443);
+
+		if ( $this->getPort() === $default_ports[$this->getProtocol()] ) {
+			return '';
+		}
+
+		return ':' . $this->getPort();
 	}
 
 	/**
@@ -151,6 +179,16 @@ class Builder implements IBuilder
 	public function getProtocol()
 	{
 		return $this->protocol;
+	}
+
+	/**
+	 * Get used port.
+	 *
+	 * @return integer
+	 */
+	public function getPort()
+	{
+		return $this->port;
 	}
 
 }

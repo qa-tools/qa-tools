@@ -116,7 +116,10 @@ class Form extends AbstractElementContainer
 				return FileInput::fromNodeElement($node_element);
 			}
 			else {
-				/*if ( is_null($input_type) || ($input_type == self::TEXT_INPUT) || ($input_type == self::PASSWORD_INPUT) ) {*/
+				/*if ( is_null($input_type)
+					|| ($input_type == self::TEXT_INPUT)
+					|| ($input_type == self::PASSWORD_INPUT)
+				) {*/
 				return TextInput::fromNodeElement($node_element);
 			}
 		}

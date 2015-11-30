@@ -18,6 +18,15 @@ class RadioButton extends LabeledElement
 {
 
 	/**
+	 * List of acceptance criteria.
+	 *
+	 * @var array
+	 */
+	protected $acceptanceCriteria = array(
+		array('tag' => 'input', 'attrs' => array('type' => 'radio')),
+	);
+
+	/**
 	 * Selects radio button uf it's not already selected.
 	 *
 	 * @return self

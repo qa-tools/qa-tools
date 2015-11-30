@@ -15,6 +15,7 @@ use Behat\Mink\Element\NodeElement;
 use mindplay\annotations\AnnotationManager;
 use QATools\QATools\PageObject\Annotation\FindByAnnotation;
 use QATools\QATools\PageObject\Exception\AnnotationException;
+use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
 
@@ -54,8 +55,11 @@ class DefaultElementLocator implements IElementLocator
 	 * @param ISearchContext    $search_context     The context to use when finding the element.
 	 * @param AnnotationManager $annotation_manager Annotation manager.
 	 */
-	public function __construct(Property $property, ISearchContext $search_context, AnnotationManager $annotation_manager)
-	{
+	public function __construct(
+		Property $property,
+		ISearchContext $search_context,
+		AnnotationManager $annotation_manager
+	) {
 		$this->property = $property;
 		$this->searchContext = $search_context;
 		$this->annotationManager = $annotation_manager;
@@ -87,6 +91,7 @@ class DefaultElementLocator implements IElementLocator
 	 * Find the element list.
 	 *
 	 * @return NodeElement[]
+	 * @throws ElementException In case no array/collection given and multiple elements found.
 	 */
 	public function findAll()
 	{
@@ -94,6 +99,20 @@ class DefaultElementLocator implements IElementLocator
 
 		foreach ( $this->getSelectors() as $selector ) {
 			$elements = array_merge($elements, $this->searchContext->findAll('se', $selector));
+		}
+
+		$element_count = count($elements);
+
+		if ( $element_count > 1 && !$this->property->isDataTypeArray() && !$this->property->isDataTypeCollection() ) {
+			throw new ElementException(
+				sprintf(
+					'The "%s" used on "%s" property expects finding 1 element, but %s elements were found.',
+					$this->property->getRawDataType(),
+					$this->property,
+					$element_count
+				),
+				ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND
+			);
 		}
 
 		return $elements;

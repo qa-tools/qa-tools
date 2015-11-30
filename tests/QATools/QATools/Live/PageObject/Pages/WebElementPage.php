@@ -48,4 +48,14 @@ class WebElementPage extends Page
 	 * @find-by('css' => '.test-input')
 	 */
 	public $textInputs;
+
+	/**
+	 * Example text inputs with multiple find-by annotations as WebElement.
+	 *
+	 * @var WebElement[]
+	 * @find-by('name' => 'test1')
+	 * @find-by('name' => 'test2')
+	 * @find-by('name' => 'test3')
+	 */
+	public $textInputsMultipleFindBy;
 }

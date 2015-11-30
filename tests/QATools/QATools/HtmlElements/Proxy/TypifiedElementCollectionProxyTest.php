@@ -29,6 +29,13 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 		parent::setUp();
 	}
 
+	protected function beforeSetUpFinish()
+	{
+		parent::beforeSetUpFinish();
+
+		$this->expectDriverGetTagName('textarea');
+	}
+
 	public function testDefaultClassName()
 	{
 		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
@@ -45,6 +52,17 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 	public function testMethodForwardingSuccess()
 	{
 		$this->assertEquals(1, $this->element->proxyMe());
+	}
+
+	public function testInternalPointerPointingOnFirstElement()
+	{
+		$node_elements = $this->expectLocatorCallReturningTwoNodeElements();
+
+		foreach ( $node_elements as $node_element ) {
+			$this->driver->shouldReceive('getTagName')->with($node_element->getXpath())->andReturn('textarea');
+		}
+
+		$this->assertEquals(1, $this->element->getObject()->proxyMe());
 	}
 
 	/**

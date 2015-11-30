@@ -23,6 +23,8 @@ class FileInputTest extends AbstractTypifiedElementTest
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\FileInput';
 		}
 
+		$this->expectedAttributes = array('type' => 'file');
+
 		parent::setUp();
 	}
 

@@ -110,9 +110,14 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 		// NodeElement + TargetElement = Proxy.
 		$this->locatorUsed = true;
 
+		/** @var AbstractTypifiedElementCollection $object */
 		$object = call_user_func(
-			array($this->className, 'fromNodeElements'), $this->locateElements(), null, $this->pageFactory
+			array($this->className, 'fromNodeElements'),
+			$this->locateElements(),
+			null,
+			$this->pageFactory
 		);
+		$object->setName($this->getName());
 
 		AbstractElementCollection::offsetSet(null, $object);
 
@@ -122,8 +127,6 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 		foreach ( $iterator as $element ) {
 			$element->setName($this->getName());
 		}
-
-		$iterator->rewind();
 	}
 
 	/**
