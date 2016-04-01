@@ -23,7 +23,7 @@ class Button extends AbstractTypifiedElement
 	 * @var array
 	 */
 	protected $acceptanceCriteria = array(
-		array('tag' => 'input', 'attrs' => array('type' => 'submit|button')),
+		array('tag' => 'input', 'attrs' => array('type' => 'submit|button|image')),
 		array('tag' => 'button'),
 		array('attrs' => array('role' => 'button')),
 	);

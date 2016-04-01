@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - All elements created manually (not through annotations) now require `IPageFactory` instance as 2nd argument (before only container type elements were needing this).
 - The second optional parameter of `PageFactory` classes is now dependency injection container, instead of a `Config`.
 - Following methods of `PageFactory` class are not longer part of public API: `setAnnotationManager`, `setSession`.
+- The `Button` typified element now accepts inputs with `type="image"` attribute by [@LewisW].
 
 ### Removed
 - Following methods were removed from `PageFactory` class: `getAnnotationManager`, `setUrlFactory`, `getUrlFactory`, `setUrlNormalizer`, `setPageLocator`.
@@ -107,3 +108,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [@evangelion1204]: https://github.com/evangelion1204
 [@fonsecas72]: https://github.com/fonsecas72
 [@slde-gorillaman]: https://github.com/slde-gorillaman
+[@LewisW]: https://github.com/LewisW

@@ -94,6 +94,7 @@ class ButtonTest extends AbstractTypifiedElementTest
 		return array(
 			array(array('type' => 'button', 'role' => 'link')),
 			array(array('type' => 'submit', 'role' => 'link')),
+			array(array('type' => 'image', 'role' => 'link')),
 			array(array('type' => 'checkbox', 'role' => 'button')),
 		);
 	}
