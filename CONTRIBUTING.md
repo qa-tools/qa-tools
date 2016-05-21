@@ -26,6 +26,37 @@ Make sure that you don't break anything with your changes by running:
 $> phpunit
 ```
 
+### Running Selenium and Testwebserver
+
+In order to run the Seleniumtests, a webserver and selenium have to be installed.
+You can do this by either running on your machine:
+
+```bash
+$> ./tests/install_webserver.sh
+$> ./tests/run_selenium.sh
+```
+
+or if you have docker installed:
+
+```bash
+$> docker run --name selenium-firefox -p 4444:4444 selenium/standalone-firefox
+$> docker run --name qa-tools-tests -p 80:80 -v ${PWD}:/usr/share/nginx/html:ro -d nginx
+```
+
+[More on Selenium Docker Image](https://github.com/SeleniumHQ/docker-selenium)
+
+[More on NGINX Docker Image](https://hub.docker.com/_/nginx/)
+
+If you are using docker-machine, you may need to modify these PhpUnit Server variables to point to the
+right machine which is hosting the Docker Containers:
+
+```
+WEB_FIXTURE_BROWSER -> Selenium browser (default: firefox)
+WEB_FIXTURE_HOST -> Selenium host (default: localhost)
+WEB_FIXTURE_PORT -> Selenium port (default: 4444)
+WEB_FIXTURE_URL -> QaTool Tests Webserver (default: http://localhost)
+```
+
 ## Checking coding standard violations
 
 This library uses [Coding Standard](https://github.com/aik099/CodingStandard) to ensure consistent formatting across the code base. Make sure you haven't introduced any Coding Standard violations by running following command in the root folder of the library:
