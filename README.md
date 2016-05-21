@@ -20,7 +20,9 @@ Library implements __PageObject pattern__, used in variety of testing frameworks
 
 ## Website and Documentation
 
-* [http://www.qa-tools.io](http://www.qa-tools.io)
+* Website: [http://www.qa-tools.io](http://www.qa-tools.io)
+* Documentation: [http://docs.qa-tools.io/](http://docs.qa-tools.io/)
+* Demo using PHPUnit: [https://github.com/qa-tools/phpunit-example/](https://github.com/qa-tools/phpunit-example/)
 
 ## Asking Questions
 
