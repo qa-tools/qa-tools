@@ -86,7 +86,6 @@ class BEMElementLocator extends DefaultElementLocator
 	 * Returns final selectors to be used for element locating.
 	 *
 	 * @return array
-	 * @throws AnnotationException When required @bem annotation is missing.
 	 */
 	protected function getSelectors()
 	{

@@ -67,7 +67,6 @@ class BlockProxy extends AbstractPartProxy implements IBlock
 	 * Returns block instance.
 	 *
 	 * @return IBlock
-	 * @throws ElementNotFoundException When block not found.
 	 */
 	public function getObject()
 	{
@@ -148,7 +147,6 @@ class BlockProxy extends AbstractPartProxy implements IBlock
 	 *                           Will receive reference to `this element` as first argument.
 	 *
 	 * @return mixed
-	 * @throws \LogicException Always.
 	 */
 	public function waitFor($timeout, $callback)
 	{

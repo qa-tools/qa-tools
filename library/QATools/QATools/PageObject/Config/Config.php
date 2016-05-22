@@ -35,8 +35,6 @@ class Config implements IConfig
 	 * Creates the config.
 	 *
 	 * @param array $options Config options.
-	 *
-	 * @throws ConfigException Throws exception on attempt to set non-existing option.
 	 */
 	public function __construct(array $options = array())
 	{

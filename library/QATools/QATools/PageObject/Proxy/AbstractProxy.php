@@ -117,7 +117,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * Locates element using the locator.
 	 *
 	 * @return NodeElement
-	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	protected function locateElement()
 	{
@@ -150,7 +149,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
-	 * @throws \InvalidArgumentException When invalid element given.
 	 */
 	public function offsetSet($index, $newval)
 	{
