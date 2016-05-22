@@ -114,7 +114,6 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 	 *                           Will receive reference to `this element` as first argument.
 	 *
 	 * @return mixed
-	 * @throws \InvalidArgumentException When invalid callback given.
 	 */
 	public function waitFor($timeout, $callback)
 	{

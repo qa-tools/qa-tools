@@ -33,7 +33,6 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
-	 * @throws \InvalidArgumentException When invalid element given.
 	 */
 	public function offsetSet($index, $newval)
 	{
