@@ -12,6 +12,7 @@ namespace QATools\QATools\PageObject\Url;
 
 
 use QATools\QATools\PageObject\Exception\UrlException;
+use QATools\QATools\PageObject\Exception\MissingParametersException;
 
 /**
  * Responsible for building the URL of pages.
@@ -99,6 +100,8 @@ class Builder implements IBuilder
 	{
 		$final_url = $this->getProtocol() . '://' . $this->getHost() . $this->getPortForBuild() . $this->getPath();
 		$final_params = array_merge($this->getParams(), $params);
+
+		list($final_url, $final_params) = $this->unmaskUrl($final_url, $final_params);
 
 		if ( !empty($final_params) ) {
 			$final_url .= '?' . http_build_query($final_params);
@@ -189,6 +192,43 @@ class Builder implements IBuilder
 	public function getPort()
 	{
 		return $this->port;
+	}
+
+	/**
+	 * Unmasks a URL and replaces masks with a parameter value.
+	 *
+	 * @param string $url    URL to be unmasked.
+	 * @param array  $params Params holding values for masks.
+	 *
+	 * @return array Returns an array of 0 => unmasked url and 1 => parameters.
+	 * @throws MissingParametersException Thrown if a mask was found in $url which does not exist in $params.
+	 */
+	protected function unmaskUrl($url, array $params)
+	{
+		if ( !preg_match_all('/\{([^{}]+)\}/', $url, $matches) ) {
+			return array($url, $params);
+		}
+
+		$url_masks = array_unique($matches[0]);
+		$parameter_names = array_unique($matches[1]);
+		$mask_replacements = array();
+		$missing_parameters = array();
+
+		foreach ( $parameter_names as $parameter_name ) {
+			if ( !array_key_exists($parameter_name, $params) ) {
+				$missing_parameters[] = $parameter_name;
+				continue;
+			}
+
+			$mask_replacements[] = rawurlencode($params[$parameter_name]);
+			unset($params[$parameter_name]);
+		}
+
+		if ( $missing_parameters ) {
+			throw new MissingParametersException($missing_parameters);
+		}
+
+		return array(str_replace($url_masks, $mask_replacements, $url), $params);
 	}
 
 }
