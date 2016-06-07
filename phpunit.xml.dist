@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="true"
+	backupStaticAttributes="false"
+	bootstrap="vendor/autoload.php"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	processIsolation="false"
+	stopOnFailure="false"
+	strict="true"
+	verbose="true">
+
+	<testsuites>
+		<testsuite name="PageObject">
+			<directory>tests/QATools/QATools/PageObject</directory>
+		</testsuite>
+		<testsuite name="HtmlElements">
+			<directory>tests/QATools/QATools/HtmlElements</directory>
+		</testsuite>
+		<testsuite name="BEM">
+			<directory>tests/QATools/QATools/BEM</directory>
+		</testsuite>
+		<testsuite name="Live">
+			<directory>tests/QATools/QATools/Live</directory>
+		</testsuite>
+	</testsuites>
+
+	<listeners>
+		<listener class="\Mockery\Adapter\Phpunit\TestListener"/>
+	</listeners>
+
+	<!--<logging>
+		<log type="coverage-html" target="build/coverage" title="BankAccount"
+			 charset="UTF-8" yui="true" highlight="true"
+			 lowUpperBound="35" highLowerBound="70"/>
+	</logging>-->
+
+	<php>
+		<ini name="xdebug.scream" value="0"/>
+		<ini name="error_reporting" value="32767"/>
+		<ini name="memory_limit" value="512M"/>
+
+		<server name="WEB_FIXTURE_BROWSER" value="firefox"/>
+		<server name="WEB_FIXTURE_HOST" value="localhost"/>
+		<server name="WEB_FIXTURE_PORT" value="4444"/>
+		<server name="WEB_FIXTURE_URL" value="http://localhost"/>
+	</php>
+
+	<filter>
+		<whitelist>
+			<directory>library/QATools/QATools/PageObject</directory>
+			<directory>library/QATools/QATools/HtmlElements</directory>
+			<directory>library/QATools/QATools/BEM</directory>
+		</whitelist>
+	</filter>
+</phpunit>

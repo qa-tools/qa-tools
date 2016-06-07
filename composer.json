@@ -1,0 +1,60 @@
+{
+	"name": "qa-tools/qa-tools",
+	"description": "Library that provides easy-to-use way of interaction with web-page elements in functional tests using PageObject pattern.",
+	"keywords": ["PageObject", "HtmlElements", "BEM", "Mink", "PHPUnit", "functional", "acceptance", "Tests"],
+	"license": "BSD-3-Clause",
+
+	"authors": [
+		{
+			"name": "Alexander Obuhovich",
+			"email": "aik.bold@gmail.com"
+		},
+		{
+			"name": "Michael Geppert",
+			"email": "evangelion1204@aol.com"
+		},
+		{
+			"name": "Dmitry Kushnikov",
+			"email": "dkushnikov@gmail.com"
+		}
+	],
+
+	"require": {
+		"php": ">=5.3.2",
+		"behat/mink": "~1.6",
+		"mindplay/annotations": "~1.2"
+	},
+
+	"require-dev": {
+		"aik099/coding-standard": "dev-master",
+		"behat/mink-selenium2-driver": "~1.2",
+		"mockery/mockery": "~0.9"
+	},
+
+	"suggest": {
+		"qa-tools/phpunit-extension": "PHPUnit extension for QA-Tools"
+	},
+
+	"replace": {
+		"aik099/qa-tools": "self.version"
+	},
+
+	"autoload": {
+		"psr-0": {
+			"QATools\\QATools\\": "./library/"
+		}
+	},
+
+	"autoload-dev": {
+		"psr-0": {
+			"tests\\QATools\\QATools\\": "./"
+		}
+	},
+
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0.x-dev",
+			"dev-develop": "1.1.x-dev"
+		}
+	}
+}
