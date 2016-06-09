@@ -25,7 +25,7 @@ matrix:
           after_script: []
 
 before_install:
-    - composer require brianium/paratest:~0.7 --no-update
+    - composer require "brianium/paratest:~0.7" "phpunit/php-code-coverage:<=3.3.9" --no-update
     - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then composer require satooshi/php-coveralls:^1.0 --no-update; fi;
 
 install:
