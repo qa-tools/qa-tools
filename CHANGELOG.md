@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-...
+-- Added support for url parameter unmasking (e.g. `{param}` text in the url of `@page-url` annotation) by [@slde-gorillaman].
 
 ### Changed
 ...
@@ -96,3 +96,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [1.0.0]: https://github.com/qa-tools/qa-tools/compare/v0.0.1...v1.0.0
 [@evangelion1204]: https://github.com/evangelion1204
 [@fonsecas72]: https://github.com/fonsecas72
+[@slde-gorillaman]: https://github.com/slde-gorillaman
