@@ -13,6 +13,7 @@ namespace QATools\QATools\PageObject\Matcher;
 
 use Behat\Mink\Session;
 use mindplay\annotations\AnnotationManager;
+use QATools\QATools\PageObject\Annotation\UrlMatchComponentAnnotation;
 use QATools\QATools\PageObject\Page;
 
 /**
@@ -57,29 +58,35 @@ class MatcherRegistry
 	 */
 	public function add(IPageMatcher $page_matcher, $priority = 0)
 	{
-		$page_matcher->registerAnnotations($this->annotationManager);
+		$this->annotationManager->registry[$page_matcher->getAnnotationName()] = $page_matcher->getAnnotationClass();
 
 		$this->matchers[] = array('instance' => $page_matcher, 'priority' => $priority);
 
-		usort($this->matchers, function ($a, $b) {
-			return strcmp($a['priority'], $b['priority']);
+		usort($this->matchers, function ($matcher_a, $matcher_b) {
+			return strcmp($matcher_a['priority'], $matcher_b['priority']);
 		});
 
 		return $this;
 	}
 
 	/**
-	 * Matches the page against registered matchers.
+	 * Matches the url against the given page.
 	 *
-	 * @param Page   $page Page to match.
 	 * @param string $url  The URL.
+	 * @param Page   $page Page to match.
 	 *
 	 * @return boolean
 	 */
-	public function match(Page $page, $url)
+	public function match($url, Page $page)
 	{
 		foreach ( $this->matchers as $matcher ) {
-			if ( $matcher['instance']->matches($page, $url) ) {
+			/* @var $annotations IUrlMatchAnnotation[] */
+			$annotations = $this->annotationManager->getClassAnnotations(
+				$page,
+				'@' . $matcher['instance']->getAnnotationName()
+			);
+
+			if ( $matcher['instance']->matches($url, $annotations) ) {
 				return true;
 			}
 		}

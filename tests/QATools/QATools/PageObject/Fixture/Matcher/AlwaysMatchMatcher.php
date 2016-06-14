@@ -12,6 +12,7 @@ namespace tests\QATools\QATools\PageObject\Fixture\Matcher;
 
 
 use QATools\QATools\PageObject\Matcher\AbstractPageMatcher;
+use QATools\QATools\PageObject\Matcher\IPageMatcher;
 use QATools\QATools\PageObject\Page;
 
 /**
@@ -19,21 +20,41 @@ use QATools\QATools\PageObject\Page;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-class AlwaysMatchMatcher extends AbstractPageMatcher
+class AlwaysMatchMatcher implements IPageMatcher
 {
 
 	/**
 	 * Matches the given page against the open.
 	 *
-	 * @param Page   $page Page to match.
-	 * @param String $url  The URL.
+	 * @param String                     $url         The URL.
+	 * @param UrlMatchRegexpAnnotation[] $annotations Given annotations.
 	 *
 	 * @return boolean
 	 * @throws \QATools\QATools\PageObject\Exception\PageMatcherException When no matches specified.
 	 */
-	public function matches(Page $page, $url)
+	public function matches($url, array $annotations)
 	{
 		return true;
+	}
+
+	/**
+	 * Returns the name of the annotation.
+	 *
+	 * @return string
+	 */
+	public function getAnnotationName()
+	{
+		return 'always-match';
+	}
+
+	/**
+	 * Returns the FQCN of the annotation.
+	 *
+	 * @return string
+	 */
+	public function getAnnotationClass()
+	{
+		return '\\AlwaysMatchAnnotation';
 	}
 
 }

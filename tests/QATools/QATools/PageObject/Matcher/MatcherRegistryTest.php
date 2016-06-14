@@ -64,7 +64,9 @@ class MatcherRegistryTest extends TestCase
 		$registry->add($matcher1, 1);
 		$registry->add($matcher2, 2);
 
-		$this->assertFalse($registry->match($this->page, '/'));
+		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
+
+		$this->assertFalse($registry->match('/', $this->page));
 	}
 
 	public function testMatchMatcherOrderDesc()
@@ -77,7 +79,9 @@ class MatcherRegistryTest extends TestCase
 		$registry->add($matcher2, 2);
 		$registry->add($matcher1, 1);
 
-		$this->assertFalse($registry->match($this->page, '/'));
+		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
+
+		$this->assertFalse($registry->match('/', $this->page));
 	}
 
 	public function testMatchMatcherOrderEqual()
@@ -94,14 +98,17 @@ class MatcherRegistryTest extends TestCase
 		$registry->add($matcher2, 0);
 		$registry->add($matcher1, -1);
 
-		$this->assertFalse($registry->match($this->page, '/'));
+		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
+
+		$this->assertFalse($registry->match('/', $this->page));
 	}
 
 	protected function createMatcher($orderedMatch = true)
 	{
 		$matcher = m::mock(self::MATCHER_INTERFACE);
 
-		$matcher->shouldReceive('registerAnnotations')->once()->andReturnSelf();
+		$matcher->shouldReceive('getAnnotationName')->twice()->andReturn('mocked-annotation');
+		$matcher->shouldReceive('getAnnotationClass')->once()->andReturn('MockedAnnotation');
 
 		if ( $orderedMatch ) {
 			$matcher->shouldReceive('matches')->once()->andReturn(false)->globally()->ordered();
@@ -121,14 +128,18 @@ class MatcherRegistryTest extends TestCase
 
 		$registry->add(new $instance_name, 0);
 
-		$this->assertTrue($registry->match($this->page, '/'));
+		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
+
+		$this->assertTrue($registry->match('/', $this->page));
 	}
 
 	public function testMatchEmptyFalse()
 	{
 		$registry = new MatcherRegistry($this->annotationManager);
 
-		$this->assertFalse($registry->match($this->page, '/'));
+		$this->annotationManager->shouldReceive('getClassAnnotations')->andReturn(array());
+
+		$this->assertFalse($registry->match('/', $this->page));
 	}
 
 }

@@ -24,22 +24,27 @@ interface IPageMatcher
 {
 
 	/**
-	 * Initializes page matcher.
+	 * Matches the given url against the given annotations.
 	 *
-	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 *
-	 * @return self
-	 */
-	public function registerAnnotations(AnnotationManager $annotation_manager);
-
-	/**
-	 * Matches the given page against the displayed page.
-	 *
-	 * @param Page   $page Page to match.
-	 * @param string $url  The URL.
+	 * @param string         $url         The URL.
+	 * @param IPageMatcher[] $annotations Given annotations.
 	 *
 	 * @return boolean
 	 */
-	public function matches(Page $page, $url);
+	public function matches($url, array $annotations);
+
+	/**
+	 * Returns the name of the annotation.
+	 * 
+	 * @return string
+	 */
+	public function getAnnotationName();
+
+	/**
+	 * Returns the FQCN of the annotation.
+	 *
+	 * @return string
+	 */
+	public function getAnnotationClass();
 
 }

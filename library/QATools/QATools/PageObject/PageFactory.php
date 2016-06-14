@@ -287,7 +287,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function opened(Page $page)
 	{
-		return $this->matcherRegistry->match($page, $this->_session->getCurrentUrl());
+		return $this->matcherRegistry->match($this->_session->getCurrentUrl(), $page);
 	}
 
 	/**
@@ -373,8 +373,6 @@ class PageFactory implements IPageFactory
 	/**
 	 * Builds the matcher registry.
 	 *
-	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 *
 	 * @return MatcherRegistry
 	 */
 	protected function buildMatcherRegistry()
@@ -382,7 +380,7 @@ class PageFactory implements IPageFactory
 		$matcher_registry = new MatcherRegistry($this->annotationManager);
 
 		foreach ( $this->config->getOption('page_matchers') as $index => $matcher_class ) {
-			$matcher_registry->add(new $matcher_class, $index);
+			$matcher_registry->add(new $matcher_class(), $index);
 		}
 
 		return $matcher_registry;

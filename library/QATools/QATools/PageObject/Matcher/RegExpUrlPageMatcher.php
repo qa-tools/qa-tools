@@ -22,44 +22,24 @@ use QATools\QATools\PageObject\Page;
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
  */
-class RegExpUrlPageMatcher extends AbstractPageMatcher
+class RegExpUrlPageMatcher implements IPageMatcher
 {
-	const ANNOTATION = 'url-match-regexp';
 
 	/**
-	 * Registers annotations, used by matcher.
+	 * Matches the given url against the given annotations.
 	 *
-	 * @param AnnotationManager $annotation_manager The annotation manager.
-	 *
-	 * @return self
-	 */
-	public function registerAnnotations(AnnotationManager $annotation_manager)
-	{
-		parent::registerAnnotations($annotation_manager);
-
-		$this->annotationManager->registry[self::ANNOTATION] = '\\QATools\\QATools\\PageObject\\Annotation\\UrlMatchRegexpAnnotation';
-
-		return $this;
-	}
-
-	/**
-	 * Matches the given page against the open.
-	 *
-	 * @param Page   $page Page to match.
-	 * @param string $url  The URL.
+	 * @param string                     $url         The URL.
+	 * @param UrlMatchRegexpAnnotation[] $annotations Given annotations.
 	 *
 	 * @return boolean
 	 * @throws PageMatcherException When no matches specified.
 	 */
-	public function matches(Page $page, $url)
+	public function matches($url, array $annotations)
 	{
-		/* @var $annotations UrlMatchRegexpAnnotation[] */
-		$annotations = $this->annotationManager->getClassAnnotations($page, '@' . self::ANNOTATION);
-
 		foreach ( $annotations as $annotation ) {
 			if ( !$annotation->isValid() ) {
 				throw new PageMatcherException(
-					self::ANNOTATION . ' annotation not valid!',
+					$this->getAnnotationName() . ' annotation not valid!',
 					PageMatcherException::TYPE_INCOMPLETE_ANNOTATION
 				);
 			}
@@ -70,6 +50,26 @@ class RegExpUrlPageMatcher extends AbstractPageMatcher
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns the name of the annotation.
+	 *
+	 * @return string
+	 */
+	public function getAnnotationName()
+	{
+		return 'url-match-regexp';
+	}
+
+	/**
+	 * Returns the FQCN of the annotation.
+	 *
+	 * @return string
+	 */
+	public function getAnnotationClass()
+	{
+		return '\\QATools\\QATools\\PageObject\\Annotation\\UrlMatchRegexpAnnotation';
 	}
 
 }
