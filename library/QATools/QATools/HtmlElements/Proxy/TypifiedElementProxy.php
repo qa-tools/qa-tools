@@ -42,8 +42,14 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	public function __construct(IElementLocator $locator, IPageFactory $page_factory, $name)
 	{
 		$this->_name = $name;
-		$this->className = '\\QATools\\QATools\\HtmlElements\\Element\\TextBlock';
-		$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\ITypifiedElement';
+
+		if ( !$this->className ) {
+			$this->className = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
+		}
+
+		if ( !$this->elementClass ) {
+			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\ITypifiedElement';
+		}
 
 		parent::__construct($locator, $page_factory);
 	}

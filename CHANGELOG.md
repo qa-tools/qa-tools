@@ -7,7 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ...
 
 ### Changed
-...
+- When "TypifiedElementProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElement".
+- When "TypifiedElementCollectionProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElementCollection".
 
 ### Fixed
 - When "WebElementCollectionProxy" class was used manually (not through annotations) the element class was "WebElement" instead of "WebElementCollection".
