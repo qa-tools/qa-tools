@@ -29,7 +29,7 @@ class WebElementCollectionProxyTest extends WebElementProxyTest
 	{
 		$expected = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
 
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->assertInstanceOf($expected, $this->createElement(false)->getObject());
 	}
 
 	public function testMethodForwardingSuccess()
@@ -55,13 +55,18 @@ class WebElementCollectionProxyTest extends WebElementProxyTest
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return WebElementProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		/** @var WebElementProxy $proxy */
 		$proxy = new $this->collectionClass($this->locator, $this->pageFactory);
-		$proxy->setClassName('\\tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\WebElementCollectionChild');
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName('\\tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\WebElementCollectionChild');
+		}
 
 		return $proxy;
 	}

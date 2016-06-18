@@ -30,7 +30,7 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
 
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->assertInstanceOf($expected, $this->createElement(false)->getObject());
 	}
 
 	public function testSetClassName()
