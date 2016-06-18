@@ -11,6 +11,7 @@
 namespace QATools\QATools\PageObject\Element;
 
 
+use Behat\Mink\Selector\Xpath\Escaper;
 use QATools\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
@@ -29,7 +30,14 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	 *
 	 * @var array
 	 */
-	protected $seleniumSelector;
+	private $_seleniumSelector;
+
+	/**
+	 * The XPath escaper.
+	 *
+	 * @var Escaper
+	 */
+	private $_xpathEscaper;
 
 	/**
 	 * Initializes web element.
@@ -39,7 +47,9 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	 */
 	public function __construct(array $selenium_selector, Session $session)
 	{
-		$this->seleniumSelector = $selenium_selector;
+		$this->_seleniumSelector = $selenium_selector;
+
+		$this->_xpathEscaper = new Escaper();
 
 		parent::__construct($this->seleniumSelectorToXpath($session), $session);
 	}
@@ -68,7 +78,17 @@ class WebElement extends NodeElement implements IWebElement, INodeElementAware
 	 */
 	protected function seleniumSelectorToXpath(Session $session)
 	{
-		return $session->getSelectorsHandler()->selectorToXpath('se', $this->seleniumSelector);
+		return $session->getSelectorsHandler()->selectorToXpath('se', $this->_seleniumSelector);
+	}
+
+	/**
+	 * Get the XPath escaper.
+	 *
+	 * @return Escaper
+	 */
+	public function getXpathEscaper()
+	{
+		return $this->_xpathEscaper;
 	}
 
 	/**

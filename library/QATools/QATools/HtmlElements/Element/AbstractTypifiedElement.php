@@ -12,7 +12,7 @@ namespace QATools\QATools\HtmlElements\Element;
 
 
 use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Selector\SelectorsHandler;
+use Behat\Mink\Selector\Xpath\Escaper;
 use Behat\Mink\Session;
 use QATools\QATools\HtmlElements\Exception\TypifiedElementException;
 use QATools\QATools\PageObject\Element\INodeElementAware;
@@ -161,6 +161,16 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	}
 
 	/**
+	 * Get the XPath escaper.
+	 *
+	 * @return Escaper
+	 */
+	public function getXpathEscaper()
+	{
+		return $this->getWrappedElement()->getXpathEscaper();
+	}
+
+	/**
 	 * Returns wrapped element.
 	 *
 	 * @return WebElement
@@ -268,16 +278,6 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	public function getTagName()
 	{
 		return $this->getWrappedElement()->getTagName();
-	}
-
-	/**
-	 * Returns selectors handler.
-	 *
-	 * @return SelectorsHandler
-	 */
-	protected function getSelectorsHandler()
-	{
-		return $this->getSession()->getSelectorsHandler();
 	}
 
 	/**
