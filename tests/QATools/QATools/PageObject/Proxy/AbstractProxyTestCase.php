@@ -140,8 +140,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->element->nonExistingMethod();
 	}
 
-	abstract public function testDefaultClassName();
-
 	abstract public function testSetClassName();
 
 	abstract public function testIsValidSubstitute();
@@ -149,9 +147,11 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return AbstractProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		return new $this->collectionClass($this->locator, $this->pageFactory);
 	}

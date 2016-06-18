@@ -45,21 +45,21 @@ class ElementContainerProxyTest extends TypifiedElementProxyTest
 		$this->assertSame($this->pageFactory, $method->invoke($object));
 	}
 
-	public function testDefaultClassName()
-	{
-		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
-	}
-
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return TypifiedElementProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		/** @var TypifiedElementProxy $proxy */
 		$proxy = new $this->collectionClass($this->locator, $this->pageFactory, 'sample-name');
-		$proxy->setClassName(self::ELEMENT_CLASS);
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName(self::ELEMENT_CLASS);
+		}
 
 		return $proxy;
 	}

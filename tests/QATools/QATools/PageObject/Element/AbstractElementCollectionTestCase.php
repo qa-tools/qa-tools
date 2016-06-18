@@ -123,9 +123,11 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	/**
 	 * Create element.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return AbstractElementCollection
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		return new $this->collectionClass();
 	}

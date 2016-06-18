@@ -35,7 +35,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\QATools\\QATools\\BEM\\Element\\Element';
 
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->assertInstanceOf($expected, $this->createElement(false)->getObject());
 	}
 
 	public function testSetClassName()
@@ -67,9 +67,11 @@ class ElementProxyTest extends AbstractProxyTestCase
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return ElementProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		return new $this->collectionClass('sample-name', $this->locator, $this->pageFactory);
 	}
