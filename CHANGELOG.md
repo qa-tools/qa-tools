@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ...
 
 ### Fixed
-...
+- When "WebElementCollectionProxy" class was used manually (not through annotations) the element class was "WebElement" instead of "WebElementCollection".
 
 ## [1.1.0] - 2015-10-24
 ### Added
