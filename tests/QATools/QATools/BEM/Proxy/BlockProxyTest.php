@@ -107,7 +107,14 @@ class BlockProxyTest extends AbstractProxyTestCase
 	 */
 	protected function createElement($replace_element_class = true)
 	{
-		return new $this->collectionClass('sample-name', $this->locator, $this->pageFactory);
+		/** @var BlockProxy $proxy */
+		$proxy = new $this->collectionClass('sample-name', $this->locator, $this->pageFactory);
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName('\\tests\\QATools\\QATools\\BEM\\Fixture\\Element\\BlockChild');
+		}
+
+		return $proxy;
 	}
 
 }

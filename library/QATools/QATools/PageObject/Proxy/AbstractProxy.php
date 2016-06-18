@@ -104,7 +104,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	{
 		$sub_object = $this->getObject();
 
-		if ( !method_exists($sub_object, $method) ) {
+		if ( !method_exists($sub_object, $method) && !method_exists($sub_object, '__call') ) {
 			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
 
 			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
