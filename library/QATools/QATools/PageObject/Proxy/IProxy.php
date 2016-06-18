@@ -50,4 +50,23 @@ interface IProxy
 	 */
 	public function __call($method, array $arguments);
 
+	/**
+	 * Proxies read access for properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 *
+	 * @return mixed
+	 */
+	public function __get($property);
+
+	/**
+	 * Proxies write access for properties of the sub-object.
+	 *
+	 * @param string $property Name of the property.
+	 * @param mixed  $value    Value of the property.
+	 *
+	 * @return void
+	 */
+	public function __set($property, $value);
+
 }

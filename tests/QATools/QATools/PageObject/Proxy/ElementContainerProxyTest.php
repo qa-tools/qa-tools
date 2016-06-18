@@ -50,6 +50,18 @@ class ElementContainerProxyTest extends WebElementProxyTest
 		$this->assertSame($this->pageFactory, $method->invoke($object));
 	}
 
+	public function testPropertyGetForwardingSuccess()
+	{
+		$this->assertEquals('value', $this->element->existingProperty);
+	}
+
+	public function testPropertySetForwardingSuccess()
+	{
+		$this->element->existingProperty = 'new_value';
+
+		$this->assertEquals('new_value', $this->element->existingProperty);
+	}
+
 	/**
 	 * Creates a proxy.
 	 *
