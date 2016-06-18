@@ -8,12 +8,12 @@
  * @link      https://github.com/qa-tools/qa-tools
  */
 
-namespace tests\QATools\QATools\HtmlElements\Fixture\Element;
+namespace tests\QATools\QATools\PageObject\Fixture\Element;
 
 
-use QATools\QATools\HtmlElements\Element\AbstractElementContainer;
+use QATools\QATools\PageObject\Element\WebElement;
 
-class ElementContainerChild extends AbstractElementContainer
+class WebElementChild extends WebElement
 {
 
 	/**
@@ -35,3 +35,5 @@ class ElementContainerChild extends AbstractElementContainer
 	}
 
 }
+
+
