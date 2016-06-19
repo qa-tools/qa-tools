@@ -104,11 +104,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$xpath = 'XPATH';
 		}
 
-		$node_element = m::mock('\\Behat\\Mink\\Element\\NodeElement');
-		$node_element->shouldReceive('getXpath')->andReturn($xpath);
-		$node_element->shouldReceive('getSession')->andReturn($this->session);
-
-		return $node_element;
+		return new NodeElement($xpath, $this->session);
 	}
 
 }

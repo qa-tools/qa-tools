@@ -60,7 +60,7 @@ class AbstractElementContainerTest extends WebElementTest
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass(array('xpath' => 'XPATH'), $this->pageFactory);
+		return new $this->elementClass($this->createNodeElement(), $this->pageFactory);
 	}
 
 }

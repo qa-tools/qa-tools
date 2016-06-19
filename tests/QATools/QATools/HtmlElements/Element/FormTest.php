@@ -160,12 +160,12 @@ class FormTest extends AbstractElementContainerTest
 	/**
 	 * @expectedException \QATools\QATools\HtmlElements\Exception\FormException
 	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD
-	 * @expectedExceptionMessage Unable create typified element for element (class: QATools\QATools\PageObject\Element\WebElement; xpath: XPATH)
+	 * @expectedExceptionMessage Unable create typified element for element (class: QATools\QATools\PageObject\Element\WebElement; xpath: WRONG_TAG)
 	 */
 	public function testTypifyFailure()
 	{
-		$node_element = $this->createNodeElement();
-		$node_element->shouldReceive('getTagName')->withNoArgs()->once()->andReturn('article');
+		$node_element = $this->createNodeElement('WRONG_TAG');
+		$this->driver->shouldReceive('getTagName')->with('WRONG_TAG')->once()->andReturn('article');
 
 		$this->getElement()->typify(array($node_element));
 	}
