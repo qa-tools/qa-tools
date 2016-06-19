@@ -213,14 +213,19 @@ class BlockTest extends PartTestCase
 			$result2[] = $this->createNodeElement('sub-xpath-2');
 		}
 
-		$this->_nodes[0]
-			->shouldReceive('findAll')
+		$this->selectorsHandler
+			->shouldReceive('selectorToXpath')
 			->with('se', $locator)
+			->andReturn('BEM_XPATH');
+
+		$this->driver
+			->shouldReceive('find')
+			->with($this->_nodes[0]->getXpath() . '/BEM_XPATH')
 			->andReturn($result1);
 
-		$this->_nodes[1]
-			->shouldReceive('findAll')
-			->with('se', $locator)
+		$this->driver
+			->shouldReceive('find')
+			->with($this->_nodes[1]->getXpath() . '/BEM_XPATH')
 			->andReturn($result2);
 	}
 

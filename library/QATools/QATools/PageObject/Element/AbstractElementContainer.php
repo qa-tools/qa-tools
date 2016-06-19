@@ -34,12 +34,12 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 	/**
 	 * Initializes html element.
 	 *
-	 * @param array        $selenium_selector Element selector.
-	 * @param IPageFactory $page_factory      Page factory.
+	 * @param NodeElement  $wrapped_element Wrapped element.
+	 * @param IPageFactory $page_factory    Page factory.
 	 */
-	public function __construct(array $selenium_selector, IPageFactory $page_factory)
+	public function __construct(NodeElement $wrapped_element, IPageFactory $page_factory)
 	{
-		parent::__construct($selenium_selector, $page_factory->getSession());
+		parent::__construct($wrapped_element);
 
 		$this->_pageFactory = $page_factory;
 		$this->_pageFactory->initElementContainer($this);
@@ -64,9 +64,7 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 			);
 		}
 
-		$selenium_selector = array(How::XPATH => $node_element->getXpath());
-
-		return new static($selenium_selector, $page_factory);
+		return new static($node_element, $page_factory);
 	}
 
 	/**

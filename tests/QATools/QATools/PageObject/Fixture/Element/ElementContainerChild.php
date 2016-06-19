@@ -23,7 +23,6 @@ class ElementContainerChild extends AbstractElementContainer
 	 * @param array  $arguments Method arguments.
 	 *
 	 * @return mixed
-	 * @throws \InvalidArgumentException When given method doesn't exist.
 	 */
 	public function __call($method, array $arguments)
 	{
@@ -31,7 +30,7 @@ class ElementContainerChild extends AbstractElementContainer
 			return 'OK';
 		}
 
-		throw new \InvalidArgumentException('The "' . $method . '" doesn\'t exist.');
+		return parent::__call($method, $arguments);
 	}
 
 }

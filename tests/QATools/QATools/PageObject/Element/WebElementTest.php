@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\PageObject\Element;
 
 
+use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 use QATools\QATools\PageObject\Element\WebElement;
 use tests\QATools\QATools\TestCase;
@@ -77,7 +78,7 @@ class WebElementTest extends TestCase
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass(array('xpath' => 'XPATH'), $this->session);
+		return new $this->elementClass(new NodeElement('XPATH', $this->session));
 	}
 
 }
