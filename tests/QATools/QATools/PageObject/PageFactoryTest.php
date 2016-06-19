@@ -13,6 +13,7 @@ namespace tests\QATools\QATools\PageObject;
 
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
+use QATools\QATools\PageObject\Matcher\MatcherRegistry;
 use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
 use QATools\QATools\PageObject\PageLocator\IPageLocator;
@@ -166,6 +167,7 @@ class PageFactoryTest extends TestCase
 	{
 		$url_components = parse_url($url);
 		$annotations = $this->expectPageUrlAnnotation($url, $params, $secure);
+		$this->expectUrlMatchFullAnnotation($this->annotationManager);
 
 		/* @var $page Page */
 		$page = m::mock($this->pageClass);
@@ -194,6 +196,23 @@ class PageFactoryTest extends TestCase
 		$this->assertSame($this->realFactory, $this->realFactory->initPage($page));
 	}
 
+	public function testInitPageWithPageUrlMatchAnnotation()
+	{
+		$this->expectPageUrlAnnotation();
+		$this->expectUrlMatchFullAnnotation($this->annotationManager, array('url' => 'test'));
+
+		/* @var $page Page */
+		$page = m::mock($this->pageClass);
+
+		/** @var Normalizer $url_normalizer */
+		$url_normalizer = m::mock(self::URL_NORMALIZER_CLASS);
+
+		$this->realFactory->setUrlFactory($this->urlFactory);
+		$this->realFactory->setUrlNormalizer($url_normalizer);
+
+		$this->assertSame($this->realFactory, $this->realFactory->initPage($page));
+	}
+
 	/**
 	 * Sets expectation for a specific page url annotation and returns them.
 	 *
@@ -216,7 +235,8 @@ class PageFactoryTest extends TestCase
 			$annotations[] = $annotation;
 		}
 
-		$this->annotationManager->shouldReceive('getClassAnnotations')
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
 			->with(m::any(), '@page-url')
 			->andReturn($annotations);
 
@@ -283,6 +303,32 @@ class PageFactoryTest extends TestCase
 
 		$this->realFactory->setUrlFactory($url_builder_factory);
 		$this->assertEquals($url_builder_factory, $this->realFactory->getUrlFactory());
+	}
+
+	/**
+	 * @dataProvider openedDataProvider
+	 */
+	public function testOpened($expected)
+	{
+		/* @var $page Page */
+		$page = m::mock($this->pageClass);
+		/* @var $registry MatcherRegistry */
+		$registry = m::mock('\\QATools\\QATools\\PageObject\\Matcher\\MatcherRegistry');
+
+		$this->session->shouldReceive('getCurrentUrl')->andReturn('/');
+		$registry->shouldReceive('match')->with('/', $page)->andReturn($expected);
+
+		$this->realFactory->setMatcherRegistry($registry);
+
+		$this->assertEquals($expected, $this->realFactory->opened($page));
+	}
+
+	public function openedDataProvider()
+	{
+		return array(
+			array(true),
+			array(false),
+		);
 	}
 
 	/**

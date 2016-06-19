@@ -16,6 +16,7 @@ use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Element\IElementContainer;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
+use QATools\QATools\PageObject\Matcher\MatcherRegistry;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
 use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
@@ -76,6 +77,13 @@ class PageFactory implements IPageFactory
 	protected $urlNormalizer;
 
 	/**
+	 * The page matcher initializer.
+	 *
+	 * @var MatcherRegistry
+	 */
+	protected $matcherRegistry;
+
+	/**
 	 * The page locator.
 	 *
 	 * @var IPageLocator
@@ -106,6 +114,7 @@ class PageFactory implements IPageFactory
 		$this->setUrlFactory(new UrlFactory());
 		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
 		$this->setPageLocator(new DefaultPageLocator((array)$this->config->getOption('page_namespace_prefix')));
+		$this->setMatcherRegistry($this->buildMatcherRegistry());
 	}
 
 	/**
@@ -141,7 +150,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @param IUrlFactory $url_builder_factory Url builder factory.
 	 *
-	 * @return IUrlFactory
+	 * @return self
 	 */
 	public function setUrlFactory(IUrlFactory $url_builder_factory)
 	{
@@ -241,6 +250,18 @@ class PageFactory implements IPageFactory
 	 */
 	public function initPage(Page $page)
 	{
+		return $this->initPageUrl($page);
+	}
+
+	/**
+	 * Initializes url builder.
+	 *
+	 * @param Page $page Page to initialize.
+	 *
+	 * @return self
+	 */
+	protected function initPageUrl(Page $page)
+	{
 		/* @var $annotations PageUrlAnnotation[] */
 		$annotations = $this->annotationManager->getClassAnnotations($page, '@page-url');
 
@@ -255,6 +276,18 @@ class PageFactory implements IPageFactory
 		);
 
 		return $this;
+	}
+
+	/**
+	 * Checks if the given page is open.
+	 *
+	 * @param Page $page Page to check.
+	 *
+	 * @return boolean
+	 */
+	public function opened(Page $page)
+	{
+		return $this->matcherRegistry->match($this->_session->getCurrentUrl(), $page);
 	}
 
 	/**
@@ -335,6 +368,36 @@ class PageFactory implements IPageFactory
 		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
 
 		return new $resolved_page_class($this);
+	}
+
+	/**
+	 * Builds the matcher registry.
+	 *
+	 * @return MatcherRegistry
+	 */
+	protected function buildMatcherRegistry()
+	{
+		$matcher_registry = new MatcherRegistry($this->annotationManager);
+
+		foreach ( $this->config->getOption('page_matchers') as $index => $matcher_class ) {
+			$matcher_registry->add(new $matcher_class(), $index);
+		}
+
+		return $matcher_registry;
+	}
+
+	/**
+	 * Sets the matcher registry.
+	 *
+	 * @param MatcherRegistry $registry The matcher registry.
+	 *
+	 * @return self
+	 */
+	public function setMatcherRegistry(MatcherRegistry $registry)
+	{
+		$this->matcherRegistry = $registry;
+
+		return $this;
 	}
 
 }

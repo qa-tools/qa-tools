@@ -22,6 +22,8 @@ class PageTest extends TestCase
 
 	const URL_BUILDER_INTERFACE = '\\QATools\\QATools\\PageObject\\Url\\IBuilder';
 
+	const PAGE_MATCHER_INTERFACE = '\\QATools\\QATools\\PageObject\\Matcher\\IPageMatcher';
+
 	/**
 	 * Page class.
 	 *
@@ -156,6 +158,24 @@ class PageTest extends TestCase
 		$this->page->setUrlBuilder($url_builder_factory->getBuilder(parse_url($url)));
 
 		$this->assertSame($this->page, $this->page->open($params));
+	}
+
+	/**
+	 * @dataProvider openedDataProvider
+	 */
+	public function testOpened($expected_opened)
+	{
+		$this->pageFactory->shouldReceive('opened')->once()->andReturn($expected_opened);
+
+		$this->assertEquals($expected_opened, $this->page->opened());
+	}
+
+	public function openedDataProvider()
+	{
+		return array(
+			array(true),
+			array(false),
+		);
 	}
 
 	/**
