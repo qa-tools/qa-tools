@@ -104,9 +104,24 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	{
 		$sub_object = $this->getObject();
 
-		if ( !method_exists($sub_object, $method) && !method_exists($sub_object, '__call') ) {
-			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
+		if ( !method_exists($sub_object, $method) ) {
+			if ( method_exists($sub_object, '__call') ) {
+				try {
+					// Call to dynamic method in proxied object was successful.
+					return call_user_func_array(array($sub_object, $method), $arguments);
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
 
+					// Call to dynamic method in proxied object failed (outside of "__call" method of that object).
+					if ( $trace[0]['function'] !== '__call' ) {
+						throw $e;
+					}
+				}
+			}
+
+			// Dynamic method in proxied object doesn't exist (known upfront or after calling missing method).
+			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
 			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
 		}
 
