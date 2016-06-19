@@ -29,8 +29,22 @@ class ElementContainerChild extends AbstractElementContainer
 		if ( $method === 'dynamicMethod' ) {
 			return 'OK';
 		}
+		elseif ( $method == 'dynamicExceptionalMethod' ) {
+			$this->exceptionalMethod();
+		}
 
 		return parent::__call($method, $arguments);
+	}
+
+	/**
+	 * Method, that always throws an exception.
+	 *
+	 * @return void
+	 * @throws \RuntimeException Always.
+	 */
+	public function exceptionalMethod()
+	{
+		throw new \RuntimeException('The exception.');
 	}
 
 }

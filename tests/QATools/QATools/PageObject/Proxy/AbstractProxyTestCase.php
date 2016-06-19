@@ -52,9 +52,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 
 	protected function setUp()
 	{
-		// FIXME: Only while test is marked as incomplete.
-		$this->ignoreLocatorTests[] = 'testMethodForwardingFailure';
-
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\AbstractProxy';
 		}
@@ -140,14 +137,30 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 */
 	public function testMethodForwardingFailure()
 	{
-		$this->markTestIncomplete('Solve Mockery "__call" method usage.');
-
 		$this->element->nonExistingMethod();
 	}
 
 	public function testDynamicMethodForwarding()
 	{
 		$this->assertEquals('OK', $this->element->dynamicMethod());
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage The exception.
+	 */
+	public function testExceptionalMethodForwarding()
+	{
+		$this->element->exceptionalMethod();
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage The exception.
+	 */
+	public function testDynamicExceptionalForwarding()
+	{
+		$this->element->dynamicExceptionalMethod();
 	}
 
 	abstract public function testSetClassName();
