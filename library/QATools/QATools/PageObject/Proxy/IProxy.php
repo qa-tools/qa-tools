@@ -40,6 +40,25 @@ interface IProxy
 	public function getObject();
 
 	/**
+	 * Proxies read access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 *
+	 * @return mixed
+	 */
+	public function __get($property);
+
+	/**
+	 * Proxies write access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 * @param mixed  $value    Property value.
+	 *
+	 * @return void
+	 */
+	public function __set($property, $value);
+
+	/**
 	 * Proxies all methods to sub-object.
 	 *
 	 * @param string $method    Method to proxy.

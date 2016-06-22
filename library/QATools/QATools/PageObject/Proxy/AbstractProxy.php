@@ -92,6 +92,79 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	}
 
 	/**
+	 * Proxies read access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __get($property)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			if ( method_exists($sub_object, '__get') ) {
+				try {
+					// Reading of dynamic property in proxied object was successful.
+					return $sub_object->$property;
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
+
+					// Reading of dynamic property in proxied object failed (outside of "__get" method of that object).
+					if ( $trace[0]['function'] !== '__get' ) {
+						throw $e;
+					}
+				}
+			}
+
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		return $sub_object->$property;
+	}
+
+	/**
+	 * Proxies write access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 * @param mixed  $value    Property value.
+	 *
+	 * @return void
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __set($property, $value)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			if ( method_exists($sub_object, '__set') ) {
+				try {
+					// Writing of dynamic method in proxied object was successful.
+					$sub_object->$property = $value;
+
+					return;
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
+
+					// Writing of dynamic property in proxied object failed (outside of "__set" method of that object).
+					if ( $trace[0]['function'] !== '__set' ) {
+						throw $e;
+					}
+				}
+			}
+
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		$sub_object->$property = $value;
+	}
+
+	/**
 	 * Proxies all methods to sub-object.
 	 *
 	 * @param string $method    Method to proxy.

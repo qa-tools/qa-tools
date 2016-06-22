@@ -17,6 +17,13 @@ class WebElementCollectionChild extends WebElementCollection
 {
 
 	/**
+	 * Example property.
+	 *
+	 * @var string
+	 */
+	public $existingProperty = 'value';
+
+	/**
 	 * Method for testing proxy abilities.
 	 *
 	 * @return integer
@@ -24,6 +31,53 @@ class WebElementCollectionChild extends WebElementCollection
 	public function proxyMe()
 	{
 		return 1;
+	}
+
+	/**
+	 * Proxies read access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 *
+	 * @return mixed
+	 * @throws \InvalidArgumentException When given method doesn't exist.
+	 */
+	public function __get($property)
+	{
+		if ( $property === 'dynamicProperty' ) {
+			return $this->existingProperty;
+		}
+		elseif ( $property === 'dynamicExceptionalProperty' ) {
+			$this->exceptionalMethod();
+
+			return null;
+		}
+
+		throw new \InvalidArgumentException('The "' . $property . '" doesn\'t exist.');
+	}
+
+	/**
+	 * Proxies write access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 * @param mixed  $value    Property value.
+	 *
+	 * @return void
+	 * @throws \InvalidArgumentException When given method doesn't exist.
+	 */
+	public function __set($property, $value)
+	{
+		if ( $property === 'dynamicProperty' ) {
+			$this->existingProperty = $value;
+
+			return;
+		}
+		elseif ( $property === 'dynamicExceptionalProperty' ) {
+			$this->exceptionalMethod();
+
+			return;
+		}
+
+		throw new \InvalidArgumentException('The "' . $property . '" doesn\'t exist.');
 	}
 
 	/**

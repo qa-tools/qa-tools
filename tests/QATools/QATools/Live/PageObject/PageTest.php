@@ -91,6 +91,16 @@ class PageTest extends AbstractLiveTestCase
 		$this->assertTextInputs($page->textInputsMultipleFindBy);
 	}
 
+	public function testContainerPropertyProxied()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
+
+		$page->inputContainer->textInput->setValue('new text');
+
+		$this->assertEquals('new text', $page->inputContainer->textInput->getValue());
+	}
+
 	/**
 	 * Asserts count and values of text inputs.
 	 *
