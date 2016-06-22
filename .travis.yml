@@ -43,7 +43,7 @@ matrix:
 install:
     - export PATH="$HOME/.composer/vendor/bin:$PATH"
     - if [ ! -e "${DOWNLOADS_FOLDER}/ocular.phar" ]; then wget https://scrutinizer-ci.com/ocular.phar -O "${DOWNLOADS_FOLDER}/ocular.phar" -t 3; fi;
-    - composer global require "brianium/paratest:~0.7" "phpunit/php-code-coverage:<=3.3.9" "satooshi/php-coveralls:^1.0" --no-update
+    - composer global require "brianium/paratest:~0.7" "phpunit/php-code-coverage:<=3.3.9" --no-update
     - composer global install --prefer-dist
     - composer install --prefer-dist
 
@@ -61,8 +61,10 @@ script:
     - if [ "$TRAVIS_PHP_VERSION" != "7" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then paratest --coverage-clover build/logs/clover.xml; fi;
 
 after_script:
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then coveralls -v; fi;
     - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php "${DOWNLOADS_FOLDER}/ocular.phar" code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 after_failure:
     - cat /tmp/webdriver_output.txt
