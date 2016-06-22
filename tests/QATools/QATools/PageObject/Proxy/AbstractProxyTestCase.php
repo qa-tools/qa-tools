@@ -158,9 +158,71 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 	 * @expectedException \RuntimeException
 	 * @expectedExceptionMessage The exception.
 	 */
-	public function testDynamicExceptionalForwarding()
+	public function testDynamicExceptionalMethodForwarding()
 	{
 		$this->element->dynamicExceptionalMethod();
+	}
+
+	public function testPropertyReadForwardingSuccess()
+	{
+		$this->assertEquals('value', $this->element->existingProperty);
+	}
+
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY
+	 * @expectedExceptionMessage "nonExistingProperty" property is not available on the
+	 */
+	public function testPropertyReadForwardingFailure()
+	{
+		$this->element->nonExistingProperty;
+	}
+
+	public function testDynamicPropertyReadForwarding()
+	{
+		$this->assertEquals('value', $this->element->dynamicProperty);
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage The exception.
+	 */
+	public function testDynamicExceptionalPropertyReadForwarding()
+	{
+		$this->element->dynamicExceptionalProperty;
+	}
+
+	public function testPropertyWriteForwardingSuccess()
+	{
+		$this->element->existingProperty = 'new_value';
+
+		$this->assertEquals('new_value', $this->element->existingProperty);
+	}
+
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY
+	 * @expectedExceptionMessage "nonExistingProperty" property is not available on the
+	 */
+	public function testPropertyWriteForwardingFailure()
+	{
+		$this->element->nonExistingProperty = 'new_value';
+	}
+
+	public function testDynamicPropertyWriteForwarding()
+	{
+		$this->element->dynamicProperty = 'new_value';
+
+		$this->assertEquals('new_value', $this->element->dynamicProperty);
+	}
+
+	/**
+	 * @expectedException \RuntimeException
+	 * @expectedExceptionMessage The exception.
+	 */
+	public function testDynamicExceptionalPropertyWriteForwarding()
+	{
+		$this->element->dynamicExceptionalProperty = 'new_value';
 	}
 
 	abstract public function testSetClassName();
