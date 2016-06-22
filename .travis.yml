@@ -57,8 +57,8 @@ before_script:
     - mkdir -p build/logs
 
 script:
-    - if [ "$TRAVIS_PHP_VERSION" = "7" -o "$TRAVIS_PHP_VERSION" == "hhvm" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
-    - if [ "$TRAVIS_PHP_VERSION" != "7" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then paratest --coverage-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" = "7.0" -o "$TRAVIS_PHP_VERSION" == "hhvm" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "7.0" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then paratest --coverage-clover build/logs/clover.xml; fi;
 
 after_script:
     - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php "${DOWNLOADS_FOLDER}/ocular.phar" code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
