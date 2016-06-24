@@ -294,7 +294,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 
 		foreach ( $nodes as $node_element ) {
 			/** @var SelectOption $option */
-			$option = SelectOption::fromNodeElement($node_element);
+			$option = SelectOption::fromNodeElement($node_element, $this->getPageFactory());
 			$ret[] = $option->setSelect($this);
 		}
 

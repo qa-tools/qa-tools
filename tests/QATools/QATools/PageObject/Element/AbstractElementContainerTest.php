@@ -42,18 +42,6 @@ class AbstractElementContainerTest extends WebElementTest
 	}
 
 	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_PAGE_FACTORY_REQUIRED
-	 * @expectedExceptionMessage Page factory is required to create this element
-	 */
-	public function testFromNodeElementWithoutPageFactory()
-	{
-		/* @var $element_class ElementContainerChild */
-		$element_class = $this->elementClass;
-		$element_class::fromNodeElement($this->createNodeElement());
-	}
-
-	/**
 	 * Create element.
 	 *
 	 * @return ElementContainerChild

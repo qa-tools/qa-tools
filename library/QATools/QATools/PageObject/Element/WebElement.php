@@ -88,6 +88,13 @@ class WebElement implements IWebElement, INodeElementAware
 	private $_wrappedElement;
 
 	/**
+	 * Stores instance of used page factory.
+	 *
+	 * @var IPageFactory
+	 */
+	private $_pageFactory;
+
+	/**
 	 * The XPath escaper.
 	 *
 	 * @var Escaper
@@ -97,11 +104,13 @@ class WebElement implements IWebElement, INodeElementAware
 	/**
 	 * Initializes web element.
 	 *
-	 * @param NodeElement $wrapped_element Wrapped element.
+	 * @param NodeElement  $wrapped_element Wrapped element.
+	 * @param IPageFactory $page_factory    Page factory.
 	 */
-	public function __construct(NodeElement $wrapped_element)
+	public function __construct(NodeElement $wrapped_element, IPageFactory $page_factory)
 	{
 		$this->_wrappedElement = $wrapped_element;
+		$this->_pageFactory = $page_factory;
 		$this->_xpathEscaper = new Escaper();
 	}
 
@@ -113,9 +122,9 @@ class WebElement implements IWebElement, INodeElementAware
 	 *
 	 * @return static
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
 	{
-		return new static($node_element);
+		return new static($node_element, $page_factory);
 	}
 
 	/**
@@ -186,6 +195,16 @@ class WebElement implements IWebElement, INodeElementAware
 	public function getXpathEscaper()
 	{
 		return $this->_xpathEscaper;
+	}
+
+	/**
+	 * Returns page factory, used during object creation.
+	 *
+	 * @return IPageFactory
+	 */
+	protected function getPageFactory()
+	{
+		return $this->_pageFactory;
 	}
 
 	/**

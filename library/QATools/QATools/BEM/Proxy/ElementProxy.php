@@ -52,7 +52,7 @@ class ElementProxy extends AbstractPartProxy implements IElement
 			return;
 		}
 
-		$web_element = WebElement::fromNodeElement($this->locateElement());
+		$web_element = WebElement::fromNodeElement($this->locateElement(), $this->pageFactory);
 
 		$this->object = new $this->className($this->getName(), $web_element);
 	}

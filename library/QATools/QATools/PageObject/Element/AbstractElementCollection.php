@@ -99,7 +99,7 @@ abstract class AbstractElementCollection extends \ArrayObject
 	public static function fromNodeElements(
 		array $node_elements,
 		$element_class = null,
-		IPageFactory $page_factory = null
+		IPageFactory $page_factory
 	) {
 		$collection = new static();
 

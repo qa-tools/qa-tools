@@ -28,6 +28,6 @@ interface INodeElementAware
 	 *
 	 * @return static
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null);
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory);
 
 }

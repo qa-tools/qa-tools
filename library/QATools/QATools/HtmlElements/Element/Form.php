@@ -91,31 +91,32 @@ class Form extends AbstractElementContainer
 			$input_type = $node_element->getAttribute('type');
 
 			if ( $input_type == self::CHECKBOX_INPUT ) {
-				return Checkbox::fromNodeElement($node_element);
+				return Checkbox::fromNodeElement($node_element, $this->getPageFactory());
 			}
 			elseif ( $input_type == self::RADIO_INPUT ) {
-				return RadioGroup::fromNodeElements($node_elements);
+				return RadioGroup::fromNodeElements($node_elements, null, $this->getPageFactory());
 			}
 			elseif ( $input_type == self::FILE_INPUT ) {
-				return FileInput::fromNodeElement($node_element);
+				return FileInput::fromNodeElement($node_element, $this->getPageFactory());
 			}
 			else {
 				/*if ( is_null($input_type)
 					|| ($input_type == self::TEXT_INPUT)
 					|| ($input_type == self::PASSWORD_INPUT)
 				) {*/
-				return TextInput::fromNodeElement($node_element);
+				return TextInput::fromNodeElement($node_element, $this->getPageFactory());
 			}
 		}
 		elseif ( $tag_name == 'select' ) {
-			return Select::fromNodeElement($node_element);
+			return Select::fromNodeElement($node_element, $this->getPageFactory());
 		}
 		elseif ( $tag_name == 'textarea' ) {
-			return TextInput::fromNodeElement($node_element);
+			return TextInput::fromNodeElement($node_element, $this->getPageFactory());
 		}
 
+		$web_element = WebElement::fromNodeElement($node_element, $this->getPageFactory());
 		throw new FormException(
-			'Unable create typified element for ' . (string)WebElement::fromNodeElement($node_element),
+			'Unable create typified element for ' . (string)$web_element,
 			FormException::TYPE_UNKNOWN_FIELD
 		);
 	}

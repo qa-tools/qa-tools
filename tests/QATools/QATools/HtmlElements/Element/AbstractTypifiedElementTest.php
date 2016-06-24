@@ -190,7 +190,7 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass($this->webElement);
+		return new $this->elementClass($this->webElement, $this->pageFactory);
 	}
 
 	/**
