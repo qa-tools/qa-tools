@@ -70,7 +70,6 @@ use Behat\Mink\Session;
  * @method boolean hasTable($locator) Checks whether element has a table with specified locator.
  * @method void attachFileToField($locator, $path) Attach file to file field with specified locator.
  *
- * @method Session getSession() Returns element session.
  * @method boolean has($selector, $locator) Checks whether element with specified selector exists inside the current element.
  * @method boolean isValid() Checks if an element still exists in the DOM.
  * @method string getText() Returns element text (inside tag).
@@ -195,6 +194,22 @@ class WebElement implements IWebElement, INodeElementAware
 	public function getXpathEscaper()
 	{
 		return $this->_xpathEscaper;
+	}
+
+	/**
+	 * Returns element session.
+	 *
+	 * @return     Session
+	 * @deprecated Accessing the session from the element is deprecated as of 1.2 and will be impossible in 2.0.
+	 */
+	public function getSession()
+	{
+		@trigger_error(
+			sprintf('The method %s is deprecated as of 1.2 and will be removed in 2.0', __METHOD__),
+			E_USER_DEPRECATED
+		);
+
+		return $this->_pageFactory->getSession();
 	}
 
 	/**

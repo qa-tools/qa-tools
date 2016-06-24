@@ -206,13 +206,19 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	}
 
 	/**
-	 * Returns wrapped element session.
+	 * Returns element session.
 	 *
-	 * @return Session
+	 * @return     Session
+	 * @deprecated Accessing the session from the element is deprecated as of 1.2 and will be impossible in 2.0.
 	 */
 	public function getSession()
 	{
-		return $this->getWrappedElement()->getSession();
+		@trigger_error(
+			sprintf('The method %s is deprecated as of 1.2 and will be removed in 2.0', __METHOD__),
+			E_USER_DEPRECATED
+		);
+
+		return $this->_pageFactory->getSession();
 	}
 
 	/**

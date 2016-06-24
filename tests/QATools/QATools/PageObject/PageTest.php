@@ -65,11 +65,6 @@ class PageTest extends TestCase
 		$this->page = new $this->pageClass($this->pageFactory);
 	}
 
-	public function testConstructor()
-	{
-		$this->assertSame($this->session, $this->page->getSession());
-	}
-
 	public function testGetAbsoluteUrl()
 	{
 		$expected = 'RL';

@@ -135,6 +135,9 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($expected, $this->typifiedElement->getName());
 	}
 
+	/**
+	 * @group legacy
+	 */
 	public function testGetSession()
 	{
 		$this->assertSame($this->session, $this->typifiedElement->getSession());

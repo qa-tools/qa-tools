@@ -31,7 +31,6 @@ class WebElementTest extends TestCase
 		$element = $this->createElement();
 
 		$this->assertEquals('XPATH', $element->getXpath());
-		$this->assertSame($this->session, $element->getSession());
 	}
 
 	public function testFromNodeElement()
@@ -76,6 +75,14 @@ class WebElementTest extends TestCase
 		$element = $this->createElement();
 
 		$this->assertInstanceOf('\\Behat\\Mink\\Selector\\Xpath\\Escaper', $element->getXpathEscaper());
+	}
+
+	/**
+	 * @group legacy
+	 */
+	public function testGetSession()
+	{
+		$this->assertSame($this->session, $this->createElement()->getSession());
 	}
 
 	/**
