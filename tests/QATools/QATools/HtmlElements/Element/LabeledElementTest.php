@@ -41,7 +41,7 @@ class LabeledElementTest extends AbstractTypifiedElementTest
 			->once()
 			->andReturn('FOUND1');
 
-		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('ID_VALUE')->andReturn('ID_VALUE_ESCAPED');
+		$this->escaper->shouldReceive('escapeLiteral')->with('ID_VALUE')->andReturn('ID_VALUE_ESCAPED');
 
 		$this->assertEquals('FOUND1', $this->getElement()->getLabel());
 	}

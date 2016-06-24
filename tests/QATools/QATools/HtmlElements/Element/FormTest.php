@@ -68,22 +68,15 @@ class FormTest extends AbstractElementContainerTest
 	 */
 	public function testGetNodeElementsFailure()
 	{
-		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
-			$this->selectorsHandler->shouldReceive('xpathLiteral')
-				->with('field-name')
-				->once()
-				->andReturn("'field-name'");
-			$this->webElement->shouldReceive('findAll')
-				->with('named', array('field', "'field-name'"))
-				->once()
-				->andReturn(array());
-		}
-		else {
-			$this->webElement->shouldReceive('findAll')
-				->with('named', array('field', 'field-name'))
-				->once()
-				->andReturn(array());
-		}
+		$this->escaper->shouldReceive('escapeLiteral')
+			->with('field-name')
+			->once()
+			->andReturn("'field-name'");
+
+		$this->webElement->shouldReceive('findAll')
+			->with('named', array('field', "'field-name'"))
+			->once()
+			->andReturn(array());
 
 		$this->getElement()->getNodeElements('field-name');
 	}
@@ -92,25 +85,16 @@ class FormTest extends AbstractElementContainerTest
 	{
 		$node_elements = array($this->createNodeElement());
 
-		if ( method_exists($this->selectorsHandler, 'xpathLiteral') ) {
-			$this->selectorsHandler->shouldReceive('xpathLiteral')
-				->with('field-name')
-				->once()
-				->andReturn("'field-name'");
+		$this->escaper->shouldReceive('escapeLiteral')
+			->with('field-name')
+			->once()
+			->andReturn("'field-name'");
 
-			$this->webElement
-				->shouldReceive('findAll')
-				->with('named', array('field', "'field-name'"))
-				->once()
-				->andReturn($node_elements);
-		}
-		else {
-			$this->webElement
-				->shouldReceive('findAll')
-				->with('named', array('field', 'field-name'))
-				->once()
-				->andReturn($node_elements);
-		}
+		$this->webElement
+			->shouldReceive('findAll')
+			->with('named', array('field', "'field-name'"))
+			->once()
+			->andReturn($node_elements);
 
 		$found_elements = $this->getElement()->getNodeElements('field-name');
 

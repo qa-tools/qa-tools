@@ -71,6 +71,13 @@ class WebElementTest extends TestCase
 		$this->assertGreaterThanOrEqual(1, microtime(true) - $start);
 	}
 
+	public function testGetXpathEscaper()
+	{
+		$element = $this->createElement();
+
+		$this->assertInstanceOf('\\Behat\\Mink\\Selector\\Xpath\\Escaper', $element->getXpathEscaper());
+	}
+
 	/**
 	 * Create element.
 	 *

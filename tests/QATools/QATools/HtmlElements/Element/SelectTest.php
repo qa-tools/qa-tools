@@ -80,7 +80,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	{
 		$this->expectDriverGetTagName('option');
 
-		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
+		$this->escaper->shouldReceive('escapeLiteral')->with('SV')->andReturn('SV');
 
 		$this->webElement
 			->shouldReceive('findAll')
@@ -102,7 +102,7 @@ class SelectTest extends AbstractTypifiedElementTest
 	{
 		$this->expectDriverGetTagName('option');
 
-		$this->selectorsHandler->shouldReceive('xpathLiteral')->with('SV')->andReturn('SV');
+		$this->escaper->shouldReceive('escapeLiteral')->with('SV')->andReturn('SV');
 
 		if ( $exact_match ) {
 			$xpath = 'descendant-or-self::option[normalize-space(.) = SV]';

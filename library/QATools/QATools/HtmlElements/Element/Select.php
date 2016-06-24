@@ -59,8 +59,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 */
 	public function getOptionsByValue($value)
 	{
-		$selectors_handler = $this->getSelectorsHandler();
-		$xpath = 'descendant-or-self::option[@value = ' . $selectors_handler->xpathLiteral($value) . ']';
+		$xpath = 'descendant-or-self::option[@value = ' . $this->getXpathEscaper()->escapeLiteral($value) . ']';
 
 		return $this->wrapOptions($this->getWrappedElement()->findAll('xpath', $xpath));
 	}
@@ -75,13 +74,13 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 */
 	public function getOptionsByText($text, $exact_match = true)
 	{
-		$selectors_handler = $this->getSelectorsHandler();
+		$escaper = $this->getXpathEscaper();
 
 		if ( $exact_match ) {
-			$xpath = 'descendant-or-self::option[normalize-space(.) = ' . $selectors_handler->xpathLiteral($text) . ']';
+			$xpath = 'descendant-or-self::option[normalize-space(.) = ' . $escaper->escapeLiteral($text) . ']';
 		}
 		else {
-			$xpath = 'descendant-or-self::option[contains(., ' . $selectors_handler->xpathLiteral($text) . ')]';
+			$xpath = 'descendant-or-self::option[contains(., ' . $escaper->escapeLiteral($text) . ')]';
 		}
 
 		return $this->wrapOptions($this->getWrappedElement()->findAll('xpath', $xpath));
