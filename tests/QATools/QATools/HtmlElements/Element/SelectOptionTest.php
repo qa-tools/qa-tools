@@ -67,14 +67,14 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->webElement->shouldReceive('isSelected')->once()->andReturn(false);
 
 		/** @var SelectOption $option */
-		$option = new $this->elementClass($this->webElement);
+		$option = new $this->elementClass($this->webElement, $this->pageFactory);
 		$option->select();
 	}
 
 	public function testSetSelect()
 	{
 		/** @var SelectOption $option */
-		$option = new $this->elementClass($this->webElement);
+		$option = new $this->elementClass($this->webElement, $this->pageFactory);
 
 		$this->assertSame($option, $option->setSelect($this->select));
 	}
@@ -194,7 +194,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	protected function createElement()
 	{
 		/** @var SelectOption $option */
-		$option = new $this->elementClass($this->webElement);
+		$option = new $this->elementClass($this->webElement, $this->pageFactory);
 		$option->setSelect($this->select);
 
 		return $option;
@@ -211,7 +211,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	{
 		$method_string = $methods ? '[' . implode(',', $methods) . ']' : '';
 
-		return m::mock($this->elementClass . $method_string, array($this->webElement, $this->select));
+		return m::mock($this->elementClass . $method_string, array($this->webElement, $this->pageFactory));
 	}
 
 }

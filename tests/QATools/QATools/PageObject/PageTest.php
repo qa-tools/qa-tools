@@ -65,11 +65,6 @@ class PageTest extends TestCase
 		$this->page = new $this->pageClass($this->pageFactory);
 	}
 
-	public function testConstructor()
-	{
-		$this->assertSame($this->session, $this->page->getSession());
-	}
-
 	public function testGetAbsoluteUrl()
 	{
 		$expected = 'RL';
@@ -156,6 +151,13 @@ class PageTest extends TestCase
 		$this->page->setUrlBuilder($url_builder_factory->getBuilder(parse_url($url)));
 
 		$this->assertSame($this->page, $this->page->open($params));
+	}
+
+	public function testOpened()
+	{
+		$this->pageFactory->shouldReceive('opened')->with($this->page)->once()->andReturn('OK');
+
+		$this->assertEquals('OK', $this->page->opened());
 	}
 
 	/**

@@ -24,7 +24,7 @@ class ElementException extends PageFactoryException
 
 	const TYPE_NOT_FOUND = 104;
 
-	const TYPE_PAGE_FACTORY_REQUIRED = 105;
-
 	const TYPE_MULTIPLE_ELEMENTS_FOUND = 106;
+
+	const TYPE_UNKNOWN_PROPERTY = 107;
 }

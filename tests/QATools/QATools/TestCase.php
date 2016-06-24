@@ -74,7 +74,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	protected function expectDriverGetTagName($tag_name, $xpath = 'XPATH')
 	{
-		$this->driver->shouldReceive('getTagName')->with($xpath)->andReturn($tag_name);
+		$this->driver->shouldReceive('getTagName')->with($xpath)->andReturn($tag_name)->byDefault();
 	}
 
 	/**
@@ -87,7 +87,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 	protected function expectDriverGetAttribute(array $attributes, $xpath = 'XPATH')
 	{
 		foreach ( $attributes as $attribute => $value ) {
-			$this->driver->shouldReceive('getAttribute')->with($xpath, $attribute)->andReturn($value);
+			$this->driver->shouldReceive('getAttribute')->with($xpath, $attribute)->andReturn($value)->byDefault();
 		}
 	}
 
@@ -104,11 +104,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 			$xpath = 'XPATH';
 		}
 
-		$node_element = m::mock('\\Behat\\Mink\\Element\\NodeElement');
-		$node_element->shouldReceive('getXpath')->andReturn($xpath);
-		$node_element->shouldReceive('getSession')->andReturn($this->session);
-
-		return $node_element;
+		return new NodeElement($xpath, $this->session);
 	}
 
 }

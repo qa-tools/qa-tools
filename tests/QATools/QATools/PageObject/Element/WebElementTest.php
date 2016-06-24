@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\PageObject\Element;
 
 
+use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 use QATools\QATools\PageObject\Element\WebElement;
 use tests\QATools\QATools\TestCase;
@@ -30,7 +31,6 @@ class WebElementTest extends TestCase
 		$element = $this->createElement();
 
 		$this->assertEquals('XPATH', $element->getXpath());
-		$this->assertSame($this->session, $element->getSession());
 	}
 
 	public function testFromNodeElement()
@@ -54,6 +54,36 @@ class WebElementTest extends TestCase
 		$this->assertEquals($expected, (string)$element);
 	}
 
+	public function testFind()
+	{
+		$findings = array(
+			$this->createNodeElement(),
+			$this->createNodeElement(),
+		);
+
+		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+
+		$element = $this->createElement();
+
+		$this->assertSame($findings[0], $element->find('aa', 'bb'));
+	}
+
+	public function testFindAll()
+	{
+		$findings = array(
+			$this->createNodeElement(),
+			$this->createNodeElement(),
+		);
+
+		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+
+		$element = $this->createElement();
+
+		$this->assertSame($findings, $element->findAll('aa', 'bb'));
+	}
+
 	/**
 	 * @medium
 	 */
@@ -71,13 +101,38 @@ class WebElementTest extends TestCase
 	}
 
 	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionMessage "missingMethod" method is not available on the Behat\Mink\Element\NodeElement
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
+	 */
+	public function testNonExistingMethodForwardingError()
+	{
+		$this->createElement()->missingMethod();
+	}
+
+	public function testGetXpathEscaper()
+	{
+		$element = $this->createElement();
+
+		$this->assertInstanceOf('\\Behat\\Mink\\Selector\\Xpath\\Escaper', $element->getXpathEscaper());
+	}
+
+	/**
+	 * @group legacy
+	 */
+	public function testGetSession()
+	{
+		$this->assertSame($this->session, $this->createElement()->getSession());
+	}
+
+	/**
 	 * Create element.
 	 *
 	 * @return WebElement
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass(array('xpath' => 'XPATH'), $this->session);
+		return new $this->elementClass(new NodeElement('XPATH', $this->session), $this->pageFactory);
 	}
 
 }

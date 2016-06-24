@@ -14,6 +14,8 @@ namespace QATools\QATools\HtmlElements\Proxy;
 use QATools\QATools\HtmlElements\Element\AbstractTypifiedElementCollection;
 use QATools\QATools\HtmlElements\Element\ITypifiedElement;
 use QATools\QATools\PageObject\Element\AbstractElementCollection;
+use QATools\QATools\PageObject\ElementLocator\IElementLocator;
+use QATools\QATools\PageObject\IPageFactory;
 
 /**
  * Class for lazy-proxy creation to ensure, that TypifiedElementCollection are
@@ -27,13 +29,28 @@ class TypifiedElementCollectionProxy extends TypifiedElementProxy
 {
 
 	/**
+	 * Initializes proxy for AbstractTypifiedElementCollection.
+	 *
+	 * @param IElementLocator $locator      Element selector.
+	 * @param IPageFactory    $page_factory Page factory.
+	 * @param string          $name         Name of the element.
+	 */
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory, $name)
+	{
+		if ( !$this->className ) {
+			$this->className = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElementCollection';
+		}
+
+		parent::__construct($locator, $page_factory, $name);
+	}
+
+	/**
 	 * Offset to set.
 	 *
 	 * @param mixed $index  The offset to assign the value to.
 	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
-	 * @throws \InvalidArgumentException When invalid element given.
 	 */
 	public function offsetSet($index, $newval)
 	{

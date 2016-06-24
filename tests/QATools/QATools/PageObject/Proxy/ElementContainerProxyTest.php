@@ -35,11 +35,6 @@ class ElementContainerProxyTest extends WebElementProxyTest
 		$this->pageFactory->shouldReceive('initElements')->andReturn($this->pageFactory);
 	}
 
-	public function testDefaultClassName()
-	{
-		$this->assertInstanceOf(self::ELEMENT_CLASS, $this->element->getObject());
-	}
-
 	public function testGetPageFactory()
 	{
 		$object = $this->element->getObject();
@@ -53,13 +48,18 @@ class ElementContainerProxyTest extends WebElementProxyTest
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return WebElementProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
 		/** @var WebElementProxy $proxy */
 		$proxy = new $this->collectionClass($this->locator, $this->pageFactory);
-		$proxy->setClassName(self::ELEMENT_CLASS);
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName(self::ELEMENT_CLASS);
+		}
 
 		return $proxy;
 	}

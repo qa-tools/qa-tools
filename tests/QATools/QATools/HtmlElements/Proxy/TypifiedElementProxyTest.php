@@ -18,9 +18,12 @@ use tests\QATools\QATools\PageObject\Proxy\AbstractProxyTestCase;
 class TypifiedElementProxyTest extends AbstractProxyTestCase
 {
 
+	const ELEMENT_CLASS = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementChild';
+
 	protected function setUp()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
+		$this->ignoreLocatorTests[] = 'testDefaultClassName';
 
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
@@ -32,9 +35,9 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 
 	public function testDefaultClassName()
 	{
-		$expected = '\\QATools\\QATools\\HtmlElements\\Element\\TextBlock';
-
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->markTestSkipped(
+			'The "' . get_class($this->element) . '" proxy is interface based and has no default class.'
+		);
 	}
 
 	public function testSetClassName()
@@ -78,11 +81,20 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 	/**
 	 * Creates a proxy.
 	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
 	 * @return TypifiedElementProxy
 	 */
-	protected function createElement()
+	protected function createElement($replace_element_class = true)
 	{
-		return new $this->collectionClass($this->locator, $this->pageFactory, 'sample-name');
+		/** @var TypifiedElementProxy $proxy */
+		$proxy = new $this->collectionClass($this->locator, $this->pageFactory, 'sample-name');
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName(self::ELEMENT_CLASS);
+		}
+
+		return $proxy;
 	}
 
 }

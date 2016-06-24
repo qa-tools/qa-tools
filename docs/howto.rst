@@ -10,7 +10,7 @@ The default page locator uses the following strategy to locate pages:
 
 #. uppercases the first letter of each word and joining them to a CamelCase like class name
 #. prepending configured namespaces defined via :ref:`page_namespace_prefix <configuration-options>`
-#. returning first existing class
+#. returning first found class
 
 .. code-block:: php
 
@@ -32,7 +32,7 @@ In some cases it might be necessary to build a custom page locator. For example 
 .. literalinclude:: examples/custom_page_locator.php
    :linenos:
 
-Now it is possible to either locate the page manually by its name
+Now it is possible to either locate the page manually by its name:
 
 .. code-block:: php
 
@@ -44,13 +44,20 @@ Now it is possible to either locate the page manually by its name
     ...
     ?>
 
-or inject the new locator into ``PageFactory`` and use it for initialization.
+or replace default locator with new one during ``PageFactory`` construction time.
 
 .. code-block:: php
 
     <?php
     ...
-    $page_factory->setPageLocator(new MappingPageLocator());
+    $container = new Container();
+
+    $container['page_locator'] = function () {
+        return new MappingPageLocator();
+    };
+
+    $page_factory = new PageFactory($session, $container);
+
     $registration_page = $page_factory->getPage('Registration Page');
     ...
     ?>

@@ -29,14 +29,17 @@ class Config implements IConfig
 	protected $options = array(
 		'base_url' => '',
 		'page_namespace_prefix' => array('\\'),
+		'page_url_matchers' => array(
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher',
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher',
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher',
+		),
 	);
 
 	/**
 	 * Creates the config.
 	 *
 	 * @param array $options Config options.
-	 *
-	 * @throws ConfigException Throws exception on attempt to set non-existing option.
 	 */
 	public function __construct(array $options = array())
 	{
@@ -52,16 +55,10 @@ class Config implements IConfig
 	 * @param mixed  $value Config option value.
 	 *
 	 * @return self
-	 * @throws ConfigException Throws exception on attempt to set non-existing option.
 	 */
 	public function setOption($name, $value)
 	{
-		if ( !isset($this->options[$name]) ) {
-			throw new ConfigException(
-				'Option "' . $name . '" doesn\'t exist in configuration',
-				ConfigException::TYPE_NOT_FOUND
-			);
-		}
+		$this->assertOptionName($name);
 
 		$this->options[$name] = $value;
 
@@ -74,9 +71,23 @@ class Config implements IConfig
 	 * @param string $name Config option name.
 	 *
 	 * @return mixed
-	 * @throws ConfigException Thrown when option with a given name doesn't exist.
 	 */
 	public function getOption($name)
+	{
+		$this->assertOptionName($name);
+
+		return $this->options[$name];
+	}
+
+	/**
+	 * Checks, that option exists in config.
+	 *
+	 * @param string $name Option name.
+	 *
+	 * @return void
+	 * @throws ConfigException Thrown when option with a given name doesn't exist.
+	 */
+	protected function assertOptionName($name)
 	{
 		if ( !isset($this->options[$name]) ) {
 			throw new ConfigException(
@@ -84,8 +95,6 @@ class Config implements IConfig
 				ConfigException::TYPE_NOT_FOUND
 			);
 		}
-
-		return $this->options[$name];
 	}
 
 }

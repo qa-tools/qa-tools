@@ -26,13 +26,6 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 {
 
 	/**
-	 * Stores instance of used page factory.
-	 *
-	 * @var IPageFactory
-	 */
-	private $_pageFactory;
-
-	/**
 	 * Specifies wrapped WebElement.
 	 *
 	 * @param WebElement   $wrapped_element Element to be wrapped.
@@ -40,21 +33,10 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 	 */
 	public function __construct(WebElement $wrapped_element, IPageFactory $page_factory)
 	{
-		parent::__construct($wrapped_element);
+		parent::__construct($wrapped_element, $page_factory);
 
-		$this->_pageFactory = $page_factory;
-		$this->_pageFactory->initElementContainer($this);
-		$this->_pageFactory->initElements($this, $page_factory->createDecorator($this));
-	}
-
-	/**
-	 * Returns page factory, used during object creation.
-	 *
-	 * @return IPageFactory
-	 */
-	protected function getPageFactory()
-	{
-		return $this->_pageFactory;
+		$page_factory->initElementContainer($this);
+		$page_factory->initElements($this, $page_factory->createDecorator($this));
 	}
 
 	/**
@@ -64,18 +46,10 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
-	 * @throws TypifiedElementException When page factory is missing.
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
 	{
-		if ( !isset($page_factory) ) {
-			throw new TypifiedElementException(
-				'Page factory is required to create this element',
-				TypifiedElementException::TYPE_PAGE_FACTORY_REQUIRED
-			);
-		}
-
-		$wrapped_element = WebElement::fromNodeElement($node_element);
+		$wrapped_element = WebElement::fromNodeElement($node_element, $page_factory);
 
 		return new static($wrapped_element, $page_factory);
 	}
@@ -114,7 +88,6 @@ abstract class AbstractElementContainer extends AbstractTypifiedElement implemen
 	 *                           Will receive reference to `this element` as first argument.
 	 *
 	 * @return mixed
-	 * @throws \InvalidArgumentException When invalid callback given.
 	 */
 	public function waitFor($timeout, $callback)
 	{

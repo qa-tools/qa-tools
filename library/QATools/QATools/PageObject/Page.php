@@ -87,7 +87,7 @@ abstract class Page extends DocumentElement implements ISearchContext
 			throw new PageException('Page url not specified', PageException::TYPE_EMPTY_URL);
 		}
 
-		$this->getSession()->visit($url);
+		$this->pageFactory->getSession()->visit($url);
 
 		return $this;
 	}
@@ -104,6 +104,16 @@ abstract class Page extends DocumentElement implements ISearchContext
 		$this->urlBuilder = $url_builder;
 
 		return $this;
+	}
+
+	/**
+	 * Checks if the page is currently opened in browser.
+	 *
+	 * @return boolean
+	 */
+	public function opened()
+	{
+		return $this->pageFactory->opened($this);
 	}
 
 }

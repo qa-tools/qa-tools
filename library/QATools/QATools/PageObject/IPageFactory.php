@@ -76,4 +76,13 @@ interface IPageFactory
 	 */
 	public function getPage($class_name);
 
+	/**
+	 * Checks if the given page is currently opened in browser.
+	 *
+	 * @param Page $page Page to check.
+	 *
+	 * @return boolean
+	 */
+	public function opened(Page $page);
+
 }

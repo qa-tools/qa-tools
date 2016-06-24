@@ -13,6 +13,7 @@ namespace QATools\QATools\HtmlElements;
 
 use QATools\QATools\HtmlElements\PropertyDecorator\TypifiedPropertyDecorator;
 use QATools\QATools\PageObject\Config\IConfig;
+use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\PageFactory;
@@ -28,14 +29,14 @@ class TypifiedPageFactory extends PageFactory
 	/**
 	 * Creates TypifiedPageFactory instance.
 	 *
-	 * @param Session $session Mink session.
-	 * @param IConfig $config  Page factory configuration..
+	 * @param Session        $session   Mink session.
+	 * @param Container|null $container Dependency injection container.
 	 */
-	public function __construct(Session $session, IConfig $config = null)
+	public function __construct(Session $session, Container $container = null)
 	{
 		$this->annotationRegistry['element-name'] = '\\QATools\\QATools\\HtmlElements\\Annotation\\ElementNameAnnotation';
 
-		parent::__construct($session, $config);
+		parent::__construct($session, $container);
 	}
 
 	/**

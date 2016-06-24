@@ -1,12 +1,23 @@
 language: php
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/downloads
+    - $HOME/.composer/cache
+
+before_cache:
+  - cp $HOME/.composer/composer.json $HOME/.composer/cache/
+  - cp $HOME/.composer/composer.lock $HOME/.composer/cache/
+
 php:
     - 5.3
     - 5.4
     - 5.5
     - 5.6
     - hhvm
-    - 7
+    - 7.0
 
 env:
     global:
@@ -24,31 +35,37 @@ matrix:
           script: sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html
           after_script: []
 
-before_install:
-    - composer require brianium/paratest:~0.7 --no-update
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then composer require satooshi/php-coveralls:dev-master --no-update; fi;
+:before_install:
+    - export DOWNLOADS_FOLDER=$HOME/downloads
+    - if [ -e "$HOME/.composer/cache/composer.json" ]; then mv $HOME/.composer/cache/composer.json $HOME/.composer/; fi;
+    - if [ -e "$HOME/.composer/cache/composer.lock" ]; then mv $HOME/.composer/cache/composer.lock $HOME/.composer/; fi;
 
 install:
-    - composer update --prefer-source
+    - export PATH="$HOME/.composer/vendor/bin:$PATH"
+    - if [ ! -e "${DOWNLOADS_FOLDER}/ocular.phar" ]; then wget https://scrutinizer-ci.com/ocular.phar -O "${DOWNLOADS_FOLDER}/ocular.phar" -t 3; fi;
+    - composer global require "brianium/paratest:~0.7" "phpunit/php-code-coverage:<=3.3.9" --no-update
+    - composer global install --prefer-dist
+    - composer install --prefer-dist
 
 before_script:
-    - export WEB_FIXTURES_HOST=http://localhost
-    - export WEB_FIXTURES_BROWSER=firefox
+    - sed -i -e "s,http://localhost,http://localhost:8000,g" phpunit.xml.dist
     - export DISPLAY=:99.0
 
     - ./tests/run_selenium.sh
-    - sudo ./tests/install_webserver.sh
+    - ./tests/install_webserver.sh
 
     - mkdir -p build/logs
 
 script:
-    - if [ "$TRAVIS_PHP_VERSION" = "7" -o "$TRAVIS_PHP_VERSION" == "hhvm" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
-    - if [ "$TRAVIS_PHP_VERSION" != "7" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then ./vendor/bin/paratest --coverage-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" = "7.0" -o "$TRAVIS_PHP_VERSION" == "hhvm" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "7.0" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then paratest --coverage-clover build/logs/clover.xml; fi;
 
 after_script:
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar -t 3; fi;
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
+    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php "${DOWNLOADS_FOLDER}/ocular.phar" code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 after_failure:
     - cat /tmp/webdriver_output.txt
+    - cat /tmp/webserver_output.txt

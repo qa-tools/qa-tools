@@ -2,10 +2,7 @@
 
 set -e
 
-echo "Installing Apache"
-apt-get update -qq
-apt-get install -qq -y --force-yes apache2 libapache2-mod-php5
+echo "Starting Web Server"
 
-echo "Configuring the vhost"
-sed -i -e "s,/var/www,$(pwd),g" /etc/apache2/sites-available/default
-/etc/init.d/apache2 restart
+# Start a webserver for web fixtures. Force using PHP 5.6 to be able to run it on PHP 5.3 and HHVM jobs too
+~/.phpenv/versions/5.6/bin/php -S localhost:8000 -t $(pwd) > /dev/null 2> /tmp/webserver_output.txt &

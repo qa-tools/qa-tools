@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\HtmlElements\Element;
 
 
+use Behat\Mink\Selector\Xpath\Escaper;
 use Mockery as m;
 use QATools\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use QATools\QATools\PageObject\Element\WebElement;
@@ -63,9 +64,18 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected $expectedAttributes = array();
 
+	/**
+	 * Mocked XPATH escaper.
+	 *
+	 * @var Escaper
+	 */
+	protected $escaper;
+
 	protected function setUp()
 	{
 		parent::setUp();
+
+		$this->escaper = m::mock('Behat\\Mink\\Selector\\Xpath\\Escaper');
 
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementChild';
@@ -73,6 +83,7 @@ class AbstractTypifiedElementTest extends TestCase
 
 		$this->webElement = m::mock(self::WEB_ELEMENT_CLASS);
 		$this->webElement->shouldReceive('getSession')->withNoArgs()->andReturn($this->session);
+		$this->webElement->shouldReceive('getXpathEscaper')->withNoArgs()->andReturn($this->escaper);
 
 		if ( !in_array($this->getName(false), $this->ignoreExpectTypifiedNodeCheck) ) {
 			$this->expectWebElementGetTagName($this->expectedTagName);
@@ -124,6 +135,9 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($expected, $this->typifiedElement->getName());
 	}
 
+	/**
+	 * @group legacy
+	 */
 	public function testGetSession()
 	{
 		$this->assertSame($this->session, $this->typifiedElement->getSession());
@@ -146,6 +160,11 @@ class AbstractTypifiedElementTest extends TestCase
 			array('isValid', true),
 			array('getXpath', 'XPATH'),
 		);
+	}
+
+	public function testGetXpathEscaper()
+	{
+		$this->assertInstanceOf('\\Behat\\Mink\\Selector\\Xpath\\Escaper', $this->typifiedElement->getXpathEscaper());
 	}
 
 	public function testAttribute()
@@ -174,7 +193,7 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass($this->webElement);
+		return new $this->elementClass($this->webElement, $this->pageFactory);
 	}
 
 	/**
@@ -186,7 +205,7 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected function expectWebElementGetTagName($tag_name)
 	{
-		$this->webElement->shouldReceive('getTagName')->withNoArgs()->andReturn($tag_name);
+		$this->webElement->shouldReceive('getTagName')->withNoArgs()->andReturn($tag_name)->byDefault();
 	}
 
 	/**
@@ -199,7 +218,7 @@ class AbstractTypifiedElementTest extends TestCase
 	protected function expectWebElementGetAttribute(array $attributes)
 	{
 		foreach ( $attributes as $attribute => $value ) {
-			$this->webElement->shouldReceive('getAttribute')->with($attribute)->andReturn($value);
+			$this->webElement->shouldReceive('getAttribute')->with($attribute)->andReturn($value)->byDefault();
 		}
 	}
 

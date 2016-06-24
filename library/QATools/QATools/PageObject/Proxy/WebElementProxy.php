@@ -31,10 +31,15 @@ class WebElementProxy extends AbstractProxy implements IWebElement
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.
 	 */
-	public function __construct(IElementLocator $locator, IPageFactory $page_factory = null)
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory)
 	{
-		$this->className = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
-		$this->elementClass = '\\QATools\\QATools\\PageObject\\Element\\IWebElement';
+		if ( !$this->className ) {
+			$this->className = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
+		}
+
+		if ( !$this->elementClass ) {
+			$this->elementClass = '\\QATools\\QATools\\PageObject\\Element\\IWebElement';
+		}
 
 		parent::__construct($locator, $page_factory);
 	}

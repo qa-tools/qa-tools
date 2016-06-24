@@ -28,22 +28,17 @@ To verify successful installation look for the ``qa-tools/qa-tools`` folder with
 
 Configuration
 -------------
-The library needs to be properly configured before usage. This is done through the help of ``Config`` class instance:
+The library can be optionally configured using following approach:
 
 .. literalinclude:: examples/config_base_url.php
    :linenos:
-   :emphasize-lines: 8-10
+   :emphasize-lines: 14-16
 
-Typical configuration process consists of 3 steps:
+Then created ``PageFactory`` class instance can be used to spawn ``Page`` class instances at will.
 
-#. obtaining (or creating) Mink's session object (line 7)
-#. providing configuration options via ``Config`` class instance (line 8-10)
-#. creating ``PageFactory`` class instance with objects created above (line 11)
-
-Then created ``PageFactory`` class instance can be used to spawn Page classes at will.
-
-.. note:: If several Mink's sessions are used, then separate ``PageFactory`` instance needs to be created for each
-          of them. It is allowed to share the ``Config`` class instance among them.
+.. note:: If several Mink's sessions are used (e.g. for different browsers), then separate ``PageFactory`` class
+          instance needs to be created for each of them. Configuration setting can be shared across different
+          ``PageFactory`` class instances, when **same container** is used to create them.
 
 .. _configuration-options:
 
@@ -52,10 +47,19 @@ Configuration Options
 The following configuration options are available:
 
 * ``base_url`` - allows to specify Base URL to be used to transform all relative urls from :ref:`@page-url annotations <page-url>` into absolute urls.
-* ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <default-page-locator>` will search for page classes defaults to ``array('\\')``
+* ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <default-page-locator>` will search for page classes. Defaults to::
 
+        array('\\')
 
-If port is specified as part of `base_url` then it will be used in every built url unless specified exactly in the `@page-url` annotation.
+* ``page_url_matchers`` - array of classes, that are used to detect if given ``Page`` is currently opened. Defaults to::
+
+        array(
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher',
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher',
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher',
+        )
+
+If port is specified as part of `base_url` then it will be used in every built url unless specified explicitly in the `@page-url` annotation.
 
 Connecting to Behat
 -------------------
@@ -67,7 +71,7 @@ Connecting to PHPUnit
 ---------------------
 .. note:: Throughout this tutorial it's assumed that working PHPUnit is configured and connected to a project that needs to be tested.
 
-To use library with PHPUnit you are required to also install https://github.com/minkphp/phpunit-mink.
+To use library with PHPUnit you are required to also install https://github.com/qa-tools/phpunit-extension.
 
 .. important:: **TODO:** Write about the obtaining Mink session need for PageFactory and that it can be easily done using PHPUnit-Mink.
 

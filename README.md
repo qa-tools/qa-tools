@@ -6,7 +6,7 @@
 [![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://docs.qa-tools.io/en/latest/)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
-[![Coverage Status](https://img.shields.io/coveralls/qa-tools/qa-tools.svg)](https://coveralls.io/r/qa-tools/qa-tools)
+[![codecov](https://codecov.io/gh/qa-tools/qa-tools/branch/develop/graph/badge.svg)](https://codecov.io/gh/qa-tools/qa-tools)
 [![Dependency Status](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a)
 
 [![Latest Stable Version](https://poser.pugx.org/qa-tools/qa-tools/v/stable.png)](https://packagist.org/packages/qa-tools/qa-tools)
@@ -20,7 +20,9 @@ Library implements __PageObject pattern__, used in variety of testing frameworks
 
 ## Website and Documentation
 
-* [http://www.qa-tools.io](http://www.qa-tools.io)
+* Website: [http://www.qa-tools.io](http://www.qa-tools.io)
+* Documentation: [http://docs.qa-tools.io/](http://docs.qa-tools.io/)
+* Demo using PHPUnit: [https://github.com/qa-tools/phpunit-example/](https://github.com/qa-tools/phpunit-example/)
 
 ## Asking Questions
 

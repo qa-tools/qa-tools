@@ -11,16 +11,20 @@
 namespace tests\QATools\QATools\PageObject;
 
 
+use mindplay\annotations\AnnotationManager;
+use Mockery as m;
+use QATools\QATools\PageObject\Annotation\MatchUrlComponentAnnotation;
+use QATools\QATools\PageObject\Annotation\MatchUrlExactAnnotation;
+use QATools\QATools\PageObject\Annotation\MatchUrlRegexpAnnotation;
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
+use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
-use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\Property;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
 use QATools\QATools\PageObject\Url\Normalizer;
-use Mockery as m;
 use tests\QATools\QATools\TestCase;
 
 class PageFactoryTest extends TestCase
@@ -31,8 +35,6 @@ class PageFactoryTest extends TestCase
 	const URL_BUILDER_INTERFACE = '\\QATools\\QATools\\PageObject\\Url\\IBuilder';
 
 	const URL_FACTORY_INTERFACE = '\\QATools\\QATools\\PageObject\\Url\\IUrlFactory';
-
-	const URL_PARSER_CLASS = '\\QATools\\QATools\\PageObject\\Url\\Parser';
 
 	const URL_NORMALIZER_CLASS = '\\QATools\\QATools\\PageObject\\Url\\Normalizer';
 
@@ -79,15 +81,31 @@ class PageFactoryTest extends TestCase
 	protected $urlFactory;
 
 	/**
+	 * The url builder factory.
+	 *
+	 * @var Normalizer
+	 */
+	protected $urlNormalizer;
+
+	/**
 	 * Page factory config.
 	 *
 	 * @var Config
 	 */
 	protected $config;
 
+	/**
+	 * Dependency injection container.
+	 *
+	 * @var Container
+	 */
+	protected $container;
+
 	protected function setUp()
 	{
 		parent::setUp();
+
+		$this->container = new Container();
 
 		$this->pageFactory->shouldReceive('initPage')->andReturn(\Mockery::self());
 		$this->pageFactory->shouldReceive('initElementContainer')->andReturn(\Mockery::self());
@@ -98,34 +116,24 @@ class PageFactoryTest extends TestCase
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->urlFactory = m::mock(self::URL_FACTORY_INTERFACE);
+		$this->urlNormalizer = m::mock(self::URL_NORMALIZER_CLASS);
 		$this->config = new Config(array('base_url' => 'http://domain.tld'));
+
+		$this->container['config'] = $this->config;
+
+		if ( $this->getName(false) === 'testInitPage' ) {
+			$this->container['url_factory'] = $this->urlFactory;
+			$this->container['url_normalizer'] = $this->urlNormalizer;
+		}
 
 		$this->realFactory = $this->createFactory();
 	}
 
-	public function testConstructorWithAnnotationManager()
+	public function testCreateFactoryWithoutContainer()
 	{
-		$this->assertSame($this->session, $this->realFactory->getSession());
-		$this->assertSame($this->annotationManager, $this->realFactory->getAnnotationManager());
-	}
+		$factory = new $this->factoryClass($this->session);
 
-	public function testConstructorWithoutAnnotationManager()
-	{
-		$factory = $this->createFactory(false);
-		$this->assertInstanceOf(self::ANNOTATION_MANAGER_CLASS, $factory->getAnnotationManager());
-	}
-
-	public function testConstructorWithConfig()
-	{
-		$factory = new $this->factoryClass($this->session, $this->config);
-		$this->assertInstanceOf(self::ANNOTATION_MANAGER_CLASS, $factory->getAnnotationManager());
-	}
-
-	public function testSetAnnotationManager()
-	{
-		$annotation_manager = m::mock(self::ANNOTATION_MANAGER_CLASS);
-		$this->assertSame($this->realFactory, $this->realFactory->setAnnotationManager($annotation_manager));
-		$this->assertSame($annotation_manager, $this->realFactory->getAnnotationManager());
+		$this->assertInstanceOf($this->factoryClass, $factory);
 	}
 
 	public function testCreateDecorator()
@@ -171,13 +179,7 @@ class PageFactoryTest extends TestCase
 		$page = m::mock($this->pageClass);
 		$url_builder = m::mock(self::URL_BUILDER_INTERFACE);
 
-		/** @var Normalizer $url_normalizer */
-		$url_normalizer = m::mock(self::URL_NORMALIZER_CLASS);
-
-		$this->realFactory->setUrlFactory($this->urlFactory);
-		$this->realFactory->setUrlNormalizer($url_normalizer);
-
-		$url_normalizer
+		$this->urlNormalizer
 			->shouldReceive('normalize')
 			->with(reset($annotations))
 			->times(isset($url) ? 1 : 0)
@@ -276,13 +278,119 @@ class PageFactoryTest extends TestCase
 		$this->assertInstanceOf($this->pageClass, $page);
 	}
 
-	public function testGetUrlBuilderFactory()
+	/**
+	 * @dataProvider openedDataProvider
+	 */
+	public function testOpened($url, $matched)
 	{
-		/* @var IUrlFactory $url_builder_factory */
-		$url_builder_factory = m::mock(self::URL_FACTORY_INTERFACE);
+		/* @var $page Page */
+		$page = m::mock($this->pageClass);
 
-		$this->realFactory->setUrlFactory($url_builder_factory);
-		$this->assertEquals($url_builder_factory, $this->realFactory->getUrlFactory());
+		$this->expectMatchUrlExactAnnotation($page, array(
+			array('url' => 'http://www.domain.tld/relative'),
+			array('url' => 'http://www.domain.tld/relative/path1'),
+			array('url' => 'http://www.domain.tld/relative/path2'),
+		));
+		$this->expectMatchUrlRegexpAnnotation($page, array(
+			array('regexp' => '#/absolute$#'),
+		));
+		$this->expectMatchUrlComponentAnnotation($page, array(
+			array('path' => '/relative/path'),
+		));
+
+		$this->session->shouldReceive('getCurrentUrl')->once()->andReturn($url);
+		$this->assertSame($matched, $this->realFactory->opened($page));
+	}
+
+	public function openedDataProvider()
+	{
+		return array(
+			'exact matched' => array('http://www.domain.tld/relative/path1', true),
+			'component matched' => array('http://www.domain.tld/relative/path', true),
+			'regexp matched' => array('http://www.domain.tld/absolute', true),
+			'nothing matched' => array('http://www.domain.tld/absolute/path', false),
+		);
+	}
+
+	/**
+	 * Sets expectation for full url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlExactAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlExactAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-exact')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for regexp url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlRegexpAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlRegexpAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-regexp')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlComponentAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlComponentAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-component')
+			->andReturn($annotations);
+
+		return $annotations;
 	}
 
 	/**
@@ -295,27 +403,22 @@ class PageFactoryTest extends TestCase
 	 */
 	protected function createFactory($with_annotation_manager = true, array $mock_methods = array())
 	{
-		/** @var PageFactory $factory */
+		$mocked_page_locator = m::mock('\\QATools\\QATools\\PageObject\\PageLocator\\IPageLocator');
+		$mocked_page_locator->shouldReceive('resolvePage')->andReturn($this->pageClass);
+		$this->container['page_locator'] = $mocked_page_locator;
+
+		if ( $with_annotation_manager ) {
+			$this->container['annotation_manager'] = $this->annotationManager;
+		}
 
 		if ( $mock_methods ) {
 			$factory = m::mock(
 				$this->factoryClass . '[' . implode(',', $mock_methods) . ']',
-				array($this->session, $this->config)
+				array($this->session, $this->container)
 			);
 		}
 		else {
-			$factory = new $this->factoryClass($this->session);
-		}
-
-		/**
-		 * @var IPageLocator $mocked_page_locator
-		 */
-		$mocked_page_locator = m::mock('\\QATools\\QATools\\PageObject\\PageLocator\\IPageLocator');
-		$mocked_page_locator->shouldReceive('resolvePage')->andReturn($this->pageClass);
-		$factory->setPageLocator($mocked_page_locator);
-
-		if ( $with_annotation_manager ) {
-			$factory->setAnnotationManager($this->annotationManager);
+			$factory = new $this->factoryClass($this->session, $this->container);
 		}
 
 		return $factory;

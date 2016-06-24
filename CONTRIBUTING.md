@@ -20,7 +20,22 @@ Feel free to ask any questions and share your experiences in the [Chat Room](htt
 9. Create Pull Request.
 
 ## Running the Tests
-Make sure that you don't break anything with your changes by running:
+
+### Installation/Configuration
+
+1. download "Selenium Standalone Server" from [http://www.seleniumhq.org/download/](http://www.seleniumhq.org/download/) url
+2. at cloned repository root copy `phpunit.xml.dist` into `phpunit.xml` and set values for environment variables defined in there:
+ * `WEB_FIXTURE_BROWSER` - browser to use
+ * `WEB_FIXTURE_HOST` - hostname/ip address of computer, where "Selenium Standalone Server" will be running
+ * `WEB_FIXTURE_PORT` - port on which Selenium Server will be running
+ * `WEB_FIXTURE_URL` - url pointing at location of cloned repository root in the web browser
+
+### Usage
+
+1. start "Selenium Standalone Server" (only when not running already):
+ * go to folder, where "Selenium Standalone Server" was downloaded
+ * execute this command: `java -jar selenium-server-standalone-X.Y.Z.jar` (replace `selenium-server-standalone-X.Y.Z.jar` with downloaded file name)
+2. make sure that you don't break anything with your changes by running:
 
 ```bash
 $> phpunit

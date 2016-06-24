@@ -146,13 +146,15 @@ This annotation is used to specify URL associated with each page class. For exam
    :linenos:
    :emphasize-lines: 5
 
-Annotation can have 3 parameters:
+There are several parameters to configure the URL:
 
-#. ``url`` - specifies absolute or relative url to the page (mandatory)
-#. ``params`` - specifies additional url parameters in associative array format (defaults to ``array()``)
+#. ``url`` - specifies absolute or relative URL to the page (mandatory)
+#. ``params`` - specifies additional URL parameters in associative array format (defaults to ``array()``)
 #. ``secure`` - specifies if secure connection (the ``https://`` protocol) needs to be used (defaults to ``null``)
 
 .. warning:: If some/all parameter names are omitted (as seen in above example), then parameter order must be preserved.
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
 
 Below is an example of annotation, where ``url`` parameter name is omitted, but ``secure`` parameter name is not:
 
@@ -168,7 +170,7 @@ Parameters in the url can be specified using 3 ways:
 * in ``params`` annotation parameter via associative array (second)
 * as a combination of both methods from above
 
-All of the following annotations will produce exactly same url:
+All of the following annotations will produce exactly same URL:
 
 .. code-block:: ruby
 
@@ -184,16 +186,15 @@ Same annotations can also be written in long form:
     @page-url('url' => 'http://www.example.com/products/shoes.html', 'params' => array('color' => 'red', 'size' => 42))
     @page-url('url' => 'http://www.example.com/products/shoes.html?color=red', 'params' => array('size' => 42))
 
-.. note:: If same url parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value
-          from ``params`` takes precedence.
+.. note:: If same URL parameter is specified in both ``url`` and ``params`` annotation parameters, then it's value from ``params`` takes precedence.
 
 Relative URLs
 ^^^^^^^^^^^^^
-Specifying absolute urls in each of created Page classes introduces fair amount of code duplication. This becomes even
+Specifying absolute URLs in each of created Page classes introduces fair amount of code duplication. This becomes even
 larger problem, when need arises to use Page classes in parallel on 2+ different domains (e.g. local development environment
 and Continuous Integration server).
 
-After setting ``base_url`` :ref:`configuration option <configuration-options>` it will be possible to use relative urls
+After setting ``base_url`` :ref:`configuration option <configuration-options>` it will be possible to use relative URLs
 **along side** (can use both at same time for different pages) with absolute ones:
 
 .. code-block:: ruby
@@ -235,7 +236,76 @@ Like for `base_url` it is possible to include a port in an absolute URL:
 
     @page-url('http://www.example.com:8080/products/shoes.html')
 
+URL parameter unmasking
+^^^^^^^^^^^^^^^^^^^^^^^
+It is possible to make ``url`` parameter of ``@page-url`` annotation more dynamic (currently it's pretty static)
+though usage of url masks. The ``url mask`` is a query string parameter name wrapped within ``{`` and ``}`` like so:
+``{parameter_name}``. When a query string parameter is encountered in the url in such a form, then instead of being
+added to the query string of built url it would be unmasked (substituted) in the main url part itself.
 
+.. code-block:: ruby
+
+    @page-url('products/{product-name}.html', 'params' => array('product-name' => 'shoes'))
+
+It doesn't look too powerful right now, but considering that params would be supplied later in ``Page::open`` method call
+it would be a major time saver for SEO url building.
+
+.. note:: Every part of url, except anchor and query string itself can be unmasked in such a way.
+
+@match-url-exact
+----------------
+This annotation allows to check if a specific page is open by comparing the specified full URL against the currently opened URL.
+
+.. literalinclude:: examples/page_url_simple.php
+    :linenos:
+    :emphasize-lines: 6
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+@match-url-regexp
+-----------------
+This annotation allows to check if a specific page is opened using a regular expression against the currently opened URL.
+
+.. code-block:: ruby
+
+    @match-url-regexp('/shoes\.html\?color=.+?$/')
+    @match-url-regexp('regexp' => '/shoes\.html\?color=.+?$/')
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+@match-url-component
+--------------------
+This annotation allows to check if a specific page is opened by comparing different components of the URL against the currently opened URL.
+
+There are several parameters to configure the matching, similar to ``@page-url``:
+
+#. ``path`` - specifies the path of an URL
+#. ``params`` - specifies parameters in associative array format
+#. ``secure`` - specifies if secure connection is used
+#. ``anchor`` - specifies the fragment/anchor of an URL
+#. ``host`` - specifies the host of an URL
+#. ``port`` - specifies the port of an URL
+#. ``user`` - specifies the user of an URL
+#. ``pass`` - specifies the password of an URL
+
+.. code-block:: ruby
+
+    // matches one of the url components
+    @match-url-component('path' => '/products/shoes.html')
+    @match-url-component('secure' => false)
+    @match-url-component('params' => array('color' => 'red'))
+    @match-url-component('anchor' => 'fragment')
+    @match-url-component('host' => 'domain.tld')
+    @match-url-component('port' => 80)
+    @match-url-component('user' => 'username')
+    @match-url-component('pass' => 'password')
+
+    // matches several of the url components
+    @match-url-component('path' => '/products/shoes.html', 'params' => array('color' => 'red'), 'secure' => false, 'host' => 'domain.tld', 'port' => 80, 'user' => 'username', 'pass' => 'password')
+
+.. warning:: This annotation should only be used on ``Page`` classes and its subclasses.
+
+.. note:: When several ``@match-url-...`` annotations are present, then they're checked until first match.
 
 @timeout
 --------

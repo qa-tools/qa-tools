@@ -12,6 +12,8 @@ namespace QATools\QATools\PageObject\Proxy;
 
 
 use QATools\QATools\PageObject\Element\WebElementCollection;
+use QATools\QATools\PageObject\ElementLocator\IElementLocator;
+use QATools\QATools\PageObject\IPageFactory;
 
 /**
  * Class for lazy-proxy creation to ensure, that WebElementCollection are
@@ -25,13 +27,27 @@ class WebElementCollectionProxy extends WebElementProxy
 {
 
 	/**
+	 * Initializes proxy for WebElementCollection.
+	 *
+	 * @param IElementLocator $locator      Element selector.
+	 * @param IPageFactory    $page_factory Page factory.
+	 */
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory)
+	{
+		if ( !$this->className ) {
+			$this->className = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
+		}
+
+		parent::__construct($locator, $page_factory);
+	}
+
+	/**
 	 * Offset to set.
 	 *
 	 * @param mixed $index  The offset to assign the value to.
 	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
-	 * @throws \InvalidArgumentException When invalid element given.
 	 */
 	public function offsetSet($index, $newval)
 	{

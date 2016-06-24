@@ -11,10 +11,13 @@
 namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
+use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Mink;
+use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 use QATools\QATools\HtmlElements\Element\AbstractTypifiedElement;
 use QATools\QATools\PageObject\Element\WebElement;
+use QATools\QATools\PageObject\SeleniumSelector;
 use tests\QATools\QATools\Live\AbstractLiveTestCase;
 
 class TypifiedElementTestCase extends AbstractLiveTestCase
@@ -56,7 +59,10 @@ class TypifiedElementTestCase extends AbstractLiveTestCase
 	 */
 	protected function createElement(array $selector)
 	{
-		$web_element = new WebElement($selector, $this->session);
+		$selenium_selector = new SeleniumSelector();
+		$xpath = $selenium_selector->translateToXPath($selector);
+
+		$web_element = new WebElement(new NodeElement($xpath, $this->session), $this->pageFactory);
 
 		return new $this->elementClass($web_element, $this->pageFactory);
 	}

@@ -40,7 +40,7 @@ abstract class AbstractPartProxy extends AbstractProxy implements IPart
 	 * @param BEMElementLocator $locator      Locator.
 	 * @param IPageFactory      $page_factory Page factory.
 	 */
-	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory = null)
+	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory)
 	{
 		if ( !$this->elementClass ) {
 			$this->elementClass = '\\QATools\\QATools\\BEM\\Element\\IPart';

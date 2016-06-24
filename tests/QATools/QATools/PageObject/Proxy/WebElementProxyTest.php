@@ -12,6 +12,7 @@ namespace tests\QATools\QATools\PageObject\Proxy;
 
 
 use Mockery as m;
+use QATools\QATools\PageObject\Proxy\WebElementProxy;
 
 class WebElementProxyTest extends AbstractProxyTestCase
 {
@@ -30,7 +31,7 @@ class WebElementProxyTest extends AbstractProxyTestCase
 	{
 		$expected = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
 
-		$this->assertInstanceOf($expected, $this->element->getObject());
+		$this->assertInstanceOf($expected, $this->createElement(false)->getObject());
 	}
 
 	public function testSetClassName()
@@ -54,6 +55,24 @@ class WebElementProxyTest extends AbstractProxyTestCase
 
 		$this->assertCount(2, $proxy);
 		$this->assertEquals('XPATH1', $proxy->getObject()->getXPath());
+	}
+
+	/**
+	 * Creates a proxy.
+	 *
+	 * @param boolean $replace_element_class Replace element class.
+	 *
+	 * @return WebElementProxy
+	 */
+	protected function createElement($replace_element_class = true)
+	{
+		$proxy = parent::createElement($replace_element_class);
+
+		if ( $replace_element_class ) {
+			$proxy->setClassName('\\tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\WebElementChild');
+		}
+
+		return $proxy;
 	}
 
 }

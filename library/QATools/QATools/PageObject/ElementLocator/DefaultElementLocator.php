@@ -122,7 +122,6 @@ class DefaultElementLocator implements IElementLocator
 	 * Returns final selectors to be used for element locating.
 	 *
 	 * @return array
-	 * @throws AnnotationException When required @find-by annotation is missing.
 	 */
 	protected function getSelectors()
 	{

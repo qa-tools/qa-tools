@@ -17,6 +17,13 @@ class TypifiedElementCollectionChild extends AbstractTypifiedElementCollection
 {
 
 	/**
+	 * Example property.
+	 *
+	 * @var string
+	 */
+	public $existingProperty = 'value';
+
+	/**
 	 * Initializes collection with a list of elements.
 	 *
 	 * @param array $elements Elements.
@@ -37,6 +44,85 @@ class TypifiedElementCollectionChild extends AbstractTypifiedElementCollection
 	public function proxyMe()
 	{
 		return 1;
+	}
+
+	/**
+	 * Proxies read access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 *
+	 * @return mixed
+	 * @throws \InvalidArgumentException When given method doesn't exist.
+	 */
+	public function __get($property)
+	{
+		if ( $property === 'dynamicProperty' ) {
+			return $this->existingProperty;
+		}
+		elseif ( $property === 'dynamicExceptionalProperty' ) {
+			$this->exceptionalMethod();
+
+			return null;
+		}
+
+		throw new \InvalidArgumentException('The "' . $property . '" doesn\'t exist.');
+	}
+
+	/**
+	 * Proxies write access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 * @param mixed  $value    Property value.
+	 *
+	 * @return void
+	 * @throws \InvalidArgumentException When given method doesn't exist.
+	 */
+	public function __set($property, $value)
+	{
+		if ( $property === 'dynamicProperty' ) {
+			$this->existingProperty = $value;
+
+			return;
+		}
+		elseif ( $property === 'dynamicExceptionalProperty' ) {
+			$this->exceptionalMethod();
+
+			return;
+		}
+
+		throw new \InvalidArgumentException('The "' . $property . '" doesn\'t exist.');
+	}
+
+	/**
+	 * Example of dynamic method.
+	 *
+	 * @param string $method    Method to proxy.
+	 * @param array  $arguments Method arguments.
+	 *
+	 * @return mixed
+	 * @throws \InvalidArgumentException When given method doesn't exist.
+	 */
+	public function __call($method, array $arguments)
+	{
+		if ( $method === 'dynamicMethod' ) {
+			return 'OK';
+		}
+		elseif ( $method == 'dynamicExceptionalMethod' ) {
+			$this->exceptionalMethod();
+		}
+
+		throw new \InvalidArgumentException('The "' . $method . '" doesn\'t exist.');
+	}
+
+	/**
+	 * Method, that always throws an exception.
+	 *
+	 * @return void
+	 * @throws \RuntimeException Always.
+	 */
+	public function exceptionalMethod()
+	{
+		throw new \RuntimeException('The exception.');
 	}
 
 }

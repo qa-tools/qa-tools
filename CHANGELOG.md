@@ -4,13 +4,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-...
+- Support for dynamic method calls (processed via "__call" method) forwarding from proxy to the element.
+- Support for property read/write calls forwarding from proxy to the element, including dynamically declared properties (processed via "__set" and "__get" methods) by [@evangelion1204].
+- Support for checking if a particular page is actually opened in the browser (via `@match-url-...` annotations and `Page::opened()` method).
+- Added support for url parameter unmasking (e.g. `{param}` text in the url of `@page-url` annotation) by [@slde-gorillaman].
 
 ### Changed
-...
+- When "TypifiedElementProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElement".
+- When "TypifiedElementCollectionProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElementCollection".
+- All elements created manually (not through annotations) now require `IPageFactory` instance as 2nd argument (before only container type elements were needing this).
+- The second optional parameter of `PageFactory` classes is now dependency injection container, instead of a `Config`.
+- Following methods of `PageFactory` class are not longer part of public API: `setAnnotationManager`, `setSession`.
+- The `Button` typified element now accepts inputs with `type="image"` attribute by [@LewisW].
+
+### Removed
+- Following methods were removed from `PageFactory` class: `getAnnotationManager`, `setUrlFactory`, `getUrlFactory`, `setUrlNormalizer`, `setPageLocator`.
 
 ### Fixed
-...
+- When "WebElementCollectionProxy" class was used manually (not through annotations) the element class was "WebElement" instead of "WebElementCollection".
 
 ## [1.1.0] - 2015-10-24
 ### Added
@@ -96,3 +107,5 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 [1.0.0]: https://github.com/qa-tools/qa-tools/compare/v0.0.1...v1.0.0
 [@evangelion1204]: https://github.com/evangelion1204
 [@fonsecas72]: https://github.com/fonsecas72
+[@slde-gorillaman]: https://github.com/slde-gorillaman
+[@LewisW]: https://github.com/LewisW

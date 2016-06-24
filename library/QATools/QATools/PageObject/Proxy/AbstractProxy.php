@@ -69,7 +69,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.
 	 */
-	public function __construct(IElementLocator $locator, IPageFactory $page_factory = null)
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory)
 	{
 		$this->locator = $locator;
 		$this->pageFactory = $page_factory;
@@ -92,6 +92,79 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	}
 
 	/**
+	 * Proxies read access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 *
+	 * @return mixed
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __get($property)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			if ( method_exists($sub_object, '__get') ) {
+				try {
+					// Reading of dynamic property in proxied object was successful.
+					return $sub_object->$property;
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
+
+					// Reading of dynamic property in proxied object failed (outside of "__get" method of that object).
+					if ( $trace[0]['function'] !== '__get' ) {
+						throw $e;
+					}
+				}
+			}
+
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		return $sub_object->$property;
+	}
+
+	/**
+	 * Proxies write access for properties to the sub-object.
+	 *
+	 * @param string $property Property to proxy.
+	 * @param mixed  $value    Property value.
+	 *
+	 * @return void
+	 * @throws ElementException When sub-object doesn't have a specific property.
+	 */
+	public function __set($property, $value)
+	{
+		$sub_object = $this->getObject();
+
+		if ( !property_exists($sub_object, $property) ) {
+			if ( method_exists($sub_object, '__set') ) {
+				try {
+					// Writing of dynamic method in proxied object was successful.
+					$sub_object->$property = $value;
+
+					return;
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
+
+					// Writing of dynamic property in proxied object failed (outside of "__set" method of that object).
+					if ( $trace[0]['function'] !== '__set' ) {
+						throw $e;
+					}
+				}
+			}
+
+			$message = sprintf('"%s" property is not available on the %s', $property, get_class($sub_object));
+			throw new ElementException($message, ElementException::TYPE_UNKNOWN_PROPERTY);
+		}
+
+		$sub_object->$property = $value;
+	}
+
+	/**
 	 * Proxies all methods to sub-object.
 	 *
 	 * @param string $method    Method to proxy.
@@ -105,8 +178,23 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 		$sub_object = $this->getObject();
 
 		if ( !method_exists($sub_object, $method) ) {
-			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
+			if ( method_exists($sub_object, '__call') ) {
+				try {
+					// Call to dynamic method in proxied object was successful.
+					return call_user_func_array(array($sub_object, $method), $arguments);
+				}
+				catch ( \Exception $e ) {
+					$trace = $e->getTrace();
 
+					// Call to dynamic method in proxied object failed (outside of "__call" method of that object).
+					if ( $trace[0]['function'] !== '__call' ) {
+						throw $e;
+					}
+				}
+			}
+
+			// Dynamic method in proxied object doesn't exist (known upfront or after calling missing method).
+			$message = sprintf('"%s" method is not available on the %s', $method, get_class($sub_object));
 			throw new ElementException($message, ElementException::TYPE_UNKNOWN_METHOD);
 		}
 
@@ -117,7 +205,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * Locates element using the locator.
 	 *
 	 * @return NodeElement
-	 * @throws ElementNotFoundException When element wasn't found on the page.
 	 */
 	protected function locateElement()
 	{
@@ -150,7 +237,6 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * @param mixed $newval The value to set.
 	 *
 	 * @return void
-	 * @throws \InvalidArgumentException When invalid element given.
 	 */
 	public function offsetSet($index, $newval)
 	{
