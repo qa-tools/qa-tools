@@ -11,8 +11,8 @@
 namespace QATools\QATools\PageObject;
 
 
+use Behat\Mink\Selector\CssSelector;
 use Behat\Mink\Selector\SelectorInterface;
-use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Selector\Xpath\Escaper;
 use QATools\QATools\PageObject\Exception\ElementException;
 
@@ -27,11 +27,11 @@ class SeleniumSelector implements SelectorInterface
 {
 
 	/**
-	 * Reference to selectors handler, where this selector was registered.
+	 * Reference to CSS selector.
 	 *
-	 * @var SelectorsHandler
+	 * @var CssSelector
 	 */
-	private $_handler;
+	private $_cssSelector;
 
 	/**
 	 * The XPath escaper.
@@ -42,12 +42,10 @@ class SeleniumSelector implements SelectorInterface
 
 	/**
 	 * Creates instance of SeleniumSelector class.
-	 *
-	 * @param SelectorsHandler $selectors_handler Mink selectors handler.
 	 */
-	public function __construct(SelectorsHandler $selectors_handler)
+	public function __construct()
 	{
-		$this->_handler = $selectors_handler;
+		$this->_cssSelector = new CssSelector();
 		$this->_xpathEscaper = new Escaper();
 	}
 
@@ -77,7 +75,7 @@ class SeleniumSelector implements SelectorInterface
 			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), " . $locator . ')]';
 		}
 		elseif ( $selector == How::CSS ) {
-			return $this->_handler->selectorToXpath('css', $locator);
+			return $this->_cssSelector->translateToXPath($locator);
 		}
 		elseif ( $selector == How::ID ) {
 			return 'descendant-or-self::*[@id = ' . $this->_xpathEscaper->escapeLiteral($locator) . ']';

@@ -214,7 +214,7 @@ class PageFactory implements IPageFactory
 		$selectors_handler = $session->getSelectorsHandler();
 
 		if ( !$selectors_handler->isSelectorRegistered('se') ) {
-			$selectors_handler->registerSelector('se', new SeleniumSelector($selectors_handler));
+			$selectors_handler->registerSelector('se', new SeleniumSelector());
 		}
 
 		$this->_session = $session;

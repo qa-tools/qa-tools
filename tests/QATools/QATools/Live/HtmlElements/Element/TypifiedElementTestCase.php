@@ -59,7 +59,7 @@ class TypifiedElementTestCase extends AbstractLiveTestCase
 	 */
 	protected function createElement(array $selector)
 	{
-		$selenium_selector = new SeleniumSelector(new SelectorsHandler());
+		$selenium_selector = new SeleniumSelector();
 		$xpath = $selenium_selector->translateToXPath($selector);
 
 		$web_element = new WebElement(new NodeElement($xpath, $this->session));

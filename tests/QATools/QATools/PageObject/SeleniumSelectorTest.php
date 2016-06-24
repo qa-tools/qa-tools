@@ -28,9 +28,7 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$selectors_handler = new SelectorsHandler();
-
-		$this->selector = new SeleniumSelector($selectors_handler);
+		$this->selector = new SeleniumSelector();
 	}
 
 	/**
