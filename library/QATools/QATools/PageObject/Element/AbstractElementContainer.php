@@ -45,7 +45,6 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
-	 * @throws ElementException When page factory is missing.
 	 */
 	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
 	{
