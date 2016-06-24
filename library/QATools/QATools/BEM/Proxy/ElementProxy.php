@@ -33,7 +33,7 @@ class ElementProxy extends AbstractPartProxy implements IElement
 	 * @param BEMElementLocator $locator      Locator.
 	 * @param IPageFactory      $page_factory Page factory.
 	 */
-	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory = null)
+	public function __construct($name, BEMElementLocator $locator, IPageFactory $page_factory)
 	{
 		$this->className = '\\QATools\\QATools\\BEM\\Element\\Element';
 		$this->elementClass = '\\QATools\\QATools\\BEM\\Element\\IElement';
