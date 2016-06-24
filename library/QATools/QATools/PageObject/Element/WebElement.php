@@ -12,6 +12,7 @@ namespace QATools\QATools\PageObject\Element;
 
 
 use Behat\Mink\Element\ElementInterface;
+use Behat\Mink\Selector\Xpath\Escaper;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\IPageFactory;
 use Behat\Mink\Element\NodeElement;
@@ -87,6 +88,13 @@ class WebElement implements IWebElement, INodeElementAware
 	private $_wrappedElement;
 
 	/**
+	 * The XPath escaper.
+	 *
+	 * @var Escaper
+	 */
+	private $_xpathEscaper;
+
+	/**
 	 * Initializes web element.
 	 *
 	 * @param NodeElement $wrapped_element Wrapped element.
@@ -94,6 +102,7 @@ class WebElement implements IWebElement, INodeElementAware
 	public function __construct(NodeElement $wrapped_element)
 	{
 		$this->_wrappedElement = $wrapped_element;
+		$this->_xpathEscaper = new Escaper();
 	}
 
 	/**
@@ -167,6 +176,16 @@ class WebElement implements IWebElement, INodeElementAware
 		}
 
 		return call_user_func_array(array($this->_wrappedElement, $method), $arguments);
+	}
+
+	/**
+	 * Returns the XPath escaper.
+	 *
+	 * @return Escaper
+	 */
+	public function getXpathEscaper()
+	{
+		return $this->_xpathEscaper;
 	}
 
 	/**

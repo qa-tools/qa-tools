@@ -59,7 +59,10 @@ class Form extends AbstractElementContainer
 	 */
 	public function getNodeElements($field_name)
 	{
-		$node_elements = $this->findAll('named', array('field', $this->_autoEscapeForXpath($field_name)));
+		$node_elements = $this->findAll(
+			'named',
+			array('field', $this->getXpathEscaper()->escapeLiteral($field_name))
+		);
 
 		if ( empty($node_elements) ) {
 			throw new FormException(
@@ -69,25 +72,6 @@ class Form extends AbstractElementContainer
 		}
 
 		return $node_elements;
-	}
-
-	/**
-	 * Determines if Mink does automatic selector escaping.
-	 *
-	 * @param string $string Text to escape.
-	 *
-	 * @return string
-	 */
-	private function _autoEscapeForXpath($string)
-	{
-		$selectors_handler = $this->getSelectorsHandler();
-
-		// Needed for Mink 1.x and below.
-		if ( method_exists($selectors_handler, 'xpathLiteral') ) {
-			$string = $selectors_handler->xpathLiteral($string);
-		}
-
-		return $string;
 	}
 
 	/**

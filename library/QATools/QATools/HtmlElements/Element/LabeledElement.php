@@ -31,7 +31,7 @@ class LabeledElement extends AbstractTypifiedElement
 
 		if ( !is_null($id) ) {
 			// Label with matching "for" attribute.
-			$escaped_id = $this->getSelectorsHandler()->xpathLiteral($id);
+			$escaped_id = $this->getXpathEscaper()->escapeLiteral($id);
 			$xpath_expressions = array(
 				'preceding::label[@for = ' . $escaped_id . ']',
 				'following::label[@for = ' . $escaped_id . ']',
