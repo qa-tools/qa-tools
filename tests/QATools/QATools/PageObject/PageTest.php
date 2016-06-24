@@ -153,6 +153,13 @@ class PageTest extends TestCase
 		$this->assertSame($this->page, $this->page->open($params));
 	}
 
+	public function testOpened()
+	{
+		$this->pageFactory->shouldReceive('opened')->with($this->page)->once()->andReturn('OK');
+
+		$this->assertEquals('OK', $this->page->opened());
+	}
+
 	/**
 	 * Creates an empty mocked url builder.
 	 *

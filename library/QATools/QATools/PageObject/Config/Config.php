@@ -29,6 +29,11 @@ class Config implements IConfig
 	protected $options = array(
 		'base_url' => '',
 		'page_namespace_prefix' => array('\\'),
+		'page_url_matchers' => array(
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher',
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher',
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher',
+		),
 	);
 
 	/**

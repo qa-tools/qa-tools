@@ -11,6 +11,11 @@
 namespace tests\QATools\QATools\PageObject;
 
 
+use mindplay\annotations\AnnotationManager;
+use Mockery as m;
+use QATools\QATools\PageObject\Annotation\MatchUrlComponentAnnotation;
+use QATools\QATools\PageObject\Annotation\MatchUrlExactAnnotation;
+use QATools\QATools\PageObject\Annotation\MatchUrlRegexpAnnotation;
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Container;
@@ -20,7 +25,6 @@ use QATools\QATools\PageObject\Property;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
 use QATools\QATools\PageObject\Url\Normalizer;
-use Mockery as m;
 use tests\QATools\QATools\TestCase;
 
 class PageFactoryTest extends TestCase
@@ -272,6 +276,121 @@ class PageFactoryTest extends TestCase
 
 		$page = $factory->getPage($this->pageClass);
 		$this->assertInstanceOf($this->pageClass, $page);
+	}
+
+	/**
+	 * @dataProvider openedDataProvider
+	 */
+	public function testOpened($url, $matched)
+	{
+		/* @var $page Page */
+		$page = m::mock($this->pageClass);
+
+		$this->expectMatchUrlExactAnnotation($page, array(
+			array('url' => 'http://www.domain.tld/relative'),
+			array('url' => 'http://www.domain.tld/relative/path1'),
+			array('url' => 'http://www.domain.tld/relative/path2'),
+		));
+		$this->expectMatchUrlRegexpAnnotation($page, array(
+			array('regexp' => '#/absolute$#'),
+		));
+		$this->expectMatchUrlComponentAnnotation($page, array(
+			array('path' => '/relative/path'),
+		));
+
+		$this->session->shouldReceive('getCurrentUrl')->once()->andReturn($url);
+		$this->assertSame($matched, $this->realFactory->opened($page));
+	}
+
+	public function openedDataProvider()
+	{
+		return array(
+			'exact matched' => array('http://www.domain.tld/relative/path1', true),
+			'component matched' => array('http://www.domain.tld/relative/path', true),
+			'regexp matched' => array('http://www.domain.tld/absolute', true),
+			'nothing matched' => array('http://www.domain.tld/absolute/path', false),
+		);
+	}
+
+	/**
+	 * Sets expectation for full url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlExactAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlExactAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-exact')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for regexp url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlRegexpAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlRegexpAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-regexp')
+			->andReturn($annotations);
+
+		return $annotations;
+	}
+
+	/**
+	 * Sets expectation for url match annotations and returns them.
+	 *
+	 * @param AnnotationManager $annotation_manager The annotation manager.
+	 * @param array             $annotations_data   Url match.
+	 *
+	 * @return array
+	 */
+	protected function expectMatchUrlComponentAnnotation(Page $page, $annotations_data = array())
+	{
+		$annotations = array();
+
+		foreach ( $annotations_data as $annotation_params ) {
+			$annotation = new MatchUrlComponentAnnotation();
+			$annotation->initAnnotation($annotation_params);
+
+			$annotations[] = $annotation;
+		}
+
+		$this->annotationManager
+			->shouldReceive('getClassAnnotations')
+			->with($page, '@match-url-component')
+			->andReturn($annotations);
+
+		return $annotations;
 	}
 
 	/**

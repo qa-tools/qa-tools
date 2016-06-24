@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support for dynamic method calls (processed via "__call" method) forwarding from proxy to the element.
 - Support for property read/write calls forwarding from proxy to the element, including dynamically declared properties (processed via "__set" and "__get" methods) by [@evangelion1204].
+- Support for checking if a particular page is actually opened in the browser (via `@match-url-...` annotations and `Page::opened()` method).
 
 ### Changed
 - When "TypifiedElementProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElement".

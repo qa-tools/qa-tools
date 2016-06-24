@@ -79,6 +79,13 @@ class PageFactory implements IPageFactory
 	protected $pageLocator;
 
 	/**
+	 * The page url matcher registry.
+	 *
+	 * @var PageUrlMatcherRegistry
+	 */
+	protected $pageUrlMatcherRegistry;
+
+	/**
 	 * The current config.
 	 *
 	 * @var IConfig
@@ -104,6 +111,7 @@ class PageFactory implements IPageFactory
 		$this->urlFactory = $container['url_factory'];
 		$this->urlNormalizer = $container['url_normalizer'];
 		$this->pageLocator = $container['page_locator'];
+		$this->pageUrlMatcherRegistry = $container['page_url_matcher_registry'];
 	}
 
 	/**
@@ -191,6 +199,18 @@ class PageFactory implements IPageFactory
 		);
 
 		return $this;
+	}
+
+	/**
+	 * Checks if the given page is currently opened in browser.
+	 *
+	 * @param Page $page Page to check.
+	 *
+	 * @return boolean
+	 */
+	public function opened(Page $page)
+	{
+		return $this->pageUrlMatcherRegistry->match($this->_session->getCurrentUrl(), $page);
 	}
 
 	/**

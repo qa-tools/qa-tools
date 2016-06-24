@@ -47,8 +47,17 @@ Configuration Options
 The following configuration options are available:
 
 * ``base_url`` - allows to specify Base URL to be used to transform all relative urls from :ref:`@page-url annotations <page-url>` into absolute urls.
-* ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <default-page-locator>` will search for page classes defaults to ``array('\\')``
+* ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <default-page-locator>` will search for page classes. Defaults to::
 
+        array('\\')
+
+* ``page_url_matchers`` - array of classes, that are used to detect if given ``Page`` is currently opened. Defaults to::
+
+        array(
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher',
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher',
+            '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher',
+        )
 
 If port is specified as part of `base_url` then it will be used in every built url unless specified explicitly in the `@page-url` annotation.
 

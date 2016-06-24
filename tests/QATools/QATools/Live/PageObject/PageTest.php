@@ -130,4 +130,16 @@ class PageTest extends AbstractLiveTestCase
 		$this->assertEquals('text2', $text_inputs[2]->getValue());
 	}
 
+	public function testPageUrlMatchAnchor()
+	{
+		/** @var WebElementPage $page */
+		$page = new WebElementPage($this->pageFactory);
+
+		$this->assertFalse($page->opened());
+
+		$page->linkAnchorTest->click();
+
+		$this->assertTrue($page->opened());
+	}
+
 }
