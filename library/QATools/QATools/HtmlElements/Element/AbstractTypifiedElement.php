@@ -46,6 +46,13 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	private $_wrappedElement;
 
 	/**
+	 * Stores instance of used page factory.
+	 *
+	 * @var IPageFactory
+	 */
+	private $_pageFactory;
+
+	/**
 	 * List of acceptance criteria.
 	 *
 	 * @var array
@@ -55,11 +62,13 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	/**
 	 * Specifies wrapped WebElement.
 	 *
-	 * @param WebElement $wrapped_element Element to be wrapped.
+	 * @param WebElement   $wrapped_element Element to be wrapped.
+	 * @param IPageFactory $page_factory    Page factory.
 	 */
-	public function __construct(WebElement $wrapped_element)
+	public function __construct(WebElement $wrapped_element, IPageFactory $page_factory)
 	{
 		$this->_wrappedElement = $wrapped_element;
+		$this->_pageFactory = $page_factory;
 
 		$this->assertWrappedElement();
 	}
@@ -72,11 +81,11 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	 *
 	 * @return static
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
 	{
-		$wrapped_element = WebElement::fromNodeElement($node_element);
+		$wrapped_element = WebElement::fromNodeElement($node_element, $page_factory);
 
-		return new static($wrapped_element);
+		return new static($wrapped_element, $page_factory);
 	}
 
 	/**
@@ -197,13 +206,29 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	}
 
 	/**
-	 * Returns wrapped element session.
+	 * Returns element session.
 	 *
-	 * @return Session
+	 * @return     Session
+	 * @deprecated Accessing the session from the element is deprecated as of 1.2 and will be impossible in 2.0.
 	 */
 	public function getSession()
 	{
-		return $this->getWrappedElement()->getSession();
+		@trigger_error(
+			sprintf('The method %s is deprecated as of 1.2 and will be removed in 2.0', __METHOD__),
+			E_USER_DEPRECATED
+		);
+
+		return $this->_pageFactory->getSession();
+	}
+
+	/**
+	 * Returns page factory, used during object creation.
+	 *
+	 * @return IPageFactory
+	 */
+	protected function getPageFactory()
+	{
+		return $this->_pageFactory;
 	}
 
 	/**
@@ -287,7 +312,7 @@ abstract class AbstractTypifiedElement implements ITypifiedElement, INodeElement
 	 */
 	protected function isSeleniumDriver()
 	{
-		return is_a($this->getSession()->getDriver(), '\\Behat\\Mink\\Driver\\Selenium2Driver');
+		return is_a($this->_pageFactory->getSession()->getDriver(), '\\Behat\\Mink\\Driver\\Selenium2Driver');
 	}
 
 	/**

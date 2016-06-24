@@ -69,7 +69,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 * @param IElementLocator $locator      Element selector.
 	 * @param IPageFactory    $page_factory Page factory.
 	 */
-	public function __construct(IElementLocator $locator, IPageFactory $page_factory = null)
+	public function __construct(IElementLocator $locator, IPageFactory $page_factory)
 	{
 		$this->locator = $locator;
 		$this->pageFactory = $page_factory;

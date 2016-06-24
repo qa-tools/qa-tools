@@ -112,7 +112,7 @@ class ElementCollectionTest extends TestCase
 	public function testFromNodeElementsDefaultsToCollectionClass()
 	{
 		$element = $this->createNodeElement();
-		$collection = NodeElementAwareCollection::fromNodeElements(array($element));
+		$collection = NodeElementAwareCollection::fromNodeElements(array($element), null, $this->pageFactory);
 		$this->assertCount(1, $collection);
 	}
 
@@ -124,7 +124,7 @@ class ElementCollectionTest extends TestCase
 	public function testFromNodeElementElementCantWorkWithInterfaces()
 	{
 		$element = $this->createNodeElement();
-		CollectionWithExistingElementInterface::fromNodeElements(array($element));
+		CollectionWithExistingElementInterface::fromNodeElements(array($element), null, $this->pageFactory);
 	}
 
 	/**

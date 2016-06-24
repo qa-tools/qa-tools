@@ -135,6 +135,9 @@ class AbstractTypifiedElementTest extends TestCase
 		$this->assertEquals($expected, $this->typifiedElement->getName());
 	}
 
+	/**
+	 * @group legacy
+	 */
 	public function testGetSession()
 	{
 		$this->assertSame($this->session, $this->typifiedElement->getSession());
@@ -190,7 +193,7 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass($this->webElement);
+		return new $this->elementClass($this->webElement, $this->pageFactory);
 	}
 
 	/**

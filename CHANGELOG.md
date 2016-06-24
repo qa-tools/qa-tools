@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - When "TypifiedElementProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElement".
 - When "TypifiedElementCollectionProxy" class was used manually (not through annotations) the element class was "TextBlock" instead of "AbstractTypifiedElementCollection".
+- All elements created manually (not through annotations) now require `IPageFactory` instance as 2nd argument (before only container type elements were needing this).
 
 ### Fixed
 - When "WebElementCollectionProxy" class was used manually (not through annotations) the element class was "WebElement" instead of "WebElementCollection".

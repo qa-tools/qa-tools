@@ -25,13 +25,6 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 {
 
 	/**
-	 * Stores instance of used page factory.
-	 *
-	 * @var IPageFactory
-	 */
-	private $_pageFactory;
-
-	/**
 	 * Initializes html element.
 	 *
 	 * @param NodeElement  $wrapped_element Wrapped element.
@@ -39,11 +32,10 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 	 */
 	public function __construct(NodeElement $wrapped_element, IPageFactory $page_factory)
 	{
-		parent::__construct($wrapped_element);
+		parent::__construct($wrapped_element, $page_factory);
 
-		$this->_pageFactory = $page_factory;
-		$this->_pageFactory->initElementContainer($this);
-		$this->_pageFactory->initElements($this, $this->_pageFactory->createDecorator($this));
+		$page_factory->initElementContainer($this);
+		$page_factory->initElements($this, $page_factory->createDecorator($this));
 	}
 
 	/**
@@ -53,28 +45,10 @@ abstract class AbstractElementContainer extends WebElement implements IElementCo
 	 * @param IPageFactory $page_factory Page factory.
 	 *
 	 * @return static
-	 * @throws ElementException When page factory is missing.
 	 */
-	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory = null)
+	public static function fromNodeElement(NodeElement $node_element, IPageFactory $page_factory)
 	{
-		if ( !isset($page_factory) ) {
-			throw new ElementException(
-				'Page factory is required to create this element',
-				ElementException::TYPE_PAGE_FACTORY_REQUIRED
-			);
-		}
-
 		return new static($node_element, $page_factory);
-	}
-
-	/**
-	 * Returns page factory, used during object creation.
-	 *
-	 * @return IPageFactory
-	 */
-	protected function getPageFactory()
-	{
-		return $this->_pageFactory;
 	}
 
 }

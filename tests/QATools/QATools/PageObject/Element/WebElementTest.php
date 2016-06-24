@@ -31,7 +31,6 @@ class WebElementTest extends TestCase
 		$element = $this->createElement();
 
 		$this->assertEquals('XPATH', $element->getXpath());
-		$this->assertSame($this->session, $element->getSession());
 	}
 
 	public function testFromNodeElement()
@@ -79,13 +78,21 @@ class WebElementTest extends TestCase
 	}
 
 	/**
+	 * @group legacy
+	 */
+	public function testGetSession()
+	{
+		$this->assertSame($this->session, $this->createElement()->getSession());
+	}
+
+	/**
 	 * Create element.
 	 *
 	 * @return WebElement
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass(new NodeElement('XPATH', $this->session));
+		return new $this->elementClass(new NodeElement('XPATH', $this->session), $this->pageFactory);
 	}
 
 }
