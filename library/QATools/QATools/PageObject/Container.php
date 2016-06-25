@@ -16,6 +16,7 @@ use mindplay\annotations\AnnotationManager;
 use Pimple\Container as BaseContainer;
 use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
+use QATools\QATools\PageObject\PageUrlMatcher\PageUrlMatcherRegistry;
 use QATools\QATools\PageObject\Url\Normalizer;
 use QATools\QATools\PageObject\Url\UrlFactory;
 
@@ -62,6 +63,19 @@ class Container extends BaseContainer
 			$config = $c['config'];
 
 			return new DefaultPageLocator((array)$config->getOption('page_namespace_prefix'));
+		};
+
+		$this['page_url_matcher_registry'] = function ($c) {
+			$page_url_matcher_registry = new PageUrlMatcherRegistry($c['annotation_manager']);
+
+			/** @var Config $config */
+			$config = $c['config'];
+
+			foreach ( $config->getOption('page_url_matchers') as $matcher_class ) {
+				$page_url_matcher_registry->add(new $matcher_class());
+			}
+
+			return $page_url_matcher_registry;
 		};
 	}
 

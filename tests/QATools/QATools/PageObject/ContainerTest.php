@@ -127,4 +127,12 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 		$page_locator->resolvePage('Matrix Page');
 	}
 
+	public function testPageUrlMatcherRegistry()
+	{
+		$this->assertInstanceOf(
+			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\PageUrlMatcherRegistry',
+			$this->container['page_url_matcher_registry']
+		);
+	}
+
 }
