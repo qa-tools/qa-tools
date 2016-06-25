@@ -54,6 +54,36 @@ class WebElementTest extends TestCase
 		$this->assertEquals($expected, (string)$element);
 	}
 
+	public function testFind()
+	{
+		$findings = array(
+			$this->createNodeElement(),
+			$this->createNodeElement(),
+		);
+
+		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+
+		$element = $this->createElement();
+
+		$this->assertSame($findings[0], $element->find('aa', 'bb'));
+	}
+
+	public function testFindAll()
+	{
+		$findings = array(
+			$this->createNodeElement(),
+			$this->createNodeElement(),
+		);
+
+		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+
+		$element = $this->createElement();
+
+		$this->assertSame($findings, $element->findAll('aa', 'bb'));
+	}
+
 	/**
 	 * @medium
 	 */
@@ -68,6 +98,16 @@ class WebElementTest extends TestCase
 		});
 
 		$this->assertGreaterThanOrEqual(1, microtime(true) - $start);
+	}
+
+	/**
+	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
+	 * @expectedExceptionMessage "missingMethod" method is not available on the Behat\Mink\Element\NodeElement
+	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
+	 */
+	public function testNonExistingMethodForwardingError()
+	{
+		$this->createElement()->missingMethod();
 	}
 
 	public function testGetXpathEscaper()
