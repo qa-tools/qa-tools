@@ -71,7 +71,7 @@ Connecting to PHPUnit
 ---------------------
 .. note:: Throughout this tutorial it's assumed that working PHPUnit is configured and connected to a project that needs to be tested.
 
-To use library with PHPUnit you are required to also install https://github.com/minkphp/phpunit-mink.
+To use library with PHPUnit you are required to also install https://github.com/qa-tools/phpunit-extension.
 
 .. important:: **TODO:** Write about the obtaining Mink session need for PageFactory and that it can be easily done using PHPUnit-Mink.
 
