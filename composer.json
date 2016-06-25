@@ -22,7 +22,8 @@
 	"require": {
 		"php": ">=5.3.2",
 		"behat/mink": "~1.6",
-		"mindplay/annotations": "~1.2"
+		"mindplay/annotations": "~1.2",
+		"pimple/pimple": "^2.0|^3.0"
 	},
 
 	"require-dev": {

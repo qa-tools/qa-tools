@@ -28,22 +28,17 @@ To verify successful installation look for the ``qa-tools/qa-tools`` folder with
 
 Configuration
 -------------
-The library needs to be properly configured before usage. This is done through the help of ``Config`` class instance:
+The library can be optionally configured using following approach:
 
 .. literalinclude:: examples/config_base_url.php
    :linenos:
-   :emphasize-lines: 8-10
+   :emphasize-lines: 14-16
 
-Typical configuration process consists of 3 steps:
+Then created ``PageFactory`` class instance can be used to spawn ``Page`` class instances at will.
 
-#. obtaining (or creating) Mink's session object (line 7)
-#. providing configuration options via ``Config`` class instance (line 8-10)
-#. creating ``PageFactory`` class instance with objects created above (line 11)
-
-Then created ``PageFactory`` class instance can be used to spawn Page classes at will.
-
-.. note:: If several Mink's sessions are used, then separate ``PageFactory`` instance needs to be created for each
-          of them. It is allowed to share the ``Config`` class instance among them.
+.. note:: If several Mink's sessions are used (e.g. for different browsers), then separate ``PageFactory`` class
+          instance needs to be created for each of them. Configuration setting can be shared across different
+          ``PageFactory`` class instances, when **same container** is used to create them.
 
 .. _configuration-options:
 
@@ -55,7 +50,7 @@ The following configuration options are available:
 * ``page_namespace_prefix`` - array of namespaces in which the :ref:`DefaultPageLocator <default-page-locator>` will search for page classes defaults to ``array('\\')``
 
 
-If port is specified as part of `base_url` then it will be used in every built url unless specified exactly in the `@page-url` annotation.
+If port is specified as part of `base_url` then it will be used in every built url unless specified explicitly in the `@page-url` annotation.
 
 Connecting to Behat
 -------------------
