@@ -12,19 +12,15 @@ namespace QATools\QATools\PageObject;
 
 
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
-use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Element\IElementContainer;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
-use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
 use QATools\QATools\PageObject\PageLocator\IPageLocator;
 use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
 use QATools\QATools\PageObject\Url\Normalizer;
-use QATools\QATools\PageObject\Url\UrlFactory;
 use Behat\Mink\Session;
-use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 
 /**
@@ -92,20 +88,22 @@ class PageFactory implements IPageFactory
 	/**
 	 * Creates PageFactory instance.
 	 *
-	 * @param Session $session Mink session.
-	 * @param IConfig $config  Page factory configuration.
+	 * @param Session        $session   Mink session.
+	 * @param Container|null $container Dependency injection container.
 	 */
-	public function __construct(Session $session, IConfig $config = null)
+	public function __construct(Session $session, Container $container = null)
 	{
-		$this->setSession($session);
-		$this->config = isset($config) ? $config : new Config();
+		if ( !isset($container) ) {
+			$container = new Container();
+		}
 
-		$annotation_manager = new AnnotationManager();
-		$annotation_manager->cache = new AnnotationCache(sys_get_temp_dir());
-		$this->setAnnotationManager($annotation_manager);
-		$this->setUrlFactory(new UrlFactory());
-		$this->setUrlNormalizer(new Normalizer($this->config->getOption('base_url')));
-		$this->setPageLocator(new DefaultPageLocator((array)$this->config->getOption('page_namespace_prefix')));
+		$this->_setSession($session);
+		$this->config = $container['config'];
+
+		$this->_setAnnotationManager($container['annotation_manager']);
+		$this->urlFactory = $container['url_factory'];
+		$this->urlNormalizer = $container['url_normalizer'];
+		$this->pageLocator = $container['page_locator'];
 	}
 
 	/**
@@ -115,75 +113,13 @@ class PageFactory implements IPageFactory
 	 *
 	 * @return self
 	 */
-	public function setAnnotationManager(AnnotationManager $manager)
+	private function _setAnnotationManager(AnnotationManager $manager)
 	{
 		foreach ( $this->annotationRegistry as $annotation_name => $annotation_class ) {
 			$manager->registry[$annotation_name] = $annotation_class;
 		}
 
 		$this->annotationManager = $manager;
-
-		return $this;
-	}
-
-	/**
-	 * Returns annotation manager.
-	 *
-	 * @return AnnotationManager
-	 */
-	public function getAnnotationManager()
-	{
-		return $this->annotationManager;
-	}
-
-	/**
-	 * Sets the url builder factory.
-	 *
-	 * @param IUrlFactory $url_builder_factory Url builder factory.
-	 *
-	 * @return IUrlFactory
-	 */
-	public function setUrlFactory(IUrlFactory $url_builder_factory)
-	{
-		$this->urlFactory = $url_builder_factory;
-
-		return $this;
-	}
-
-	/**
-	 * Returns current url builder factory.
-	 *
-	 * @return IUrlFactory
-	 */
-	public function getUrlFactory()
-	{
-		return $this->urlFactory;
-	}
-
-	/**
-	 * Sets the url normalizer.
-	 *
-	 * @param Normalizer $normalizer The normalizer.
-	 *
-	 * @return self
-	 */
-	public function setUrlNormalizer(Normalizer $normalizer)
-	{
-		$this->urlNormalizer = $normalizer;
-
-		return $this;
-	}
-
-	/**
-	 * Sets the page locator.
-	 *
-	 * @param IPageLocator $page_locator The page locator.
-	 *
-	 * @return self
-	 */
-	public function setPageLocator(IPageLocator $page_locator)
-	{
-		$this->pageLocator = $page_locator;
 
 		return $this;
 	}
@@ -209,7 +145,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @return self
 	 */
-	public function setSession(Session $session)
+	private function _setSession(Session $session)
 	{
 		$selectors_handler = $session->getSelectorsHandler();
 
