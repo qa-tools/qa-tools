@@ -36,11 +36,31 @@ class ConfigTest extends TestCase
 		return array(
 			array(
 				array(),
-				array('base_url' => ''),
+				array(
+					'base_url' => '',
+					'page_namespace_prefix' => array('\\'),
+					'page_url_matchers' => array(
+						'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher',
+						'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher',
+						'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher',
+					),
+				),
 			),
 			array(
-				array('base_url' => 'value'),
-				array('base_url' => 'value'),
+				array(
+					'base_url' => 'override',
+					'page_namespace_prefix' => array('\\CustomNS'),
+					'page_url_matchers' => array(
+						'CustomPageUrlMatcher',
+					),
+				),
+				array(
+					'base_url' => 'override',
+					'page_namespace_prefix' => array('\\CustomNS'),
+					'page_url_matchers' => array(
+						'CustomPageUrlMatcher',
+					),
+				),
 			),
 		);
 	}
@@ -70,7 +90,9 @@ class ConfigTest extends TestCase
 	public function optionDataProvider()
 	{
 		return array(
-			array('base_url', 'value'),
+			array('base_url', 'override1'),
+			array('page_namespace_prefix', 'override2'),
+			array('page_url_matchers', 'override3'),
 		);
 	}
 
@@ -87,6 +109,21 @@ class ConfigTest extends TestCase
 
 		$config = new Config($options);
 		$config->getOption($name);
+	}
+
+	/**
+	 * @dataProvider getOptionWithFailureDataProvider
+	 */
+	public function testSetOptionWithFailure(array $options, $name)
+	{
+		$this->setExpectedException(
+			'QATools\\QATools\\PageObject\\Exception\\ConfigException',
+			'Option "' . $name . '" doesn\'t exist in configuration',
+			ConfigException::TYPE_NOT_FOUND
+		);
+
+		$config = new Config($options);
+		$config->setOption($name, 'x');
 	}
 
 	public function getOptionWithFailureDataProvider()
