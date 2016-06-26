@@ -236,6 +236,22 @@ Like for `base_url` it is possible to include a port in an absolute URL:
 
     @page-url('http://www.example.com:8080/products/shoes.html')
 
+URL parameter unmasking
+^^^^^^^^^^^^^^^^^^^^^^^
+It is possible to make ``url`` parameter of ``@page-url`` annotation more dynamic (currently it's pretty static)
+though usage of url masks. The ``url mask`` is a query string parameter name wrapped within ``{`` and ``}`` like so:
+``{parameter_name}``. When a query string parameter is encountered in the url in such a form, then instead of being
+added to the query string of built url it would be unmasked (substituted) in the main url part itself.
+
+.. code-block:: ruby
+
+    @page-url('products/{product-name}.html', 'params' => array('product-name' => 'shoes'))
+
+It doesn't look too powerful right now, but considering that params would be supplied later in ``Page::open`` method call
+it would be a major time saver for SEO url building.
+
+.. note:: Every part of url, except anchor and query string itself can be unmasked in such a way.
+
 @match-url-exact
 ----------------
 This annotation allows to check if a specific page is open by comparing the specified full URL against the currently opened URL.
