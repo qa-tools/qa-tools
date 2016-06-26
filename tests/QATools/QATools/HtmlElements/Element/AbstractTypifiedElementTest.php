@@ -205,7 +205,7 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected function expectWebElementGetTagName($tag_name)
 	{
-		$this->webElement->shouldReceive('getTagName')->withNoArgs()->andReturn($tag_name);
+		$this->webElement->shouldReceive('getTagName')->withNoArgs()->andReturn($tag_name)->byDefault();
 	}
 
 	/**
@@ -218,7 +218,7 @@ class AbstractTypifiedElementTest extends TestCase
 	protected function expectWebElementGetAttribute(array $attributes)
 	{
 		foreach ( $attributes as $attribute => $value ) {
-			$this->webElement->shouldReceive('getAttribute')->with($attribute)->andReturn($value);
+			$this->webElement->shouldReceive('getAttribute')->with($attribute)->andReturn($value)->byDefault();
 		}
 	}
 
