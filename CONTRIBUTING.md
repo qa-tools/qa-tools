@@ -9,7 +9,7 @@ Feel free to ask any questions and share your experiences in the [Chat Room](htt
 - If you are going to make a big, substantial change, let's discuss it first.
 
 ## Working with Pull Requests
-1. Create your feature addition or a bug fix branch based on __`develop`__ branch in your repository's fork.
+1. Create your feature addition or a bug fix branch based on __`master`__ branch in your repository's fork.
 2. Make necessary changes, but __don't mix__ code reformatting with code changes on topic.
 3. Write documentation in `/docs` folder (is applicable).
 4. Add entry in `CHANGELOG.md` file following http://keepachangelog.com/ format (if applicable).

@@ -6,13 +6,14 @@
 [![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://docs.qa-tools.io/en/latest/)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
-[![codecov](https://codecov.io/gh/qa-tools/qa-tools/branch/develop/graph/badge.svg)](https://codecov.io/gh/qa-tools/qa-tools)
+[![codecov](https://codecov.io/gh/qa-tools/qa-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/qa-tools/qa-tools)
 [![Dependency Status](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e1e5d1ebe4a1b38d00000a)
 
-[![Latest Stable Version](https://poser.pugx.org/qa-tools/qa-tools/v/stable.png)](https://packagist.org/packages/qa-tools/qa-tools)
-[![Total Downloads](https://poser.pugx.org/qa-tools/qa-tools/downloads.png)](https://packagist.org/packages/qa-tools/qa-tools)
-[![Latest Unstable Version](https://poser.pugx.org/qa-tools/qa-tools/v/unstable.svg)](https://packagist.org/packages/qa-tools/qa-tools)
-[![License](https://poser.pugx.org/qa-tools/qa-tools/license.svg)](https://packagist.org/packages/qa-tools/qa-tools)
+
+[![Latest Stable Version](https://poser.pugx.org/qa-tools/qa-tools/v/stable)](https://packagist.org/packages/qa-tools/qa-tools)
+[![Total Downloads](https://poser.pugx.org/qa-tools/qa-tools/downloads)](https://packagist.org/packages/qa-tools/qa-tools)
+[![Latest Unstable Version](https://poser.pugx.org/qa-tools/qa-tools/v/unstable)](https://packagist.org/packages/qa-tools/qa-tools)
+[![License](https://poser.pugx.org/qa-tools/qa-tools/license)](https://packagist.org/packages/qa-tools/qa-tools)
 
 QA-Tools is a set of quality assurance tools to be used during acceptance tests writing on PHP.
 
