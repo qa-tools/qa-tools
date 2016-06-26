@@ -23,8 +23,7 @@ use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
 use QATools\QATools\PageObject\Property;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
-use QATools\QATools\PageObject\Url\IUrlFactory;
-use QATools\QATools\PageObject\Url\Normalizer;
+use tests\QATools\QATools\PageObject\Fixture\Page\PageChild;
 use tests\QATools\QATools\TestCase;
 
 class PageFactoryTest extends TestCase
@@ -50,7 +49,7 @@ class PageFactoryTest extends TestCase
 	 *
 	 * @var string
 	 */
-	protected $pageClass = '\\tests\\QATools\\QATools\\PageObject\\Fixture\\Page\\PageChild';
+	protected $pageClass = 'tests\\QATools\\QATools\\PageObject\\Fixture\\Page\\PageChild';
 
 	/**
 	 * Decorator class.
@@ -74,27 +73,6 @@ class PageFactoryTest extends TestCase
 	protected $realFactory;
 
 	/**
-	 * The url builder factory.
-	 *
-	 * @var IUrlFactory
-	 */
-	protected $urlFactory;
-
-	/**
-	 * The url builder factory.
-	 *
-	 * @var Normalizer
-	 */
-	protected $urlNormalizer;
-
-	/**
-	 * Page factory config.
-	 *
-	 * @var Config
-	 */
-	protected $config;
-
-	/**
 	 * Dependency injection container.
 	 *
 	 * @var Container
@@ -115,15 +93,15 @@ class PageFactoryTest extends TestCase
 		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any());
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
-		$this->urlFactory = m::mock(self::URL_FACTORY_INTERFACE);
-		$this->urlNormalizer = m::mock(self::URL_NORMALIZER_CLASS);
-		$this->config = new Config(array('base_url' => 'http://domain.tld'));
+		$config = new Config(array('base_url' => 'http://domain.tld'));
 
-		$this->container['config'] = $this->config;
+		$this->container['config'] = $config;
 
-		if ( $this->getName(false) === 'testInitPage' ) {
-			$this->container['url_factory'] = $this->urlFactory;
-			$this->container['url_normalizer'] = $this->urlNormalizer;
+		if ( $this->getName(false) === 'testGetPage' ) {
+			$parts = explode('\\', $this->pageClass);
+			array_pop($parts);
+
+			$config->setOption('page_namespace_prefix', implode('\\', $parts) . '\\');
 		}
 
 		$this->realFactory = $this->createFactory();
@@ -167,33 +145,17 @@ class PageFactoryTest extends TestCase
 		$this->assertSame($this->realFactory, $this->realFactory->initElements($search_context, $decorator));
 	}
 
-	/**
-	 * @dataProvider initPageDataProvider
-	 */
-	public function testInitPage($url, array $params, $secure, $use_url_builder)
+	public function testInitPage()
 	{
-		$url_components = parse_url($url);
-		$annotations = $this->expectPageUrlAnnotation($url, $params, $secure);
+		$this->expectPageUrlAnnotation('/relative-path', array('param' => 'value'));
 
-		/* @var $page Page */
-		$page = m::mock($this->pageClass);
-		$url_builder = m::mock(self::URL_BUILDER_INTERFACE);
+		// Checks, that url builder/normalizer really uses base url from configuration.
+		$this->annotationManager->shouldReceive('getPropertyAnnotations')->withAnyArgs()->andReturn(array());
+		$this->session->shouldReceive('visit')->with('http://domain.tld/relative-path?param=value')->once();
 
-		$this->urlNormalizer
-			->shouldReceive('normalize')
-			->with(reset($annotations))
-			->times(isset($url) ? 1 : 0)
-			->andReturn($url_components);
-
-		$this->urlFactory
-			->shouldReceive('getBuilder')
-			->with($url_components)
-			->times(isset($url) ? 1 : 0)
-			->andReturn($url_builder);
-
-		$page->shouldReceive('setUrlBuilder')->times($use_url_builder ? 1 : 0)->andReturn($page);
-
-		$this->assertSame($this->realFactory, $this->realFactory->initPage($page));
+		/** @var PageChild $page */
+		$page = new $this->pageClass($this->realFactory);
+		$page->open();
 	}
 
 	/**
@@ -225,26 +187,6 @@ class PageFactoryTest extends TestCase
 		return $annotations;
 	}
 
-	/**
-	 * Provides url for testing.
-	 *
-	 * @return array
-	 */
-	public function initPageDataProvider()
-	{
-		return array(
-			array('TEST-URL', array(), null, true),
-			array('TEST-URL', array('param' => 'value'), null, true),
-			array('TEST-URL?param=value', array(), null, true),
-			array('TEST-URL?param1=value1', array('param2' => 'value2'), null, true),
-			array('TEST-URL#anchor', array(), null, true),
-			array('TEST-URL#anchor', array('param' => 'value'), null, true),
-			array('TEST-URL?param=value#anchor', array(), null, true),
-			array('TEST-URL?param1=value1#anchor', array('param2' => 'value2'), null, true),
-			array(null, array(), null, false),
-		);
-	}
-
 	public function testInitElementContainer()
 	{
 		$element_container = m::mock('\\QATools\\QATools\\PageObject\\Element\\AbstractElementContainer');
@@ -274,7 +216,11 @@ class PageFactoryTest extends TestCase
 		$factory->shouldReceive('initElements')->andReturn($factory);
 		$factory->shouldReceive('createDecorator')->andReturn($this->createNullDecorator());
 
-		$page = $factory->getPage($this->pageClass);
+		$parts = explode('\\', $this->pageClass);
+		$page_name = array_pop($parts);
+
+		// Checks, that page locator really uses namespace prefixes from configuration.
+		$page = $factory->getPage($page_name);
 		$this->assertInstanceOf($this->pageClass, $page);
 	}
 
@@ -403,10 +349,6 @@ class PageFactoryTest extends TestCase
 	 */
 	protected function createFactory($with_annotation_manager = true, array $mock_methods = array())
 	{
-		$mocked_page_locator = m::mock('\\QATools\\QATools\\PageObject\\PageLocator\\IPageLocator');
-		$mocked_page_locator->shouldReceive('resolvePage')->andReturn($this->pageClass);
-		$this->container['page_locator'] = $mocked_page_locator;
-
 		if ( $with_annotation_manager ) {
 			$this->container['annotation_manager'] = $this->annotationManager;
 		}
