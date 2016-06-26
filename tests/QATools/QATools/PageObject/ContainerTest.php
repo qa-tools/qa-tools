@@ -62,69 +62,34 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
 	public function testAnnotationManager()
 	{
-		$this->assertInstanceOf('\\mindplay\\annotations\\AnnotationManager', $this->container['annotation_manager']);
+		$this->assertInstanceOf(
+			'\\mindplay\\annotations\\AnnotationManager',
+			$this->container['annotation_manager']
+		);
 	}
 
 	public function testUrlFactory()
 	{
-		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Url\\UrlFactory', $this->container['url_factory']);
+		$this->assertInstanceOf(
+			'\\QATools\\QATools\\PageObject\\Url\\UrlFactory',
+			$this->container['url_factory']
+		);
 	}
 
 	public function testUrlNormalizer()
 	{
-		$this->container['config_options'] = array(
-			'base_url' => 'http://www.domain.com/',
-		);
-
-		/** @var Normalizer $url_normalizer */
-		$url_normalizer = $this->container['url_normalizer'];
-
-		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\Url\\Normalizer', $url_normalizer);
-
-		$page_url_annotation = new PageUrlAnnotation();
-		$page_url_annotation->url = '/relative';
-
-		$this->assertSame(
-			array(
-				'scheme' => 'http',
-				'host' => 'www.domain.com',
-				'path' => '/relative',
-				'query' => '',
-			),
-			$url_normalizer->normalize($page_url_annotation)
+		$this->assertInstanceOf(
+			'\\QATools\\QATools\\PageObject\\Url\\Normalizer',
+			$this->container['url_normalizer']
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionMessage None of the possible classes were found: \MatrixPage
-	 */
-	public function testPageLocatorDefaultOptions()
+	public function testPageLocator()
 	{
-		/** @var DefaultPageLocator $page_locator */
-		$page_locator = $this->container['page_locator'];
-
-		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\PageLocator\\DefaultPageLocator', $page_locator);
-
-		$page_locator->resolvePage('Matrix Page');
-	}
-
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionMessage None of the possible classes were found: \MatrixNS\MatrixPage
-	 */
-	public function testPageLocatorUserOptions()
-	{
-		$this->container['config_options'] = array(
-			'page_namespace_prefix' => 'MatrixNS\\',
+		$this->assertInstanceOf(
+			'\\QATools\\QATools\\PageObject\\PageLocator\\DefaultPageLocator',
+			$this->container['page_locator']
 		);
-
-		/** @var DefaultPageLocator $page_locator */
-		$page_locator = $this->container['page_locator'];
-
-		$this->assertInstanceOf('\\QATools\\QATools\\PageObject\\PageLocator\\DefaultPageLocator', $page_locator);
-
-		$page_locator->resolvePage('Matrix Page');
 	}
 
 	public function testPageUrlMatcherRegistry()
