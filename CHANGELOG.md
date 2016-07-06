@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ...
 
-## [1.1.0] - 2016-06-26
+## [1.2.0] - 2016-06-26
 ### Added
 - Support for dynamic method calls (processed via "__call" method) forwarding from proxy to the element.
 - Support for property read/write calls forwarding from proxy to the element, including dynamically declared properties (processed via "__set" and "__get" methods) by [@evangelion1204].
