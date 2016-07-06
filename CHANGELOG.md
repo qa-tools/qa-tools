@@ -12,6 +12,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ...
 
+## [1.2.1] - 2016-07-06
+### Fixed
+- Attempting to create `PageFactory` class instance with `Config` class as 2nd argument resulted in error.
+
 ## [1.2.0] - 2016-06-26
 ### Added
 - Support for dynamic method calls (processed via "__call" method) forwarding from proxy to the element.
@@ -111,7 +115,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Removed dependency on Selenium2.
 
-[Unreleased]: https://github.com/qa-tools/qa-tools/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/qa-tools/qa-tools/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/qa-tools/qa-tools/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/qa-tools/qa-tools/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/qa-tools/qa-tools/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/qa-tools/qa-tools/compare/v1.0.0...v1.0.1

@@ -114,6 +114,30 @@ class PageFactoryTest extends TestCase
 		$this->assertInstanceOf($this->factoryClass, $factory);
 	}
 
+	public function testCreateFactoryWithContainer()
+	{
+		$factory = new $this->factoryClass($this->session, $this->container);
+
+		$this->assertInstanceOf($this->factoryClass, $factory);
+	}
+
+	public function testCreateFactoryWithConfig()
+	{
+		$config = new Config(array('base_url' => 'http://domain.tld'));
+		$factory = new $this->factoryClass($this->session, $config);
+
+		$this->assertInstanceOf($this->factoryClass, $factory);
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage The "$container_or_config" argument must be either Container or Config.
+	 */
+	public function testCreateFactoryError()
+	{
+		new $this->factoryClass($this->session, 'something else');
+	}
+
 	public function testCreateDecorator()
 	{
 		$this->assertInstanceOf($this->decoratorClass, $this->createDefaultDecorator());

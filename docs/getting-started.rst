@@ -32,7 +32,7 @@ The library can be optionally configured using following approach:
 
 .. literalinclude:: examples/config_base_url.php
    :linenos:
-   :emphasize-lines: 14-16
+   :emphasize-lines: 12-14,19-21
 
 Then created ``PageFactory`` class instance can be used to spawn ``Page`` class instances at will.
 

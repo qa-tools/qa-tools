@@ -14,6 +14,7 @@ namespace QATools\QATools\BEM;
 use QATools\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
 use QATools\QATools\BEM\ElementLocator\LocatorHelper;
 use QATools\QATools\BEM\PropertyDecorator\BEMPropertyDecorator;
+use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\ISearchContext;
@@ -37,15 +38,15 @@ class BEMPageFactory extends PageFactory
 	/**
 	 * Creates BEMPageFactory instance.
 	 *
-	 * @param Session        $session        Mink session.
-	 * @param Container|null $container      Dependency injection container.
-	 * @param LocatorHelper  $locator_helper Locator helper.
+	 * @param Session               $session             Mink session.
+	 * @param Container|Config|null $container_or_config Dependency injection container_or_config or Config.
+	 * @param LocatorHelper         $locator_helper      Locator helper.
 	 */
-	public function __construct(Session $session, Container $container = null, LocatorHelper $locator_helper = null)
+	public function __construct(Session $session, $container_or_config = null, LocatorHelper $locator_helper = null)
 	{
 		$this->annotationRegistry['bem'] = '\\QATools\\QATools\\BEM\\Annotation\\BEMAnnotation';
 
-		parent::__construct($session, $container);
+		parent::__construct($session, $container_or_config);
 
 		$this->_locatorHelper = isset($locator_helper) ? $locator_helper : new LocatorHelper();
 	}
