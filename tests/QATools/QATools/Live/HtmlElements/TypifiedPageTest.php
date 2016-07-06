@@ -11,10 +11,13 @@
 namespace tests\QATools\QATools\Live\HtmlElements;
 
 
-use tests\QATools\QATools\Live\AbstractLiveTestCase;
+use QATools\QATools\PageObject\Page;
+use QATools\QATools\PageObject\PageFactory;
+use tests\QATools\QATools\Live\AbstractLivePageTestCase;
+use tests\QATools\QATools\Live\HtmlElements\Pages\RelativePage;
 use tests\QATools\QATools\Live\HtmlElements\Pages\TypifiedElementPage;
 
-class TypifiedPageTest extends AbstractLiveTestCase
+class TypifiedPageTest extends AbstractLivePageTestCase
 {
 
 	protected function setUp()
@@ -108,6 +111,18 @@ class TypifiedPageTest extends AbstractLiveTestCase
 		$this->assertEquals('', $page->textInputs[0]->getText());
 		$this->assertEquals('', $page->textInputs[1]->getText());
 		$this->assertEquals('', $page->textInputs[2]->getText());
+	}
+
+	/**
+	 * Creates page with relative url.
+	 *
+	 * @param PageFactory $page_factory Page factory.
+	 *
+	 * @return Page
+	 */
+	protected function createRelativePage(PageFactory $page_factory)
+	{
+		return new RelativePage($page_factory);
 	}
 
 }

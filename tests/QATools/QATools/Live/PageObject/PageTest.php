@@ -12,10 +12,13 @@ namespace tests\QATools\QATools\Live\PageObject;
 
 
 use QATools\QATools\PageObject\Element\WebElement;
-use tests\QATools\QATools\Live\AbstractLiveTestCase;
+use QATools\QATools\PageObject\Page;
+use QATools\QATools\PageObject\PageFactory;
+use tests\QATools\QATools\Live\AbstractLivePageTestCase;
+use tests\QATools\QATools\Live\PageObject\Pages\RelativePage;
 use tests\QATools\QATools\Live\PageObject\Pages\WebElementPage;
 
-class PageTest extends AbstractLiveTestCase
+class PageTest extends AbstractLivePageTestCase
 {
 
 	protected function setUp()
@@ -140,6 +143,18 @@ class PageTest extends AbstractLiveTestCase
 		$page->linkAnchorTest->click();
 
 		$this->assertTrue($page->opened());
+	}
+
+	/**
+	 * Creates page with relative url.
+	 *
+	 * @param PageFactory $page_factory Page factory.
+	 *
+	 * @return Page
+	 */
+	protected function createRelativePage(PageFactory $page_factory)
+	{
+		return new RelativePage($page_factory);
 	}
 
 }

@@ -12,10 +12,12 @@ namespace QATools\QATools\PageObject;
 
 
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
+use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Config\IConfig;
 use QATools\QATools\PageObject\Element\IElementContainer;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use QATools\QATools\PageObject\PageLocator\IPageLocator;
+use QATools\QATools\PageObject\PageUrlMatcher\PageUrlMatcherRegistry;
 use QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecorator;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
 use QATools\QATools\PageObject\Url\IUrlFactory;
@@ -95,23 +97,53 @@ class PageFactory implements IPageFactory
 	/**
 	 * Creates PageFactory instance.
 	 *
-	 * @param Session        $session   Mink session.
-	 * @param Container|null $container Dependency injection container.
+	 * @param Session               $session             Mink session.
+	 * @param Container|Config|null $container_or_config Dependency injection container_or_config or Config.
+	 *
+	 * @throws \InvalidArgumentException When something else was given instead of container_or_config/config object.
 	 */
-	public function __construct(Session $session, Container $container = null)
+	public function __construct(Session $session, $container_or_config = null)
 	{
-		if ( !isset($container) ) {
-			$container = new Container();
+		if ( isset($container_or_config) ) {
+			if ( $container_or_config instanceof Config ) {
+				$container_or_config = $this->_createContainer($container_or_config);
+			}
+			elseif ( !($container_or_config instanceof Container) ) {
+				throw new \InvalidArgumentException(
+					'The "$container_or_config" argument must be either Container or Config.'
+				);
+			}
+		}
+		else {
+			$container_or_config = $this->_createContainer();
 		}
 
 		$this->_setSession($session);
-		$this->config = $container['config'];
+		$this->config = $container_or_config['config'];
 
-		$this->_setAnnotationManager($container['annotation_manager']);
-		$this->urlFactory = $container['url_factory'];
-		$this->urlNormalizer = $container['url_normalizer'];
-		$this->pageLocator = $container['page_locator'];
-		$this->pageUrlMatcherRegistry = $container['page_url_matcher_registry'];
+		$this->_setAnnotationManager($container_or_config['annotation_manager']);
+		$this->urlFactory = $container_or_config['url_factory'];
+		$this->urlNormalizer = $container_or_config['url_normalizer'];
+		$this->pageLocator = $container_or_config['page_locator'];
+		$this->pageUrlMatcherRegistry = $container_or_config['page_url_matcher_registry'];
+	}
+
+	/**
+	 * Creates container_or_config object.
+	 *
+	 * @param Config|null $config Config.
+	 *
+	 * @return Container
+	 */
+	private function _createContainer(Config $config = null)
+	{
+		$container = new Container();
+
+		if ( isset($config) ) {
+			$container['config'] = $config;
+		}
+
+		return $container;
 	}
 
 	/**
