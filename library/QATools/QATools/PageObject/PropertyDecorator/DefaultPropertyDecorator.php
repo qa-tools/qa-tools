@@ -80,7 +80,7 @@ class DefaultPropertyDecorator implements IPropertyDecorator
 
 		$locator = $this->locatorFactory->createLocator($property);
 
-		return $locator != null ? $this->doDecorate($property, $locator) : null;
+		return $locator !== null ? $this->doDecorate($property, $locator) : null;
 	}
 
 	/**
