@@ -25,7 +25,7 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 		$this->ignoreLocatorTests[] = 'testGetName';
 		$this->ignoreLocatorTests[] = 'testDefaultClassName';
 
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\ITypifiedElement';
 		}

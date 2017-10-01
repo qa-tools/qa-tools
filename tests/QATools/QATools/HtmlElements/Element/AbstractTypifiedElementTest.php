@@ -77,7 +77,7 @@ class AbstractTypifiedElementTest extends TestCase
 
 		$this->escaper = m::mock('Behat\\Mink\\Selector\\Xpath\\Escaper');
 
-		if ( is_null($this->elementClass) ) {
+		if ( $this->elementClass === null ) {
 			$this->elementClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementChild';
 		}
 

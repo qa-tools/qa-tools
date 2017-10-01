@@ -23,7 +23,7 @@ class BlockProxyTest extends AbstractProxyTestCase
 		$this->ignoreLocatorTests[] = 'testGetName';
 		$this->locatorClass = '\\QATools\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
 
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\BEM\\Proxy\\BlockProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\BEM\\Element\\IBlock';
 		}

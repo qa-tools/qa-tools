@@ -21,7 +21,7 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 
 	protected function setUp()
 	{
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementCollectionProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\TextInput';
 		}

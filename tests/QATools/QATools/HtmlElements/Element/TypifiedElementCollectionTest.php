@@ -30,7 +30,7 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 
 	protected function setUp()
 	{
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementCollectionChild';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\TextInput';
 		}

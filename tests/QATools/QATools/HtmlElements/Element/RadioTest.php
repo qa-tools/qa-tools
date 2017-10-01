@@ -19,7 +19,7 @@ class RadioTest extends LabeledElementTest
 
 	protected function setUp()
 	{
-		if ( is_null($this->elementClass) ) {
+		if ( $this->elementClass === null ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 

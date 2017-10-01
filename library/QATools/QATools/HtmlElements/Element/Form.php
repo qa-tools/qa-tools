@@ -100,7 +100,7 @@ class Form extends AbstractElementContainer
 				return FileInput::fromNodeElement($node_element, $this->getPageFactory());
 			}
 			else {
-				/*if ( is_null($input_type)
+				/*if ( $input_type === null
 					|| ($input_type == self::TEXT_INPUT)
 					|| ($input_type == self::PASSWORD_INPUT)
 				) {*/
