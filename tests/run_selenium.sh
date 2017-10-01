@@ -2,7 +2,7 @@
 
 set -e
 
-SELENIUM_BINARY="$DOWNLOADS_FOLDER/selenium_251.jar"
+SELENIUM_BINARY="$DOWNLOADS_FOLDER/selenium_360.jar"
 CHROME_DRIVER_ARCHIVE="$DOWNLOADS_FOLDER/chromedriver_linux64.zip"
 CHROME_DRIVER_BINARY="$DOWNLOADS_FOLDER/chromedriver"
 
@@ -14,7 +14,7 @@ fi
 
 if [ ! -e "$SELENIUM_BINARY" ]; then
 	echo "Downloading Selenium"
-	curl -L http://selenium-release.storage.googleapis.com/2.51/selenium-server-standalone-2.51.0.jar > "$SELENIUM_BINARY"
+	curl -L http://selenium-release.storage.googleapis.com/3.6/selenium-server-standalone-3.6.0.jar > "$SELENIUM_BINARY"
 fi
 
 echo "Running Selenium"
