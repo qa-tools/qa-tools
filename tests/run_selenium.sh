@@ -7,6 +7,14 @@ sh -e /etc/init.d/xvfb start
 sleep 4
 
 SELENIUM_BINARY="$DOWNLOADS_FOLDER/selenium_251.jar"
+CHROME_DRIVER_ARCHIVE="$DOWNLOADS_FOLDER/chromedriver_linux64.zip"
+CHROME_DRIVER_BINARY="$DOWNLOADS_FOLDER/chromedriver"
+
+if [ ! -e "$CHROME_DRIVER_BINARY" ]; then
+	echo "Downloading Chrome Driver"
+	curl -L https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip > "$CHROME_DRIVER_ARCHIVE"
+	unzip "$CHROME_DRIVER_ARCHIVE"
+fi
 
 if [ ! -e "$SELENIUM_BINARY" ]; then
 	echo "Downloading Selenium"
