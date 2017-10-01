@@ -21,7 +21,7 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 
 	protected function setUp()
 	{
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioGroup';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioButton';
 		}

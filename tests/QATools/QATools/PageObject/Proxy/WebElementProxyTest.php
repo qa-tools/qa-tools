@@ -19,7 +19,7 @@ class WebElementProxyTest extends AbstractProxyTestCase
 
 	protected function setUp()
 	{
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\IWebElement';
 		}

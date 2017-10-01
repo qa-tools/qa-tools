@@ -16,7 +16,7 @@ class ElementWithAttributeWildcardAcceptanceCriteriaTest extends AbstractTypifie
 
 	protected function setUp()
 	{
-		if ( is_null($this->elementClass) ) {
+		if ( $this->elementClass === null ) {
 			$this->elementClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\ElementWithAttributeWildcardAcceptanceCriteria';
 		}
 

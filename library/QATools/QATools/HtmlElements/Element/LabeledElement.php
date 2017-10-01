@@ -29,7 +29,7 @@ class LabeledElement extends AbstractTypifiedElement
 		$label = null;
 		$id = $this->getAttribute('id');
 
-		if ( !is_null($id) ) {
+		if ( $id !== null ) {
 			// Label with matching "for" attribute.
 			$escaped_id = $this->getXpathEscaper()->escapeLiteral($id);
 			$xpath_expressions = array(
@@ -39,12 +39,12 @@ class LabeledElement extends AbstractTypifiedElement
 			$label = $this->getWrappedElement()->find('xpath', '(' . implode(' | ', $xpath_expressions) . ')[1]');
 		}
 
-		if ( is_null($label) ) {
+		if ( $label === null ) {
 			// Label wrapped around checkbox.
 			$label = $this->getWrappedElement()->find('xpath', 'parent::label');
 		}
 
-		if ( is_null($label) ) {
+		if ( $label === null ) {
 			// Label right next to checkbox.
 			$label = $this->getWrappedElement()->find('xpath', 'following-sibling::*[1][self::label]');
 		}
@@ -61,7 +61,7 @@ class LabeledElement extends AbstractTypifiedElement
 	{
 		$label = $this->getLabel();
 
-		return is_null($label) ? null : $label->getText();
+		return $label === null ? null : $label->getText();
 	}
 
 	/**

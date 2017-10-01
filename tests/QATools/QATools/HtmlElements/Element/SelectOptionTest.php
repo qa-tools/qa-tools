@@ -29,7 +29,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 
 	protected function setUp()
 	{
-		if ( is_null($this->elementClass) ) {
+		if ( $this->elementClass === null ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\SelectOption';
 		}
 

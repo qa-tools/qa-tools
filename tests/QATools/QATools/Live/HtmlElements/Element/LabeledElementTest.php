@@ -32,7 +32,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 		$label_element = $this->createElement(array('id' => $id));
 		$label = $label_element->getLabel();
 
-		if ( is_null($label_text) ) {
+		if ( $label_text === null ) {
 			$this->assertNull($label, '->getLabel() haven\'t found label on a page');
 		}
 		else {

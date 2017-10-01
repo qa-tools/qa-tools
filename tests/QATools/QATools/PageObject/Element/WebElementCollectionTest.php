@@ -18,7 +18,7 @@ class WebElementCollectionTest extends AbstractElementCollectionTestCase
 
 	protected function setUp()
 	{
-		if ( is_null($this->collectionClass) ) {
+		if ( $this->collectionClass === null ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
 			$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
 		}
