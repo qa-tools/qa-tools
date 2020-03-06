@@ -2,10 +2,6 @@
 
 set -e
 
-echo "Starting XVFB"
-sh -e /etc/init.d/xvfb start
-sleep 4
-
 SELENIUM_BINARY="$DOWNLOADS_FOLDER/selenium_251.jar"
 CHROME_DRIVER_ARCHIVE="$DOWNLOADS_FOLDER/chromedriver_linux64.zip"
 CHROME_DRIVER_BINARY="$DOWNLOADS_FOLDER/chromedriver"

@@ -2,6 +2,9 @@ language: php
 
 sudo: false
 
+services:
+  - xvfb
+
 addons:
   chrome: stable
 
@@ -55,7 +58,6 @@ install:
 before_script:
     - sed -i -e "s,http://localhost,http://localhost:8000,g" phpunit.xml.dist
     - sed -i -e "s,firefox,chrome,g" phpunit.xml.dist
-    - export DISPLAY=:99.0
 
     - ./tests/run_selenium.sh
     - ./tests/install_webserver.sh
