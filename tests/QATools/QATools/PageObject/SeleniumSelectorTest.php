@@ -11,13 +11,16 @@
 namespace tests\QATools\QATools\PageObject;
 
 
-use Behat\Mink\Selector\SelectorsHandler;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\How;
 use QATools\QATools\PageObject\SeleniumSelector;
 
-class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
+class SeleniumSelectorTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Selenium Selector fixture.
@@ -36,11 +39,9 @@ class SeleniumSelectorTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testNotImplemented(array $locator)
 	{
-		$this->setExpectedException(
-			'QATools\\QATools\\PageObject\\Exception\\ElementException',
-			'Selector type "' . key($locator) . '" not yet implemented',
-			ElementException::TYPE_UNKNOWN_SELECTOR
-		);
+		$this->expectException('QATools\\QATools\\PageObject\\Exception\\ElementException');
+		$this->expectExceptionMessage('Selector type "' . key($locator) . '" not yet implemented');
+		$this->expectExceptionCode(ElementException::TYPE_UNKNOWN_SELECTOR);
 
 		$this->selector->translateToXPath($locator);
 	}

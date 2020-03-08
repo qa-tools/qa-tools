@@ -11,11 +11,15 @@
 namespace tests\QATools\QATools\BEM\ElementLocator;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
 use Mockery as m;
 
-class BEMElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
+class BEMElementLocatorFactoryTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	const PROPERTY_CLASS = '\\QATools\\QATools\\PageObject\\Property';
 

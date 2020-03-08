@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\HtmlElements\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\HtmlElements\Annotation\ElementNameAnnotation;
 
-class ElementNameAnnotationTest extends \PHPUnit_Framework_TestCase
+class ElementNameAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	public function testInitAnnotation()
 	{

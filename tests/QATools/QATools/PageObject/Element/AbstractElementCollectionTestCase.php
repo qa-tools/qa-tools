@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools\PageObject\Element;
 
 
+use PHPUnit\Framework\Error\Notice;
 use QATools\QATools\PageObject\Element\AbstractElementCollection;
 use Mockery as m;
 use Mockery\MockInterface;
@@ -75,7 +76,7 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 		try {
 			$this->assertNull($this->element[$new_count]);
 		}
-		catch ( \PHPUnit_Framework_Error_Notice $e ) {
+		catch ( Notice $e ) {
 			// Ignore notice.
 		}
 

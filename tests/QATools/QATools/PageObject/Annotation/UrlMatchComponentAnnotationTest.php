@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\PageObject\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\MatchUrlComponentAnnotation;
 
-class UrlMatchComponentAnnotationTest extends \PHPUnit_Framework_TestCase
+class UrlMatchComponentAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * @dataProvider initAnnotationDataProvider

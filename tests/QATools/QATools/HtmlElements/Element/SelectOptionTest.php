@@ -91,7 +91,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		}
 		else {
 			if ( !$checked ) {
-				$this->setExpectedException('\\QATools\\QATools\\HtmlElements\\Exception\\TypifiedElementException');
+				$this->expectException('\\QATools\\QATools\\HtmlElements\\Exception\\TypifiedElementException');
 			}
 
 			$this->webElement->shouldReceive('click')->never();

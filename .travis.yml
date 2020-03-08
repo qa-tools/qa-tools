@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 services:
   - xvfb
 
@@ -18,18 +16,18 @@ before_cache:
   - cp $HOME/.composer/composer.lock $HOME/.composer/cache/
 
 php:
-    - 5.4
-    - 5.5
     - 5.6
-    - hhvm
     - 7.0
     - 7.1
+    - 7.2
+    - 7.3
+    - 7.4
 
 env:
     global:
         - BUILD_TYPE=code
 
-matrix:
+jobs:
     include:
         - php: 5.6 # A PHP version needs to be selected even if we won't use it there
           env: BUILD_TYPE=doc # marker environment variable to make the build matrix more readable in the UI
@@ -40,20 +38,15 @@ matrix:
           before_script: []
           script: sphinx-build -nW -b html -d docs/build/doctrees docs docs/build/html
           after_script: []
-        - php: 5.3
-          dist: precise
 
 :before_install:
     - export DOWNLOADS_FOLDER=$HOME/downloads
-    - if [ -e "$HOME/.composer/cache/composer.json" ]; then mv $HOME/.composer/cache/composer.json $HOME/.composer/; fi;
-    - if [ -e "$HOME/.composer/cache/composer.lock" ]; then mv $HOME/.composer/cache/composer.lock $HOME/.composer/; fi;
 
 install:
-    - export PATH="$HOME/.composer/vendor/bin:$PATH"
-    - if [ ! -e "${DOWNLOADS_FOLDER}/ocular.phar" ]; then wget https://scrutinizer-ci.com/ocular.phar -O "${DOWNLOADS_FOLDER}/ocular.phar" -t 3; fi;
-    - composer global require "brianium/paratest:~0.7" "phpunit/php-code-coverage:<=3.3.9" --no-update
-    - composer global install --prefer-dist
     - composer install --prefer-dist
+    - if [ ! -e "${DOWNLOADS_FOLDER}/ocular.phar" ]; then wget https://scrutinizer-ci.com/ocular.phar -O "${DOWNLOADS_FOLDER}/ocular.phar" -t 3; fi;
+    - export PATH="$HOME/.composer/vendor/bin:$PATH"
+    - composer global require "phpunit/phpunit:<8.0" --prefer-dist
 
 before_script:
     - sed -i -e "s,http://localhost,http://localhost:8000,g" phpunit.xml.dist
@@ -65,11 +58,10 @@ before_script:
     - mkdir -p build/logs
 
 script:
-    - if [ "$TRAVIS_PHP_VERSION" = "7.0" -o "$TRAVIS_PHP_VERSION" == "hhvm" ]; then phpunit --coverage-clover build/logs/clover.xml; fi;
-    - if [ "$TRAVIS_PHP_VERSION" != "7.0" -a "$TRAVIS_PHP_VERSION" != "hhvm" ]; then paratest --coverage-clover build/logs/clover.xml; fi;
+    - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php "${DOWNLOADS_FOLDER}/ocular.phar" code-coverage:upload --format=php-clover build/logs/clover.xml; fi;
+    - php "${DOWNLOADS_FOLDER}/ocular.phar" code-coverage:upload --format=php-clover build/logs/clover.xml
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

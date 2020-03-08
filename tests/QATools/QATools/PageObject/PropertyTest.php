@@ -13,10 +13,14 @@ namespace tests\QATools\QATools\PageObject;
 
 use mindplay\annotations\standard\VarAnnotation;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Property;
 
-class PropertyTest extends \PHPUnit_Framework_TestCase
+class PropertyTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	const ANNOTATION_MANAGER_CLASS = '\\mindplay\\annotations\\AnnotationManager';
 

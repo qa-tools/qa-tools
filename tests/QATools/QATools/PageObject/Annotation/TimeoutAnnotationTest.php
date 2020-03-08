@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\PageObject\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\TimeoutAnnotation;
 
-class TimeoutAnnotationTest extends \PHPUnit_Framework_TestCase
+class TimeoutAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	public function testInitAnnotation()
 	{

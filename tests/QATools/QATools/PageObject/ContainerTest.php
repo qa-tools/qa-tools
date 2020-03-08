@@ -12,14 +12,18 @@ namespace tests\QATools\QATools\PageObject;
 
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
 use QATools\QATools\PageObject\Url\Normalizer;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Container.
