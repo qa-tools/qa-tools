@@ -137,7 +137,7 @@ class DefaultPageLocator implements IPageLocator
 
 		$message = sprintf(
 			'None of the possible classes were found: %s',
-			implode($possible_pages, ', ')
+			implode(', ', $possible_pages)
 		);
 
 		throw new PageFactoryException($message, PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND);

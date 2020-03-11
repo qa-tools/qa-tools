@@ -74,7 +74,8 @@ class BEMAnnotation extends Annotation
 	protected function getModificator()
 	{
 		if ( $this->modificator ) {
-			list($modificator_name, $modificator_value) = each($this->modificator);
+			$modificator_name = key($this->modificator);
+			$modificator_value = $this->modificator[$modificator_name];
 		}
 		else {
 			$modificator_name = $modificator_value = null;
