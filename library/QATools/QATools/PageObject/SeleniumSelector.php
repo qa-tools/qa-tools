@@ -66,8 +66,8 @@ class SeleniumSelector implements SelectorInterface
 			);
 		}
 
-		list ($selector, $locator) = each($locator);
-		$locator = trim($locator);
+		$selector = key($locator);
+		$locator = trim($locator[$selector]);
 
 		if ( $selector == How::CLASS_NAME ) {
 			$locator = $this->_xpathEscaper->escapeLiteral(' ' . $locator . ' ');
