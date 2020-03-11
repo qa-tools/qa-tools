@@ -50,7 +50,7 @@ class SeleniumSelectorTest extends TestCase
 	{
 		return array(
 			array(
-				array('what-the-heck' => ''),
+				array('not-implemented-selector' => ''),
 			),
 		);
 	}
