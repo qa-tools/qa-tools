@@ -2,7 +2,6 @@
 
 [![Join the chat at https://gitter.im/qa-tools/qa-tools](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/qa-tools/qa-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/qa-tools/qa-tools.svg?branch=master)](https://travis-ci.org/qa-tools/qa-tools)
-[![HHVM Status](http://hhvm.h4cc.de/badge/qa-tools/qa-tools.svg?style=flat)](http://hhvm.h4cc.de/package/qa-tools/qa-tools)
 [![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://docs.qa-tools.io/en/latest/)
 [![composer.lock](https://poser.pugx.org/qa-tools/qa-tools/composerlock)](https://packagist.org/packages/qa-tools/qa-tools)
 
