@@ -3,10 +3,14 @@
 namespace tests\QATools\QATools\PageObject\Exception;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Exception\MissingParametersException;
 
-class MissingParametersExceptionTest extends \PHPUnit_Framework_TestCase
+class MissingParametersExceptionTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	public function testCanConstruct()
 	{

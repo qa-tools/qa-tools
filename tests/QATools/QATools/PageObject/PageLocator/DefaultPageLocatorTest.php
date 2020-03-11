@@ -12,10 +12,14 @@ namespace tests\QATools\QATools\PageObject\PageLocator;
 
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
 
-class DefaultPageLocatorTest extends \PHPUnit_Framework_TestCase
+class DefaultPageLocatorTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Locator class.

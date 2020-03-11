@@ -14,10 +14,14 @@ namespace tests\QATools\QATools\Live;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\IPageFactory;
 
-abstract class AbstractLiveTestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractLiveTestCase extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Session manager.

@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\BEM\ElementLocator;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\BEM\ElementLocator\LocatorHelper;
 
-class LocatorHelperTest extends \PHPUnit_Framework_TestCase
+class LocatorHelperTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Locator helper.

@@ -12,10 +12,14 @@ namespace tests\QATools\QATools\PageObject\ElementLocator;
 
 
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 
-class DefaultElementLocatorFactoryTest extends \PHPUnit_Framework_TestCase
+class DefaultElementLocatorFactoryTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	const PROPERTY_CLASS = '\\QATools\\QATools\\PageObject\\Property';
 

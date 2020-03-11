@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\PageObject\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\MatchUrlRegexpAnnotation;
 
-class UrlMatchRegexpAnnotationTest extends \PHPUnit_Framework_TestCase
+class UrlMatchRegexpAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * @dataProvider initAnnotationDataProvider

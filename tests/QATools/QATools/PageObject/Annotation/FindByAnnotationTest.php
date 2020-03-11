@@ -11,10 +11,14 @@
 namespace tests\QATools\QATools\PageObject\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\FindByAnnotation;
 
-class FindByAnnotationTest extends \PHPUnit_Framework_TestCase
+class FindByAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * @dataProvider selectorDataProvider

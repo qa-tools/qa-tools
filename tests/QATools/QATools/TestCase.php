@@ -13,10 +13,13 @@ namespace tests\QATools\QATools;
 
 use Behat\Mink\Element\NodeElement;
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use QATools\QATools\PageObject\IPageFactory;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Session.

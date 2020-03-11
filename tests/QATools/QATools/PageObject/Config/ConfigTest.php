@@ -101,11 +101,9 @@ class ConfigTest extends TestCase
 	 */
 	public function testGetOptionWithFailure(array $options, $name)
 	{
-		$this->setExpectedException(
-			'QATools\\QATools\\PageObject\\Exception\\ConfigException',
-			'Option "' . $name . '" doesn\'t exist in configuration',
-			ConfigException::TYPE_NOT_FOUND
-		);
+		$this->expectException('QATools\\QATools\\PageObject\\Exception\\ConfigException');
+		$this->expectExceptionMessage('Option "' . $name . '" doesn\'t exist in configuration');
+		$this->expectExceptionCode(ConfigException::TYPE_NOT_FOUND);
 
 		$config = new Config($options);
 		$config->getOption($name);
@@ -116,11 +114,9 @@ class ConfigTest extends TestCase
 	 */
 	public function testSetOptionWithFailure(array $options, $name)
 	{
-		$this->setExpectedException(
-			'QATools\\QATools\\PageObject\\Exception\\ConfigException',
-			'Option "' . $name . '" doesn\'t exist in configuration',
-			ConfigException::TYPE_NOT_FOUND
-		);
+		$this->expectException('QATools\\QATools\\PageObject\\Exception\\ConfigException');
+		$this->expectExceptionMessage('Option "' . $name . '" doesn\'t exist in configuration');
+		$this->expectExceptionCode(ConfigException::TYPE_NOT_FOUND);
 
 		$config = new Config($options);
 		$config->setOption($name, 'x');

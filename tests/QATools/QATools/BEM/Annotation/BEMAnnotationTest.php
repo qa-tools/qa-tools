@@ -11,13 +11,17 @@
 namespace tests\QATools\QATools\BEM\Annotation;
 
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use QATools\QATools\BEM\Annotation\BEMAnnotation;
 use QATools\QATools\BEM\ElementLocator\LocatorHelper;
 use Mockery\MockInterface;
 use Mockery as m;
 
-class BEMAnnotationTest extends \PHPUnit_Framework_TestCase
+class BEMAnnotationTest extends TestCase
 {
+
+	use MockeryPHPUnitIntegration;
 
 	/**
 	 * Annotation.
