@@ -20,7 +20,10 @@ class SelectTest extends AbstractTypifiedElementTest
 
 	const SELECT_OPTION_CLASS = '\\QATools\\QATools\\HtmlElements\\Element\\SelectOption';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Select';
@@ -32,11 +35,11 @@ class SelectTest extends AbstractTypifiedElementTest
 
 		$this->expectedTagName = 'select';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
-	 * Occurs before element creation in setUp.
+	 * Occurs before element creation in setUpTest.
 	 *
 	 * @return void
 	 */
@@ -157,13 +160,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($selected_option1, $option);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_SELECTED
-	 * @expectedExceptionMessage No options are selected
-	 */
 	public function testGetFirstSelectedOptionError()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_SELECTED);
+		$this->expectExceptionMessage('No options are selected');
+
 		$this->expectDriverGetTagName('option');
 
 		/* @var $element Select */
@@ -186,13 +188,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectByText('TX', true));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Cannot locate option with text: TX
-	 */
 	public function testSelectByTextWithoutExactMatch()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Cannot locate option with text: TX');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptionsByText'));
 		$element->shouldReceive('getOptionsByText')->andReturn(array());
@@ -225,13 +226,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectByValue('TX'));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Cannot locate option with value: TX
-	 */
 	public function testSelectByValueWithoutExactMatch()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Cannot locate option with value: TX');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('getOptionsByValue'));
 		$element->shouldReceive('getOptionsByValue')->andReturn(array());
@@ -282,13 +282,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->selectAll());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
-	 * @expectedExceptionMessage You may only deselect all options of a multi-select
-	 */
 	public function testSelectAllNotIsMultiple()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT);
+		$this->expectExceptionMessage('You may only deselect all options of a multi-select');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('isMultiple'));
 		$element->shouldReceive('isMultiple')->once()->andReturn(false);
@@ -312,13 +311,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->setSelected(array(1, 2)));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
-	 * @expectedExceptionMessage You may only deselect all options of a multi-select
-	 */
 	public function testSetSelectedNotIsMultiple()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT);
+		$this->expectExceptionMessage('You may only deselect all options of a multi-select');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('isMultiple'));
 		$element->shouldReceive('isMultiple')->once()->andReturn(false);
@@ -339,13 +337,12 @@ class SelectTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->deselectAll());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT
-	 * @expectedExceptionMessage You may only deselect all options of a multi-select
-	 */
 	public function testDeselectAllNotIsMultiple()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_NOT_MULTISELECT);
+		$this->expectExceptionMessage('You may only deselect all options of a multi-select');
+
 		/* @var $element Select */
 		$element = $this->mockElement(array('isMultiple'));
 		$element->shouldReceive('isMultiple')->once()->andReturn(false);

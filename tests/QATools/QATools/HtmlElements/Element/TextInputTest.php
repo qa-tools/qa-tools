@@ -17,13 +17,16 @@ use QATools\QATools\HtmlElements\Element\TextInput;
 class TextInputTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\TextInput';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testClear()

@@ -17,9 +17,12 @@ use tests\QATools\QATools\PageObject\Fixture\Element\ElementContainerChild;
 class AbstractElementContainerTest extends WebElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->elementClass = '\\tests\\QATools\\QATools\\PageObject\\Fixture\\Element\\ElementContainerChild';
 

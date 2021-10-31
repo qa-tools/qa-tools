@@ -41,9 +41,12 @@ class BlockTest extends PartTestCase
 	 */
 	private $_elementLocator;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->partClass = '\\tests\\QATools\\QATools\\BEM\\Fixture\\Element\\BlockChild';
 

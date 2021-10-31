@@ -16,7 +16,10 @@ use QATools\QATools\HtmlElements\Element\Button;
 class ButtonTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Button';
@@ -27,7 +30,7 @@ class ButtonTest extends AbstractTypifiedElementTest
 		$this->ignoreExpectTypifiedNodeCheck[] = 'testAssertWrappedElementTagNotMatching';
 		$this->ignoreExpectTypifiedNodeCheck[] = 'testAssertWrappedElementAttributeNotMatching';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testClick()
@@ -37,13 +40,12 @@ class ButtonTest extends AbstractTypifiedElementTest
 		$this->assertSame($this->typifiedElement, $this->getElement()->click());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\TypifiedElementException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT
-	 * @expectedExceptionMessageRegExp /^Wrapped element "Mockery.*?" does not match "QATools\\QATools\\HtmlElements\\Element\\Button" criteria$/
-	 */
 	public function testAssertWrappedElementTagNotMatching()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\TypifiedElementException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT);
+		$this->expectExceptionMessageMatches('/^Wrapped element "Mockery.*?" does not match "QATools\\\QATools\\\HtmlElements\\\Element\\\Button" criteria$/');
+
 		$this->expectDriverGetTagName($this->expectedTagName . '_postfix');
 		$this->expectWebElementGetTagName($this->expectedTagName . '_postfix');
 
@@ -55,13 +57,12 @@ class ButtonTest extends AbstractTypifiedElementTest
 		$this->assertSame($this->webElement, $this->typifiedElement->getWrappedElement());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\TypifiedElementException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT
-	 * @expectedExceptionMessageRegExp /^Wrapped element "Mockery.*?" does not match "QATools\\QATools\\HtmlElements\\Element\\Button" criteria$/
-	 */
 	public function testAssertWrappedElementAttributeNotMatching()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\TypifiedElementException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\TypifiedElementException::TYPE_INCORRECT_WRAPPED_ELEMENT);
+		$this->expectExceptionMessageMatches('/^Wrapped element "Mockery.*?" does not match "QATools\\\QATools\\\HtmlElements\\\Element\\\Button" criteria$/');
+
 		$this->expectDriverGetTagName('input');
 		$this->expectWebElementGetTagName('input');
 

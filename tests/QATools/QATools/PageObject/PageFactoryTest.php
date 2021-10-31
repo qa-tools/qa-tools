@@ -79,9 +79,12 @@ class PageFactoryTest extends TestCase
 	 */
 	protected $container;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->container = new Container();
 
@@ -129,12 +132,11 @@ class PageFactoryTest extends TestCase
 		$this->assertInstanceOf($this->factoryClass, $factory);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage The "$container_or_config" argument must be either Container or Config.
-	 */
 	public function testCreateFactoryError()
 	{
+		$this->expectException('\InvalidArgumentException');
+		$this->expectExceptionMessage('The "$container_or_config" argument must be either Container or Config.');
+
 		new $this->factoryClass($this->session, 'something else');
 	}
 

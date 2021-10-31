@@ -32,10 +32,11 @@ class ContainerTest extends TestCase
 	 */
 	protected $container;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->container = new Container();
 	}
 

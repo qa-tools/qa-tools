@@ -19,14 +19,17 @@ class TypifiedElementCollectionProxyTest extends TypifiedElementProxyTest
 
 	const ELEMENT_CLASS = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementCollectionChild';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Proxy\\TypifiedElementCollectionProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\TextInput';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	protected function beforeSetUpFinish()

@@ -21,10 +21,13 @@ use tests\QATools\QATools\Live\PageObject\Pages\WebElementPage;
 class PageTest extends AbstractLivePageTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->pageFactoryClass = '\\QATools\\QATools\\PageObject\\PageFactory';
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testButton1LocatedById()

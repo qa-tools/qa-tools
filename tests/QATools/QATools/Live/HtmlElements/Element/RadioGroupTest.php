@@ -20,9 +20,12 @@ class RadioGroupTest extends TypifiedElementTestCase
 
 	const XPATH_RADIO_GROUP = "/descendant-or-self::*[@name = 'radio-group1']";
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioGroup';
 	}

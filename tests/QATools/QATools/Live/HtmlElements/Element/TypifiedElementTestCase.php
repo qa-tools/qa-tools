@@ -44,10 +44,13 @@ class TypifiedElementTestCase extends AbstractLiveTestCase
 	 */
 	protected $elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->pageFactoryClass = '\\QATools\\QATools\\HtmlElements\\TypifiedPageFactory';
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**

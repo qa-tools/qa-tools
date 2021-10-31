@@ -45,10 +45,11 @@ class PropertyTest extends TestCase
 	 */
 	protected $annotationManager;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 
 		$property = new \ReflectionProperty($this, 'propertyClass');

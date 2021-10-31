@@ -17,11 +17,14 @@ use QATools\QATools\PageObject\Annotation\MatchUrlComponentAnnotation;
 class ComponentPageUrlMatcherTest extends AbstractPageUrlMatcherTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->className = '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ComponentPageUrlMatcher';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testPriority()

@@ -20,7 +20,7 @@ class ElementContainerProxyTest extends TypifiedElementProxyTest
 	const ELEMENT_CLASS = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\ElementContainerChild';
 
 	/**
-	 * Occurs before "setUp" method is finished configuration jobs.
+	 * Occurs before "setUpTest" method is finished configuration jobs.
 	 *
 	 * @return void
 	 */

@@ -19,11 +19,14 @@ use tests\QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorT
 class TypifiedPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->decoratorClass = '\\QATools\\QATools\\HtmlElements\\PropertyDecorator\\TypifiedPropertyDecorator';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**

@@ -38,13 +38,16 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 	 */
 	private $_locatorHelper;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->searchContextClass = '\\QATools\\QATools\\BEM\\Element\\IBlock';
 		$this->locatorClass = '\\QATools\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
 		$this->_locatorHelper = m::mock('\\QATools\\QATools\\BEM\\ElementLocator\\LocatorHelper');
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
@@ -95,13 +98,12 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertCount(0, $this->locator->findAll());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND
-	 * @expectedExceptionMessage The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.
-	 */
 	public function testGetSelectorMultipleNotArrayOrCollection()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND);
+		$this->expectExceptionMessage('The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.');
+
 		$selector = array('xpath' => 'xpath1');
 
 		$this->expectBEMAnnotation(array($selector));
@@ -118,13 +120,13 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 
 	/**
 	 * @dataProvider getSelectorFailureDataProvider
-	 *
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
-	 * @expectedExceptionMessage BEM block/element must be specified as annotation
 	 */
 	public function testGetSelectorFailure($annotations)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED);
+		$this->expectExceptionMessage('BEM block/element must be specified as annotation');
+
 		$this->property->shouldReceive('__toString')->andReturn('OK');
 		$this->property->shouldReceive('getDataType');
 		$this->property->shouldReceive('getAnnotations')->with('@bem')->andReturn($annotations);

@@ -14,11 +14,12 @@ namespace tests\QATools\QATools\BEM\ElementLocator;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use QATools\QATools\BEM\ElementLocator\LocatorHelper;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class LocatorHelperTest extends TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException;
 
 	/**
 	 * Locator helper.
@@ -27,20 +28,20 @@ class LocatorHelperTest extends TestCase
 	 */
 	private $_locatorHelper;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->_locatorHelper = new LocatorHelper();
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
-	 * @expectedExceptionMessage BEM Block name cannot be empty
-	 */
 	public function testGetBlockLocatorWithoutName()
 	{
+		$this->expectException('\QATools\QATools\BEM\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED);
+		$this->expectExceptionMessage('BEM Block name cannot be empty');
+
 		$this->_locatorHelper->getBlockLocator('');
 	}
 
@@ -58,23 +59,21 @@ class LocatorHelperTest extends TestCase
 		$this->_assertLocatorClassName($locator, 'block-name_modificator-name_modificator-value');
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_ELEMENT_REQUIRED
-	 * @expectedExceptionMessage BEM element name cannot be empty
-	 */
 	public function testGetElementLocatorWithoutName()
 	{
+		$this->expectException('\QATools\QATools\BEM\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\BEM\Exception\ElementException::TYPE_ELEMENT_REQUIRED);
+		$this->expectExceptionMessage('BEM element name cannot be empty');
+
 		$this->_locatorHelper->getElementLocator('', 'block-name');
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\BEM\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED
-	 * @expectedExceptionMessage BEM block name cannot be empty
-	 */
 	public function testGetElementLocatorWithoutBlockName()
 	{
+		$this->expectException('\QATools\QATools\BEM\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\BEM\Exception\ElementException::TYPE_BLOCK_REQUIRED);
+		$this->expectExceptionMessage('BEM block name cannot be empty');
+
 		$this->_locatorHelper->getElementLocator('element-name', '');
 	}
 

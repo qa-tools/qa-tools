@@ -17,7 +17,10 @@ use Mockery as m;
 class FileInputTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\FileInput';
@@ -25,7 +28,7 @@ class FileInputTest extends AbstractTypifiedElementTest
 
 		$this->expectedAttributes = array('type' => 'file');
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
@@ -46,13 +49,12 @@ class FileInputTest extends AbstractTypifiedElementTest
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\FileInputException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\FileInputException::TYPE_FILE_NOT_FOUND
-	 * @expectedExceptionMessage File "/non-existing-file.txt" doesn't exist
-	 */
 	public function testSetNonExistingFileToUpload()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\FileInputException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\FileInputException::TYPE_FILE_NOT_FOUND);
+		$this->expectExceptionMessage('File "/non-existing-file.txt" doesn\'t exist');
+
 		$this->getElement()->setFileToUpload('/non-existing-file.txt');
 	}
 

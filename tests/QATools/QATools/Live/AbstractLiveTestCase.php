@@ -54,12 +54,11 @@ abstract class AbstractLiveTestCase extends TestCase
 	/**
 	 * Creates one session per test case.
 	 *
+	 * @beforeClass
 	 * @return void
 	 */
-	public static function setUpBeforeClass()
+	public static function setUpTestBeforeClass()
 	{
-		parent::setUpBeforeClass();
-
 		if ( !is_object(self::$mink) ) {
 			self::$mink = new Mink();
 
@@ -74,12 +73,11 @@ abstract class AbstractLiveTestCase extends TestCase
 	/**
 	 * Prepare session and page factory for the tests.
 	 *
+	 * @before
 	 * @return void
 	 */
-	protected function setUp()
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->session = self::$mink->getSession();
 		$this->pageFactory = $this->createFactory();
 	}
@@ -127,12 +125,11 @@ abstract class AbstractLiveTestCase extends TestCase
 	/**
 	 * Stops all sessions, that might have started.
 	 *
+	 * @after
 	 * @return void
 	 */
-	protected function tearDown()
+	protected function tearDownTest()
 	{
-		parent::tearDown();
-
 		if ( $this->session !== null ) {
 			$this->session->reset();
 		}
@@ -141,12 +138,11 @@ abstract class AbstractLiveTestCase extends TestCase
 	/**
 	 * Stops all sessions, that might have started.
 	 *
+	 * @afterClass
 	 * @return void
 	 */
-	public static function tearDownAfterClass()
+	public static function tearDownTestAfterClass()
 	{
-		parent::tearDownAfterClass();
-
 		self::$mink->stopSessions();
 	}
 

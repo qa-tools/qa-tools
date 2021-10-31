@@ -50,9 +50,12 @@ class PageTest extends TestCase
 	 */
 	protected $urlBuilderFactory;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->pageFactory->shouldReceive('initPage')->once()->andReturn($this->pageFactory);
 		$this->pageFactory->shouldReceive('initElements')->once()->andReturn($this->pageFactory);
@@ -87,13 +90,12 @@ class PageTest extends TestCase
 		$this->assertSame($this->page, $this->page->open());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL
-	 * @expectedExceptionMessage Page url not specified
-	 */
 	public function testOpenIncorrectUrlBuilder()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageException::TYPE_EMPTY_URL);
+		$this->expectExceptionMessage('Page url not specified');
+
 		$url_builder = $this->createUrlBuilderWithReturn();
 
 		$this->page->setUrlBuilder($url_builder);
@@ -101,13 +103,12 @@ class PageTest extends TestCase
 		$this->page->open();
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageException::TYPE_MISSING_URL_BUILDER
-	 * @expectedExceptionMessage The url builder of a page not set, have you used @page-url annotation?
-	 */
 	public function testOpenMissingUrlBuilder()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageException::TYPE_MISSING_URL_BUILDER);
+		$this->expectExceptionMessage('The url builder of a page not set, have you used @page-url annotation?');
+
 		$this->page->open();
 	}
 

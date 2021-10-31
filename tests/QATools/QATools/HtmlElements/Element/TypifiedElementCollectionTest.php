@@ -28,7 +28,10 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 	 */
 	protected $webElement;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementCollectionChild';
@@ -38,7 +41,7 @@ class TypifiedElementCollectionTest extends AbstractElementCollectionTestCase
 		$this->webElement = m::mock(self::WEB_ELEMENT_CLASS);
 		$this->webElement->shouldReceive('getSession')->withNoArgs()->andReturn($this->session);
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testSetName()

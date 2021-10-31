@@ -19,14 +19,17 @@ use Mockery\MockInterface;
 class RadioGroupTest extends TypifiedElementCollectionTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioGroup';
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioButton';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
@@ -58,13 +61,12 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertTrue($this->mockCollection(array(), array($radio))->hasSelectedButton());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_SELECTED
-	 * @expectedExceptionMessage No selected button
-	 */
 	public function testGetSelectedButtonNotFound()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\RadioGroupException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_SELECTED);
+		$this->expectExceptionMessage('No selected button');
+
 		$this->mockCollection()->getSelectedButton();
 	}
 
@@ -76,13 +78,12 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertSame($radio, $this->mockCollection(array(), array($radio))->getSelectedButton());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Cannot locate radio button with label text containing: ANY
-	 */
 	public function testSelectButtonByLabelTextNotFound()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\RadioGroupException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Cannot locate radio button with label text containing: ANY');
+
 		$this->mockCollection()->selectButtonByLabelText('ANY');
 	}
 
@@ -96,13 +97,12 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertSame($element, $element->selectButtonByLabelText('LE T'));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Cannot locate radio button with value: ANY
-	 */
 	public function testSelectButtonByValueNotFound()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\RadioGroupException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Cannot locate radio button with value: ANY');
+
 		$this->mockCollection()->selectButtonByValue('ANY');
 	}
 
@@ -116,13 +116,12 @@ class RadioGroupTest extends TypifiedElementCollectionTest
 		$this->assertSame($element, $element->selectButtonByValue('V1'));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\RadioGroupException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Cannot locate radio button with index: 100
-	 */
 	public function testSelectButtonByIndexNotFound()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\RadioGroupException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\RadioGroupException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Cannot locate radio button with index: 100');
+
 		$this->mockCollection()->selectButtonByIndex(100);
 	}
 

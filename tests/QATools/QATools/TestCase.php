@@ -15,11 +15,13 @@ use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use QATools\QATools\PageObject\IPageFactory;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException, ExpectExceptionMessageMatches;
 
 	/**
 	 * Session.
@@ -49,10 +51,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
 	 */
 	protected $pageFactory;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$handler = m::mock('\\Behat\\Mink\\Selector\\SelectorsHandler');
 		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH'))->andReturn('XPATH');
 		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH_ROOT'))->andReturn('/XPATH');

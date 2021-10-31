@@ -17,11 +17,14 @@ use QATools\QATools\PageObject\Annotation\MatchUrlRegexpAnnotation;
 class RegexpPageUrlMatcherTest extends AbstractPageUrlMatcherTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->className = '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\RegexpPageUrlMatcher';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testPriority()

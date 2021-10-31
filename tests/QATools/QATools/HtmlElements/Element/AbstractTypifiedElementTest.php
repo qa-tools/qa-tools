@@ -44,7 +44,7 @@ class AbstractTypifiedElementTest extends TestCase
 	protected $typifiedElement;
 
 	/**
-	 * List of tests where not to mock getTagName in setUp.
+	 * List of tests where not to mock getTagName in setUpTest.
 	 *
 	 * @var array List of tests.
 	 */
@@ -71,9 +71,12 @@ class AbstractTypifiedElementTest extends TestCase
 	 */
 	protected $escaper;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->escaper = m::mock('Behat\\Mink\\Selector\\Xpath\\Escaper');
 
@@ -101,7 +104,7 @@ class AbstractTypifiedElementTest extends TestCase
 	}
 
 	/**
-	 * Occurs before element creation in setUp.
+	 * Occurs before element creation in setUpTest.
 	 *
 	 * @return void
 	 */

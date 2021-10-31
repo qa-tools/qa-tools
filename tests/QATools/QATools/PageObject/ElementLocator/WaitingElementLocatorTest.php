@@ -20,11 +20,14 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 
 	const TIMEOUT = 5;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->locatorClass = '\\QATools\\QATools\\PageObject\\ElementLocator\\WaitingElementLocator';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
@@ -58,13 +61,12 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 		$this->assertSame($node_element, $found_elements[0]);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
-	 * @expectedExceptionMessage @find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock
-	 */
 	public function testGetSelectorFailureWithTimeout()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED);
+		$this->expectExceptionMessage('@find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock');
+
 		$this->property->shouldReceive('__toString')->andReturn('OK');
 		$this->property->shouldReceive('getDataType')->andReturn('PageClass');
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn(array());

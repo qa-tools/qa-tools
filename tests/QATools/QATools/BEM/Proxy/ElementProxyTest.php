@@ -18,7 +18,10 @@ use tests\QATools\QATools\PageObject\Proxy\AbstractProxyTestCase;
 class ElementProxyTest extends AbstractProxyTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
 		$this->locatorClass = '\\QATools\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
@@ -28,7 +31,7 @@ class ElementProxyTest extends AbstractProxyTestCase
 			$this->collectionElementClass = '\\QATools\\QATools\\BEM\\Element\\IElement';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testDefaultClassName()

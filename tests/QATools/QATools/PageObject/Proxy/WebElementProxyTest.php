@@ -17,14 +17,17 @@ use QATools\QATools\PageObject\Proxy\WebElementProxy;
 class WebElementProxyTest extends AbstractProxyTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\WebElementProxy';
 			$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\IWebElement';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testDefaultClassName()

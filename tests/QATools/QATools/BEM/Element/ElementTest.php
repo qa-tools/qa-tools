@@ -26,9 +26,12 @@ class ElementTest extends PartTestCase
 	 */
 	private $_webElement;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->partClass = '\\QATools\\QATools\\BEM\\Element\\Element';
 		$this->_webElement = m::mock('\\QATools\\QATools\\PageObject\\Element\\WebElement');

@@ -71,9 +71,12 @@ class DefaultPropertyDecoratorTest extends TestCase
 	 */
 	protected $decorator;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->property = m::mock('\\QATools\\QATools\\PageObject\\Property');
 		$this->locator = m::mock($this->locatorClass);
@@ -122,13 +125,12 @@ class DefaultPropertyDecoratorTest extends TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_UNKNOWN_CLASS
-	 * @expectedExceptionMessage "PropertyName" element not recognised. "\QATools\QATools\PageObject\MissingClass" class not found
-	 */
 	public function testNotExistentClassPreventsDecoration()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageFactoryException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_UNKNOWN_CLASS);
+		$this->expectExceptionMessage('"PropertyName" element not recognised. "\QATools\QATools\PageObject\MissingClass" class not found');
+
 		$this->property->shouldReceive('__toString')->andReturn('PropertyName');
 		$this->property->shouldReceive('isSimpleDataType')->andReturn(false);
 		$this->property->shouldReceive('getDataType')->andReturn('\\QATools\\QATools\\PageObject\\MissingClass');

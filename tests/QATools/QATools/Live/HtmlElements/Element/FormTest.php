@@ -16,9 +16,12 @@ use QATools\QATools\HtmlElements\Element\Form;
 class FormTest extends TypifiedElementTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Form';
 	}

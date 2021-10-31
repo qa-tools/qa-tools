@@ -100,13 +100,12 @@ class WebElementTest extends TestCase
 		$this->assertGreaterThanOrEqual(1, microtime(true) - $start);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionMessage "missingMethod" method is not available on the Behat\Mink\Element\NodeElement
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
-	 */
 	public function testNonExistingMethodForwardingError()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionMessage('"missingMethod" method is not available on the Behat\Mink\Element\NodeElement');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD);
+
 		$this->createElement()->missingMethod();
 	}
 

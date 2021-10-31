@@ -33,11 +33,14 @@ abstract class AbstractPageUrlMatcherTestCase extends TestCase
 	 */
 	protected $pageUrlMatcher;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->pageUrlMatcher = new $this->className();
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	abstract public function testPriority();

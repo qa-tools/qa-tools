@@ -27,7 +27,10 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 	 */
 	protected $select;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\SelectOption';
@@ -36,7 +39,7 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->select = m::mock('\\QATools\\QATools\\HtmlElements\\Element\\Select');
 		$this->expectedTagName = 'option';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
@@ -57,13 +60,12 @@ class SelectOptionTest extends AbstractTypifiedElementTest
 		$this->assertSame($element, $element->select(true));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\SelectException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\SelectException::TYPE_UNBOUND_OPTION
-	 * @expectedExceptionMessage No SELECT element association defined
-	 */
 	public function testSelectException()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\SelectException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\SelectException::TYPE_UNBOUND_OPTION);
+		$this->expectExceptionMessage('No SELECT element association defined');
+
 		$this->webElement->shouldReceive('isSelected')->once()->andReturn(false);
 
 		/** @var SelectOption $option */
