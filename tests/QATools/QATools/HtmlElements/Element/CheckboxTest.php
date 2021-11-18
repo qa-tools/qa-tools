@@ -17,7 +17,10 @@ use Mockery as m;
 class CheckboxTest extends LabeledElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Checkbox';
@@ -25,7 +28,7 @@ class CheckboxTest extends LabeledElementTest
 
 		$this->expectedAttributes = array('type' => 'checkbox');
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**

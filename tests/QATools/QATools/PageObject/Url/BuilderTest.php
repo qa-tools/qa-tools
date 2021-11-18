@@ -43,13 +43,12 @@ class BuilderTest extends TestCase
 		$this->assertEquals($normalized_components['port'], $builder->getPort());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
-	 * @expectedExceptionMessage No base url specified
-	 */
 	public function testConstructorMissingProtocol()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\UrlException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL);
+		$this->expectExceptionMessage('No base url specified');
+
 		$normalized_components = array(
 			'scheme' => '',
 			'host' => 'domain.tld',
@@ -61,13 +60,12 @@ class BuilderTest extends TestCase
 		new Builder($normalized_components);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
-	 * @expectedExceptionMessage No base url specified
-	 */
 	public function testConstructorMissingHost()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\UrlException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL);
+		$this->expectExceptionMessage('No base url specified');
+
 		$normalized_components = array(
 			'scheme' => 'http',
 			'host' => '',
@@ -79,13 +77,12 @@ class BuilderTest extends TestCase
 		new Builder($normalized_components);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\UrlException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL
-	 * @expectedExceptionMessage No base url specified
-	 */
 	public function testConstructorEmptyPath()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\UrlException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\UrlException::TYPE_INVALID_URL);
+		$this->expectExceptionMessage('No base url specified');
+
 		$normalized_components = array(
 			'scheme' => 'http',
 			'host' => 'domain.tld',
@@ -253,11 +250,12 @@ class BuilderTest extends TestCase
 
 	/**
 	 * @dataProvider buildExceptionDataProvider
-	 * @expectedException \QATools\QATools\PageObject\Exception\MissingParametersException
-	 * @expectedExceptionMessage No parameters for "i_do_not_exist" masks given.
 	 */
 	public function testBuildParamException($normalized_components, array $params)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\MissingParametersException');
+		$this->expectExceptionMessage('No parameters for "i_do_not_exist" masks given.');
+
 		$url_builder = new Builder($normalized_components);
 		$url_builder->build($params);
 	}

@@ -17,11 +17,14 @@ use QATools\QATools\PageObject\Annotation\MatchUrlExactAnnotation;
 class ExactPageUrlMatcherTest extends AbstractPageUrlMatcherTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->className = '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\ExactPageUrlMatcher';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testPriority()

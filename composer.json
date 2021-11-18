@@ -30,7 +30,7 @@
 		"aik099/coding-standard": "dev-master",
 		"behat/mink-selenium2-driver": "~1.2",
 		"mockery/mockery": "~1.1",
-		"symfony/phpunit-bridge": "^5.0"
+		"yoast/phpunit-polyfills": "^1.0"
 	},
 
 	"suggest": {

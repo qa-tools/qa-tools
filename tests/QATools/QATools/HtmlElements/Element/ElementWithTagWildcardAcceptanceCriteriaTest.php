@@ -14,7 +14,10 @@ namespace tests\QATools\QATools\HtmlElements\Element;
 class ElementWithTagWildcardAcceptanceCriteriaTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\ElementWithTagWildcardAcceptanceCriteria';
@@ -22,7 +25,7 @@ class ElementWithTagWildcardAcceptanceCriteriaTest extends AbstractTypifiedEleme
 
 		$this->expectedTagName = 'button';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 }

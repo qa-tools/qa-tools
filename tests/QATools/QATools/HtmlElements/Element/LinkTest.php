@@ -16,13 +16,16 @@ use QATools\QATools\HtmlElements\Element\Link;
 class LinkTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Link';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testGetUrl()

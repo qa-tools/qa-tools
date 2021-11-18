@@ -18,6 +18,7 @@ use tests\QATools\QATools\TestCase;
 
 class PageUrlMatcherRegistryTest extends TestCase
 {
+
 	const ANNOTATION_MANAGER_CLASS = '\\mindplay\\annotations\\AnnotationManager';
 
 	const MATCHER_INTERFACE = '\\QATools\\QATools\\PageObject\\PageUrlMatcher\\IPageUrlMatcher';
@@ -43,9 +44,12 @@ class PageUrlMatcherRegistryTest extends TestCase
 	 */
 	protected $page;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->pageUrlMatcherRegistry = new PageUrlMatcherRegistry($this->annotationManager);
@@ -62,15 +66,15 @@ class PageUrlMatcherRegistryTest extends TestCase
 	}
 
 	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageUrlMatcherException
-	 * @expectedExceptionMessage The page url matcher with "1" priority is already registered.
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageUrlMatcherException::TYPE_DUPLICATE_PRIORITY
-	 *
 	 * @return void
 	 * @throws \QATools\QATools\PageObject\Exception\PageUrlMatcherException
 	 */
 	public function testUniqueMatcherPriorityChecked()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageUrlMatcherException');
+		$this->expectExceptionMessage('The page url matcher with "1" priority is already registered.');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageUrlMatcherException::TYPE_DUPLICATE_PRIORITY);
+
 		$matcher1 = m::mock(self::MATCHER_INTERFACE);
 		$matcher1->shouldReceive('getPriority')->andReturn(1);
 		$matcher1->shouldReceive('getAnnotationName')->andReturn('a');
@@ -133,13 +137,12 @@ class PageUrlMatcherRegistryTest extends TestCase
 		$this->assertTrue($this->pageUrlMatcherRegistry->match('/', $this->page));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageUrlMatcherException
-	 * @expectedExceptionMessage The "@one" annotation is not valid.
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageUrlMatcherException::TYPE_INVALID_ANNOTATION
-	 */
 	public function testInvalidAnnotations()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageUrlMatcherException');
+		$this->expectExceptionMessage('The "@one" annotation is not valid.');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageUrlMatcherException::TYPE_INVALID_ANNOTATION);
+
 		$annotation_class = '\\QATools\\QATools\\PageObject\\Annotation\\IMatchUrlAnnotation';
 		$annotation = m::mock($annotation_class);
 		$annotation->shouldReceive('isValid')->andReturn(false);

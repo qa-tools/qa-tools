@@ -16,11 +16,12 @@ use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\How;
 use QATools\QATools\PageObject\SeleniumSelector;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class SeleniumSelectorTest extends TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException;
 
 	/**
 	 * Selenium Selector fixture.
@@ -29,7 +30,10 @@ class SeleniumSelectorTest extends TestCase
 	 */
 	protected $selector;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->selector = new SeleniumSelector();
 	}
@@ -150,13 +154,14 @@ class SeleniumSelectorTest extends TestCase
 	/**
 	 * Testing incorrect locators.
 	 *
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_INCORRECT_SELECTOR
-	 * @expectedExceptionMessage Incorrect Selenium selector format
 	 * @dataProvider incorrectDataProvider
 	 */
 	public function testIncorrect($locator)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_INCORRECT_SELECTOR);
+		$this->expectExceptionMessage('Incorrect Selenium selector format');
+
 		$this->selector->translateToXPath($locator);
 	}
 

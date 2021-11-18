@@ -15,11 +15,13 @@ use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectExceptionMessageMatches;
 
 class DefaultPageLocatorTest extends TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException, ExpectExceptionMessageMatches;
 
 	/**
 	 * Locator class.
@@ -28,23 +30,21 @@ class DefaultPageLocatorTest extends TestCase
 	 */
 	protected $locatorClass = '\\QATools\\QATools\\PageObject\\PageLocator\\DefaultPageLocator';
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_MISSING_PREFIXES
-	 * @expectedExceptionMessage No namespace prefixes passed
-	 */
 	public function testEmptyPrefix()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageFactoryException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_MISSING_PREFIXES);
+		$this->expectExceptionMessage('No namespace prefixes passed');
+
 		new $this->locatorClass(array());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_NAME_MISSING
-	 * @expectedExceptionMessage No page name given
-	 */
 	public function testEmptyPageName()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageFactoryException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_NAME_MISSING);
+		$this->expectExceptionMessage('No page name given');
+
 		/** @var DefaultPageLocator $locator */
 		$locator = new $this->locatorClass(array('\\'));
 
@@ -53,13 +53,13 @@ class DefaultPageLocatorTest extends TestCase
 
 	/**
 	 * @dataProvider invalidPageClassNamesDataProvider
-	 *
-	 * @expectedException \QATools\QATools\PageObject\Exception\PageFactoryException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND
-	 * @expectedExceptionMessageRegExp /^None of the possible classes were found: (.+)$/
 	 */
 	public function testResolvePageFailure($prefixes, $class_name)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\PageFactoryException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\PageFactoryException::TYPE_PAGE_CLASS_NOT_FOUND);
+		$this->expectExceptionMessageMatches('/^None of the possible classes were found: (.+)$/');
+
 		/** @var DefaultPageLocator $locator */
 		$locator = new $this->locatorClass($prefixes);
 

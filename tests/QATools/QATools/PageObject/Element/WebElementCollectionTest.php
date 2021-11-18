@@ -16,14 +16,17 @@ use Mockery as m;
 class WebElementCollectionTest extends AbstractElementCollectionTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Element\\WebElementCollection';
 			$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 }

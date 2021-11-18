@@ -18,9 +18,12 @@ class SelectTest extends TypifiedElementTestCase
 
 	const SELECT_OPTION_CLASS = '\\QATools\\QATools\\HtmlElements\\Element\\SelectOption';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Select';
 	}

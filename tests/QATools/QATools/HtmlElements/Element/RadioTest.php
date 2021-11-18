@@ -17,7 +17,10 @@ use QATools\QATools\HtmlElements\Element\RadioButton;
 class RadioTest extends LabeledElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\RadioButton';
@@ -25,7 +28,7 @@ class RadioTest extends LabeledElementTest
 
 		$this->expectedAttributes = array('type' => 'radio');
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testSelect()

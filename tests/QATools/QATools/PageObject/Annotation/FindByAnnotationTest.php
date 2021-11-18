@@ -14,11 +14,12 @@ namespace tests\QATools\QATools\PageObject\Annotation;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use QATools\QATools\PageObject\Annotation\FindByAnnotation;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class FindByAnnotationTest extends TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException;
 
 	/**
 	 * @dataProvider selectorDataProvider
@@ -63,24 +64,22 @@ class FindByAnnotationTest extends TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage FindBy annotation requires one of 'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath', 'label' or both 'how' and 'using' parameters specified
-	 */
 	public function testUnknownDirectSelector()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage("FindBy annotation requires one of 'className', 'css', 'id', 'linkText', 'name', 'partialLinkText', 'tagName', 'xpath', 'label' or both 'how' and 'using' parameters specified");
+
 		$annotation = new FindByAnnotation();
 		$annotation->getSelector();
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage FindBy annotation expects 'how' to be one of \QATools\QATools\PageObject\How class constants
-	 */
 	public function testUnknownHowSelector()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage("FindBy annotation expects 'how' to be one of \QATools\QATools\PageObject\How class constants");
+
 		$annotation = new FindByAnnotation();
 		$annotation->how = 'wrong';
 		$annotation->using = 'test';

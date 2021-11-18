@@ -50,17 +50,20 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		'testSetName', 'testFromNodeElements', 'testInternalPointerPointingOnFirstElement',
 	);
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->collectionClass) ) {
 			$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\AbstractProxy';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
-	 * Occurs before "setUp" method is finished configuration jobs.
+	 * Occurs before "setUpTest" method is finished configuration jobs.
 	 *
 	 * @return void
 	 */
@@ -112,13 +115,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertSame($this->element->getObject(), $this->element->getObject());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementNotFoundException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage No elements found by selector: OK
-	 */
 	public function testGetObjectEmptyLocator()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementNotFoundException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('No elements found by selector: OK');
+
 		$this->locator->shouldReceive('findAll')->once()->andReturn(null);
 		$this->locator->shouldReceive('__toString')->once()->andReturn('OK');
 
@@ -130,13 +132,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('XPATH', $this->element->getXpath());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD
-	 * @expectedExceptionMessage "nonExistingMethod" method is not available on the
-	 */
 	public function testMethodForwardingFailure()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_METHOD);
+		$this->expectExceptionMessage('"nonExistingMethod" method is not available on the');
+
 		$this->element->nonExistingMethod();
 	}
 
@@ -145,21 +146,19 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('OK', $this->element->dynamicMethod());
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage The exception.
-	 */
 	public function testExceptionalMethodForwarding()
 	{
+		$this->expectException('\RuntimeException');
+		$this->expectExceptionMessage('The exception.');
+
 		$this->element->exceptionalMethod();
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage The exception.
-	 */
 	public function testDynamicExceptionalMethodForwarding()
 	{
+		$this->expectException('\RuntimeException');
+		$this->expectExceptionMessage('The exception.');
+
 		$this->element->dynamicExceptionalMethod();
 	}
 
@@ -168,13 +167,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('value', $this->element->existingProperty);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY
-	 * @expectedExceptionMessage "nonExistingProperty" property is not available on the
-	 */
 	public function testPropertyReadForwardingFailure()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY);
+		$this->expectExceptionMessage('"nonExistingProperty" property is not available on the');
+
 		$this->element->nonExistingProperty;
 	}
 
@@ -183,12 +181,11 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('value', $this->element->dynamicProperty);
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage The exception.
-	 */
 	public function testDynamicExceptionalPropertyReadForwarding()
 	{
+		$this->expectException('\RuntimeException');
+		$this->expectExceptionMessage('The exception.');
+
 		$this->element->dynamicExceptionalProperty;
 	}
 
@@ -199,13 +196,12 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('new_value', $this->element->existingProperty);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY
-	 * @expectedExceptionMessage "nonExistingProperty" property is not available on the
-	 */
 	public function testPropertyWriteForwardingFailure()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_UNKNOWN_PROPERTY);
+		$this->expectExceptionMessage('"nonExistingProperty" property is not available on the');
+
 		$this->element->nonExistingProperty = 'new_value';
 	}
 
@@ -216,12 +212,11 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 		$this->assertEquals('new_value', $this->element->dynamicProperty);
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage The exception.
-	 */
 	public function testDynamicExceptionalPropertyWriteForwarding()
 	{
+		$this->expectException('\RuntimeException');
+		$this->expectExceptionMessage('The exception.');
+
 		$this->element->dynamicExceptionalProperty = 'new_value';
 	}
 

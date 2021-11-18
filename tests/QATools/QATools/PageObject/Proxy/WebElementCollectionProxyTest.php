@@ -17,12 +17,15 @@ use Mockery as m;
 class WebElementCollectionProxyTest extends WebElementProxyTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->collectionClass = '\\QATools\\QATools\\PageObject\\Proxy\\WebElementCollectionProxy';
 		$this->collectionElementClass = '\\QATools\\QATools\\PageObject\\Element\\WebElement';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testDefaultClassName()

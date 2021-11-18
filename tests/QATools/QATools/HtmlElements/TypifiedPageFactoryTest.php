@@ -24,13 +24,16 @@ class TypifiedPageFactoryTest extends PageFactoryTest
 	 */
 	protected $typifiedProperty;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->factoryClass = '\\QATools\\QATools\\HtmlElements\\TypifiedPageFactory';
 		$this->pageClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Page\\TypifiedPageChild';
 		$this->decoratorClass = '\\QATools\\QATools\\HtmlElements\\PropertyDecorator\\TypifiedPropertyDecorator';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 }

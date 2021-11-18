@@ -18,17 +18,20 @@ use tests\QATools\QATools\HtmlElements\Fixture\Element\ElementContainerChild;
 class AbstractElementContainerTest extends AbstractTypifiedElementTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\ElementContainerChild';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
-	 * Occurs before element creation in setUp.
+	 * Occurs before element creation in setUpTest.
 	 *
 	 * @return void
 	 */

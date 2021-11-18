@@ -12,6 +12,7 @@ namespace tests\QATools\QATools\PageObject\Element;
 
 
 use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\Error\Warning;
 use QATools\QATools\PageObject\Element\AbstractElementCollection;
 use Mockery as m;
 use Mockery\MockInterface;
@@ -41,9 +42,12 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	 */
 	protected $element;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
+		parent::setUpTest();
 
 		$this->beforeSetUpFinish();
 
@@ -51,7 +55,7 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 	}
 
 	/**
-	 * Occurs before "setUp" method is finished configuration jobs.
+	 * Occurs before "setUpTest" method is finished configuration jobs.
 	 *
 	 * @return void
 	 */
@@ -78,11 +82,18 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 			\class_alias('PHPUnit_Framework_Error_Notice', 'PHPUnit\Framework\Error\Notice');
 		}
 
+		if ( !\class_exists('PHPUnit\Framework\Error\Warning') ) {
+			\class_alias('PHPUnit_Framework_Error_Warning', 'PHPUnit\Framework\Error\Warning');
+		}
+
 		try {
 			$this->assertNull($this->element[$new_count]);
 		}
 		catch ( Notice $e ) {
-			// Ignore notice.
+			// Ignore notice on PHP < 8.0.
+		}
+		catch ( Warning $e ) {
+			// Ignore warning on PHP >= 8.0.
 		}
 
 		$this->assertArrayHasKey($initial_count, $this->element);

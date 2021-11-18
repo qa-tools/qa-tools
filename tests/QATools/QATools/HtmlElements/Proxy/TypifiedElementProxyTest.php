@@ -20,7 +20,10 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 
 	const ELEMENT_CLASS = '\\tests\\QATools\\QATools\\HtmlElements\\Fixture\\Element\\TypifiedElementChild';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
 		$this->ignoreLocatorTests[] = 'testDefaultClassName';
@@ -30,7 +33,7 @@ class TypifiedElementProxyTest extends AbstractProxyTestCase
 			$this->collectionElementClass = '\\QATools\\QATools\\HtmlElements\\Element\\ITypifiedElement';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testDefaultClassName()

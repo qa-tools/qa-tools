@@ -18,12 +18,15 @@ use tests\QATools\QATools\PageObject\PropertyDecorator\DefaultPropertyDecoratorT
 class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->locatorClass = '\\QATools\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
 		$this->decoratorClass = '\\QATools\\QATools\\BEM\\PropertyDecorator\\BEMPropertyDecorator';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testBlockProxy()
@@ -70,24 +73,26 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 
 	/**
 	 * @dataProvider bemPartDataProvider
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
-	 * @expectedExceptionMessage BEM block/element must be specified as annotation
 	 */
 	public function testMissingAnnotationError($part_class)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED);
+		$this->expectExceptionMessage('BEM block/element must be specified as annotation');
+
 		$this->_expectBEMAnnotation($part_class, array());
 		$this->decorator->decorate($this->property);
 	}
 
 	/**
 	 * @dataProvider bemPartDataProvider
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage Either 'block' or 'element' key with non-empty value must be specified in the annotation
 	 */
 	public function testEmptyAnnotationError($part_class)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage("Either 'block' or 'element' key with non-empty value must be specified in the annotation");
+
 		$annotation = new BEMAnnotation();
 		$this->_expectBEMAnnotation($part_class, array($annotation));
 		$this->decorator->decorate($this->property);
@@ -95,12 +100,13 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 
 	/**
 	 * @dataProvider bemPartDataProvider
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage Either 'block' or 'element' key with non-empty value must be specified in the annotation
 	 */
 	public function testElementWithBlockAnnotationError($part_class)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage("Either 'block' or 'element' key with non-empty value must be specified in the annotation");
+
 		$annotation = new BEMAnnotation();
 		$annotation->block = 'block-name';
 		$annotation->element = 'element-name';
@@ -121,13 +127,12 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage BEM block can only be used in BEMPage sub-class property
-	 */
 	public function testBlockUsedInWrongContext()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage('BEM block can only be used in BEMPage sub-class property');
+
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
 		$this->locator->shouldReceive('getSearchContext')->andReturn($search_context);
 
@@ -138,13 +143,12 @@ class BEMPropertyDecoratorTest extends DefaultPropertyDecoratorTest
 		$this->decorator->decorate($this->property);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE
-	 * @expectedExceptionMessage BEM element can only be used in Block sub-class (or any class, implementing IBlock interface) property
-	 */
 	public function testElementUsedInWrongContext()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_INCORRECT_USAGE);
+		$this->expectExceptionMessage('BEM element can only be used in Block sub-class (or any class, implementing IBlock interface) property');
+
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
 		$this->locator->shouldReceive('getSearchContext')->andReturn($search_context);
 

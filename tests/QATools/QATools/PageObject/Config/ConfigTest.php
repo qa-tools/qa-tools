@@ -65,13 +65,12 @@ class ConfigTest extends TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ConfigException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ConfigException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Option "non_predefined_key" doesn't exist in configuration
-	 */
 	public function testConstructorWithFailure()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ConfigException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ConfigException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Option "non_predefined_key" doesn\'t exist in configuration');
+
 		new Config(array('non_predefined_key' => 'value'));
 	}
 

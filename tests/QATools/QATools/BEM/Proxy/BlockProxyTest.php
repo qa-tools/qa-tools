@@ -14,11 +14,17 @@ namespace tests\QATools\QATools\BEM\Proxy;
 use QATools\QATools\BEM\Proxy\BlockProxy;
 use Mockery as m;
 use tests\QATools\QATools\PageObject\Proxy\AbstractProxyTestCase;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertIsType;
 
 class BlockProxyTest extends AbstractProxyTestCase
 {
 
-	protected function setUp()
+	use AssertIsType;
+
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->ignoreLocatorTests[] = 'testGetName';
 		$this->locatorClass = '\\QATools\\QATools\\BEM\\ElementLocator\\BEMElementLocator';
@@ -28,11 +34,11 @@ class BlockProxyTest extends AbstractProxyTestCase
 			$this->collectionElementClass = '\\QATools\\QATools\\BEM\\Element\\IBlock';
 		}
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	/**
-	 * Occurs before "setUp" method is finished configuration jobs.
+	 * Occurs before "setUpTest" method is finished configuration jobs.
 	 *
 	 * @return void
 	 */
@@ -82,16 +88,15 @@ class BlockProxyTest extends AbstractProxyTestCase
 
 	public function testMethodForwardingSuccess()
 	{
-		$this->assertInternalType('array', $this->element->getNodes());
+		$this->assertIsArray($this->element->getNodes());
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementNotFoundException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Block not found by selector: OK
-	 */
 	public function testGetObjectEmptyLocator()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementNotFoundException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementNotFoundException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Block not found by selector: OK');
+
 		$this->locator->shouldReceive('findAll')->once()->andReturn(null);
 		$this->locator->shouldReceive('__toString')->once()->andReturn('OK');
 

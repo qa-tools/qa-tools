@@ -20,7 +20,10 @@ class FormTest extends AbstractElementContainerTest
 
 	const TYPIFIED_ELEMENT_CLASS = '\\QATools\\QATools\\HtmlElements\\Element\\AbstractTypifiedElement';
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		if ( is_null($this->elementClass) ) {
 			$this->elementClass = '\\QATools\\QATools\\HtmlElements\\Element\\Form';
@@ -28,7 +31,7 @@ class FormTest extends AbstractElementContainerTest
 
 		$this->ignoreExpectTypifiedNodeCheck[] = 'testTypify';
 
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testFill()
@@ -61,13 +64,12 @@ class FormTest extends AbstractElementContainerTest
 		$form->shouldReceive('setValue')->with($typified_element, $field_value)->once()->andReturn($form);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\FormException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND
-	 * @expectedExceptionMessage Form field "field-name" not found
-	 */
 	public function testGetNodeElementsFailure()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\FormException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\FormException::TYPE_NOT_FOUND);
+		$this->expectExceptionMessage('Form field "field-name" not found');
+
 		$this->escaper->shouldReceive('escapeLiteral')
 			->with('field-name')
 			->once()
@@ -141,26 +143,24 @@ class FormTest extends AbstractElementContainerTest
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\FormException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD
-	 * @expectedExceptionMessage Unable create typified element for element (class: QATools\QATools\PageObject\Element\WebElement; xpath: WRONG_TAG)
-	 */
 	public function testTypifyFailure()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\FormException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\FormException::TYPE_UNKNOWN_FIELD);
+		$this->expectExceptionMessage('Unable create typified element for element (class: QATools\QATools\PageObject\Element\WebElement; xpath: WRONG_TAG)');
+
 		$node_element = $this->createNodeElement('WRONG_TAG');
 		$this->driver->shouldReceive('getTagName')->with('WRONG_TAG')->once()->andReturn('article');
 
 		$this->getElement()->typify(array($node_element));
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\HtmlElements\Exception\FormException
-	 * @expectedExceptionCode \QATools\QATools\HtmlElements\Exception\FormException::TYPE_READONLY_FIELD
-	 * @expectedExceptionMessage Element ELEMENT NAME doesn't support value changing
-	 */
 	public function testSetValueFailure()
 	{
+		$this->expectException('\QATools\QATools\HtmlElements\Exception\FormException');
+		$this->expectExceptionCode(\QATools\QATools\HtmlElements\Exception\FormException::TYPE_READONLY_FIELD);
+		$this->expectExceptionMessage('Element ELEMENT NAME doesn\'t support value changing');
+
 		$typified_element = m::mock(self::TYPIFIED_ELEMENT_CLASS);
 		$typified_element->shouldReceive('__toString')->withNoArgs()->once()->andReturn('ELEMENT NAME');
 

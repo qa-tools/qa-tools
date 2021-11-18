@@ -37,10 +37,11 @@ class BEMAnnotationTest extends TestCase
 	 */
 	private $_locatorHelper;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->_annotation = new BEMAnnotation();
 		$this->_locatorHelper = m::mock('\\QATools\\QATools\\BEM\\ElementLocator\\LocatorHelper');
 	}

@@ -20,10 +20,13 @@ use tests\QATools\QATools\Live\HtmlElements\Pages\TypifiedElementPage;
 class TypifiedPageTest extends AbstractLivePageTestCase
 {
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
 		$this->pageFactoryClass = '\\QATools\\QATools\\HtmlElements\\TypifiedPageFactory';
-		parent::setUp();
+		parent::setUpTest();
 	}
 
 	public function testButton1LocatedById()

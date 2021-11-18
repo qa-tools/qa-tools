@@ -17,11 +17,12 @@ use QATools\QATools\PageObject\Annotation\FindByAnnotation;
 use Mockery as m;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
+use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class DefaultElementLocatorTest extends TestCase
 {
 
-	use MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration, ExpectException;
 
 	const PROPERTY_CLASS = '\\QATools\\QATools\\PageObject\\Property';
 
@@ -69,10 +70,11 @@ class DefaultElementLocatorTest extends TestCase
 	 */
 	protected $locator;
 
-	protected function setUp()
+	/**
+	 * @before
+	 */
+	protected function setUpTest()
 	{
-		parent::setUp();
-
 		$this->property = m::mock(self::PROPERTY_CLASS);
 		$this->annotationManager = m::mock('\\mindplay\\annotations\\AnnotationManager');
 		$this->searchContext = m::mock($this->searchContextClass);
@@ -129,13 +131,12 @@ class DefaultElementLocatorTest extends TestCase
 		);
 	}
 
-	/**
-	 * @expectedException \QATools\QATools\PageObject\Exception\ElementException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND
-	 * @expectedExceptionMessage The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.
-	 */
 	public function testGetSelectorMultipleNotArrayOrCollection()
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND);
+		$this->expectExceptionMessage('The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.');
+
 		$selector = array('xpath' => 'xpath1');
 
 		$this->expectFindByAnnotations(array($selector));
@@ -152,13 +153,13 @@ class DefaultElementLocatorTest extends TestCase
 
 	/**
 	 * @dataProvider getSelectorFailureDataProvider
-	 *
-	 * @expectedException \QATools\QATools\PageObject\Exception\AnnotationException
-	 * @expectedExceptionCode \QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED
-	 * @expectedExceptionMessage @find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock
 	 */
 	public function testGetSelectorFailure($annotations)
 	{
+		$this->expectException('\QATools\QATools\PageObject\Exception\AnnotationException');
+		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\AnnotationException::TYPE_REQUIRED);
+		$this->expectExceptionMessage('@find-by must be specified in the property "OK" DocBlock or in class "PageClass" DocBlock');
+
 		$this->property->shouldReceive('__toString')->andReturn('OK');
 		$this->property->shouldReceive('getDataType')->andReturn('PageClass');
 		$this->property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@find-by')->andReturn($annotations);
