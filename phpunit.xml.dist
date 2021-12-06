@@ -23,9 +23,9 @@
 		<testsuite name="BEM">
 			<directory>tests/QATools/QATools/BEM</directory>
 		</testsuite>
-		<!--<testsuite name="Live">
+		<testsuite name="Live">
 			<directory>tests/QATools/QATools/Live</directory>
-		</testsuite>-->
+		</testsuite>
 	</testsuites>
 
 	<!--<logging>

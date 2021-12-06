@@ -15,9 +15,12 @@ use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
+use Yoast\PHPUnitPolyfills\Polyfills\AssertStringContains;
 
 abstract class AbstractLivePageTestCase extends AbstractLiveTestCase
 {
+
+	use AssertStringContains;
 
 	public function testOpeningPageUsingConfigInjection()
 	{
@@ -30,7 +33,7 @@ abstract class AbstractLivePageTestCase extends AbstractLiveTestCase
 		$page = $this->createRelativePage($page_factory);
 		$page->open();
 
-		$this->assertContains('direct_open=1', $this->session->getCurrentUrl(), 'Correct URL is opened');
+		$this->assertStringContainsString('direct_open=1', $this->session->getCurrentUrl(), 'Correct URL is opened');
 	}
 
 	public function testOpeningPageUsingContainerInjection()
@@ -47,7 +50,7 @@ abstract class AbstractLivePageTestCase extends AbstractLiveTestCase
 		$page = $this->createRelativePage($page_factory);
 		$page->open();
 
-		$this->assertContains('direct_open=1', $this->session->getCurrentUrl(), 'Correct URL is opened');
+		$this->assertStringContainsString('direct_open=1', $this->session->getCurrentUrl(), 'Correct URL is opened');
 	}
 
 	/**
