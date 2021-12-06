@@ -17,3 +17,5 @@ fi
 
 echo "Running Selenium"
 java -jar "$SELENIUM_BINARY" > /dev/null 2> /tmp/webdriver_output.txt &
+
+while ! nc -z localhost 4444 </dev/null; do echo Waiting for Selenium server to start...; sleep 1; done
