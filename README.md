@@ -1,8 +1,9 @@
 # QA-Tools
 
 [![Join the chat at https://gitter.im/qa-tools/qa-tools](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/qa-tools/qa-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/qa-tools/qa-tools.svg?branch=master)](https://travis-ci.org/qa-tools/qa-tools)
-[![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://docs.qa-tools.io/en/latest/)
+[![CI](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml)
+[![Docs](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml)
+[![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://qa-tools.readthedocs.org/en/latest/)
 [![composer.lock](https://poser.pugx.org/qa-tools/qa-tools/composerlock)](https://packagist.org/packages/qa-tools/qa-tools)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
