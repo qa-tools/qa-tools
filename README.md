@@ -4,7 +4,6 @@
 [![CI](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml)
 [![Docs](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml)
 [![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://qa-tools.readthedocs.org/en/latest/)
-[![composer.lock](https://poser.pugx.org/qa-tools/qa-tools/composerlock)](https://packagist.org/packages/qa-tools/qa-tools)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
 [![codecov](https://codecov.io/gh/qa-tools/qa-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/qa-tools/qa-tools)
