@@ -7,10 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ...
 
 ### Changed
-...
+- Changed minimal supported version to PHP 5.6.
 
 ### Fixed
-...
+- Made code compatible with PHP 7.4 (don't use "each(...)", use "implode" function correctly).
 
 ## [1.2.1] - 2016-07-06
 ### Fixed
