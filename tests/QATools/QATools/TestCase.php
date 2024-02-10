@@ -11,6 +11,7 @@
 namespace tests\QATools\QATools;
 
 
+use Behat\Mink\Element\ElementFinder;
 use Behat\Mink\Element\NodeElement;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -29,6 +30,13 @@ class TestCase extends \PHPUnit\Framework\TestCase
 	 * @var \Mockery\MockInterface
 	 */
 	protected $session;
+
+	/**
+	 * Element finder.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $elementFinder;
 
 	/**
 	 * Session driver.
@@ -61,11 +69,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
 		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH_ROOT'))->andReturn('/XPATH');
 		$this->selectorsHandler = $handler;
 
-		$this->driver = m::mock('\\Behat\\Mink\\Driver\\DriverInterface');
-
 		$this->session = m::mock('\\Behat\\Mink\\Session');
 		$this->session->shouldReceive('getSelectorsHandler')->andReturn($this->selectorsHandler);
+
+		$this->driver = m::mock('\\Behat\\Mink\\Driver\\DriverInterface');
 		$this->session->shouldReceive('getDriver')->andReturn($this->driver)->byDefault();
+
+		if ( \class_exists('\\Behat\\Mink\\Element\\ElementFinder') ) {
+			$this->elementFinder = m::mock('\\Behat\\Mink\\Element\\ElementFinder');
+			$this->session->shouldReceive('getElementFinder')->andReturn($this->elementFinder)->byDefault();
+		}
 
 		$this->pageFactory = m::mock('\\QATools\\QATools\\PageObject\\IPageFactory');
 		$this->pageFactory->shouldReceive('getSession')->andReturn($this->session);

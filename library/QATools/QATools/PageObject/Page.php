@@ -11,6 +11,8 @@
 namespace QATools\QATools\PageObject;
 
 
+use Behat\Mink\Element\NodeElement;
+use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\Exception\PageException;
 use QATools\QATools\PageObject\Url\IBuilder;
 use Behat\Mink\Element\DocumentElement;
@@ -19,9 +21,36 @@ use Behat\Mink\Element\DocumentElement;
  * The base class to be used for making classes representing pages, that can contain WebElements.
  *
  * @method \Mockery\Expectation shouldReceive(string $name)
+ *
+ * @method NodeElement|null findById($id) Finds element by its id.
+ * @method boolean hasLink($locator) Checks whether element has a link with specified locator.
+ * @method NodeElement|null findLink($locator) Finds link with specified locator.
+ * @method void clickLink($locator) Clicks link with specified locator.
+ * @method boolean hasButton($locator) Checks whether element has a button (input[type=submit|image|button|reset], button) with specified locator.
+ * @method NodeElement|null findButton($locator) Finds button (input[type=submit|image|button|reset], button) with specified locator.
+ * @method void pressButton($locator) Presses button (input[type=submit|image|button|reset], button) with specified locator.
+ * @method boolean hasField($locator) Checks whether element has a field (input, textarea, select) with specified locator.
+ * @method NodeElement|null findField($locator) Finds field (input, textarea, select) with specified locator.
+ * @method void fillField($locator, $value) Fills in field (input, textarea, select) with specified locator.
+ * @method boolean hasCheckedField($locator) Checks whether element has a checkbox with specified locator, which is checked.
+ * @method boolean hasUncheckedField($locator) Checks whether element has a checkbox with specified locator, which is unchecked.
+ * @method void checkField($locator) Checks checkbox with specified locator.
+ * @method void uncheckField($locator) Unchecks checkbox with specified locator.
+ * @method boolean hasSelect($locator) Checks whether element has a select field with specified locator.
+ * @method void selectFieldOption($locator, $value, $multiple = false) Selects option from select field with specified locator.
+ * @method boolean hasTable($locator) Checks whether element has a table with specified locator.
+ * @method void attachFileToField($locator, $path) Attach file to file field with specified locator.
+ *
+ * @method boolean has($selector, $locator) Checks whether element with specified selector exists inside the current element.
+ * @method boolean isValid() Checks if an element still exists in the DOM.
+ * @method string getText() Returns element text (inside tag).
+ * @method string getHtml() Returns element inner html.
+ * @method string getOuterHtml() Returns element outer html.
  */
-abstract class Page extends DocumentElement implements ISearchContext
+abstract class Page implements ISearchContext
 {
+
+	use TWrappedElement;
 
 	/**
 	 * Page factory, used to create a Page.
@@ -38,13 +67,20 @@ abstract class Page extends DocumentElement implements ISearchContext
 	protected $urlBuilder;
 
 	/**
+	 * Wrapped element.
+	 *
+	 * @var DocumentElement
+	 */
+	private $_wrappedElement;
+
+	/**
 	 * Initialize the page.
 	 *
 	 * @param IPageFactory $page_factory Page factory.
 	 */
 	public function __construct(IPageFactory $page_factory)
 	{
-		parent::__construct($page_factory->getSession());
+		$this->_wrappedElement = new DocumentElement($page_factory->getSession());
 
 		$this->pageFactory = $page_factory;
 

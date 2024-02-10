@@ -216,20 +216,34 @@ class BlockTest extends PartTestCase
 			$result2[] = $this->createNodeElement('sub-xpath-2');
 		}
 
-		$this->selectorsHandler
-			->shouldReceive('selectorToXpath')
-			->with('se', $locator)
-			->andReturn('BEM_XPATH');
+		if ( $this->elementFinder !== null ) {
+			// Since Mink v1.11.0.
+			$this->elementFinder
+				->shouldReceive('findAll')
+				->with('se', $locator, $this->_nodes[0]->getXpath())
+				->andReturn($result1);
+			$this->elementFinder
+				->shouldReceive('findAll')
+				->with('se', $locator, $this->_nodes[1]->getXpath())
+				->andReturn($result2);
+		}
+		else {
+			// Older Mink version.
+			$this->selectorsHandler
+				->shouldReceive('selectorToXpath')
+				->with('se', $locator)
+				->andReturn('BEM_XPATH');
 
-		$this->driver
-			->shouldReceive('find')
-			->with($this->_nodes[0]->getXpath() . '/BEM_XPATH')
-			->andReturn($result1);
+			$this->driver
+				->shouldReceive('find')
+				->with($this->_nodes[0]->getXpath() . '/BEM_XPATH')
+				->andReturn($result1);
 
-		$this->driver
-			->shouldReceive('find')
-			->with($this->_nodes[1]->getXpath() . '/BEM_XPATH')
-			->andReturn($result2);
+			$this->driver
+				->shouldReceive('find')
+				->with($this->_nodes[1]->getXpath() . '/BEM_XPATH')
+				->andReturn($result2);
+		}
 	}
 
 	/**
