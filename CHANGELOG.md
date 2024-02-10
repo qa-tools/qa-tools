@@ -11,7 +11,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 ...
- 
+
+## [1.2.3] - 2024-02-10
+### Fixed
+- Library wasn't working with a Mink v1.11.0+ versions. 
+
 ## [1.2.2] - 2024-02-10
 ### Changed
 - Changed minimal supported version to PHP 5.6.
@@ -122,8 +126,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Removed dependency on Selenium2.
 
-[Unreleased]: https://github.com/qa-tools/qa-tools/compare/v1.2.2...HEAD
-[1.2.2]: https://github.com/qa-tools/qa-tools/compare/v1.2.2...v1.2.2
+[Unreleased]: https://github.com/qa-tools/qa-tools/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/qa-tools/qa-tools/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/qa-tools/qa-tools/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/qa-tools/qa-tools/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/qa-tools/qa-tools/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/qa-tools/qa-tools/compare/v1.0.1...v1.1.0
