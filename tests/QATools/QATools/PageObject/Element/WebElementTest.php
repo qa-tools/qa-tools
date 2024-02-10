@@ -61,8 +61,15 @@ class WebElementTest extends TestCase
 			$this->createNodeElement(),
 		);
 
-		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
-		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+		if ( $this->elementFinder !== null ) {
+			// Since Mink v1.11.0.
+			$this->elementFinder->shouldReceive('findAll')->with('aa', 'bb', 'XPATH')->andReturn($findings);
+		}
+		else {
+			// Older Mink version.
+			$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+			$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+		}
 
 		$element = $this->createElement();
 
@@ -76,8 +83,15 @@ class WebElementTest extends TestCase
 			$this->createNodeElement(),
 		);
 
-		$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
-		$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+		if ( $this->elementFinder !== null ) {
+			// Since Mink v1.11.0.
+			$this->elementFinder->shouldReceive('findAll')->with('aa', 'bb', 'XPATH')->andReturn($findings);
+		}
+		else {
+			// Older Mink version.
+			$this->selectorsHandler->shouldReceive('selectorToXpath')->with('aa', 'bb')->andReturn('SUB-XPATH');
+			$this->driver->shouldReceive('find')->with('XPATH/SUB-XPATH')->andReturn($findings);
+		}
 
 		$element = $this->createElement();
 
