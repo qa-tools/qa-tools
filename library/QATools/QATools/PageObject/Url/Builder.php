@@ -220,7 +220,7 @@ class Builder implements IBuilder
 				continue;
 			}
 
-			$mask_replacements[] = rawurlencode($params[$parameter_name]);
+			$mask_replacements[] = $params[$parameter_name] === null ? '' : rawurlencode($params[$parameter_name]);
 			unset($params[$parameter_name]);
 		}
 
