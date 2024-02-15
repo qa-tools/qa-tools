@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    paths-ignore: ['docs/**', '.github/workflows/docs.yml']
+    paths-ignore: ['docs/**', '.github/workflows/docs.yml', '.readthedocs.yaml']
   pull_request:
-    paths-ignore: ['docs/**', '.github/workflows/docs.yml']
+    paths-ignore: ['docs/**', '.github/workflows/docs.yml', '.readthedocs.yaml']
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
@@ -55,7 +55,7 @@ jobs:
           composer require --no-update --dev scrutinizer/ocular
 
       - name: Install dependencies
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "highest"
 
