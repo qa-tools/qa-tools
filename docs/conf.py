@@ -7,7 +7,7 @@ import sys
 import os
 
 # Use theme, that was once default, but now replaced by the Alabaster
-    import sphinx_rtd_theme
+import sphinx_rtd_theme
 html_theme = 'sphinx_rtd_theme'
 #html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
