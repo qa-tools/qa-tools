@@ -103,15 +103,19 @@ class WebElementTest extends TestCase
 	 */
 	public function testWaitFor()
 	{
+		$element_inside_callback = null;
 		$element = $this->createElement();
 
 		$start = microtime(true);
 
-		$element->waitFor(1, function () {
+		$element->waitFor(1, function ($callback_element) use (&$element_inside_callback) {
+			$element_inside_callback = $callback_element;
+
 			return false;
 		});
 
-		$this->assertGreaterThanOrEqual(1, microtime(true) - $start);
+		$this->assertSame($element, $element_inside_callback, 'Incorrect element passed to the callback.');
+		$this->assertGreaterThanOrEqual(1, microtime(true) - $start, 'No waiting happened.');
 	}
 
 	public function testNonExistingMethodForwardingError()
