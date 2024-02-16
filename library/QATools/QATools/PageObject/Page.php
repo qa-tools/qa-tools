@@ -143,6 +143,16 @@ abstract class Page implements ISearchContext
 	}
 
 	/**
+	 * Returns url of the current page.
+	 *
+	 * @return string
+	 */
+	public function getCurrentUrl()
+	{
+		return $this->pageFactory->getSession()->getCurrentUrl();
+	}
+
+	/**
 	 * Checks if the page is currently opened in browser.
 	 *
 	 * @return boolean

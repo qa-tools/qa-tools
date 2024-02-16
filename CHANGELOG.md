@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-...
+- Added the `Page::getCurrentUrl` method, that returns actual page URL.
 
 ### Changed
 - The `WebElement::waitFor` method now provide `WebElement` class (or used subclass, like `AbstractElementContainer`, etc.) instance to the callback instead of a Mink's `NodeElement` class instance.
