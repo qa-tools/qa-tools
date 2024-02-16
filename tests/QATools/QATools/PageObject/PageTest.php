@@ -162,6 +162,25 @@ class PageTest extends TestCase
 	}
 
 	/**
+	 * @medium
+	 */
+	public function testWaitFor()
+	{
+		$page_inside_callback = null;
+
+		$start = microtime(true);
+
+		$this->page->waitFor(1, function ($callback_page) use (&$page_inside_callback) {
+			$page_inside_callback = $callback_page;
+
+			return false;
+		});
+
+		$this->assertSame($this->page, $page_inside_callback, 'Incorrect page passed to the callback.');
+		$this->assertGreaterThanOrEqual(1, microtime(true) - $start, 'No waiting happened.');
+	}
+
+	/**
 	 * Creates an empty mocked url builder.
 	 *
 	 * @return IBuilder

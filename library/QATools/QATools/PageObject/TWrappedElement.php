@@ -54,7 +54,12 @@ trait TWrappedElement
 	 */
 	public function waitFor($timeout, $callback)
 	{
-		return $this->_wrappedElement->waitFor($timeout, $callback);
+		$container = $this;
+		$wrapped_callback = function () use ($container, $callback) {
+			return call_user_func($callback, $container);
+		};
+
+		return $this->_wrappedElement->waitFor($timeout, $wrapped_callback);
 	}
 
 	/**
