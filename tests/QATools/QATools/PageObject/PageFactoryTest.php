@@ -255,8 +255,9 @@ class PageFactoryTest extends TestCase
 	 */
 	public function testOpened($url, $matched)
 	{
-		/* @var $page Page */
+		/** @var Page $page */
 		$page = m::mock($this->pageClass);
+		$page->shouldReceive('getCurrentUrl')->once()->andReturn($url);
 
 		$this->expectMatchUrlExactAnnotation($page, array(
 			array('url' => 'http://www.domain.tld/relative'),
@@ -270,7 +271,6 @@ class PageFactoryTest extends TestCase
 			array('path' => '/relative/path'),
 		));
 
-		$this->session->shouldReceive('getCurrentUrl')->once()->andReturn($url);
 		$this->assertSame($matched, $this->realFactory->opened($page));
 	}
 

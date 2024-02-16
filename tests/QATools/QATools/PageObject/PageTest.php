@@ -180,6 +180,14 @@ class PageTest extends TestCase
 		$this->assertGreaterThanOrEqual(1, microtime(true) - $start, 'No waiting happened.');
 	}
 
+	public function testGetCurrentUrl()
+	{
+		$expected_url = 'https://www.google.com/test';
+		$this->session->shouldReceive('getCurrentUrl')->andReturn($expected_url);
+
+		$this->assertEquals($expected_url, $this->page->getCurrentUrl(), 'Page URL is incorrect.');
+	}
+
 	/**
 	 * Creates an empty mocked url builder.
 	 *
