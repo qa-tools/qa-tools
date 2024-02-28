@@ -123,9 +123,7 @@ abstract class Page implements ISearchContext
 			throw new PageException('Page url not specified', PageException::TYPE_EMPTY_URL);
 		}
 
-		$this->pageFactory->getSession()->visit($url);
-
-		return $this;
+		return $this->setCurrentUrl($url);
 	}
 
 	/**
@@ -145,11 +143,29 @@ abstract class Page implements ISearchContext
 	/**
 	 * Returns url of the current page.
 	 *
+	 * Overriding this method would allow operating on a page within a frameset.
+	 *
 	 * @return string
 	 */
 	public function getCurrentUrl()
 	{
 		return $this->pageFactory->getSession()->getCurrentUrl();
+	}
+
+	/**
+	 * Sets url of the current page.
+	 *
+	 * Overriding this method would allow operating on a page within a frameset.
+	 *
+	 * @param string $url URL.
+	 *
+	 * @return self
+	 */
+	protected function setCurrentUrl($url)
+	{
+		$this->pageFactory->getSession()->visit($url);
+
+		return $this;
 	}
 
 	/**
