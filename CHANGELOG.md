@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Added the `Page::getCurrentUrl` method, that returns actual page URL.
+- Added the public `Page::getBrowserUrl` method, that returns URL of the Web Browser (overriding allows operating within a frameset).
+- Added the protected `Page::setBrowserUrl` method, that sets URL of the Web Browser (overriding allows operating within a frameset).
 
 ### Changed
 - The `WebElement::waitFor` method now provide `WebElement` class (or used subclass, like `AbstractElementContainer`, etc.) instance to the callback instead of a Mink's `NodeElement` class instance.

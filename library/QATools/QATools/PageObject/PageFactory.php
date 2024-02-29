@@ -243,7 +243,7 @@ class PageFactory implements IPageFactory
 	public function opened(Page $page)
 	{
 		// Changing "match" method signature would introduce a BC break.
-		return $this->pageUrlMatcherRegistry->match($page->getCurrentUrl(), $page);
+		return $this->pageUrlMatcherRegistry->match($page->getBrowserUrl(), $page);
 	}
 
 	/**

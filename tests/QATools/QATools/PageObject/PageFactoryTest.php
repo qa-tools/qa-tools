@@ -257,7 +257,7 @@ class PageFactoryTest extends TestCase
 	{
 		/** @var Page $page */
 		$page = m::mock($this->pageClass);
-		$page->shouldReceive('getCurrentUrl')->once()->andReturn($url);
+		$page->shouldReceive('getBrowserUrl')->once()->andReturn($url);
 
 		$this->expectMatchUrlExactAnnotation($page, array(
 			array('url' => 'http://www.domain.tld/relative'),

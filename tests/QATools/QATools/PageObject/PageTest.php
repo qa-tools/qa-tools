@@ -180,12 +180,12 @@ class PageTest extends TestCase
 		$this->assertGreaterThanOrEqual(1, microtime(true) - $start, 'No waiting happened.');
 	}
 
-	public function testGetCurrentUrl()
+	public function testGetBrowserUrl()
 	{
 		$expected_url = 'https://www.google.com/test';
 		$this->session->shouldReceive('getCurrentUrl')->andReturn($expected_url);
 
-		$this->assertEquals($expected_url, $this->page->getCurrentUrl(), 'Page URL is incorrect.');
+		$this->assertEquals($expected_url, $this->page->getBrowserUrl(), 'Page URL is incorrect.');
 	}
 
 	/**
