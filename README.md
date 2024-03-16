@@ -3,7 +3,7 @@
 [![Join the chat at https://gitter.im/qa-tools/qa-tools](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/qa-tools/qa-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![CI](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/tests.yml)
 [![Docs](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml/badge.svg)](https://github.com/qa-tools/qa-tools/actions/workflows/docs.yml)
-[![Documentation](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](http://qa-tools.readthedocs.org/en/latest/)
+[![Documentation Status](https://readthedocs.org/projects/qa-tools/badge/?version=latest)](https://qa-tools.readthedocs.io/en/latest/?badge=latest)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qa-tools/qa-tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qa-tools/qa-tools/?branch=master)
 [![codecov](https://codecov.io/gh/qa-tools/qa-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/qa-tools/qa-tools)
