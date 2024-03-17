@@ -57,7 +57,7 @@ class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 	 */
 	public function createLocator(Property $property)
 	{
-		return new BEMElementLocator($property, $this->searchContext, $this->annotationManager, $this->_locatorHelper);
+		return new BEMElementLocator($property, $this->searchContext, $this->_locatorHelper);
 	}
 
 }

@@ -50,13 +50,6 @@ class DefaultElementLocatorTest extends TestCase
 	protected $property;
 
 	/**
-	 * Annotation manager.
-	 *
-	 * @var \Mockery\MockInterface
-	 */
-	protected $annotationManager;
-
-	/**
 	 * Search context.
 	 *
 	 * @var \Mockery\MockInterface
@@ -76,7 +69,6 @@ class DefaultElementLocatorTest extends TestCase
 	protected function setUpTest()
 	{
 		$this->property = m::mock(self::PROPERTY_CLASS);
-		$this->annotationManager = m::mock('\\mindplay\\annotations\\AnnotationManager');
 		$this->searchContext = m::mock($this->searchContextClass);
 
 		$this->locator = $this->createLocator();
@@ -220,10 +212,10 @@ class DefaultElementLocatorTest extends TestCase
 		if ( $mock_methods ) {
 			$class = $this->locatorClass . '[' . implode(',', $mock_methods) . ']';
 
-			return m::mock($class, array($this->property, $this->searchContext, $this->annotationManager));
+			return m::mock($class, array($this->property, $this->searchContext));
 		}
 
-		return new $this->locatorClass($this->property, $this->searchContext, $this->annotationManager);
+		return new $this->locatorClass($this->property, $this->searchContext);
 	}
 
 }
