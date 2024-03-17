@@ -11,7 +11,6 @@
 namespace QATools\QATools\BEM\ElementLocator;
 
 
-use mindplay\annotations\AnnotationManager;
 use QATools\QATools\BEM\Annotation\BEMAnnotation;
 use QATools\QATools\BEM\Element\IBlock;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocator;
@@ -37,18 +36,16 @@ class BEMElementLocator extends DefaultElementLocator
 	/**
 	 * Creates a new element locator.
 	 *
-	 * @param Property          $property           Property.
-	 * @param ISearchContext    $search_context     The context to use when finding the element.
-	 * @param AnnotationManager $annotation_manager Annotation manager.
-	 * @param LocatorHelper     $locator_helper     Locator helper.
+	 * @param Property       $property       Property.
+	 * @param ISearchContext $search_context The context to use when finding the element.
+	 * @param LocatorHelper  $locator_helper Locator helper.
 	 */
 	public function __construct(
 		Property $property,
 		ISearchContext $search_context,
-		AnnotationManager $annotation_manager,
 		LocatorHelper $locator_helper
 	) {
-		parent::__construct($property, $search_context, $annotation_manager);
+		parent::__construct($property, $search_context);
 
 		$this->_helper = $locator_helper;
 	}

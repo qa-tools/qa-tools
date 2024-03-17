@@ -58,7 +58,7 @@ class DefaultElementLocatorFactory implements IElementLocatorFactory
 	 */
 	public function createLocator(Property $property)
 	{
-		return new WaitingElementLocator($property, $this->searchContext, $this->annotationManager);
+		return new WaitingElementLocator($property, $this->searchContext);
 	}
 
 }

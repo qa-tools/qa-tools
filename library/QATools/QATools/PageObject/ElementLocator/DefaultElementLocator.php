@@ -12,7 +12,6 @@ namespace QATools\QATools\PageObject\ElementLocator;
 
 
 use Behat\Mink\Element\NodeElement;
-use mindplay\annotations\AnnotationManager;
 use QATools\QATools\PageObject\Annotation\FindByAnnotation;
 use QATools\QATools\PageObject\Exception\AnnotationException;
 use QATools\QATools\PageObject\Exception\ElementException;
@@ -35,13 +34,6 @@ class DefaultElementLocator implements IElementLocator
 	protected $searchContext;
 
 	/**
-	 * Annotation manager.
-	 *
-	 * @var AnnotationManager
-	 */
-	protected $annotationManager;
-
-	/**
 	 * Property.
 	 *
 	 * @var Property
@@ -51,18 +43,13 @@ class DefaultElementLocator implements IElementLocator
 	/**
 	 * Creates a new element locator.
 	 *
-	 * @param Property          $property           Property.
-	 * @param ISearchContext    $search_context     The context to use when finding the element.
-	 * @param AnnotationManager $annotation_manager Annotation manager.
+	 * @param Property       $property       Property.
+	 * @param ISearchContext $search_context The context to use when finding the element.
 	 */
-	public function __construct(
-		Property $property,
-		ISearchContext $search_context,
-		AnnotationManager $annotation_manager
-	) {
+	public function __construct(Property $property, ISearchContext $search_context)
+	{
 		$this->property = $property;
 		$this->searchContext = $search_context;
-		$this->annotationManager = $annotation_manager;
 	}
 
 	/**

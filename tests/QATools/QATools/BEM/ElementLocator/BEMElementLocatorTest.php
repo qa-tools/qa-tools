@@ -208,14 +208,13 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 
 			return m::mock(
 				$class,
-				array($this->property, $this->searchContext, $this->annotationManager, $this->_locatorHelper)
+				array($this->property, $this->searchContext, $this->_locatorHelper)
 			);
 		}
 
 		return new $this->locatorClass(
 			$this->property,
 			$this->searchContext,
-			$this->annotationManager,
 			$this->_locatorHelper
 		);
 	}
