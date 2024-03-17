@@ -15,7 +15,6 @@ use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
-use mindplay\annotations\AnnotationManager;
 
 /**
  * Factory to create BEM block/element locators.
@@ -35,16 +34,14 @@ class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 	/**
 	 * Create locator factory instance.
 	 *
-	 * @param ISearchContext    $search_context     Search context.
-	 * @param AnnotationManager $annotation_manager Annotation manager.
-	 * @param LocatorHelper     $locator_helper     Locator helper.
+	 * @param ISearchContext $search_context Search context.
+	 * @param LocatorHelper  $locator_helper Locator helper.
 	 */
 	public function __construct(
 		ISearchContext $search_context,
-		AnnotationManager $annotation_manager,
 		LocatorHelper $locator_helper
 	) {
-		parent::__construct($search_context, $annotation_manager);
+		parent::__construct($search_context);
 		$this->_locatorHelper = $locator_helper;
 	}
 

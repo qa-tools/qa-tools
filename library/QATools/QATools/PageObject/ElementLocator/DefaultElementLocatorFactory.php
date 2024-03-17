@@ -11,7 +11,6 @@
 namespace QATools\QATools\PageObject\ElementLocator;
 
 
-use mindplay\annotations\AnnotationManager;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
 
@@ -31,22 +30,13 @@ class DefaultElementLocatorFactory implements IElementLocatorFactory
 	protected $searchContext;
 
 	/**
-	 * Page factory.
-	 *
-	 * @var AnnotationManager
-	 */
-	protected $annotationManager;
-
-	/**
 	 * Create locator factory instance.
 	 *
-	 * @param ISearchContext    $search_context     Search context.
-	 * @param AnnotationManager $annotation_manager Annotation manager.
+	 * @param ISearchContext $search_context Search context.
 	 */
-	public function __construct(ISearchContext $search_context, AnnotationManager $annotation_manager)
+	public function __construct(ISearchContext $search_context)
 	{
 		$this->searchContext = $search_context;
-		$this->annotationManager = $annotation_manager;
 	}
 
 	/**

@@ -32,10 +32,9 @@ class BEMElementLocatorFactoryTest extends TestCase
 
 	public function testCreateLocator()
 	{
-		$annotation_manager = m::mock('\\mindplay\\annotations\\AnnotationManager');
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
 		$locator_helper = m::mock('\\QATools\\QATools\\BEM\\ElementLocator\\LocatorHelper');
-		$factory = new BEMElementLocatorFactory($search_context, $annotation_manager, $locator_helper);
+		$factory = new BEMElementLocatorFactory($search_context, $locator_helper);
 
 		$property = m::mock(self::PROPERTY_CLASS);
 		$locator = $factory->createLocator($property);
