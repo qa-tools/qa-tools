@@ -243,7 +243,7 @@ class DefaultPropertyDecoratorTest extends TestCase
 
 		/** @var $page_factory IPageFactory */
 		$page_factory = m::mock('\\QATools\\QATools\\PageObject\\IPageFactory');
-		$locator_factory = new DefaultElementLocatorFactory($search_context, $annotation_manager);
+		$locator_factory = new DefaultElementLocatorFactory($search_context);
 
 		/** @var $decorator IPropertyDecorator */
 		$decorator = new $this->decoratorClass($locator_factory, $page_factory);

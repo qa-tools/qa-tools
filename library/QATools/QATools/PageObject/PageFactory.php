@@ -173,7 +173,7 @@ class PageFactory implements IPageFactory
 	 */
 	public function createDecorator(ISearchContext $search_context)
 	{
-		$locator_factory = new DefaultElementLocatorFactory($search_context, $this->annotationManager);
+		$locator_factory = new DefaultElementLocatorFactory($search_context);
 
 		return new DefaultPropertyDecorator($locator_factory, $this);
 	}

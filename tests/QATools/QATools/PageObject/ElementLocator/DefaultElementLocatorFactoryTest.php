@@ -32,9 +32,8 @@ class DefaultElementLocatorFactoryTest extends TestCase
 
 	public function testCreateLocator()
 	{
-		$annotation_manager = m::mock('\\mindplay\\annotations\\AnnotationManager');
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
-		$factory = new DefaultElementLocatorFactory($search_context, $annotation_manager);
+		$factory = new DefaultElementLocatorFactory($search_context);
 
 		$property = m::mock(self::PROPERTY_CLASS);
 		$property->shouldReceive('getAnnotationsFromPropertyOrClass')->with('@timeout')->once()->andReturn(array());
