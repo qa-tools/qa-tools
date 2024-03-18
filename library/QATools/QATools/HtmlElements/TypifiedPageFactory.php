@@ -49,7 +49,7 @@ class TypifiedPageFactory extends PageFactory
 	 */
 	public function createDecorator(ISearchContext $search_context)
 	{
-		$locator_factory = new DefaultElementLocatorFactory($search_context);
+		$locator_factory = new DefaultElementLocatorFactory($search_context, $this->seleniumSelector);
 
 		return new TypifiedPropertyDecorator($locator_factory, $this);
 	}

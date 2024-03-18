@@ -33,7 +33,7 @@ class RadioGroupTest extends TypifiedElementTestCase
 	public function testGetButtonsWithName()
 	{
 		/** @var RadioGroup $radio_group */
-		$radio_group = $this->createElement(array('xpath' => self::XPATH_RADIO_GROUP));
+		$radio_group = $this->createElement('xpath', self::XPATH_RADIO_GROUP);
 
 		$this->assertCount(4, $radio_group);
 		$this->assertInstanceOf(self::RADIO_CLASS, $radio_group[0]);
@@ -42,9 +42,7 @@ class RadioGroupTest extends TypifiedElementTestCase
 	public function testGetButtonsWithoutName()
 	{
 		/** @var RadioGroup $radio_group */
-		$radio_group = $this->createElement(array(
-			'xpath' => "/descendant-or-self::*[@type = 'radio']",
-		));
+		$radio_group = $this->createElement('xpath', "/descendant-or-self::*[@type = 'radio']");
 
 		$this->assertCount(5, $radio_group);
 		$this->assertInstanceOf(self::RADIO_CLASS, $radio_group[0]);
@@ -53,7 +51,7 @@ class RadioGroupTest extends TypifiedElementTestCase
 	public function testSelection()
 	{
 		/** @var RadioGroup $radio_group */
-		$radio_group = $this->createElement(array('xpath' => self::XPATH_RADIO_GROUP));
+		$radio_group = $this->createElement('xpath', self::XPATH_RADIO_GROUP);
 
 		$this->assertFalse($radio_group->hasSelectedButton(), 'No radio button is selected initially');
 		$radio_group->selectButtonByValue(4);
@@ -63,7 +61,7 @@ class RadioGroupTest extends TypifiedElementTestCase
 	public function testAccessOfSingleRadioButton()
 	{
 		/** @var RadioGroup $radio_group */
-		$radio_group = $this->createElement(array('xpath' => self::XPATH_RADIO_GROUP));
+		$radio_group = $this->createElement('xpath', self::XPATH_RADIO_GROUP);
 
 		$this->assertFalse($radio_group->hasSelectedButton(), 'No radio button is selected initially');
 		$radio_group[2]->select();
@@ -73,7 +71,7 @@ class RadioGroupTest extends TypifiedElementTestCase
 	public function testIteratingRadioButtons()
 	{
 		/** @var RadioGroup $radio_group */
-		$radio_group = $this->createElement(array('xpath' => self::XPATH_RADIO_GROUP));
+		$radio_group = $this->createElement('xpath', self::XPATH_RADIO_GROUP);
 
 		$this->assertFalse($radio_group->hasSelectedButton(), 'No radio button is selected initially');
 		$this->assertCount(4, $radio_group);
@@ -90,13 +88,15 @@ class RadioGroupTest extends TypifiedElementTestCase
 	/**
 	 * Creates element.
 	 *
-	 * @param array $selector Selector.
+	 * @param string $how   How class constant.
+	 * @param string $using Using value.
 	 *
 	 * @return RadioGroup
 	 */
-	protected function createElement(array $selector)
+	protected function createElement($how, $using)
 	{
-		$node_elements = $this->session->getPage()->findAll('se', $selector);
+		$xpath = $this->pageFactory->translateToXPath($how, $using);
+		$node_elements = $this->session->getPage()->findAll('xpath', $xpath);
 
 		return call_user_func($this->elementClass . '::fromNodeElements', $node_elements, null, $this->pageFactory);
 	}

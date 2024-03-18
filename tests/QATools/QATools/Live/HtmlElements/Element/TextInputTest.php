@@ -32,7 +32,7 @@ class TextInputTest extends TypifiedElementTestCase
 	public function testSendKeys($element_id, $expected_text)
 	{
 		/** @var TextInput $element */
-		$element = $this->createElement(array('id' => $element_id));
+		$element = $this->createElement('id', $element_id);
 
 		$this->assertEmpty($element->getText());
 		$this->assertSame($element, $element->sendKeys($expected_text));

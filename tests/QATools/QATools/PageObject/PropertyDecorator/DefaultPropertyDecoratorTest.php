@@ -24,6 +24,7 @@ use QATools\QATools\PageObject\Proxy\WebElementProxy;
 use mindplay\annotations\AnnotationCache;
 use mindplay\annotations\AnnotationManager;
 use Mockery as m;
+use QATools\QATools\PageObject\SeleniumSelector;
 use tests\QATools\QATools\TestCase;
 
 class DefaultPropertyDecoratorTest extends TestCase
@@ -185,27 +186,6 @@ class DefaultPropertyDecoratorTest extends TestCase
 	}
 
 	/**
-	 * Creates NodeElement mock.
-	 *
-	 * @param string|null $xpath XPath of the element.
-	 *
-	 * @return NodeElement
-	 */
-	protected function createNodeElement($xpath = null)
-	{
-		$element = parent::createNodeElement($xpath);
-
-		if ( $this->getName(false) === 'testProxyWebElement' ) {
-			$this->selectorsHandler
-				->shouldReceive('selectorToXpath')
-				->with('se', array('xpath' => $xpath))
-				->andReturn($xpath);
-		}
-
-		return $element;
-	}
-
-	/**
 	 * Verifies, that proxy did that's needed.
 	 *
 	 * @param IProxy $proxy         Proxy object.
@@ -238,12 +218,15 @@ class DefaultPropertyDecoratorTest extends TestCase
 	{
 		/** @var $search_context ISearchContext */
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
+
+		$selenium_selector = m::mock(SeleniumSelector::class);
+
 		$annotation_manager = new AnnotationManager();
 		$annotation_manager->cache = new AnnotationCache(sys_get_temp_dir());
 
 		/** @var $page_factory IPageFactory */
 		$page_factory = m::mock('\\QATools\\QATools\\PageObject\\IPageFactory');
-		$locator_factory = new DefaultElementLocatorFactory($search_context);
+		$locator_factory = new DefaultElementLocatorFactory($search_context, $selenium_selector);
 
 		/** @var $decorator IPropertyDecorator */
 		$decorator = new $this->decoratorClass($locator_factory, $page_factory);

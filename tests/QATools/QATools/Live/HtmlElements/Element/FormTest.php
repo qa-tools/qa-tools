@@ -37,7 +37,7 @@ class FormTest extends TypifiedElementTestCase
 		$page->findById('generate-btn')->click();
 
 		/** @var Form $form */
-		$form = $this->createElement(array('id' => 'test-form'));
+		$form = $this->createElement('id', 'test-form');
 		$delayed_element = $form->waitFor(2, function (Form $given_form) {
 			return $given_form->find('css', '#delayed-element');
 		});

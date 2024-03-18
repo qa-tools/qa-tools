@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - The `WebElement::waitFor` method now provide `WebElement` class (or used subclass, like `AbstractElementContainer`, etc.) instance to the callback instead of a Mink's `NodeElement` class instance.
 - The `Page::waitFor` method now provide `Page` class (or used subclass, like `TypifiedPage`, `BEMPage`, etc.) instance to the callback instead of a Mink's `DocumentElement` class instance.
+- The `se` selector handler is no longer registered in the Mink Session (use the `PageFactory::translateToXPath` instead).
 
 ### Fixed
 ...

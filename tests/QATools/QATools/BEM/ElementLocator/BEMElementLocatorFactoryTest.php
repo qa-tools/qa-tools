@@ -15,6 +15,7 @@ use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use QATools\QATools\BEM\ElementLocator\BEMElementLocatorFactory;
 use Mockery as m;
+use QATools\QATools\PageObject\SeleniumSelector;
 
 class BEMElementLocatorFactoryTest extends TestCase
 {
@@ -33,8 +34,9 @@ class BEMElementLocatorFactoryTest extends TestCase
 	public function testCreateLocator()
 	{
 		$search_context = m::mock('\\QATools\\QATools\\PageObject\\ISearchContext');
+		$selenium_selector = m::mock(SeleniumSelector::class);
 		$locator_helper = m::mock('\\QATools\\QATools\\BEM\\ElementLocator\\LocatorHelper');
-		$factory = new BEMElementLocatorFactory($search_context, $locator_helper);
+		$factory = new BEMElementLocatorFactory($search_context, $selenium_selector, $locator_helper);
 
 		$property = m::mock(self::PROPERTY_CLASS);
 		$locator = $factory->createLocator($property);

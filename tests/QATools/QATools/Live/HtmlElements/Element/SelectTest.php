@@ -31,7 +31,7 @@ class SelectTest extends TypifiedElementTestCase
 	public function testGetOptions()
 	{
 		/** @var Select $element */
-		$element = $this->createElement(array('id' => 'select-complex'));
+		$element = $this->createElement('id', 'select-complex');
 		$options = $element->getOptions();
 
 		$this->assertCount(3, $options);
@@ -42,7 +42,7 @@ class SelectTest extends TypifiedElementTestCase
 	public function testGetOptionsByValue()
 	{
 		/** @var Select $element */
-		$element = $this->createElement(array('id' => 'select-complex'));
+		$element = $this->createElement('id', 'select-complex');
 		$options = $element->getOptionsByValue('v1');
 
 		$this->assertCount(1, $options);
@@ -53,7 +53,7 @@ class SelectTest extends TypifiedElementTestCase
 	public function testGetOptionsByText()
 	{
 		/** @var Select $element */
-		$element = $this->createElement(array('id' => 'select-complex'));
+		$element = $this->createElement('id', 'select-complex');
 		$options = $element->getOptionsByText('t1');
 
 		$this->assertCount(1, $options);
@@ -64,7 +64,7 @@ class SelectTest extends TypifiedElementTestCase
 	public function testSelectByText()
 	{
 		/** @var Select $element */
-		$element = $this->createElement(array('id' => 'select-complex'));
+		$element = $this->createElement('id', 'select-complex');
 		$element->selectByText('t1');
 
 		$options = $element->getSelectedOptions();

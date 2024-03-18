@@ -125,7 +125,7 @@ class PageFactory implements IPageFactory
 			$container_or_config = $this->_createContainer();
 		}
 
-		$this->_setSession($session);
+		$this->_session = $session;
 		$this->config = $container_or_config['config'];
 
 		$this->_setAnnotationManager($container_or_config['annotation_manager']);
@@ -181,29 +181,9 @@ class PageFactory implements IPageFactory
 	 */
 	public function createDecorator(ISearchContext $search_context)
 	{
-		$locator_factory = new DefaultElementLocatorFactory($search_context);
+		$locator_factory = new DefaultElementLocatorFactory($search_context, $this->seleniumSelector);
 
 		return new DefaultPropertyDecorator($locator_factory, $this);
-	}
-
-	/**
-	 * Sets session.
-	 *
-	 * @param Session $session Session.
-	 *
-	 * @return self
-	 */
-	private function _setSession(Session $session)
-	{
-		$selectors_handler = $session->getSelectorsHandler();
-
-		if ( !$selectors_handler->isSelectorRegistered('se') ) {
-			$selectors_handler->registerSelector('se', new SeleniumSelector());
-		}
-
-		$this->_session = $session;
-
-		return $this;
 	}
 
 	/**

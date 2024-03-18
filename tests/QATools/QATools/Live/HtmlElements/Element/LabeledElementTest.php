@@ -32,7 +32,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	public function testGetLabel($id, $label_text)
 	{
 		/** @var LabeledElement $label_element */
-		$label_element = $this->createElement(array('id' => $id));
+		$label_element = $this->createElement('id', $id);
 		$label = $label_element->getLabel();
 
 		if ( is_null($label_text) ) {
@@ -50,7 +50,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	public function testGetLabelText($id, $label_text)
 	{
 		/** @var LabeledElement $label_element */
-		$label_element = $this->createElement(array('id' => $id));
+		$label_element = $this->createElement('id', $id);
 		$this->assertSame($label_text, $label_element->getLabelText());
 	}
 
@@ -60,7 +60,7 @@ class LabeledElementTest extends TypifiedElementTestCase
 	public function testGetText($id, $label_text)
 	{
 		/** @var LabeledElement $label_element */
-		$label_element = $this->createElement(array('id' => $id));
+		$label_element = $this->createElement('id', $id);
 		$this->assertSame($label_text, $label_element->getText());
 	}
 

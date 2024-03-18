@@ -161,7 +161,7 @@ class BlockTest extends PartTestCase
 		$this->_prepareSearchFixture();
 
 		$block = $this->createPart();
-		$node = $block->find('se', $this->_locator);
+		$node = $block->find('xpath', $this->getLocatorXPath());
 
 		$this->assertEquals('sub-xpath-1', $node->getXpath());
 	}
@@ -171,7 +171,7 @@ class BlockTest extends PartTestCase
 		$this->_prepareSearchFixture(true);
 
 		$block = $this->createPart();
-		$node = $block->find('se', $this->_locator);
+		$node = $block->find('xpath', $this->getLocatorXPath());
 
 		$this->assertNull($node);
 	}
@@ -181,7 +181,7 @@ class BlockTest extends PartTestCase
 		$this->_prepareSearchFixture();
 
 		$block = $this->createPart();
-		$nodes = $block->findAll('se', $this->_locator);
+		$nodes = $block->findAll('xpath', $this->getLocatorXPath());
 
 		$this->assertCount(2, $nodes);
 		$this->assertEquals('sub-xpath-1', $nodes[0]->getXpath());
@@ -193,9 +193,22 @@ class BlockTest extends PartTestCase
 		$this->_prepareSearchFixture(true);
 
 		$block = $this->createPart();
-		$nodes = $block->findAll('se', $this->_locator);
+		$nodes = $block->findAll('xpath', $this->getLocatorXPath());
 
 		$this->assertCount(0, $nodes);
+	}
+
+	/**
+	 * Returns xpath matching predefined locator.
+	 *
+	 * @return string
+	 */
+	protected function getLocatorXPath()
+	{
+		$how = key($this->_locator);
+		$using = $this->_locator[$how];
+
+		return $this->pageFactory->translateToXPath($how, $using);
 	}
 
 	/**
@@ -207,7 +220,9 @@ class BlockTest extends PartTestCase
 	 */
 	private function _prepareSearchFixture($empty_result = false)
 	{
-		$locator = array('className' => 'block-name__element-name');
+		$how = 'className';
+		$using = 'block-name__element-name';
+		$locator = array($how => $using);
 
 		$result1 = $result2 = array();
 
@@ -216,22 +231,27 @@ class BlockTest extends PartTestCase
 			$result2[] = $this->createNodeElement('sub-xpath-2');
 		}
 
+		$this->pageFactory->shouldReceive('translateToXPath')
+			->with($how, $using)
+			->once()
+			->andReturn('BEM_XPATH_TRANSLATED');
+
 		if ( $this->elementFinder !== null ) {
 			// Since Mink v1.11.0.
 			$this->elementFinder
 				->shouldReceive('findAll')
-				->with('se', $locator, $this->_nodes[0]->getXpath())
+				->with('xpath', 'BEM_XPATH_TRANSLATED', $this->_nodes[0]->getXpath())
 				->andReturn($result1);
 			$this->elementFinder
 				->shouldReceive('findAll')
-				->with('se', $locator, $this->_nodes[1]->getXpath())
+				->with('xpath', 'BEM_XPATH_TRANSLATED', $this->_nodes[1]->getXpath())
 				->andReturn($result2);
 		}
 		else {
 			// Older Mink version.
 			$this->selectorsHandler
 				->shouldReceive('selectorToXpath')
-				->with('se', $locator)
+				->with('xpath', 'BEM_XPATH_TRANSLATED')
 				->andReturn('BEM_XPATH');
 
 			$this->driver

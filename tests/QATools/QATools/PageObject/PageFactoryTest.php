@@ -100,9 +100,6 @@ class PageFactoryTest extends TestCase
 		$this->pageFactory->shouldReceive('initElementContainer')->andReturn(\Mockery::self());
 		$this->pageFactory->shouldReceive('initElements')->andReturn(\Mockery::self());
 
-		$this->selectorsHandler->shouldReceive('isSelectorRegistered')->andReturn(false);
-		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any());
-
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
 		$this->seleniumSelector = m::mock(SeleniumSelector::class);
 		$config = new Config(array('base_url' => 'http://domain.tld'));

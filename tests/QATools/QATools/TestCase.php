@@ -65,8 +65,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
 	protected function setUpTest()
 	{
 		$handler = m::mock('\\Behat\\Mink\\Selector\\SelectorsHandler');
-		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH'))->andReturn('XPATH');
-		$handler->shouldReceive('selectorToXpath')->with('se', array('xpath' => 'XPATH_ROOT'))->andReturn('/XPATH');
 		$this->selectorsHandler = $handler;
 
 		$this->session = m::mock('\\Behat\\Mink\\Session');

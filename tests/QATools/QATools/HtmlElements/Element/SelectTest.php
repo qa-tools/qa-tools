@@ -70,9 +70,17 @@ class SelectTest extends AbstractTypifiedElementTest
 	{
 		$this->expectDriverGetTagName('option');
 
-		$this->webElement->shouldReceive('findAll')->with('se', array('tagName' => 'option'))->once()->andReturn(
-			array($this->createNodeElement())
-		);
+		$this->pageFactory->shouldReceive('translateToXPath')
+			->with('tagName', 'option')
+			->once()
+			->andReturn('OK');
+
+		$this->webElement->shouldReceive('findAll')
+			->with('xpath', 'OK')
+			->once()
+			->andReturn(
+				array($this->createNodeElement())
+			);
 
 		$this->typifiedElement = $this->createElement();
 
