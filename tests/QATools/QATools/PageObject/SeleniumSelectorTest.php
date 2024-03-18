@@ -38,25 +38,13 @@ class SeleniumSelectorTest extends TestCase
 		$this->selector = new SeleniumSelector();
 	}
 
-	/**
-	 * @dataProvider notImplementedDataProvider
-	 */
-	public function testNotImplemented(array $locator)
+	public function testNotImplemented()
 	{
 		$this->expectException('QATools\\QATools\\PageObject\\Exception\\ElementException');
-		$this->expectExceptionMessage('Selector type "' . key($locator) . '" not yet implemented');
+		$this->expectExceptionMessage('The "not-implemented-selector" how is not yet implemented');
 		$this->expectExceptionCode(ElementException::TYPE_UNKNOWN_SELECTOR);
 
-		$this->selector->translateToXPath($locator);
-	}
-
-	public function notImplementedDataProvider()
-	{
-		return array(
-			array(
-				array('not-implemented-selector' => ''),
-			),
-		);
+		$this->selector->translateToXPath('not-implemented-selector', 'not empty');
 	}
 
 	/**
@@ -64,7 +52,7 @@ class SeleniumSelectorTest extends TestCase
 	 *
 	 * @dataProvider correctDataProvider
 	 */
-	public function testCorrect(array $locator, $expected_count)
+	public function testCorrect($how, $using, $expected_count)
 	{
 		$dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -75,7 +63,7 @@ class SeleniumSelectorTest extends TestCase
 			$dom->loadHTMLFile(__DIR__ . '/Fixture/selector_test.html');
 		}
 
-		$xpath = $this->selector->translateToXPath($locator);
+		$xpath = $this->selector->translateToXPath($how, $using);
 
 		$dom_xpath = new \DOMXPath($dom);
 		$node_list = $dom_xpath->query($xpath);
@@ -92,90 +80,72 @@ class SeleniumSelectorTest extends TestCase
 	{
 		return array(
 			How::CLASS_NAME . ' (partial)' => array(
-				array(How::CLASS_NAME => 'class-one'), 2,
+				How::CLASS_NAME, 'class-one', 2,
 			),
 			How::CLASS_NAME . ' (exact)' => array(
-				array(How::CLASS_NAME => 'class-two'), 1,
+				How::CLASS_NAME, 'class-two', 1,
 			),
 			How::CSS . ' (tag name)' => array(
-				array(How::CSS => 'p'), 2,
+				How::CSS, 'p', 2,
 			),
 			How::CSS . ' (id)' => array(
-				array(How::CSS => '#the-paragraph'), 1,
+				How::CSS, '#the-paragraph', 1,
 			),
 			How::CSS . ' (class name)' => array(
-				array(How::CSS => '.class-one'), 2,
+				How::CSS, '.class-one', 2,
 			),
 			How::CSS . ' (mix)' => array(
-				array(How::CSS => '.class-one.class-two'), 1,
+				How::CSS, '.class-one.class-two', 1,
 			),
 			How::ID => array(
-				array(How::ID => 'the-paragraph'), 1,
+				How::ID, 'the-paragraph', 1,
 			),
 			How::NAME => array(
-				array(How::NAME => 'field'), 3,
+				How::NAME, 'field', 3,
 			),
 			How::ID_OR_NAME => array(
-				array(How::ID_OR_NAME => 'field'), 4,
+				How::ID_OR_NAME, 'field', 4,
 			),
 			How::LINK_TEXT => array(
-				array(How::LINK_TEXT => 'cheese'), 1,
+				How::LINK_TEXT, 'cheese', 1,
 			),
 			How::PARTIAL_LINK_TEXT => array(
-				array(How::PARTIAL_LINK_TEXT => 'cheese'), 2,
+				How::PARTIAL_LINK_TEXT, 'cheese', 2,
 			),
 			How::TAG_NAME => array(
-				array(How::TAG_NAME => 'a'), 3,
+				How::TAG_NAME, 'a', 3,
 			),
 			How::XPATH => array(
-				array(How::XPATH => 'descendant-or-self::a[@name]'), 1,
+				How::XPATH, 'descendant-or-self::a[@name]', 1,
 			),
 			How::LABEL . ' (incomplete label)' => array(
-				array(How::LABEL => 'label'), 0,
+				How::LABEL, 'label', 0,
 			),
 			How::LABEL . ' (preceding-label)' => array(
-				array(How::LABEL => 'label text 2'), 1,
+				How::LABEL, 'label text 2', 1,
 			),
 			How::LABEL . ' (following-label)' => array(
-				array(How::LABEL => 'label text 3'), 1,
+				How::LABEL, 'label text 3', 1,
 			),
 			How::LABEL . ' (label-input-inside)' => array(
-				array(How::LABEL => 'label text 4'), 1,
+				How::LABEL, 'label text 4', 1,
 			),
 			How::LABEL . ' (label-textarea)' => array(
-				array(How::LABEL => 'label textarea'), 1,
+				How::LABEL, 'label textarea', 1,
 			),
 			How::LABEL . ' (label-select)' => array(
-				array(How::LABEL => 'label select'), 1,
+				How::LABEL, 'label select', 1,
 			),
 		);
 	}
 
-	/**
-	 * Testing incorrect locators.
-	 *
-	 * @dataProvider incorrectDataProvider
-	 */
-	public function testIncorrect($locator)
+	public function testIncorrect()
 	{
 		$this->expectException('\QATools\QATools\PageObject\Exception\ElementException');
 		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_INCORRECT_SELECTOR);
-		$this->expectExceptionMessage('Incorrect Selenium selector format');
+		$this->expectExceptionMessage('The "using" part the Selenium selector is empty');
 
-		$this->selector->translateToXPath($locator);
-	}
-
-	/**
-	 * Returns locators, in incorrect format.
-	 *
-	 * @return array
-	 */
-	public function incorrectDataProvider()
-	{
-		return array(
-			array(''),
-			array('//html'),
-		);
+		$this->selector->translateToXPath(How::ID, '');
 	}
 
 }
