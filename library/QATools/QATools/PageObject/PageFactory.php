@@ -88,6 +88,13 @@ class PageFactory implements IPageFactory
 	protected $pageUrlMatcherRegistry;
 
 	/**
+	 * Selenium selector.
+	 *
+	 * @var SeleniumSelector
+	 */
+	protected $seleniumSelector;
+
+	/**
 	 * The current config.
 	 *
 	 * @var IConfig
@@ -126,6 +133,7 @@ class PageFactory implements IPageFactory
 		$this->urlNormalizer = $container_or_config['url_normalizer'];
 		$this->pageLocator = $container_or_config['page_locator'];
 		$this->pageUrlMatcherRegistry = $container_or_config['page_url_matcher_registry'];
+		$this->seleniumSelector = $container_or_config['selenium_selector'];
 	}
 
 	/**
@@ -324,6 +332,19 @@ class PageFactory implements IPageFactory
 		$resolved_page_class = $this->pageLocator->resolvePage($class_name);
 
 		return new $resolved_page_class($this);
+	}
+
+	/**
+	 * Translates provided how/using combo into XPath.
+	 *
+	 * @param string $how   How class constant.
+	 * @param string $using Using value.
+	 *
+	 * @return string
+	 */
+	public function translateToXPath($how, $using)
+	{
+		return $this->seleniumSelector->translateToXPath($how, $using);
 	}
 
 }

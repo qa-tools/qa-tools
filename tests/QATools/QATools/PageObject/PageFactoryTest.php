@@ -23,6 +23,7 @@ use QATools\QATools\PageObject\Page;
 use QATools\QATools\PageObject\PageFactory;
 use QATools\QATools\PageObject\Property;
 use QATools\QATools\PageObject\PropertyDecorator\IPropertyDecorator;
+use QATools\QATools\PageObject\SeleniumSelector;
 use tests\QATools\QATools\PageObject\Fixture\Page\PageChild;
 use tests\QATools\QATools\TestCase;
 
@@ -66,6 +67,13 @@ class PageFactoryTest extends TestCase
 	protected $annotationManager;
 
 	/**
+	 * Selenium selector.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $seleniumSelector;
+
+	/**
 	 * Page factory.
 	 *
 	 * @var PageFactory
@@ -96,6 +104,7 @@ class PageFactoryTest extends TestCase
 		$this->selectorsHandler->shouldReceive('registerSelector')->with('se', m::any());
 
 		$this->annotationManager = m::mock(self::ANNOTATION_MANAGER_CLASS);
+		$this->seleniumSelector = m::mock(SeleniumSelector::class);
 		$config = new Config(array('base_url' => 'http://domain.tld'));
 
 		$this->container['config'] = $config;
@@ -237,7 +246,7 @@ class PageFactoryTest extends TestCase
 
 	public function testGetPage()
 	{
-		$factory = $this->createFactory(true, array('initPage', 'initElements', 'createDecorator'));
+		$factory = $this->createFactory(array('initPage', 'initElements', 'createDecorator'));
 		$factory->shouldReceive('initPage')->andReturn($factory);
 		$factory->shouldReceive('initElements')->andReturn($factory);
 		$factory->shouldReceive('createDecorator')->andReturn($this->createNullDecorator());
@@ -282,6 +291,16 @@ class PageFactoryTest extends TestCase
 			'regexp matched' => array('http://www.domain.tld/absolute', true),
 			'nothing matched' => array('http://www.domain.tld/absolute/path', false),
 		);
+	}
+
+	public function testTranslateToXPath()
+	{
+		$this->seleniumSelector->shouldReceive('translateToXPath')
+			->with('how1', 'using1')
+			->once()
+			->andReturn('XPATH');
+
+		$this->assertEquals('XPATH', $this->createFactory()->translateToXPath('how1', 'using1'));
 	}
 
 	/**
@@ -368,16 +387,14 @@ class PageFactoryTest extends TestCase
 	/**
 	 * Creates factory.
 	 *
-	 * @param boolean $with_annotation_manager Use mock annotation manager.
-	 * @param array   $mock_methods            Methods to mock.
+	 * @param array $mock_methods Methods to mock.
 	 *
 	 * @return PageFactory
 	 */
-	protected function createFactory($with_annotation_manager = true, array $mock_methods = array())
+	protected function createFactory(array $mock_methods = array())
 	{
-		if ( $with_annotation_manager ) {
-			$this->container['annotation_manager'] = $this->annotationManager;
-		}
+		$this->container['annotation_manager'] = $this->annotationManager;
+		$this->container['selenium_selector'] = $this->seleniumSelector;
 
 		if ( $mock_methods ) {
 			$factory = m::mock(
