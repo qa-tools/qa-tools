@@ -29,7 +29,7 @@ class TextInput extends AbstractTypifiedElement implements ISimpleSetter
 	/**
 	 * Clears all the text entered into this text input.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function clear()
 	{
@@ -43,7 +43,7 @@ class TextInput extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $keys Text to print.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function sendKeys($keys)
 	{
@@ -67,7 +67,7 @@ class TextInput extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value)
 	{

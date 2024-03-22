@@ -49,7 +49,7 @@ abstract class AbstractTypifiedElementCollection extends AbstractElementCollecti
 	 *
 	 * @param string $name Name to set.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setName($name)
 	{

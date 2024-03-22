@@ -98,7 +98,7 @@ class TypifiedElementProxy extends AbstractProxy implements ITypifiedElement
 	 *
 	 * @param string $name Name to set.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setName($name)
 	{

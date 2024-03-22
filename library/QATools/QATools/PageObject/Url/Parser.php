@@ -91,7 +91,7 @@ class Parser
 	 *
 	 * @param array $params GET params.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setParams(array $params)
 	{
@@ -105,7 +105,7 @@ class Parser
 	 *
 	 * @param Parser $parser The url parser to merge.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function merge(Parser $parser)
 	{

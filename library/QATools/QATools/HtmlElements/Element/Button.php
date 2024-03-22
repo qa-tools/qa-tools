@@ -31,7 +31,7 @@ class Button extends AbstractTypifiedElement
 	/**
 	 * Clicks the button.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function click()
 	{

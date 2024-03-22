@@ -132,7 +132,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 * @param string  $text        The visible text to match against.
 	 * @param boolean $exact_match Search for exact text.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws SelectException No options were found by given text.
 	 */
 	public function selectByText($text, $exact_match = true)
@@ -152,7 +152,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 * @param string  $text        The visible text to match against.
 	 * @param boolean $exact_match Search for exact text.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function deselectByText($text, $exact_match = true)
 	{
@@ -168,7 +168,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $value The value to match against.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws SelectException When option with given value can't be found.
 	 */
 	public function selectByValue($value)
@@ -187,7 +187,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $value Value of an option be be deselected.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function deselectByValue($value)
 	{
@@ -201,7 +201,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	/**
 	 * Selects all options.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function selectAll()
 	{
@@ -215,7 +215,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param array $values Values of options to select.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setSelected(array $values)
 	{
@@ -236,7 +236,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	/**
 	 * Deselects all options.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function deselectAll()
 	{
@@ -254,7 +254,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value)
 	{
@@ -271,7 +271,7 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 * @param array|SelectOption[] $options    Options to be selected.
 	 * @param boolean              $first_only Select only first option.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	protected function selectOptions(array $options, $first_only = false)
 	{

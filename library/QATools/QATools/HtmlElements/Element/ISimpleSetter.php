@@ -24,7 +24,7 @@ interface ISimpleSetter
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value);
 
