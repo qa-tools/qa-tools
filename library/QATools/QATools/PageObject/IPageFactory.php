@@ -85,4 +85,14 @@ interface IPageFactory
 	 */
 	public function opened(Page $page);
 
+	/**
+	 * Translates provided how/using combo into XPath.
+	 *
+	 * @param string $how   How class constant.
+	 * @param string $using Using value.
+	 *
+	 * @return string
+	 */
+	public function translateToXPath($how, $using);
+
 }

@@ -17,6 +17,7 @@ use QATools\QATools\PageObject\Annotation\FindByAnnotation;
 use Mockery as m;
 use QATools\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
+use QATools\QATools\PageObject\SeleniumSelector;
 use Yoast\PHPUnitPolyfills\Polyfills\ExpectException;
 
 class DefaultElementLocatorTest extends TestCase
@@ -57,6 +58,13 @@ class DefaultElementLocatorTest extends TestCase
 	protected $searchContext;
 
 	/**
+	 * Selenium selector.
+	 *
+	 * @var \Mockery\MockInterface
+	 */
+	protected $seleniumSelector;
+
+	/**
 	 * Locator.
 	 *
 	 * @var DefaultElementLocator
@@ -70,6 +78,7 @@ class DefaultElementLocatorTest extends TestCase
 	{
 		$this->property = m::mock(self::PROPERTY_CLASS);
 		$this->searchContext = m::mock($this->searchContextClass);
+		$this->seleniumSelector = m::mock(SeleniumSelector::class);
 
 		$this->locator = $this->createLocator();
 	}
@@ -106,7 +115,15 @@ class DefaultElementLocatorTest extends TestCase
 		$this->property->shouldReceive('isDataTypeCollection')->andReturn($is_collection);
 
 		foreach ( $selectors as $selector ) {
-			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK'));
+			$how = key($selector);
+			$using = $selector[$how];
+
+			$this->expectXPathTranslation($how, $using);
+
+			$this->searchContext->shouldReceive('findAll')
+				->with('xpath', '{{' . $using . '}}')
+				->once()
+				->andReturn(array('OK'));
 		}
 
 		$this->assertCount(count($selectors), $this->locator->findAll());
@@ -115,11 +132,11 @@ class DefaultElementLocatorTest extends TestCase
 	public function selectorProvider()
 	{
 		return array(
-			array(array(array('xpath' => 'xpath1')), false, false),
-			array(array(array('xpath' => 'xpath1')), true, false),
-			array(array(array('xpath' => 'xpath1')), false, true),
-			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2')), true, false),
-			array(array(array('xpath' => 'xpath1'), array('xpath' => 'xpath2')), false, true),
+			array(array(array('how1' => 'using1')), false, false),
+			array(array(array('how1' => 'using1')), true, false),
+			array(array(array('how1' => 'using1')), false, true),
+			array(array(array('how1' => 'using1'), array('how2' => 'using2')), true, false),
+			array(array(array('how1' => 'using1'), array('how2' => 'using2')), false, true),
 		);
 	}
 
@@ -129,7 +146,9 @@ class DefaultElementLocatorTest extends TestCase
 		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND);
 		$this->expectExceptionMessage('The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.');
 
-		$selector = array('xpath' => 'xpath1');
+		$how = 'how1';
+		$using = 'using1';
+		$selector = array($how => $using);
 
 		$this->expectFindByAnnotations(array($selector));
 
@@ -138,7 +157,12 @@ class DefaultElementLocatorTest extends TestCase
 		$this->property->shouldReceive('getRawDataType')->andReturn('SingleElement');
 		$this->property->shouldReceive('__toString')->andReturn('TestPage::button');
 
-		$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK1', 'OK2'));
+		$this->expectXPathTranslation($how, $using);
+
+		$this->searchContext->shouldReceive('findAll')
+			->with('xpath', '{{' . $using . '}}')
+			->once()
+			->andReturn(array('OK1', 'OK2'));
 
 		$this->locator->findAll();
 	}
@@ -172,7 +196,7 @@ class DefaultElementLocatorTest extends TestCase
 		$expected = 'OK';
 		$this->expectFindByAnnotations('OK');
 
-		$this->assertEquals(var_export(array(array('se' => $expected)), true), (string)$this->locator);
+		$this->assertEquals(var_export(array($expected), true), (string)$this->locator);
 	}
 
 	/**
@@ -201,6 +225,24 @@ class DefaultElementLocatorTest extends TestCase
 	}
 
 	/**
+	 * Expect xpath translations.
+	 *
+	 * @param string $how   How.
+	 * @param string $using Using.
+	 *
+	 * @return void
+	 */
+	protected function expectXPathTranslation($how, $using)
+	{
+		$this->seleniumSelector->shouldReceive('translateToXPath')
+			->with($how, $using)
+			->once()
+			->andReturnUsing(function ($how, $using) {
+				return '{{' . $using . '}}';
+			});
+	}
+
+	/**
 	 * Creates locator.
 	 *
 	 * @param array $mock_methods Mock methods.
@@ -212,10 +254,10 @@ class DefaultElementLocatorTest extends TestCase
 		if ( $mock_methods ) {
 			$class = $this->locatorClass . '[' . implode(',', $mock_methods) . ']';
 
-			return m::mock($class, array($this->property, $this->searchContext));
+			return m::mock($class, array($this->property, $this->searchContext, $this->seleniumSelector));
 		}
 
-		return new $this->locatorClass($this->property, $this->searchContext);
+		return new $this->locatorClass($this->property, $this->searchContext, $this->seleniumSelector);
 	}
 
 }

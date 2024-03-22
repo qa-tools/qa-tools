@@ -44,7 +44,15 @@ class WaitingElementLocatorTest extends DefaultElementLocatorTest
 		$this->property->shouldReceive('isDataTypeCollection')->andReturn($is_collection);
 
 		foreach ( $selectors as $selector ) {
-			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array($node_element));
+			$how = key($selector);
+			$using = $selector[$how];
+
+			$this->expectXPathTranslation($how, $using);
+
+			$this->searchContext->shouldReceive('findAll')
+				->with('xpath', '{{' . $using . '}}')
+				->once()
+				->andReturn(array($node_element));
 		}
 
 		$this->searchContext

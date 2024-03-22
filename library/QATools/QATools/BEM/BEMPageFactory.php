@@ -60,7 +60,11 @@ class BEMPageFactory extends PageFactory
 	 */
 	public function createDecorator(ISearchContext $search_context)
 	{
-		$locator_factory = new BEMElementLocatorFactory($search_context, $this->_locatorHelper);
+		$locator_factory = new BEMElementLocatorFactory(
+			$search_context,
+			$this->seleniumSelector,
+			$this->_locatorHelper
+		);
 
 		return new BEMPropertyDecorator($locator_factory, $this);
 	}

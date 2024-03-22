@@ -77,6 +77,10 @@ class Container extends BaseContainer
 
 			return $page_url_matcher_registry;
 		};
+
+		$this['selenium_selector'] = function () {
+			return new SeleniumSelector();
+		};
 	}
 
 }

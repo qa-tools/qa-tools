@@ -18,6 +18,7 @@ use QATools\QATools\PageObject\Annotation\PageUrlAnnotation;
 use QATools\QATools\PageObject\Config\Config;
 use QATools\QATools\PageObject\Container;
 use QATools\QATools\PageObject\PageLocator\DefaultPageLocator;
+use QATools\QATools\PageObject\SeleniumSelector;
 use QATools\QATools\PageObject\Url\Normalizer;
 
 class ContainerTest extends TestCase
@@ -102,6 +103,14 @@ class ContainerTest extends TestCase
 		$this->assertInstanceOf(
 			'\\QATools\\QATools\\PageObject\\PageUrlMatcher\\PageUrlMatcherRegistry',
 			$this->container['page_url_matcher_registry']
+		);
+	}
+
+	public function testSeleniumSelector()
+	{
+		$this->assertInstanceOf(
+			SeleniumSelector::class,
+			$this->container['selenium_selector']
 		);
 	}
 

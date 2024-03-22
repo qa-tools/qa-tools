@@ -17,6 +17,7 @@ use QATools\QATools\PageObject\ElementLocator\DefaultElementLocator;
 use QATools\QATools\PageObject\Exception\AnnotationException;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
+use QATools\QATools\PageObject\SeleniumSelector;
 
 /**
  * Locates BEM blocks/elements.
@@ -36,16 +37,18 @@ class BEMElementLocator extends DefaultElementLocator
 	/**
 	 * Creates a new element locator.
 	 *
-	 * @param Property       $property       Property.
-	 * @param ISearchContext $search_context The context to use when finding the element.
-	 * @param LocatorHelper  $locator_helper Locator helper.
+	 * @param Property         $property          Property.
+	 * @param ISearchContext   $search_context    The context to use when finding the element.
+	 * @param SeleniumSelector $selenium_selector Selenium selector.
+	 * @param LocatorHelper    $locator_helper    Locator helper.
 	 */
 	public function __construct(
 		Property $property,
 		ISearchContext $search_context,
+		SeleniumSelector $selenium_selector,
 		LocatorHelper $locator_helper
 	) {
-		parent::__construct($property, $search_context);
+		parent::__construct($property, $search_context, $selenium_selector);
 
 		$this->_helper = $locator_helper;
 	}

@@ -38,6 +38,13 @@ class Block extends AbstractPart implements IBlock
 	private $_locator;
 
 	/**
+	 * Page factory.
+	 *
+	 * @var IPageFactory
+	 */
+	private $_pageFactory;
+
+	/**
 	 * Create instance of BEM block.
 	 *
 	 * @param string              $name         Block name.
@@ -51,6 +58,7 @@ class Block extends AbstractPart implements IBlock
 
 		$this->_nodes = $nodes;
 		$this->_locator = $locator;
+		$this->_pageFactory = $page_factory;
 
 		$page_factory->initElements($this, $page_factory->createDecorator($this));
 	}
@@ -99,7 +107,11 @@ class Block extends AbstractPart implements IBlock
 			$modificator_value
 		);
 
-		return $this->findAll('se', $locator);
+		$how = key($locator);
+		$using = $locator[$how];
+		$xpath = $this->_pageFactory->translateToXPath($how, $using);
+
+		return $this->findAll('xpath', $xpath);
 	}
 
 	/**

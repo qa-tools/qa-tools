@@ -13,6 +13,7 @@ namespace QATools\QATools\PageObject\ElementLocator;
 
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
+use QATools\QATools\PageObject\SeleniumSelector;
 
 /**
  * Factory, that creates locators for finding WebElements.
@@ -30,13 +31,22 @@ class DefaultElementLocatorFactory implements IElementLocatorFactory
 	protected $searchContext;
 
 	/**
+	 * Selenium selector.
+	 *
+	 * @var SeleniumSelector
+	 */
+	protected $seleniumSelector;
+
+	/**
 	 * Create locator factory instance.
 	 *
-	 * @param ISearchContext $search_context Search context.
+	 * @param ISearchContext   $search_context    Search context.
+	 * @param SeleniumSelector $selenium_selector Selenium selector.
 	 */
-	public function __construct(ISearchContext $search_context)
+	public function __construct(ISearchContext $search_context, SeleniumSelector $selenium_selector)
 	{
 		$this->searchContext = $search_context;
+		$this->seleniumSelector = $selenium_selector;
 	}
 
 	/**
@@ -48,7 +58,7 @@ class DefaultElementLocatorFactory implements IElementLocatorFactory
 	 */
 	public function createLocator(Property $property)
 	{
-		return new WaitingElementLocator($property, $this->searchContext);
+		return new WaitingElementLocator($property, $this->searchContext, $this->seleniumSelector);
 	}
 
 }

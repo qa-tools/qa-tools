@@ -98,13 +98,6 @@ abstract class AbstractProxyTestCase extends AbstractElementCollectionTestCase
 			$this->createNodeElement('XPATH2'),
 		);
 
-		foreach ( $node_elements as $node_element ) {
-			$this->selectorsHandler
-				->shouldReceive('selectorToXpath')
-				->with('se', array('xpath' => $node_element->getXpath()))
-				->andReturn($node_element->getXpath());
-		}
-
 		$this->locator->shouldReceive('findAll')->once()->andReturn($node_elements);
 
 		return $node_elements;

@@ -17,6 +17,7 @@ use QATools\QATools\PageObject\Exception\AnnotationException;
 use QATools\QATools\PageObject\Exception\ElementException;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
+use QATools\QATools\PageObject\SeleniumSelector;
 
 /**
  * Class, that locates WebElements.
@@ -41,15 +42,27 @@ class DefaultElementLocator implements IElementLocator
 	protected $property;
 
 	/**
+	 * Selenium selector.
+	 *
+	 * @var SeleniumSelector
+	 */
+	protected $seleniumSelector;
+
+	/**
 	 * Creates a new element locator.
 	 *
-	 * @param Property       $property       Property.
-	 * @param ISearchContext $search_context The context to use when finding the element.
+	 * @param Property         $property          Property.
+	 * @param ISearchContext   $search_context    The context to use when finding the element.
+	 * @param SeleniumSelector $selenium_selector Selenium selector.
 	 */
-	public function __construct(Property $property, ISearchContext $search_context)
-	{
+	public function __construct(
+		Property $property,
+		ISearchContext $search_context,
+		SeleniumSelector $selenium_selector
+	) {
 		$this->property = $property;
 		$this->searchContext = $search_context;
+		$this->seleniumSelector = $selenium_selector;
 	}
 
 	/**
@@ -85,7 +98,11 @@ class DefaultElementLocator implements IElementLocator
 		$elements = array();
 
 		foreach ( $this->getSelectors() as $selector ) {
-			$elements = array_merge($elements, $this->searchContext->findAll('se', $selector));
+			$how = key($selector);
+			$using = $selector[$how];
+			$xpath = $this->seleniumSelector->translateToXPath($how, $using);
+
+			$elements = array_merge($elements, $this->searchContext->findAll('xpath', $xpath));
 		}
 
 		$element_count = count($elements);
@@ -164,7 +181,7 @@ class DefaultElementLocator implements IElementLocator
 		$selectors = $this->getSelectors();
 
 		foreach ( $selectors as $selector ) {
-			$exported_selectors[] = array('se' => $selector);
+			$exported_selectors[] = $selector;
 		}
 
 		return var_export($exported_selectors, true);

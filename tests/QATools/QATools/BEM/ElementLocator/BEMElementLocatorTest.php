@@ -65,7 +65,14 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		}
 
 		foreach ( $selectors as $selector ) {
-			$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK'));
+			$how = key($selector);
+			$using = $selector[$how];
+
+			$this->expectXPathTranslation($how, $using);
+
+			$this->searchContext->shouldReceive('findAll')
+				->with('xpath', '{{' . $using . '}}')
+				->andReturn(array('OK'));
 		}
 
 		$this->searchContext->shouldReceive('getName')->times(count($selectors))->andReturn('block-name');
@@ -83,15 +90,23 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 
 	public function testGetSelectorBlock()
 	{
-		$expected = array('xpath' => 'xpath1');
-		$annotations = $this->expectBEMAnnotation(array($expected));
+		$how = 'how1';
+		$using = 'using1';
+		$annotations = $this->expectBEMAnnotation(array(
+			array($how => $using),
+		));
 
 		$this->property->shouldReceive('isDataTypeArray')->andReturn(false);
 		$this->property->shouldReceive('isDataTypeCollection')->andReturn(false);
 
 		$annotations[0]->block = 'block-name';
 
-		$this->searchContext->shouldReceive('findAll')->with('se', $expected)->andReturn(array());
+		$this->expectXPathTranslation($how, $using);
+
+		$this->searchContext->shouldReceive('findAll')
+			->with('xpath', '{{' . $using . '}}')
+			->once()
+			->andReturn(array());
 		$this->searchContext->shouldReceive('getName')->never();
 
 		$this->assertEquals('', $annotations[0]->element, 'element name isn\'t touched');
@@ -104,16 +119,23 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$this->expectExceptionCode(\QATools\QATools\PageObject\Exception\ElementException::TYPE_MULTIPLE_ELEMENTS_FOUND);
 		$this->expectExceptionMessage('The "SingleElement" used on "TestPage::button" property expects finding 1 element, but 2 elements were found.');
 
-		$selector = array('xpath' => 'xpath1');
-
-		$this->expectBEMAnnotation(array($selector));
+		$how = 'how1';
+		$using = 'using1';
+		$this->expectBEMAnnotation(array(
+			array($how => $using),
+		));
 
 		$this->property->shouldReceive('isDataTypeArray')->andReturn(false);
 		$this->property->shouldReceive('isDataTypeCollection')->andReturn(false);
 		$this->property->shouldReceive('getRawDataType')->andReturn('SingleElement');
 		$this->property->shouldReceive('__toString')->andReturn('TestPage::button');
 
-		$this->searchContext->shouldReceive('findAll')->with('se', $selector)->andReturn(array('OK1', 'OK2'));
+		$this->expectXPathTranslation($how, $using);
+
+		$this->searchContext->shouldReceive('findAll')
+			->with('xpath', '{{' . $using . '}}')
+			->once()
+			->andReturn(array('OK1', 'OK2'));
 
 		$this->locator->findAll();
 	}
@@ -139,7 +161,7 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 		$expected = 'OK';
 		$this->expectBEMAnnotation('OK');
 
-		$this->assertEquals(var_export(array(array('se' => $expected)), true), (string)$this->locator);
+		$this->assertEquals(var_export(array($expected), true), (string)$this->locator);
 	}
 
 	/**
@@ -208,13 +230,14 @@ class BEMElementLocatorTest extends DefaultElementLocatorTest
 
 			return m::mock(
 				$class,
-				array($this->property, $this->searchContext, $this->_locatorHelper)
+				array($this->property, $this->searchContext, $this->seleniumSelector, $this->_locatorHelper)
 			);
 		}
 
 		return new $this->locatorClass(
 			$this->property,
 			$this->searchContext,
+			$this->seleniumSelector,
 			$this->_locatorHelper
 		);
 	}

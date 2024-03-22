@@ -47,7 +47,12 @@ class Select extends AbstractTypifiedElement implements ISimpleSetter
 	 */
 	public function getOptions()
 	{
-		return $this->wrapOptions($this->getWrappedElement()->findAll('se', array(How::TAG_NAME => 'option')));
+		return $this->wrapOptions(
+			$this->getWrappedElement()->findAll(
+				'xpath',
+				$this->getPageFactory()->translateToXPath(How::TAG_NAME, 'option')
+			)
+		);
 	}
 
 	/**

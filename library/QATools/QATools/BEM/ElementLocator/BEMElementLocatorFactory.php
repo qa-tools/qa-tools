@@ -15,6 +15,7 @@ use QATools\QATools\PageObject\ElementLocator\DefaultElementLocatorFactory;
 use QATools\QATools\PageObject\ElementLocator\IElementLocator;
 use QATools\QATools\PageObject\ISearchContext;
 use QATools\QATools\PageObject\Property;
+use QATools\QATools\PageObject\SeleniumSelector;
 
 /**
  * Factory to create BEM block/element locators.
@@ -34,14 +35,16 @@ class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 	/**
 	 * Create locator factory instance.
 	 *
-	 * @param ISearchContext $search_context Search context.
-	 * @param LocatorHelper  $locator_helper Locator helper.
+	 * @param ISearchContext   $search_context    Search context.
+	 * @param SeleniumSelector $selenium_selector Selenium selector.
+	 * @param LocatorHelper    $locator_helper    Locator helper.
 	 */
 	public function __construct(
 		ISearchContext $search_context,
+		SeleniumSelector $selenium_selector,
 		LocatorHelper $locator_helper
 	) {
-		parent::__construct($search_context);
+		parent::__construct($search_context, $selenium_selector);
 		$this->_locatorHelper = $locator_helper;
 	}
 
@@ -54,7 +57,7 @@ class BEMElementLocatorFactory extends DefaultElementLocatorFactory
 	 */
 	public function createLocator(Property $property)
 	{
-		return new BEMElementLocator($property, $this->searchContext, $this->_locatorHelper);
+		return new BEMElementLocator($property, $this->searchContext, $this->seleniumSelector, $this->_locatorHelper);
 	}
 
 }

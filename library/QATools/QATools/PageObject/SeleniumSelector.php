@@ -12,7 +12,6 @@ namespace QATools\QATools\PageObject;
 
 
 use Behat\Mink\Selector\CssSelector;
-use Behat\Mink\Selector\SelectorInterface;
 use Behat\Mink\Selector\Xpath\Escaper;
 use QATools\QATools\PageObject\Exception\ElementException;
 
@@ -23,7 +22,7 @@ use QATools\QATools\PageObject\Exception\ElementException;
  *
  * @link http://bit.ly/qa-tools-findby-selector
  */
-class SeleniumSelector implements SelectorInterface
+class SeleniumSelector
 {
 
 	/**
@@ -50,74 +49,75 @@ class SeleniumSelector implements SelectorInterface
 	}
 
 	/**
-	 * Translates provided locator into XPath.
+	 * Translates provided how/using combo into XPath.
 	 *
-	 * @param mixed $locator Current selector locator.
+	 * @param string $how   How class constant.
+	 * @param string $using Using value.
 	 *
 	 * @return string
-	 * @throws ElementException When used selector is broken or not implemented.
+	 * @throws ElementException When given "$how" is not implemented.
+	 * @throws ElementException When given "$using" is empty.
 	 */
-	public function translateToXPath($locator)
+	public function translateToXPath($how, $using)
 	{
-		if ( !$locator || !is_array($locator) ) {
+		if ( empty($using) ) {
 			throw new ElementException(
-				'Incorrect Selenium selector format',
+				'The "using" part the Selenium selector is empty',
 				ElementException::TYPE_INCORRECT_SELECTOR
 			);
 		}
 
-		$selector = key($locator);
-		$locator = trim($locator[$selector]);
+		$using = trim($using);
 
-		if ( $selector == How::CLASS_NAME ) {
-			$locator = $this->_xpathEscaper->escapeLiteral(' ' . $locator . ' ');
+		if ( $how == How::CLASS_NAME ) {
+			$using = $this->_xpathEscaper->escapeLiteral(' ' . $using . ' ');
 
-			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), " . $locator . ')]';
+			return "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), " . $using . ')]';
 		}
-		elseif ( $selector == How::CSS ) {
-			return $this->_cssSelector->translateToXPath($locator);
+		elseif ( $how == How::CSS ) {
+			return $this->_cssSelector->translateToXPath($using);
 		}
-		elseif ( $selector == How::ID ) {
-			return 'descendant-or-self::*[@id = ' . $this->_xpathEscaper->escapeLiteral($locator) . ']';
+		elseif ( $how == How::ID ) {
+			return 'descendant-or-self::*[@id = ' . $this->_xpathEscaper->escapeLiteral($using) . ']';
 		}
-		elseif ( $selector == How::NAME ) {
-			return 'descendant-or-self::*[@name = ' . $this->_xpathEscaper->escapeLiteral($locator) . ']';
+		elseif ( $how == How::NAME ) {
+			return 'descendant-or-self::*[@name = ' . $this->_xpathEscaper->escapeLiteral($using) . ']';
 		}
-		elseif ( $selector == How::ID_OR_NAME ) {
-			$locator = $this->_xpathEscaper->escapeLiteral($locator);
+		elseif ( $how == How::ID_OR_NAME ) {
+			$using = $this->_xpathEscaper->escapeLiteral($using);
 
-			return 'descendant-or-self::*[@id = ' . $locator . ' or @name = ' . $locator . ']';
+			return 'descendant-or-self::*[@id = ' . $using . ' or @name = ' . $using . ']';
 		}
-		elseif ( $selector == How::TAG_NAME ) {
-			return 'descendant-or-self::' . $locator;
+		elseif ( $how == How::TAG_NAME ) {
+			return 'descendant-or-self::' . $using;
 		}
-		elseif ( $selector == How::LINK_TEXT ) {
-			$locator = $this->_xpathEscaper->escapeLiteral($locator);
+		elseif ( $how == How::LINK_TEXT ) {
+			$using = $this->_xpathEscaper->escapeLiteral($using);
 
-			return 'descendant-or-self::a[./@href][normalize-space(string(.)) = ' . $locator . ']';
+			return 'descendant-or-self::a[./@href][normalize-space(string(.)) = ' . $using . ']';
 		}
-		elseif ( $selector == How::LABEL ) {
-			$locator = $this->_xpathEscaper->escapeLiteral($locator);
+		elseif ( $how == How::LABEL ) {
+			$using = $this->_xpathEscaper->escapeLiteral($using);
 			$xpath_pieces = array();
-			$xpath_pieces[] = 'descendant-or-self::*[@id = (//label[normalize-space(string(.)) = ' . $locator . ']/@for)]';
-			$xpath_pieces[] = 'descendant-or-self::label[normalize-space(string(.)) = ' . $locator . ']//input';
+			$xpath_pieces[] = 'descendant-or-self::*[@id = (//label[normalize-space(string(.)) = ' . $using . ']/@for)]';
+			$xpath_pieces[] = 'descendant-or-self::label[normalize-space(string(.)) = ' . $using . ']//input';
 
 			return implode('|', $xpath_pieces);
 		}
-		elseif ( $selector == How::PARTIAL_LINK_TEXT ) {
-			$locator = $this->_xpathEscaper->escapeLiteral($locator);
+		elseif ( $how == How::PARTIAL_LINK_TEXT ) {
+			$using = $this->_xpathEscaper->escapeLiteral($using);
 
-			return 'descendant-or-self::a[./@href][contains(normalize-space(string(.)), ' . $locator . ')]';
+			return 'descendant-or-self::a[./@href][contains(normalize-space(string(.)), ' . $using . ')]';
 		}
-		elseif ( $selector == How::XPATH ) {
-			return $locator;
+		elseif ( $how == How::XPATH ) {
+			return $using;
 		}
 
 		/*case How::LINK_TEXT:
 		case How::PARTIAL_LINK_TEXT:*/
 
 		throw new ElementException(
-			sprintf('Selector type "%s" not yet implemented', $selector),
+			sprintf('The "%s" how is not yet implemented', $how),
 			ElementException::TYPE_UNKNOWN_SELECTOR
 		);
 	}
