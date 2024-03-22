@@ -25,7 +25,7 @@ interface IConfig
 	 * @param string $name  Config option name.
 	 * @param mixed  $value Config option value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setOption($name, $value);
 

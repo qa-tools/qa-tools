@@ -36,7 +36,7 @@ class Form extends AbstractElementContainer
 	 *
 	 * @param array $form_data Associative array with keys matching field names.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function fill(array $form_data)
 	{
@@ -127,7 +127,7 @@ class Form extends AbstractElementContainer
 	 * @param ITypifiedElement $typified_element Element, to set a value for.
 	 * @param mixed            $value            Element value to set.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws FormException When element doesn't support value changing.
 	 */
 	public function setValue(ITypifiedElement $typified_element, $value)
@@ -147,7 +147,7 @@ class Form extends AbstractElementContainer
 	/**
 	 * Submits a form.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function submit()
 	{

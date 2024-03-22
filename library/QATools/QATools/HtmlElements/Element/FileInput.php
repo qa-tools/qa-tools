@@ -43,7 +43,7 @@ class FileInput extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param string $filename Filename.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws FileInputException When file could not be found on disk.
 	 */
 	public function setFileToUpload($filename)
@@ -65,7 +65,7 @@ class FileInput extends AbstractTypifiedElement implements ISimpleSetter
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value)
 	{

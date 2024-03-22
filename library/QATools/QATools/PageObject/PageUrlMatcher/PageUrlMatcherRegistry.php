@@ -53,7 +53,7 @@ class PageUrlMatcherRegistry
 	 *
 	 * @param IPageUrlMatcher $page_url_matcher Page url matcher.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws PageUrlMatcherException When page url matcher with same priority is already registered.
 	 */
 	public function add(IPageUrlMatcher $page_url_matcher)

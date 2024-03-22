@@ -29,7 +29,7 @@ class RadioButton extends LabeledElement
 	/**
 	 * Selects radio button uf it's not already selected.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function select()
 	{

@@ -40,7 +40,7 @@ class SelectOption extends AbstractTypifiedElement
 	 *
 	 * @param Select $select Associated SELECT element.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setSelect(Select $select)
 	{
@@ -54,7 +54,7 @@ class SelectOption extends AbstractTypifiedElement
 	 *
 	 * @param boolean $multiple Append this option to current selection.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws SelectException When no SELECT element association defined.
 	 */
 	public function select($multiple = false)
@@ -76,7 +76,7 @@ class SelectOption extends AbstractTypifiedElement
 	/**
 	 * Deselects option if it is not already deselected.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws SelectException When non-Selenium driver is used.
 	 */
 	public function deselect()
@@ -100,7 +100,7 @@ class SelectOption extends AbstractTypifiedElement
 	 *
 	 * @param boolean|null $select_or_deselect Tells, how option state should be altered.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function toggle($select_or_deselect = null)
 	{

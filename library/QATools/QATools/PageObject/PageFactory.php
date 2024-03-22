@@ -159,7 +159,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @param AnnotationManager $manager Annotation manager.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	private function _setAnnotationManager(AnnotationManager $manager)
 	{
@@ -201,7 +201,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @param Page $page Page to initialize.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function initPage(Page $page)
 	{
@@ -239,7 +239,7 @@ class PageFactory implements IPageFactory
 	 *
 	 * @param IElementContainer $element_container AbstractElementContainer to be initialized.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function initElementContainer(IElementContainer $element_container)
 	{
@@ -252,7 +252,7 @@ class PageFactory implements IPageFactory
 	 * @param ISearchContext     $search_context     Context, to be used for element initialization.
 	 * @param IPropertyDecorator $property_decorator Element locator factory.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function initElements(ISearchContext $search_context, IPropertyDecorator $property_decorator)
 	{
@@ -265,7 +265,7 @@ class PageFactory implements IPageFactory
 	 * @param ISearchContext     $search_context     Search context.
 	 * @param IPropertyDecorator $property_decorator Property decorator.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	protected function proxyFields(ISearchContext $search_context, IPropertyDecorator $property_decorator)
 	{

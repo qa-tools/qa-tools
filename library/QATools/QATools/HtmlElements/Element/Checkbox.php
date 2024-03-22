@@ -29,7 +29,7 @@ class Checkbox extends LabeledElement implements ISimpleSetter
 	/**
 	 * Checks checkbox if it is not already checked.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function check()
 	{
@@ -41,7 +41,7 @@ class Checkbox extends LabeledElement implements ISimpleSetter
 	/**
 	 * Unchecks checkbox if it is not already unchecked.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function uncheck()
 	{
@@ -55,7 +55,7 @@ class Checkbox extends LabeledElement implements ISimpleSetter
 	 *
 	 * @param boolean|null $check_or_uncheck Tells, how checkbox state should be altered.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function toggle($check_or_uncheck = null)
 	{
@@ -81,7 +81,7 @@ class Checkbox extends LabeledElement implements ISimpleSetter
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value)
 	{

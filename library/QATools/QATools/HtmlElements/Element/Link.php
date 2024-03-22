@@ -30,7 +30,7 @@ class Link extends AbstractTypifiedElement
 	/**
 	 * Click the link.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function click()
 	{

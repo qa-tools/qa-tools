@@ -85,7 +85,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 *
 	 * @param string $text Text.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws RadioGroupException When radio button with given label text wasn't found.
 	 */
 	public function selectButtonByLabelText($text)
@@ -110,7 +110,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 *
 	 * @param string $value The value to match against.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws RadioGroupException When radio button with given value wasn't found.
 	 */
 	public function selectButtonByValue($value)
@@ -135,7 +135,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 *
 	 * @param integer $index Index of a radio button to be selected.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws RadioGroupException When non-existing index was given.
 	 */
 	public function selectButtonByIndex($index)
@@ -159,7 +159,7 @@ class RadioGroup extends AbstractTypifiedElementCollection implements ISimpleSet
 	 *
 	 * @param mixed $value New value.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setValue($value)
 	{

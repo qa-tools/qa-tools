@@ -112,7 +112,7 @@ abstract class Page implements ISearchContext
 	 *
 	 * @param array $params Page parameters.
 	 *
-	 * @return self
+	 * @return static
 	 * @throws PageException When page url not specified.
 	 */
 	public function open(array $params = array())
@@ -131,7 +131,7 @@ abstract class Page implements ISearchContext
 	 *
 	 * @param IBuilder $url_builder Url builder.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setUrlBuilder(IBuilder $url_builder)
 	{
@@ -159,7 +159,7 @@ abstract class Page implements ISearchContext
 	 *
 	 * @param string $url URL.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	protected function setBrowserUrl($url)
 	{

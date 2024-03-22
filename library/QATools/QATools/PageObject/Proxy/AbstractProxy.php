@@ -82,7 +82,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @param string $class_name Class name to proxy.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function setClassName($class_name)
 	{
