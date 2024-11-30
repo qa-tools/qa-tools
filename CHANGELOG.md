@@ -4,7 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-...
+- Added `waitFor` method to all typified elements (subclasses of the `AbstractTypifiedElement` class).
 
 ### Changed
 ...
