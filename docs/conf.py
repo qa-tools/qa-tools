@@ -100,6 +100,14 @@ highlight_language = 'php'
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'QA-Toolsdoc'
 
+html_context = {
+    "display_github": True,
+    "github_user": "qa-tools",
+    "github_repo": "qa-tools",
+    "github_version": "master",
+    "conf_py_path": "/docs/",
+}
+
 # -- Options for LaTeX output ---------------------------------------------
 
 # Grouping the document tree into LaTeX files. List of tuples
