@@ -76,7 +76,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
 		if ( \class_exists('\\Behat\\Mink\\Element\\ElementFinder') ) {
 			$this->elementFinder = m::mock('\\Behat\\Mink\\Element\\ElementFinder');
 			$this->session->shouldReceive('getElementFinder')->andReturn($this->elementFinder)->byDefault();
+		}
 
+		if ( $this->usesNewMinkArchitecture() ) {
 			$page = new \Behat\Mink\Element\DocumentElement($this->driver, $this->elementFinder);
 		}
 		else {
@@ -128,11 +130,29 @@ class TestCase extends \PHPUnit\Framework\TestCase
 			$xpath = 'XPATH';
 		}
 
-		if ( isset($this->elementFinder) ) {
+		if ( $this->usesNewMinkArchitecture() ) {
 			return new NodeElement($xpath, $this->driver, $this->elementFinder);
 		}
 
 		return new NodeElement($xpath, $this->session);
+	}
+
+	/**
+	 * Detects, if the installed Mink version uses the Driver + ElementFinder based Element hierarchy
+	 * (e.g. the "2-architecture-changes" branch) instead of the Session-based one.
+	 *
+	 * The presence of the "\Behat\Mink\Element\ElementFinder" class alone isn't a reliable indicator,
+	 * because that class was already present in some 1.x releases (e.g. v1.13.0), while
+	 * "Element::__construct()" still accepted a "Session" back then.
+	 *
+	 * @return boolean
+	 */
+	protected function usesNewMinkArchitecture()
+	{
+		$constructor = new \ReflectionMethod('\\Behat\\Mink\\Element\\DocumentElement', '__construct');
+		$first_parameter_type = $constructor->getParameters()[0]->getType();
+
+		return $first_parameter_type && $first_parameter_type->getName() === 'Behat\\Mink\\Driver\\DriverInterface';
 	}
 
 }
