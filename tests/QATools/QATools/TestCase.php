@@ -76,7 +76,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
 		if ( \class_exists('\\Behat\\Mink\\Element\\ElementFinder') ) {
 			$this->elementFinder = m::mock('\\Behat\\Mink\\Element\\ElementFinder');
 			$this->session->shouldReceive('getElementFinder')->andReturn($this->elementFinder)->byDefault();
+
+			$page = new \Behat\Mink\Element\DocumentElement($this->driver, $this->elementFinder);
 		}
+		else {
+			$page = new \Behat\Mink\Element\DocumentElement($this->session);
+		}
+
+		$this->session->shouldReceive('getPage')->andReturn($page)->byDefault();
 
 		$this->pageFactory = m::mock('\\QATools\\QATools\\PageObject\\IPageFactory');
 		$this->pageFactory->shouldReceive('getSession')->andReturn($this->session);
@@ -119,6 +126,10 @@ class TestCase extends \PHPUnit\Framework\TestCase
 	{
 		if ( !isset($xpath) ) {
 			$xpath = 'XPATH';
+		}
+
+		if ( isset($this->elementFinder) ) {
+			return new NodeElement($xpath, $this->driver, $this->elementFinder);
 		}
 
 		return new NodeElement($xpath, $this->session);

@@ -112,7 +112,7 @@ class FormTest extends AbstractElementContainerTest
 		// 3 times for radio, because radio is wrapped within a collection and is asserted.
 		$call_count = $input_type == 'radio' ? 3 : 2;
 
-		$node_element = new NodeElement('XPATH', $this->session);
+		$node_element = $this->createNodeElement();
 		$this->driver->shouldReceive('getTagName')->with('XPATH')->times($call_count)->andReturn($tag_name);
 
 		if ( $tag_name == 'input' ) {
