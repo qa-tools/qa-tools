@@ -149,7 +149,7 @@ class WebElementTest extends TestCase
 	 */
 	protected function createElement()
 	{
-		return new $this->elementClass(new NodeElement('XPATH', $this->session), $this->pageFactory);
+		return new $this->elementClass($this->createNodeElement('XPATH'), $this->pageFactory);
 	}
 
 }

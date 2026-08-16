@@ -18,7 +18,7 @@ defaults:
 jobs:
 
   tests:
-    name: "PHP ${{ matrix.php }}${{ matrix.with_coverage == true && ' with coverage' || ''}}"
+    name: "PHP ${{ matrix.php }}${{ matrix.with_coverage == true && ' with coverage' || ''}}${{ matrix.mink_version == '2-architecture-changes' && ' (Mink 2.x)' || '' }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,6 +27,9 @@ jobs:
         include:
           - php: '7.2'
             with_coverage: true
+          - php: '8.3'
+            with_coverage: false
+            mink_version: '2-architecture-changes'
       fail-fast: false
 
     steps:
@@ -53,6 +56,11 @@ jobs:
         if: "${{ matrix.php >= '8.0' }}"
         run: |
           composer require --no-update --dev scrutinizer/ocular
+
+      - name: Configure for Mink 2.x architecture
+        if: "${{ matrix.mink_version == '2-architecture-changes' }}"
+        run: |
+          composer require --no-update "behat/mink:dev-2-architecture-changes as 1.99"
 
       - name: Install dependencies
         uses: "ramsey/composer-install@v3"

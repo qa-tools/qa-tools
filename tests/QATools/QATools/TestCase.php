@@ -11,6 +11,8 @@
 namespace tests\QATools\QATools;
 
 
+use Behat\Mink\Driver\DriverInterface;
+use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\ElementFinder;
 use Behat\Mink\Element\NodeElement;
 use Mockery as m;
@@ -78,6 +80,15 @@ class TestCase extends \PHPUnit\Framework\TestCase
 			$this->session->shouldReceive('getElementFinder')->andReturn($this->elementFinder)->byDefault();
 		}
 
+		if ( $this->usesNewMinkArchitecture() ) {
+			$page = new DocumentElement($this->driver, $this->elementFinder);
+		}
+		else {
+			$page = new DocumentElement($this->session);
+		}
+
+		$this->session->shouldReceive('getPage')->andReturn($page)->byDefault();
+
 		$this->pageFactory = m::mock('\\QATools\\QATools\\PageObject\\IPageFactory');
 		$this->pageFactory->shouldReceive('getSession')->andReturn($this->session);
 	}
@@ -121,7 +132,35 @@ class TestCase extends \PHPUnit\Framework\TestCase
 			$xpath = 'XPATH';
 		}
 
+		if ( $this->usesNewMinkArchitecture() ) {
+			return new NodeElement($xpath, $this->driver, $this->elementFinder);
+		}
+
 		return new NodeElement($xpath, $this->session);
+	}
+
+	/**
+	 * Probe Mink 2.x architecture.
+	 *
+	 * @return boolean
+	 */
+	protected function usesNewMinkArchitecture()
+	{
+		$constructor = new \ReflectionMethod(DocumentElement::class, '__construct');
+		$first_parameter = $constructor->getParameters()[0];
+
+		if ( PHP_VERSION_ID < 70100 ) {
+			$first_parameter_type = $first_parameter->getClass();
+		}
+		else {
+			$first_parameter_type = $first_parameter->getType();
+		}
+
+		if ( $first_parameter_type && method_exists($first_parameter_type, 'getName') ) {
+			return $first_parameter_type->getName() === DriverInterface::class;
+		}
+
+		return false;
 	}
 
 }

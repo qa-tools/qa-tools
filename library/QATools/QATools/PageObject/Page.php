@@ -80,7 +80,7 @@ abstract class Page implements ISearchContext
 	 */
 	public function __construct(IPageFactory $page_factory)
 	{
-		$this->_wrappedElement = new DocumentElement($page_factory->getSession());
+		$this->_wrappedElement = $page_factory->getSession()->getPage();
 
 		$this->pageFactory = $page_factory;
 
