@@ -47,14 +47,9 @@ jobs:
           # PHP 7.1 development web server segfaults if timezone not set.
           ini-values: date.timezone=Europe/Paris, error_reporting=-1, display_errors=On
 
-      - name: Configure for PHP >= 7.1
+      - name: Configure Symfony Error Handler
         run: |
           composer require --no-update --dev symfony/error-handler "^4.4 || ^5.0"
-
-      - name: Configure for PHP >= 8.0
-        if: "${{ matrix.php >= '8.0' }}"
-        run: |
-          composer require --no-update --dev scrutinizer/ocular
 
       - name: Configure for Mink 2.x architecture
         if: "${{ matrix.mink_version == '2-architecture-changes' }}"
@@ -111,13 +106,32 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           report_type: test_results
 
-      - name: Upload Coverage to Scrutinizer CI (PHP < 8.0)
-        if: "${{ matrix.php < '8.0' && matrix.with_coverage == true }}"
+      - name: Upload Coverage to Scrutinizer CI
+        if: "${{ matrix.with_coverage == true }}"
         run: |
-          wget https://github.com/scrutinizer-ci/ocular/releases/download/1.6.0/ocular.phar
-          php ocular.phar code-coverage:upload --repository=g/qa-tools/qa-tools --format=php-clover coverage.clover
+          REPOSITORY='g/qa-tools/qa-tools'
+          REVISION="${GITHUB_SHA}"
+          BASE_PATH="$(git rev-parse --show-toplevel)/"
+          PARENTS="$(git show -s --format=%P HEAD)"
 
-      - name: Upload Coverage to Scrutinizer CI (PHP >= 8.0)
-        if: "${{ matrix.php >= '8.0' && matrix.with_coverage == true }}"
-        run: |
-           vendor/bin/ocular code-coverage:upload --repository=g/qa-tools/qa-tools --format=php-clover coverage.clover
+          sed "s#${BASE_PATH}#{scrutinizer_project_base_path}/#g" coverage.clover \
+            | base64 -w0 > coverage.clover.base64
+
+          jq -n \
+            --arg revision "$REVISION" \
+            --arg parents "$PARENTS" \
+            --arg format "php-clover" \
+            --rawfile data coverage.clover.base64 \
+            '{
+              revision: $revision,
+              parents: ($parents | split(" ") | map(select(length > 0))),
+              coverage: {
+                format: $format,
+                data: $data
+              }
+            }' > scrutinizer-payload.json
+
+          curl -fsS -X POST \
+            "https://scrutinizer-ci.com/api/repositories/${REPOSITORY}/data/code-coverage" \
+            -H 'Content-Type: application/json' \
+            --data @scrutinizer-payload.json
