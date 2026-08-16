@@ -11,7 +11,6 @@
 namespace tests\QATools\QATools\Live\HtmlElements\Element;
 
 
-use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Mink;
 use Behat\Mink\Session;
 use QATools\QATools\HtmlElements\Element\AbstractTypifiedElement;
@@ -63,7 +62,10 @@ class TypifiedElementTestCase extends AbstractLiveTestCase
 	{
 		$xpath = $this->pageFactory->translateToXPath($how, $using);
 
-		$web_element = new WebElement(new NodeElement($xpath, $this->session), $this->pageFactory);
+		$web_element = new WebElement(
+			$this->session->getPage()->find('xpath', $xpath),
+			$this->pageFactory
+		);
 
 		return new $this->elementClass($web_element, $this->pageFactory);
 	}
