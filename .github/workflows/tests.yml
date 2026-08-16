@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 2
 
@@ -63,7 +63,7 @@ jobs:
           composer require --no-update "behat/mink:dev-2-architecture-changes as 1.99"
 
       - name: Install dependencies
-        uses: "ramsey/composer-install@v3"
+        uses: "ramsey/composer-install@v4"
         with:
           dependency-versions: "highest"
 
@@ -80,7 +80,7 @@ jobs:
           chrome-version: "stable"
 
       - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@master
+        uses: nanasess/setup-chromedriver@v3
 
       - name: Start virtual frame buffer and Selenium server
         run: |
@@ -101,7 +101,7 @@ jobs:
 
       - name: Upload Coverage to CodeCov
         if: "${{ matrix.with_coverage == true }}"
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
