@@ -77,15 +77,6 @@ abstract class AbstractElementCollectionTestCase extends TestCase
 
 		$this->assertSame($element, $this->element[$initial_count]);
 
-		// Alias class not included in forward compatibility class list.
-		if ( !\class_exists('PHPUnit\Framework\Error\Notice') ) {
-			\class_alias('PHPUnit_Framework_Error_Notice', 'PHPUnit\Framework\Error\Notice');
-		}
-
-		if ( !\class_exists('PHPUnit\Framework\Error\Warning') ) {
-			\class_alias('PHPUnit_Framework_Error_Warning', 'PHPUnit\Framework\Error\Warning');
-		}
-
 		try {
 			$this->assertNull($this->element[$new_count]);
 		}
