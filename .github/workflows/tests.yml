@@ -91,18 +91,25 @@ jobs:
       - name: Run tests with Coverage
         if: "${{ matrix.with_coverage == true }}"
         run: |
-          vendor/bin/phpunit -v --coverage-clover=coverage.clover
+          vendor/bin/phpunit -v --log-junit junit.xml --coverage-clover=coverage.clover
 
       - name: Run tests without Coverage
         if: "${{ matrix.with_coverage == false }}"
         run: |
-          vendor/bin/phpunit -v
+          vendor/bin/phpunit -v --log-junit junit.xml
 
-      - name: Upload Coverage to CodeCov
+      - name: Upload Coverage to Codecov
         if: "${{ matrix.with_coverage == true }}"
         uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
 
       - name: Upload Coverage to Scrutinizer CI (PHP < 8.0)
         if: "${{ matrix.php < '8.0' && matrix.with_coverage == true }}"
