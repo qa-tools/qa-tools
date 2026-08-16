@@ -77,6 +77,7 @@ abstract class AbstractElementCollection extends \ArrayObject
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($index, $newval)
 	{
 		if ( !$this->assertElement($newval) ) {
