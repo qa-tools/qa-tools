@@ -238,6 +238,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($index, $newval)
 	{
 		$this->locateObject();
@@ -252,6 +253,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($index)
 	{
 		$this->locateObject();
@@ -266,6 +268,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($index)
 	{
 		$this->locateObject();
@@ -280,6 +283,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return mixed|null
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($index)
 	{
 		$this->locateObject();
@@ -292,6 +296,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return integer
 	 */
+	#[\ReturnTypeWillChange]
 	public function count()
 	{
 		$this->locateObject();
@@ -304,6 +309,7 @@ abstract class AbstractProxy extends AbstractElementCollection implements IProxy
 	 *
 	 * @return \ArrayIterator
 	 */
+	#[\ReturnTypeWillChange]
 	public function getIterator()
 	{
 		$this->locateObject();

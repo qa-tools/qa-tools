@@ -65,7 +65,9 @@ class WaitingElementLocator extends DefaultElementLocator
 			return parent::findAll();
 		}
 
-		return $this->searchContext->waitFor($this->timeout, array($this, 'parent::findAll'));
+		return $this->searchContext->waitFor($this->timeout, function () {
+			return parent::findAll();
+		});
 	}
 
 }
