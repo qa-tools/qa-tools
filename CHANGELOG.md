@@ -7,10 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ...
 
 ### Changed
-...
+- Adjusted the `Page::__construct` method to support the upcoming Mink 2.x releases.
 
 ### Fixed
-...
+- Fixed PHP 8.1 deprecation notices about missing return types on `ArrayObject`-related methods in `AbstractElementCollection` and `AbstractProxy` classes.
+- Fixed a PHP 8.2 deprecation notice about using `array($this, 'parent::findAll')` as a callable in the `WaitingElementLocator` class.
 
 ## [1.3.0] - 2024-11-30
 
