@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Adjusted the `Page::__construct` method to support the upcoming Mink 2.x releases.
+- Changed minimal supported version to PHP 7.4.
 
 ### Fixed
 - Fixed PHP 8.1 deprecation notices about missing return types on `ArrayObject`-related methods in `AbstractElementCollection` and `AbstractProxy` classes.
