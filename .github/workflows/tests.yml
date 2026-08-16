@@ -100,7 +100,7 @@ jobs:
       - name: Upload Coverage to Scrutinizer CI (PHP < 8.0)
         if: "${{ matrix.php < '8.0' && matrix.with_coverage == true }}"
         run: |
-          wget https://scrutinizer-ci.com/ocular.phar
+          wget https://github.com/scrutinizer-ci/ocular/releases/download/1.6.0/ocular.phar
           php ocular.phar code-coverage:upload --repository=g/qa-tools/qa-tools --format=php-clover coverage.clover
 
       - name: Upload Coverage to Scrutinizer CI (PHP >= 8.0)
