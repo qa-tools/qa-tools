@@ -52,7 +52,7 @@ jobs:
           composer require --no-update --dev symfony/error-handler "^4.4 || ^5.0"
 
       - name: Configure for PHP >= 8.0
-        if: "${{ matrix.php >= '8.0' }}"
+        if: "${{ fromJSON(split(matrix.php, '.')[0]) >= 8 }}"
         run: |
           composer require --no-update --dev scrutinizer/ocular
 
@@ -112,12 +112,12 @@ jobs:
           report_type: test_results
 
       - name: Upload Coverage to Scrutinizer CI (PHP < 8.0)
-        if: "${{ matrix.php < '8.0' && matrix.with_coverage == true }}"
+        if: "${{ fromJSON(split(matrix.php, '.')[0]) < 8 && matrix.with_coverage == true }}"
         run: |
           wget https://github.com/scrutinizer-ci/ocular/releases/download/1.6.0/ocular.phar
           php ocular.phar code-coverage:upload --repository=g/qa-tools/qa-tools --format=php-clover coverage.clover
 
       - name: Upload Coverage to Scrutinizer CI (PHP >= 8.0)
-        if: "${{ matrix.php >= '8.0' && matrix.with_coverage == true }}"
+        if: "${{ fromJSON(split(matrix.php, '.')[0]) >= 8 && matrix.with_coverage == true }}"
         run: |
            vendor/bin/ocular code-coverage:upload --repository=g/qa-tools/qa-tools --format=php-clover coverage.clover
